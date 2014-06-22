@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tables>
+    <table class="com.redcard.merchant.entity.Merchant" primaryKey="code" startRow="1">
+        <column cell="A1" propertyName="code" columnName="商户号"></column>
+        <column cell="B1" nullAllowed="true" propertyName="fullName" columnName="商户名称"></column>
+        <column cell="C1" nullAllowed="true" propertyName="shortName" columnName="商户简称"></column>
+        <column cell="E1" nullAllowed="true" propertyName="industryType" columnName="所属行业"></column>
+        <column cell="E1" nullAllowed="true" propertyName="address" columnName="商户地址"></column>
+        <column cell="F1" nullAllowed="true" propertyName="website" columnName="商户网址"></column>
+        <column cell="G1" nullAllowed="true" propertyName="bank" columnName="开户银行"></column>
+        <column cell="H1" nullAllowed="true" propertyName="bankNo" columnName="银行账号"></column>
+        <column cell="I1" nullAllowed="true" propertyName="tradeTimesPerDay" columnName="每日交易次数"></column>
+        <column cell="J1" nullAllowed="true" propertyName="tradeLimitMoneyPerTime" columnName="每日单笔交易限额"></column>
+        <column cell="K1" nullAllowed="true" propertyName="tradeLimitMoneyPerDay" columnName="每日交易限额"></column>
+        <column cell="L1" nullAllowed="true" propertyName="contacter" columnName="联系人"></column>
+        <column cell="M1" nullAllowed="true" propertyName="phone" columnName="联系电话"></column>
+        <column cell="N1" nullAllowed="true" propertyName="fax" columnName="传真"></column>
+        <column cell="O1" nullAllowed="true" propertyName="postCode" columnName="邮政编码"></column>
+        <column cell="P1" nullAllowed="true" propertyName="clearingPeriod" columnName="结算周期">
+            <mapping value="0" text="年"></mapping>
+            <mapping value="1" text="自然月"></mapping>
+            <mapping value="2" text="自定义月"></mapping>
+            <mapping value="3" text="周"></mapping>
+            <mapping value="4" text="日"></mapping>
+        </column>
+        <column cell="Q1" nullAllowed="true" propertyName="clearingDate" columnName="结算日">
+        </column>
+        <column cell="R1" nullAllowed="true" propertyName="feeEnable" columnName="是否带手续费付款">
+            <mapping value="0" text="否"></mapping>
+            <mapping value="1" text="是"></mapping>
+        </column>
+    </table>
+    <table class="com.redcard.merchant.entity.Compact" primaryKey="code" startRow="1">
+        <column cell="A1" propertyName="merchantCode" columnName="商户号"></column>
+        <column cell="B1" propertyName="code" columnName="合同编号"></column>
+        <column cell="C1" nullAllowed="true" propertyName="title" columnName="合同名称"></column>
+        <column cell="D1" nullAllowed="true" propertyName="startDate" columnName="合同签署日期"></column>
+        <column cell="E1" nullAllowed="true" propertyName="endDate" columnName="合同终止日期"></column>
+        <column cell="F1" nullAllowed="true" propertyName="partyA" columnName="合同甲方"></column>
+        <column cell="G1" nullAllowed="true" propertyName="partyB" columnName="合同乙方"></column>
+    </table>
+    <table class="com.redcard.merchant.entity.Brand" primaryKey="brandCode" startRow="1">
+        <column cell="A1" propertyName="brandCode" columnName="品牌编号"></column>
+        <column cell="B1" nullAllowed="true" propertyName="brandFullName" columnName="品牌名称"></column>
+        <column cell="C1" nullAllowed="true" propertyName="brandShortName" columnName="品牌简称"></column>
+        <column cell="D1" nullAllowed="true" propertyName="type" columnName="品牌类型">
+            <mapping value="1" text="大型百货"></mapping>
+            <mapping value="2" text="超市卖场"></mapping>
+            <mapping value="3" text="餐饮连锁"></mapping>
+            <mapping value="4" text="休闲娱乐"></mapping>
+            <mapping value="5" text="宾馆酒店"></mapping>
+            <mapping value="6" text="家电家居"></mapping>
+            <mapping value="7" text="医疗药房"></mapping>
+            <mapping value="8" text="教育培训"></mapping>
+            <mapping value="9" text="食品西点"></mapping>
+            <mapping value="10" text="生活服务"></mapping>
+            <mapping value="11" text="各类专卖"></mapping>
+            <mapping value="12" text="连锁书店"></mapping>
+            <mapping value="13" text="汽车美容"></mapping>
+            <mapping value="14" text="票务旅游"></mapping>
+        </column>
+    </table>
+    <table class="com.redcard.merchant.entity.Shop" primaryKey="shopCode" startRow="1">
+        <column cell="A1" propertyName="merchantCode" columnName="商户号"></column>
+        <column cell="B1" propertyName="brandCode" columnName="品牌编号"></column>
+        <column cell="C1" propertyName="brandFullName" columnName="品牌名称"></column>
+        <column cell="D1" propertyName="shopCode" columnName="门店编号"></column>
+        <column cell="E1" nullAllowed="true" propertyName="name" columnName="门店名称"></column>
+        <column cell="F1" nullAllowed="true" propertyName="address" columnName="门店地址"></column>
+        <column cell="G1" nullAllowed="true" propertyName="contacter" columnName="门店联系人"></column>
+        <column cell="H1" nullAllowed="true" propertyName="phone" columnName="门店联系电话"></column>
+        <column cell="I1" nullAllowed="true" propertyName="area" columnName="所属商区"></column>
+    </table>
+    <table class="com.redcard.merchant.entity.Pos" primaryKey="terminalNo" startRow="1">
+        <column cell="A1" propertyName="merchantCode" columnName="商户号"></column>
+        <column cell="B1" propertyName="brandCode" columnName="品牌编号"></column>
+        <column cell="C1" propertyName="brandName" columnName="品牌名称"></column>
+        <column cell="D1" propertyName="shopCode" columnName="门店编号"></column>
+        <column cell="E1" propertyName="shopName" columnName="门店名称"></column>
+        <column cell="F1" propertyName="terminalNo" columnName="终端号"></column>
+        <column cell="G1" nullAllowed="true" propertyName="type" columnName="终端类型">
+            <mapping value="0" text="网上"></mapping>
+            <mapping value="1" text="网下"></mapping>
+            <mapping value="2" text="网上网下双用"></mapping>
+        </column>
+        <column cell="H1" nullAllowed="true" propertyName="posUsedWay" columnName="使用方式">
+            <mapping value="0" text="白名单"></mapping>
+            <mapping value="1" text="黑名单"></mapping>
+        </column>
+        <column cell="I1" nullAllowed="true" propertyName="outerMerchantCode" columnName="商银通商户号"></column>
+        <column cell="J1" nullAllowed="true" propertyName="outerMerchantName" columnName="商银通商户名称"></column>
+        <column cell="K1" nullAllowed="true" propertyName="outerTerminalName" columnName="商银通终端名称"></column>
+        <column cell="L1" nullAllowed="true" propertyName="outerMerchantAddr" columnName="商银通商户地址"></column>
+        <column cell="M1" nullAllowed="true" propertyName="outerMerchantLinkMan" columnName="商银通商户联系人"></column>
+        <column cell="N1" nullAllowed="true" propertyName="outerMerchantLinkPhone" columnName="商银通商户联系电话"></column>
+    </table>
+    <table class="com.redcard.merchant.entity.PosFee" primaryKey="terminalNo" startRow="1">
+        <column cell="F1" propertyName="terminalNo"></column>
+        <column cell="G1" nullAllowed="true" propertyName="receivedFeeWay">
+            <mapping value="0" text="商户支出"></mapping>
+            <mapping value="1" text="客户支出"></mapping>
+        </column>
+        <column cell="H1" nullAllowed="true" propertyName="feeWay">
+            <mapping value="0" text="每笔百分比"></mapping>
+            <mapping value="1" text="每笔固定金额"></mapping>
+        </column>
+        <column cell="I1" nullAllowed="true" propertyName="feeValue"></column>
+        <column cell="J1" nullAllowed="true" propertyName="startDate"></column>
+        <column cell="K1" nullAllowed="true" propertyName="endDate"></column>
+    </table>
+    <table class="com.redcard.order.entity.OrderAwardMoney" startRow="1">
+        <column cell="A1" propertyName="orderId"></column>
+        <column cell="Q1" nullAllowed="true" propertyName="money"></column>
+        <column cell="R1" nullAllowed="true" propertyName="awardDate"></column>
+        <column cell="S1" nullAllowed="true" propertyName="comment"></column>
+    </table>
+</tables>

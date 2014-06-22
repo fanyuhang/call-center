@@ -1,0 +1,27 @@
+// .po file like language pack
+plupload.addI18n({
+	'Select files' : '选择文件',
+	'Add files to the upload queue and click the start button.' : '选择文件到列表，点击上传按钮',
+	'Filename' : '文件名',
+	'Status' : '状态',
+	'Size' : '大小',
+	'Add Files' : '新增文件',
+	'Stop current upload' : '停止当前上传',
+	'Start uploading queue' : '开始上传',
+	'Drag files here.' : '拖拽文件',
+	'Start Upload': '开始上传',
+	'Uploaded %d/%d files': '已上传 %d/%d 文件',
+  'N/A' : '',
+  'Drag files here.' : '选择文件',
+  'File extension error.': '文件格式错误.',
+  'File size error.': '文件大小错误.',
+  'Init error.': '初始化错误.',
+  'HTTP Error.': '请求错误.',
+  'Security error.': '安全性错误.',
+  'Generic error.': '一般性错误.',
+  'IO error.': 'IO error.',
+  'Stop Upload': '停止上传.',
+  'Add Files': '添加文件',
+  'Start upload': '开始上传.',
+  '%d files queued': '%d 文件队列.'
+});
