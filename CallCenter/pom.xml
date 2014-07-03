@@ -1,0 +1,690 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.smartcard</groupId>
+    <artifactId>CallCenter</artifactId>
+    <version>1.0.0</version>
+    <packaging>war</packaging>
+    <name>CallCenter</name>
+ 
+    <!-- 项目属性 -->
+    <properties>
+        <!-- 主要依赖库的版本定义 -->
+        <spring.version>3.2.0.RELEASE</spring.version>
+        <hibernate.version>4.1.2</hibernate.version>
+        <mybatis.version>3.1.1</mybatis.version>
+        <mybatis-spring.version>1.1.1</mybatis-spring.version>
+        <shiro.version>2.1.0</shiro.version>
+        <quartz.version>2.1.6</quartz.version>
+        <ehcache.version>2.5.2</ehcache.version>
+        <slf4j.version>1.6.4</slf4j.version>
+        <jetty.version>7.6.3.v20120416</jetty.version>
+        <h2.version>1.3.166</h2.version>
+        <org.codehaus.jackson.version>1.9.9</org.codehaus.jackson.version>
+        <netty.version>3.5.10.Final</netty.version>
+        <jtds.version>1.2.4</jtds.version>
+        <velocity.version>1.7</velocity.version>
+        <ant.version>1.8.4</ant.version>
+        <poi.version>3.9</poi.version>
+        <cxf.version>2.7.2</cxf.version>
+        <digester.version>3.2</digester.version>
+        <jxls.version>1.0.5</jxls.version>
+        <com.fasterxml.jackson.version>2.1.4</com.fasterxml.jackson.version>
+
+        <jdbc.driver.groupId>com.h2database</jdbc.driver.groupId>
+        <jdbc.driver.artifactId>h2</jdbc.driver.artifactId>
+        <jdbc.driver.version>${h2.version}</jdbc.driver.version>
+
+        <!-- Plugin的属性定义 -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <jdk.version>1.6</jdk.version>
+    </properties>
+
+    <!-- 设定除中央仓库(repo1.maven.org/maven2/)外的其他仓库,按设定顺序进行查找. -->
+    <repositories>
+        <repository>
+            <id>offical</id>
+            <name>Maven Official Repository</name>
+            <url>http://repo1.maven.org/maven2</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>springside-google</id>
+            <name>SpringSide Additional Repository at google</name>
+            <url>http://springside.googlecode.com/svn/springside4-repository/</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>mvn</id>
+            <name>SpringSide Additional Repository at github</name>
+            <url>http://mvnrepository.com/</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <!-- 依赖项定义 -->
+    <dependencies>
+
+        <!-- google java library -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>11.0.2</version>
+        </dependency>
+
+        <!-- SPRING begin -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>1.6.9</version>
+        </dependency>
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+            <version>2.2.2</version>
+        </dependency>
+        <dependency>
+            <groupId>asm</groupId>
+            <artifactId>asm</artifactId>
+            <version>3.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.1</version>
+        </dependency>
+        <!-- SPRING end -->
+
+        <!-- PERSISTENCE begin -->
+        <!-- hibernate -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-ehcache</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.0-api</artifactId>
+            <version>1.0.1.Final</version>
+        </dependency>
+
+        <!-- mybatis -->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>${mybatis.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-spring</artifactId>
+            <version>${mybatis-spring.version}</version>
+        </dependency>
+
+        <!-- spring data access -->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
+            <version>1.0.3.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <!-- dbcp connection pool -->
+        <dependency>
+            <groupId>commons-dbcp</groupId>
+            <artifactId>commons-dbcp</artifactId>
+            <version>1.4</version>
+        </dependency>
+
+        <!-- jdbc driver -->
+        <dependency>
+            <groupId>${jdbc.driver.groupId}</groupId>
+            <artifactId>${jdbc.driver.artifactId}</artifactId>
+            <version>${jdbc.driver.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <!-- PERSISTENCE end -->
+
+        <!-- WEB begin -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.5</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- WEB end -->
+
+        <!-- TIMER -->
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+            <version>${quartz.version}</version>
+        </dependency>
+
+        <!-- CACHE -->
+        <dependency>
+            <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache-core</artifactId>
+            <version>${ehcache.version}</version>
+        </dependency>
+
+        <!-- LOGGING begin -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.16</version>
+        </dependency>
+        <dependency>
+            <groupId>log4jdbc</groupId>
+            <artifactId>log4jdbc4</artifactId>
+            <version>1.2</version>
+        </dependency>
+        <!-- LOGGING end -->
+
+        <!-- GENERAL UTILS begin -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>1.8.3</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-jexl</artifactId>
+            <version>2.1.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.beanshell</groupId>
+            <artifactId>bsh</artifactId>
+            <version>2.0b4</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.3</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+            <version>3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>1.4</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-pool</groupId>
+            <artifactId>commons-pool</artifactId>
+            <version>1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>jta</groupId>
+            <artifactId>jta</artifactId>
+            <version>1.0.1b</version>
+        </dependency>
+        <dependency>
+            <groupId>xerces</groupId>
+            <artifactId>xercesImpl</artifactId>
+            <version>2.8.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.castor</groupId>
+            <artifactId>castor-xml</artifactId>
+            <version>1.2</version>
+        </dependency>
+
+        <!-- Json support for spring mvc begin -->
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-core-asl</artifactId>
+            <version>${org.codehaus.jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+            <version>${org.codehaus.jackson.version}</version>
+        </dependency>
+        <!-- Json support for spring mvc end -->
+
+        <!-- GENERAL UTILS end -->
+
+        <!-- TEST begin -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.10</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.dbunit</groupId>
+            <artifactId>dbunit</artifactId>
+            <version>2.4.8</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- TEST end -->
+
+        <!-- bouncycastle begin -->
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk16</artifactId>
+            <version>1.46</version>
+        </dependency>
+        <!-- bouncycastle end -->
+        <!-- Netty begin -->
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty</artifactId>
+            <version>${netty.version}</version>
+        </dependency>
+        <!-- Netty end -->
+
+        <dependency>
+            <groupId>net.sourceforge.jexcelapi</groupId>
+            <artifactId>jxl</artifactId>
+            <version>2.6.12</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        <!-- ms sql jdbc driver begin -->
+        <dependency>
+            <groupId>net.sourceforge.jtds</groupId>
+            <artifactId>jtds</artifactId>
+            <version>${jtds.version}</version>
+        </dependency>
+        <!-- ms sql jdbc driver end -->
+        <!-- velocity begin -->
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity</artifactId>
+            <version>${velocity.version}</version>
+        </dependency>
+        <!-- velocity end -->
+        <dependency>
+            <groupId>org.apache.ant</groupId>
+            <artifactId>ant</artifactId>
+            <version>${ant.version}</version>
+        </dependency>
+        <!-- POI begin -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>${poi.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>${poi.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.commons</groupId>
+          <artifactId>commons-digester3</artifactId>
+          <version>${digester.version}</version>
+        </dependency>
+        <!-- POI end -->
+
+        <!-- SOAP begin -->
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-core</artifactId>
+            <version>${cxf.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.geronimo.specs</groupId>
+                    <artifactId>geronimo-javamail_1.4_spec</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.geronimo.specs</groupId>
+                    <artifactId>geronimo-activation_1.1_spec</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-frontend-jaxws</artifactId>
+            <version>${cxf.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.geronimo.specs</groupId>
+                    <artifactId>geronimo-javamail_1.4_spec</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.geronimo.specs</groupId>
+                    <artifactId>geronimo-activation_1.1_spec</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-transports-http</artifactId>
+            <version>${cxf.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>org.apache.cxf</artifactId>
+                    <groupId>cxf-rt-transports-http-jetty</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.woodstox</groupId>
+            <artifactId>stax2-api</artifactId>
+            <version>3.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-ws-security</artifactId>
+            <version>${cxf.version}</version>
+        </dependency>
+        <!-- SOAP end -->
+        <!-- jxls start -->
+        <dependency>
+            <groupId>net.sf.jxls</groupId>
+            <artifactId>jxls-core</artifactId>
+            <version>${jxls.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.jxls</groupId>
+            <artifactId>jxls-reader</artifactId>
+            <version>${jxls.version}</version>
+        </dependency>
+        <!-- jxls end -->
+
+        <!-- fasterxml start -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${com.fasterxml.jackson.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${com.fasterxml.jackson.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- fasterxml end -->
+    </dependencies>
+
+    <!-- 插件配置 -->
+    <build>
+        <pluginManagement>
+            <plugins>
+                <!-- compiler插件, 设定JDK版本 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>2.3.2</version>
+                    <configuration>
+                        <source>${jdk.version}</source>
+                        <target>${jdk.version}</target>
+                        <showWarnings>true</showWarnings>
+                    </configuration>
+                </plugin>
+
+                <!-- resource插件 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>2.5</version>
+                </plugin>
+
+                <!-- war打包插件, 设定war包名称不带版本号 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>2.2</version>
+                    <configuration>
+                        <warName>${project.artifactId}</warName>
+                    </configuration>
+                </plugin>
+
+                <!-- jar打包相关插件 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>2.4</version>
+                    <configuration>
+                        <archive>
+                            <manifest>
+                                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            </manifest>
+                        </archive>
+                        <excludes>
+                            <exclude>ehcache/**</exclude>
+                            <exclude>mapper/**</exclude>
+                            <exclude>wsdl/**</exclude>
+                            <exclude>sql/**</exclude>
+                            <exclude>i18N/**</exclude>
+                            <exclude>*</exclude>
+                        </excludes>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <version>2.2.1</version>
+                    <configuration>
+                        <filters>
+                            <filter>bin/assembly/filter.properties</filter>
+                        </filters>
+                        <descriptors>
+                            <descriptor>bin/assembly/distribution.xml</descriptor>
+                        </descriptors>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>2.1.2</version>
+                </plugin>
+
+                <!-- clean插件 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>2.4.1</version>
+                </plugin>
+
+                <!-- install插件 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>2.3.1</version>
+                </plugin>
+
+                <!-- eclipse插件,设定下载Source -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-eclipse-plugin</artifactId>
+                    <version>2.9</version>
+                    <configuration>
+                        <downloadSources>true</downloadSources>
+                        <downloadJavadocs>false</downloadJavadocs>
+                    </configuration>
+                </plugin>
+
+                <!-- jetty插件 -->
+                <plugin>
+                    <groupId>org.mortbay.jetty</groupId>
+                    <artifactId>jetty-maven-plugin</artifactId>
+                    <version>${jetty.version}</version>
+                    <configuration>
+                        <!--<webApp>
+                            <contextPath>/CardSystem</contextPath>
+                        </webApp>-->
+                        <connectors>
+                            <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
+                                <port>8080</port>
+                            </connector>
+                        </connectors>
+                    </configuration>
+                </plugin>
+                <!-- ant插件 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-antrun-plugin</artifactId>
+                    <version>1.7</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+    <profiles>
+        <!-- 刷新开发环境数据库 -->
+        <profile>
+            <id>refresh-db</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <configuration>
+                            <target>
+                                <property file="src/main/resources/application.local.properties"/>
+                                <property file="src/main/resources/application.properties"/>
+
+                                <property name="sql.type" value="h2"/>
+                                <property name="sql.delimiter" value=";"/>
+                                <property name="dbunit.datatype" value="org.dbunit.ext.h2.H2DataTypeFactory"/>
+                                <property name="dbunit.operation.type" value="CLEAN_INSERT"/>
+                                <!--<property name="sql.type" value="sqlserver"/>-->
+                                <!--<property name="sql.delimiter" value="go"/>-->
+                                <!--<property name="dbunit.datatype" value="org.dbunit.ext.mssql.MsSqlDataTypeFactory"/>-->
+                                <!--<property name="dbunit.operation.type" value="MSSQL_CLEAN_INSERT"/>-->
+
+
+                                <taskdef name="dbunit" classname="org.dbunit.ant.DbUnitTask"
+                                         classpathref="maven.test.classpath"/>
+
+                                <sql driver="${jdbc.driver}" url="${jdbc.url}" userid="${jdbc.username}"
+                                     password="${jdbc.password}" src="src/main/resources/sql/${sql.type}/system.sql"
+                                     onerror="continue" delimiter="${sql.delimiter}">
+                                    <classpath refid="maven.test.classpath"/>
+                                </sql>
+
+                                <sql driver="${jdbc.driver}" url="${jdbc.url}" userid="${jdbc.username}"
+                                     password="${jdbc.password}" src="src/main/resources/sql/${sql.type}/quartz.sql"
+                                     onerror="continue" delimiter="${sql.delimiter}">
+                                    <classpath refid="maven.test.classpath"/>
+                                </sql>
+
+                                <sql driver="${jdbc.driver}" url="${jdbc.url}" userid="${jdbc.username}"
+                                     password="${jdbc.password}" src="src/main/resources/sql/${sql.type}/message.sql"
+                                     onerror="continue" delimiter="${sql.delimiter}">
+                                    <classpath refid="maven.test.classpath"/>
+                                </sql>
+
+                                <sql driver="${jdbc.driver}" url="${jdbc.url}" userid="${jdbc.username}"
+                                     password="${jdbc.password}" src="src/main/resources/sql/${sql.type}/email.sql"
+                                     onerror="continue" delimiter="${sql.delimiter}">
+                                    <classpath refid="maven.test.classpath"/>
+                                </sql>
+
+                                <sql driver="${jdbc.driver}" url="${jdbc.url}" userid="${jdbc.username}"
+                                     password="${jdbc.password}" src="src/main/resources/sql/${sql.type}/customer.sql"
+                                     onerror="continue" delimiter="${sql.delimiter}">
+                                    <classpath refid="maven.test.classpath"/>
+                                </sql>
+
+                                <dbunit driver="${jdbc.driver}" url="${jdbc.url}" userid="${jdbc.username}"
+                                        password="${jdbc.password}">
+                                    <dbconfig>
+                                        <property name="datatypeFactory" value="${dbunit.datatype}"/>
+                                        <property name="metadataHandler"
+                                                  value="org.dbunit.database.DefaultMetadataHandler"/>
+                                    </dbconfig>
+                                    <classpath refid="maven.test.classpath"/>
+                                    <operation type="${dbunit.operation.type}"
+                                               src="src/test/resources/data/sample-data.xml"
+                                               format="flat" transaction="true"/>
+                                </dbunit>
+                            </target>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>
