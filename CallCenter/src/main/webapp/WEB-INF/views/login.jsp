@@ -227,12 +227,12 @@
                     </tr>
                     <tr>
                         <td align="right">账号：</td>
-                        <td align="left"><input type="text" name="loginName" id="txtUsername" class="login-text" />
+                        <td align="left"><input type="text" name="loginName" id="txtUsername" value="admin" class="login-text" />
                         </td>
                     </tr>
                     <tr>
                         <td align="right">密码：</td>
-                        <td align="left"><input type="password" name="password" id="txtPassword" class="login-text"/></td>
+                        <td align="left"><input type="password" name="password" id="txtPassword" value="admin888" class="login-text"/></td>
                     </tr>
                     <tr>
                         <td align="center" colspan="2">

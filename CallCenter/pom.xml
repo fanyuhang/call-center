@@ -220,7 +220,7 @@
         </dependency>
 
         <!-- LOGGING begin -->
-        <dependency>
+        <!-- <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>${slf4j.version}</version>
@@ -229,8 +229,8 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
             <version>${slf4j.version}</version>
-        </dependency>
-        <dependency>
+        </dependency> -->
+        <!-- <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>1.2.16</version>
@@ -239,7 +239,7 @@
             <groupId>log4jdbc</groupId>
             <artifactId>log4jdbc4</artifactId>
             <version>1.2</version>
-        </dependency>
+        </dependency> -->
         <!-- LOGGING end -->
 
         <!-- GENERAL UTILS begin -->
@@ -622,17 +622,17 @@
                         <artifactId>maven-antrun-plugin</artifactId>
                         <configuration>
                             <target>
-                                <property file="src/main/resources/application.local.properties"/>
+                                <!-- <property file="src/main/resources/application.local.properties"/> -->
                                 <property file="src/main/resources/application.properties"/>
 
-                                <property name="sql.type" value="h2"/>
+                                <!-- <property name="sql.type" value="h2"/>
                                 <property name="sql.delimiter" value=";"/>
                                 <property name="dbunit.datatype" value="org.dbunit.ext.h2.H2DataTypeFactory"/>
-                                <property name="dbunit.operation.type" value="CLEAN_INSERT"/>
-                                <!--<property name="sql.type" value="sqlserver"/>-->
-                                <!--<property name="sql.delimiter" value="go"/>-->
-                                <!--<property name="dbunit.datatype" value="org.dbunit.ext.mssql.MsSqlDataTypeFactory"/>-->
-                                <!--<property name="dbunit.operation.type" value="MSSQL_CLEAN_INSERT"/>-->
+                                <property name="dbunit.operation.type" value="CLEAN_INSERT"/> -->
+                                <property name="sql.type" value="sqlserver"/>
+                                <property name="sql.delimiter" value="go"/>
+                                <property name="dbunit.datatype" value="org.dbunit.ext.mssql.MsSqlDataTypeFactory"/>
+                                <property name="dbunit.operation.type" value="MSSQL_CLEAN_INSERT"/>
 
 
                                 <taskdef name="dbunit" classname="org.dbunit.ant.DbUnitTask"
@@ -677,7 +677,7 @@
                                     </dbconfig>
                                     <classpath refid="maven.test.classpath"/>
                                     <operation type="${dbunit.operation.type}"
-                                               src="src/test/resources/data/sample-data.xml"
+                                               src="src/test/resources/data/common-security-data.xml"
                                                format="flat" transaction="true"/>
                                 </dbunit>
                             </target>
