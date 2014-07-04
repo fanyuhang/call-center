@@ -163,48 +163,24 @@
              fldIcon="/static/ligerUI/icons/32X32/search.gif"
              fldLink="/system/sysLog/init" fldType="1" fldPosition="8"/>
    
-    <tblNode fldCode="0103" fldParent="01" fldName="商户管理" fldDesc="" fldTarget="#"
+    <tblNode fldCode="0103" fldParent="01" fldName="客户管理" fldDesc="" fldTarget="#"
              fldIcon="/static/ligerUI/icons/silkicons/application.png" fldLink="" fldType="1"
              fldPosition="3"/>
-    <tblNode fldCode="010313" fldParent="0103" fldName="集团商户管理" fldDesc="" fldTarget=""
-             fldIcon="/static/ligerUI/icons/32X32/sitemap.gif"
+    <tblNode fldCode="010301" fldParent="0103" fldName="客户管理" fldDesc="" fldTarget=""
+             fldIcon="/static/ligerUI/icons/32X32/customers.gif"
              fldLink="/merchant/group/init" fldType="1" fldPosition="0"/>
-    <tblNode fldCode="01031301" fldParent="010313" fldName="新增" fldDesc="" fldTarget="add"
-             fldIcon="/static/ligerUI/icons/silkicons/add.png"
-             fldLink="" fldType="2" fldPosition="1"/>
-    <tblNode fldCode="01031302" fldParent="010313" fldName="修改" fldDesc="" fldTarget="modify"
-             fldIcon="/static/ligerUI/icons/miniicons/page_edit.gif"
-             fldLink="" fldType="2" fldPosition="2"/>
-    <tblNode fldCode="01031303" fldParent="010313" fldName="删除" fldDesc="" fldTarget="delete"
-             fldIcon="/static/ligerUI/icons/miniicons/page_delete.gif"
-             fldLink="" fldType="2" fldPosition="3"/>
-    <tblNode fldCode="01031304" fldParent="010313" fldName="查看" fldDesc="" fldTarget="view"
-             fldIcon="/static/ligerUI/icons/silkicons/application_view_detail.png"
-             fldLink="" fldType="2" fldPosition="4"/>
-    <tblNode fldCode="01031305" fldParent="010313" fldName="导入" fldDesc="" fldTarget="import"
-             fldIcon="/static/ligerUI/icons/silkicons/application_get.png"
-             fldLink="" fldType="2" fldPosition="6"/>
-    <tblNode fldCode="01031306" fldParent="010313" fldName="下载导入模板" fldDesc="" fldTarget="modul"
-             fldIcon="/static/ligerUI/icons/silkicons/application_put.png"
-             fldLink="" fldType="2" fldPosition="5"/>
-    <tblNode fldCode="01031307" fldParent="010313" fldName="导出" fldDesc="" fldTarget="export"
-             fldIcon="/static/ligerUI/icons/miniicons/action_save.gif"
-             fldLink="" fldType="2" fldPosition="7"/>
-    <tblNode fldCode="01031308" fldParent="010313" fldName="设置结算信息" fldDesc="" fldTarget="settle"
-             fldIcon="/static/ligerUI/icons/miniicons/icon_settings.gif"
-             fldLink="" fldType="2" fldPosition="8"/>
-    <tblNode fldCode="0103130801" fldParent="01031308" fldName="新增" fldDesc="" fldTarget="add"
-             fldIcon="/static/ligerUI/icons/silkicons/add.png"
-             fldLink="" fldType="2" fldPosition="1"/>
-    <tblNode fldCode="0103130802" fldParent="01031308" fldName="修改" fldDesc="" fldTarget="modify"
-             fldIcon="/static/ligerUI/icons/miniicons/page_edit.gif"
-             fldLink="" fldType="2" fldPosition="2"/>
-    <tblNode fldCode="0103130803" fldParent="01031308" fldName="删除" fldDesc="" fldTarget="delete"
-             fldIcon="/static/ligerUI/icons/miniicons/page_delete.gif"
-             fldLink="" fldType="2" fldPosition="3"/>
-    <tblNode fldCode="0103130804" fldParent="01031308" fldName="查看" fldDesc="" fldTarget="view"
-             fldIcon="/static/ligerUI/icons/silkicons/application_view_detail.png"
-             fldLink="" fldType="2" fldPosition="4"/>
+    <tblNode fldCode="010302" fldParent="0103" fldName="客户交接" fldDesc="" fldTarget=""
+             fldIcon="/static/ligerUI/icons/32X32/communication.gif"
+             fldLink="/merchant/group/init" fldType="1" fldPosition="1"/>
+    <tblNode fldCode="010303" fldParent="0103" fldName="产品管理" fldDesc="" fldTarget=""
+             fldIcon="/static/ligerUI/icons/32X32/product.gif"
+             fldLink="/merchant/group/init" fldType="1" fldPosition="2"/>
+    <tblNode fldCode="010304" fldParent="0103" fldName="合同管理" fldDesc="" fldTarget=""
+             fldIcon="/static/ligerUI/icons/32X32/billing.gif"
+             fldLink="/merchant/group/init" fldType="1" fldPosition="3"/>
+    <tblNode fldCode="010305" fldParent="0103" fldName="绩效管理" fldDesc="" fldTarget=""
+             fldIcon="/static/ligerUI/icons/32X32/report.gif"
+             fldLink="/merchant/group/init" fldType="1" fldPosition="4"/>
 
     <tblRole fldId="1" fldRoleName="sysadmin"/>
 
