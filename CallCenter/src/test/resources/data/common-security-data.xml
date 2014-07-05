@@ -166,9 +166,14 @@
     <tblNode fldCode="0103" fldParent="01" fldName="客户管理" fldDesc="" fldTarget="#"
              fldIcon="/static/ligerUI/icons/silkicons/application.png" fldLink="" fldType="1"
              fldPosition="3"/>
+             
     <tblNode fldCode="010301" fldParent="0103" fldName="客户管理" fldDesc="" fldTarget=""
              fldIcon="/static/ligerUI/icons/32X32/customers.gif"
-             fldLink="/merchant/group/init" fldType="1" fldPosition="0"/>
+             fldLink="/customer/customer/init" fldType="1" fldPosition="0"/>
+    <tblNode fldCode="01030101" fldParent="010301" fldName="新增" fldDesc="" fldTarget="add"
+             fldIcon="/static/ligerUI/icons/silkicons/add.png"
+             fldLink="/customer/customer/add" fldType="2" fldPosition="1"/>       
+             
     <tblNode fldCode="010302" fldParent="0103" fldName="客户交接" fldDesc="" fldTarget=""
              fldIcon="/static/ligerUI/icons/32X32/communication.gif"
              fldLink="/merchant/group/init" fldType="1" fldPosition="1"/>

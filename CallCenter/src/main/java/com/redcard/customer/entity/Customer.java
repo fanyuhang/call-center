@@ -10,12 +10,13 @@ import javax.persistence.Table;
  * Customer entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "tblCustomer")
+@Table(name = "TBLCUSTOMER")
 public class Customer implements java.io.Serializable {
 
 	// Fields
 
 	private String fldId;
+	private String fldName;
 	private Integer fldSource;
 	private Integer fldGender;
 	private String fldIdentityNo;
@@ -82,7 +83,7 @@ public class Customer implements java.io.Serializable {
 
 	// Property accessors
 	@Id
-	@Column(name = "fldId", unique = true, nullable = false)
+	@Column(name = "FLDID", unique = true, nullable = false)
 	public String getFldId() {
 		return this.fldId;
 	}
@@ -91,7 +92,16 @@ public class Customer implements java.io.Serializable {
 		this.fldId = fldId;
 	}
 
-	@Column(name = "fldSource")
+	@Column(name = "FLDNAME")
+	public String getFldName() {
+		return fldName;
+	}
+
+	public void setFldName(String fldName) {
+		this.fldName = fldName;
+	}
+
+	@Column(name = "FLDSOURCE")
 	public Integer getFldSource() {
 		return this.fldSource;
 	}
@@ -100,7 +110,7 @@ public class Customer implements java.io.Serializable {
 		this.fldSource = fldSource;
 	}
 
-	@Column(name = "fldGender")
+	@Column(name = "FLDGENDER")
 	public Integer getFldGender() {
 		return this.fldGender;
 	}
@@ -109,7 +119,7 @@ public class Customer implements java.io.Serializable {
 		this.fldGender = fldGender;
 	}
 
-	@Column(name = "fldIdentityNo")
+	@Column(name = "FLDIDENTITYNO")
 	public String getFldIdentityNo() {
 		return this.fldIdentityNo;
 	}
@@ -118,7 +128,7 @@ public class Customer implements java.io.Serializable {
 		this.fldIdentityNo = fldIdentityNo;
 	}
 
-	@Column(name = "fldPhone")
+	@Column(name = "FLDPHONE")
 	public String getFldPhone() {
 		return this.fldPhone;
 	}
@@ -127,7 +137,7 @@ public class Customer implements java.io.Serializable {
 		this.fldPhone = fldPhone;
 	}
 
-	@Column(name = "fldMobile")
+	@Column(name = "FLDMOBILE")
 	public String getFldMobile() {
 		return this.fldMobile;
 	}
@@ -136,7 +146,7 @@ public class Customer implements java.io.Serializable {
 		this.fldMobile = fldMobile;
 	}
 
-	@Column(name = "fldAddress")
+	@Column(name = "FLDADDRESS")
 	public String getFldAddress() {
 		return this.fldAddress;
 	}
@@ -145,7 +155,7 @@ public class Customer implements java.io.Serializable {
 		this.fldAddress = fldAddress;
 	}
 
-	@Column(name = "fldEmail")
+	@Column(name = "FLDEMAIL")
 	public String getFldEmail() {
 		return this.fldEmail;
 	}
@@ -154,7 +164,7 @@ public class Customer implements java.io.Serializable {
 		this.fldEmail = fldEmail;
 	}
 
-	@Column(name = "fldComment")
+	@Column(name = "FLDCOMMENT")
 	public String getFldComment() {
 		return this.fldComment;
 	}
@@ -163,7 +173,7 @@ public class Customer implements java.io.Serializable {
 		this.fldComment = fldComment;
 	}
 
-	@Column(name = "fldFinancialUserNo")
+	@Column(name = "FLDFINANCIALUSERNO")
 	public String getFldFinancialUserNo() {
 		return this.fldFinancialUserNo;
 	}
@@ -172,7 +182,7 @@ public class Customer implements java.io.Serializable {
 		this.fldFinancialUserNo = fldFinancialUserNo;
 	}
 
-	@Column(name = "fldCustomerUserNo")
+	@Column(name = "FLDCUSTOMERUSERNO")
 	public String getFldCustomerUserNo() {
 		return this.fldCustomerUserNo;
 	}
@@ -181,7 +191,7 @@ public class Customer implements java.io.Serializable {
 		this.fldCustomerUserNo = fldCustomerUserNo;
 	}
 
-	@Column(name = "fldServiceUserNo")
+	@Column(name = "FLDSERVICEUSERNO")
 	public String getFldServiceUserNo() {
 		return this.fldServiceUserNo;
 	}
@@ -190,7 +200,7 @@ public class Customer implements java.io.Serializable {
 		this.fldServiceUserNo = fldServiceUserNo;
 	}
 
-	@Column(name = "fldCardNo")
+	@Column(name = "FLDCARDNO")
 	public String getFldCardNo() {
 		return this.fldCardNo;
 	}
@@ -199,7 +209,7 @@ public class Customer implements java.io.Serializable {
 		this.fldCardNo = fldCardNo;
 	}
 
-	@Column(name = "fldCardLevel")
+	@Column(name = "FLDCARDLEVEL")
 	public Integer getFldCardLevel() {
 		return this.fldCardLevel;
 	}
@@ -208,7 +218,7 @@ public class Customer implements java.io.Serializable {
 		this.fldCardLevel = fldCardLevel;
 	}
 
-	@Column(name = "fldCardTotalMoney")
+	@Column(name = "FLDCARDTOTALMONEY")
 	public Double getFldCardTotalMoney() {
 		return this.fldCardTotalMoney;
 	}
@@ -217,7 +227,7 @@ public class Customer implements java.io.Serializable {
 		this.fldCardTotalMoney = fldCardTotalMoney;
 	}
 
-	@Column(name = "fldCardStatus")
+	@Column(name = "FLDCARDSTATUS")
 	public Integer getFldCardStatus() {
 		return this.fldCardStatus;
 	}
@@ -226,7 +236,7 @@ public class Customer implements java.io.Serializable {
 		this.fldCardStatus = fldCardStatus;
 	}
 
-	@Column(name = "fldStatus")
+	@Column(name = "FLDSTATUS")
 	public Integer getFldStatus() {
 		return this.fldStatus;
 	}
@@ -235,7 +245,7 @@ public class Customer implements java.io.Serializable {
 		this.fldStatus = fldStatus;
 	}
 
-	@Column(name = "fldOperateUserNo")
+	@Column(name = "FLDOPERATEUSERNO")
 	public String getFldOperateUserNo() {
 		return this.fldOperateUserNo;
 	}
@@ -244,7 +254,7 @@ public class Customer implements java.io.Serializable {
 		this.fldOperateUserNo = fldOperateUserNo;
 	}
 
-	@Column(name = "fldOperateDate")
+	@Column(name = "FLDOPERATEDATE")
 	public Timestamp getFldOperateDate() {
 		return this.fldOperateDate;
 	}
@@ -253,7 +263,7 @@ public class Customer implements java.io.Serializable {
 		this.fldOperateDate = fldOperateDate;
 	}
 
-	@Column(name = "fldCreateUserNo")
+	@Column(name = "FLDCREATEUSERNO")
 	public String getFldCreateUserNo() {
 		return this.fldCreateUserNo;
 	}
@@ -262,7 +272,7 @@ public class Customer implements java.io.Serializable {
 		this.fldCreateUserNo = fldCreateUserNo;
 	}
 
-	@Column(name = "fldCreateDate")
+	@Column(name = "FLDCREATEDATE")
 	public Timestamp getFldCreateDate() {
 		return this.fldCreateDate;
 	}
