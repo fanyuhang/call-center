@@ -1,0 +1,792 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+    <tblNode fldCode="0198" fldParent="01" fldName="登陆" fldDesc="" fldTarget=""
+             fldIcon="/static/ligerUI/icons/32X32/sitemap.gif"
+             fldLink="/login" fldType="1" fldPosition="19"/>
+
+    <tblNode fldCode="0199" fldParent="01" fldName="注销" fldDesc="" fldTarget=""
+             fldIcon="/static/ligerUI/icons/32X32/sitemap.gif"
+             fldLink="/logout" fldType="1" fldPosition="19"/>
+
+    <tblNode fldCode="01" fldParent="" fldName="redcard" fldDesc="root" fldTarget="#" fldIcon="" fldLink="" fldType="1"
+             fldPosition="1"/>
+    <tblNode fldCode="0101" fldParent="01" fldName="安全管理" fldDesc="" fldTarget="#"
+             fldIcon="/static/ligerUI/icons/silkicons/application.png" fldLink="" fldType="1"
+             fldPosition="1"/>
+    <tblNode fldCode="010101" fldParent="0101" fldName="用户管理" fldDesc="" fldTarget=""
+             fldIcon="/static/ligerUI/icons/32X32/user.gif"
+             fldLink="/security/user/init" fldType="1" fldPosition="1"/>
+    <tblNode fldCode="01010101" fldParent="010101" fldName="增加" fldDesc="" fldTarget="add"
+             fldIcon="/static/ligerUI/icons/silkicons/add.png"
+             fldLink="/security/user/save" fldType="2" fldPosition="1"/>
+    <tblNode fldCode="01010102" fldParent="010101" fldName="修改" fldDesc="" fldTarget="modify"
+             fldIcon="/static/ligerUI/icons/miniicons/page_edit.gif"
+             fldLink="/security/user/update" fldType="2" fldPosition="2"/>
+    <tblNode fldCode="01010103" fldParent="010101" fldName="删除" fldDesc="" fldTarget="delete"
+             fldIcon="/static/ligerUI/icons/miniicons/page_delete.gif"
+             fldLink="/security/user/delete" fldType="2" fldPosition="3"/>
+    <tblNode fldCode="01010104" fldParent="010101" fldName="查看" fldDesc="" fldTarget="view"
+             fldIcon="/static/ligerUI/icons/silkicons/application_view_detail.png"
+             fldLink="" fldType="2" fldPosition="4"/>
+    <tblNode fldCode="01010105" fldParent="010101" fldName="重置密码" fldDesc="" fldTarget="reset"
+             fldIcon="/static/ligerUI/icons/silkicons/application_key.png"
+             fldLink="/security/user/resetPassword" fldType="2" fldPosition="5"/>
+    <tblNode fldCode="01010106" fldParent="010101" fldName="Key激活" fldDesc="" fldTarget="active"
+             fldIcon="/static/ligerUI/icons/silkicons/key.png"
+             fldLink="/security/user/activeCert" fldType="2" fldPosition="6"/>
+    <tblNode fldCode="01010107" fldParent="010101" fldName="解锁" fldDesc="" fldTarget="unlock"
+             fldIcon="/static/ligerUI/icons/miniicons/icon_key.gif"
+             fldLink="/security/user/activeCert" fldType="2" fldPosition="7"/>
+    <tblNode fldCode="01010108" fldParent="010101" fldName="签退" fldDesc="" fldTarget="signoff"
+             fldIcon="/static/ligerUI/icons/32X32/logout.gif"
+             fldLink="/security/user/signoff" fldType="2" fldPosition="8"/>
+    <tblNode fldCode="01010109" fldParent="010101" fldName="注销" fldDesc="" fldTarget="cancel"
+             fldIcon="/static/ligerUI/icons/32X32/sign_out.gif"
+             fldLink="/security/user/signoff" fldType="2" fldPosition="9"/>
+
+    <tblNode fldCode="010102" fldParent="0101" fldName="部门管理" fldDesc="" fldTarget=""
+             fldIcon="/static/ligerUI/icons/32X32/customers.gif"
+             fldLink="/security/dept/init" fldType="1" fldPosition="2"/>
+    <tblNode fldCode="01010201" fldParent="010102" fldName="增加" fldDesc="" fldTarget="add"
+             fldIcon="/static/ligerUI/icons/silkicons/add.png"
+             fldLink="/security/dept/save" fldType="2" fldPosition="1"/>
+    <tblNode fldCode="01010202" fldParent="010102" fldName="修改" fldDesc="" fldTarget="modify"
+             fldIcon="/static/ligerUI/icons/miniicons/page_edit.gif"
+             fldLink="/security/dept/update" fldType="2" fldPosition="2"/>
+    <tblNode fldCode="01010203" fldParent="010102" fldName="删除" fldDesc="" fldTarget="delete"
+             fldIcon="/static/ligerUI/icons/miniicons/page_delete.gif"
+             fldLink="/security/dept/delete" fldType="2" fldPosition="3"/>
+
+    <tblNode fldCode="010103" fldParent="0101" fldName="模块管理" fldDesc="" fldTarget=""
+             fldIcon="/static/ligerUI/icons/32X32/sitemap.gif"
+             fldLink="/security/node/init" fldType="1" fldPosition="3"/>
+    <tblNode fldCode="01010301" fldParent="010103" fldName="增加" fldDesc="" fldTarget="add"
+             fldIcon="/static/ligerUI/icons/silkicons/add.png"
+             fldLink="" fldType="2" fldPosition="1"/>
+    <tblNode fldCode="01010302" fldParent="010103" fldName="修改" fldDesc="" fldTarget="modify"
+             fldIcon="/static/ligerUI/icons/miniicons/page_edit.gif"
+             fldLink="" fldType="2" fldPosition="2"/>
+    <tblNode fldCode="01010303" fldParent="010103" fldName="保存" fldDesc="" fldTarget="save"
+             fldIcon="/static/ligerUI/icons/silkicons/page_save.png"
+             fldLink="" fldType="2" fldPosition="3"/>
+    <tblNode fldCode="01010304" fldParent="010103" fldName="取消" fldDesc="" fldTarget="cancel"
+             fldIcon="/static/ligerUI/icons/silkicons/cancel.png"
+             fldLink="/security/node/" fldType="2" fldPosition="4"/>
+    <tblNode fldCode="01010305" fldParent="010103" fldName="删除" fldDesc="" fldTarget="delete"
+             fldIcon="/static/ligerUI/icons/miniicons/page_delete.gif"
+             fldLink="/security/node/delete" fldType="2" fldPosition="5"/>
+    <tblNode fldCode="01010306" fldParent="010103" fldName="操作按钮" fldDesc="" fldTarget="button"
+             fldIcon="/static/ligerUI/icons/32X32/document_library.gif"
+             fldLink="" fldType="2" fldPosition="6"/>
+
+    <tblNode fldCode="010104" fldParent="0101" fldName="角色管理" fldDesc="" fldTarget=""
+             fldIcon="/static/ligerUI/icons/32X32/role.gif"
+             fldLink="/security/role/init" fldType="1" fldPosition="4"/>
+    <tblNode fldCode="01010401" fldParent="010104" fldName="增加" fldDesc="" fldTarget="add"
+             fldIcon="/static/ligerUI/icons/silkicons/add.png"
+             fldLink="/security/role/save" fldType="2" fldPosition="1"/>
+    <tblNode fldCode="01010402" fldParent="010104" fldName="修改" fldDesc="" fldTarget="modify"
+             fldIcon="/static/ligerUI/icons/miniicons/page_edit.gif"
+             fldLink="/security/role/update" fldType="2" fldPosition="2"/>
+    <tblNode fldCode="01010403" fldParent="010104" fldName="删除" fldDesc="" fldTarget="delete"
+             fldIcon="/static/ligerUI/icons/miniicons/page_delete.gif"
+             fldLink="/security/role/delete" fldType="2" fldPosition="3"/>
+
+    <tblNode fldCode="010105" fldParent="0101" fldName="功能权限管理" fldDesc="" fldTarget=""
+             fldIcon="/static/ligerUI/icons/32X32/config.gif"
+             fldLink="/security/privilege/init" fldType="1" fldPosition="5"/>
+    <tblNode fldCode="01010501" fldParent="010105" fldName="保存" fldDesc="" fldTarget="save"
+             fldIcon="/static/ligerUI/icons/silkicons/page_save.png"
+             fldLink="/security/privilege/saveRolePrivilege" fldType="2" fldPosition="1"/>
+
+    <tblNode fldCode="010106" fldParent="0101" fldName="数据权限管理" fldDesc="" fldTarget=""
+             fldIcon="/static/ligerUI/icons/32X32/setup.gif"
+             fldLink="/security/dataPrivilege/init" fldType="1" fldPosition="6"/>
+    <tblNode fldCode="01010601" fldParent="010106" fldName="增加" fldDesc="" fldTarget="add"
+             fldIcon="/static/ligerUI/icons/silkicons/add.png"
+             fldLink="/security/dataPrivilege/add" fldType="2" fldPosition="1"/>
+    <tblNode fldCode="01010602" fldParent="010106" fldName="修改" fldDesc="" fldTarget="modify"
+             fldIcon="/static/ligerUI/icons/miniicons/page_edit.gif"
+             fldLink="/security/dataPrivilege/update" fldType="2" fldPosition="2"/>
+    <tblNode fldCode="01010603" fldParent="010106" fldName="删除" fldDesc="" fldTarget="delete"
+             fldIcon="/static/ligerUI/icons/miniicons/page_delete.gif"
+             fldLink="/security/dataPrivilege/delete" fldType="2" fldPosition="3"/>
+
+    <tblNode fldCode="010107" fldParent="0101" fldName="证书管理" fldDesc="" fldTarget=""
+             fldIcon="/static/ligerUI/icons/32X32/config.gif"
+             fldLink="/security/cert/init" fldType="1" fldPosition="7"/>
+    <tblNode fldCode="01010701" fldParent="010107" fldName="删除" fldDesc="" fldTarget="delete"
+             fldIcon="/static/ligerUI/icons/miniicons/page_delete.gif"
+             fldLink="/security/cert/delete" fldType="2" fldPosition="1"/>
+
+    <tblNode fldCode="0102" fldParent="01" fldName="系统设置" fldDesc="" fldTarget="#"
+             fldIcon="/static/ligerUI/icons/silkicons/application.png" fldLink="" fldType="1"
+             fldPosition="2"/>
+
+    <tblNode fldCode="010204" fldParent="0102" fldName="数据字典管理" fldDesc="" fldTarget=""
+             fldIcon="/static/ligerUI/icons/32X32/document_library.gif"
+             fldLink="/system/dictionary/init" fldType="1" fldPosition="5"/>
+    <tblNode fldCode="01020401" fldParent="010204" fldName="增加" fldDesc="" fldTarget="add"
+             fldIcon="/static/ligerUI/icons/silkicons/add.png"
+             fldLink="/system/dictionary/save" fldType="2" fldPosition="1"/>
+    <tblNode fldCode="01020402" fldParent="010204" fldName="修改" fldDesc="" fldTarget="modify"
+             fldIcon="/static/ligerUI/icons/miniicons/page_edit.gif"
+             fldLink="/system/dictionary/update" fldType="2" fldPosition="2"/>
+    <tblNode fldCode="01020403" fldParent="010204" fldName="删除" fldDesc="" fldTarget="delete"
+             fldIcon="/static/ligerUI/icons/miniicons/page_delete.gif"
+             fldLink="/system/dictionary/delete" fldType="2" fldPosition="3"/>
+
+    <tblNode fldCode="010205" fldParent="0102" fldName="系统参数管理" fldDesc="" fldTarget=""
+             fldIcon="/static/ligerUI/icons/32X32/attibutes.gif"
+             fldLink="/system/parameter/init" fldType="1" fldPosition="6"/>
+    <tblNode fldCode="01020501" fldParent="010205" fldName="修改" fldDesc="" fldTarget="modify"
+             fldIcon="/static/ligerUI/icons/miniicons/page_edit.gif"
+             fldLink="/system/parameter/update" fldType="2" fldPosition="2"/>
+
+    <tblNode fldCode="010206" fldParent="0102" fldName="定时任务管理" fldDesc="" fldTarget=""
+             fldIcon="/static/ligerUI/icons/32X32/product_169.gif"
+             fldLink="/system/sysJob/init" fldType="1" fldPosition="7"/>
+    <tblNode fldCode="01020601" fldParent="010206" fldName="增加" fldDesc="" fldTarget="add"
+             fldIcon="/static/ligerUI/icons/silkicons/add.png"
+             fldLink="/system/sysJob/save" fldType="2" fldPosition="1"/>
+    <tblNode fldCode="01020602" fldParent="010206" fldName="修改" fldDesc="" fldTarget="modify"
+             fldIcon="/static/ligerUI/icons/miniicons/page_edit.gif"
+             fldLink="/system/sysJob/update" fldType="2" fldPosition="2"/>
+    <tblNode fldCode="01020604" fldParent="010206" fldName="删除" fldDesc="" fldTarget="delete"
+             fldIcon="/static/ligerUI/icons/miniicons/page_delete.gif"
+             fldLink="/system/sysJob/delete" fldType="2" fldPosition="3"/>
+    <tblNode fldCode="01020605" fldParent="010206" fldName="查看" fldDesc="" fldTarget="view"
+             fldIcon="/static/ligerUI/icons/silkicons/application_view_detail.png"
+             fldLink="" fldType="2" fldPosition="4"/>
+
+    <tblNode fldCode="010208" fldParent="0102" fldName="系统日志" fldDesc="" fldTarget=""
+             fldIcon="/static/ligerUI/icons/32X32/search.gif"
+             fldLink="/system/sysLog/init" fldType="1" fldPosition="8"/>
+   
+    <tblNode fldCode="0103" fldParent="01" fldName="客户管理" fldDesc="" fldTarget="#"
+             fldIcon="/static/ligerUI/icons/silkicons/application.png" fldLink="" fldType="1"
+             fldPosition="3"/>
+             
+    <tblNode fldCode="010301" fldParent="0103" fldName="客户管理" fldDesc="" fldTarget=""
+             fldIcon="/static/ligerUI/icons/32X32/customers.gif"
+             fldLink="/customer/customer/init" fldType="1" fldPosition="0"/>
+    <tblNode fldCode="01030101" fldParent="010301" fldName="新增" fldDesc="" fldTarget="add"
+             fldIcon="/static/ligerUI/icons/silkicons/add.png"
+             fldLink="/customer/customer/add" fldType="2" fldPosition="1"/>       
+             
+    <tblNode fldCode="010302" fldParent="0103" fldName="客户交接" fldDesc="" fldTarget=""
+             fldIcon="/static/ligerUI/icons/32X32/communication.gif"
+             fldLink="/merchant/group/init" fldType="1" fldPosition="1"/>
+    <tblNode fldCode="010303" fldParent="0103" fldName="产品管理" fldDesc="" fldTarget=""
+             fldIcon="/static/ligerUI/icons/32X32/product.gif"
+             fldLink="/merchant/group/init" fldType="1" fldPosition="2"/>
+    <tblNode fldCode="010304" fldParent="0103" fldName="合同管理" fldDesc="" fldTarget=""
+             fldIcon="/static/ligerUI/icons/32X32/billing.gif"
+             fldLink="/merchant/group/init" fldType="1" fldPosition="3"/>
+    <tblNode fldCode="010305" fldParent="0103" fldName="绩效管理" fldDesc="" fldTarget=""
+             fldIcon="/static/ligerUI/icons/32X32/report.gif"
+             fldLink="/merchant/group/init" fldType="1" fldPosition="4"/>
+
+    <tblRole fldId="1" fldRoleName="sysadmin"/>
+
+    <tblUser fldId="1" fldLoginName="admin" fldUserName="admin" fldPassword="5ba7e14af239a0e31a7741c727339198"
+             fldLoginStatus="0" fldUserStatus="0"
+             fldLoginErrCount="0" fldModifyPwdCount="0" fldGender="0" fldEmail="" fldPhone="" fldMobile="" fldFax=""
+             fldAddress="" fldPosition="1"/>
+
+    <tblUserRoleLink fldId="1" fldUserId="1" fldRoleId="1"/>
+
+    <tblDept fldDeptCode="001" fldParent="" fldDeptName="瑞得支付" fldPosition="1"/>
+    <!-- <tblUserDeptLink fldId="1" fldUserId="1" fldDeptCode="001"/> -->
+
+    <tblDictionary fldId="1" fldType="1" fldName="男" fldValue="1" fldStatus="0" fldComment="性别--男"/>
+    <tblDictionary fldId="2" fldType="1" fldName="女" fldValue="0" fldStatus="0" fldComment="性别--女"/>
+    <tblDictionary fldId="3" fldType="2" fldName="正常" fldValue="0" fldStatus="0" fldComment="用户状态--正常"/>
+    <tblDictionary fldId="4" fldType="2" fldName="注销" fldValue="1" fldStatus="0" fldComment="用户状态--注销"/>
+    <tblDictionary fldId="183" fldType="2" fldName="锁定" fldValue="2" fldStatus="0" fldComment="用户状态--锁定"/>
+    <tblDictionary fldId="5" fldType="3" fldName="在线" fldValue="1" fldStatus="0" fldComment="登录状态--在线"/>
+    <tblDictionary fldId="6" fldType="3" fldName="离线" fldValue="0" fldStatus="0" fldComment="登录状态--离线"/>
+    <tblDictionary fldId="7" fldType="4" fldName="瑞得制卡" fldValue="0" fldStatus="0" fldComment="瑞得制卡"/>
+    <tblDictionary fldId="10" fldType="5" fldName="卡内扣除" fldValue="0" fldStatus="0" fldComment="手续费收取方式，卡内扣除"/>
+    <tblDictionary fldId="11" fldType="5" fldName="现金收取" fldValue="1" fldStatus="0" fldComment="手续费收取方式，收取现金"/>
+    <tblDictionary fldId="12" fldType="6" fldName="日" fldValue="1" fldStatus="0" fldComment="卡有效期单位，天"/>
+    <tblDictionary fldId="13" fldType="6" fldName="月" fldValue="2" fldStatus="0" fldComment="卡有效期单位，月"/>
+    <tblDictionary fldId="14" fldType="6" fldName="年" fldValue="3" fldStatus="0" fldComment="卡有效期单位，年"/>
+    <tblDictionary fldId="15" fldType="7" fldName="居民身份证或临时身份证" fldValue="11" fldStatus="0"
+                   fldComment="证件类型，居民身份证或临时身份证"/>
+    <tblDictionary fldId="16" fldType="7" fldName="军人或武警身份证件" fldValue="12" fldStatus="0" fldComment="证件类型，军人或武警身份证件 "/>
+    <tblDictionary fldId="17" fldType="8" fldName="制卡" fldValue="0" fldStatus="0" fldComment="卡状态，制卡"/>
+    <tblDictionary fldId="18" fldType="8" fldName="入库" fldValue="1" fldStatus="0" fldComment="卡状态，入库"/>
+    <tblDictionary fldId="19" fldType="8" fldName="领卡" fldValue="2" fldStatus="0" fldComment="卡状态，领卡"/>
+    <tblDictionary fldId="20" fldType="8" fldName="激活" fldValue="3" fldStatus="0" fldComment="卡状态，激活"/>
+    <tblDictionary fldId="73" fldType="8" fldName="挂失" fldValue="4" fldStatus="0" fldComment="卡状态，挂失"/>
+    <tblDictionary fldId="273" fldType="8" fldName="销户" fldValue="5" fldStatus="0" fldComment="卡状态，销户"/>
+
+    <tblDictionary fldId="21" fldType="9" fldName="激活" fldValue="1" fldStatus="0" fldComment="卡户状态，激活"/>
+    <tblDictionary fldId="22" fldType="9" fldName="冻结" fldValue="2" fldStatus="0" fldComment="卡户状态，冻结"/>
+    <tblDictionary fldId="23" fldType="9" fldName="锁定" fldValue="3" fldStatus="0" fldComment="卡户状态，锁定"/>
+    <tblDictionary fldId="184" fldType="9" fldName="过期转出" fldValue="4" fldStatus="0" fldComment="卡户状态，过期转出"/>
+    <tblDictionary fldId="272" fldType="9" fldName="销户" fldValue="5" fldStatus="0" fldComment="卡户状态，销户"/>
+
+    <tblDictionary fldId="24" fldType="10" fldName="冻结" fldValue="0" fldStatus="0" fldComment="冻结操作，冻结"/>
+    <tblDictionary fldId="25" fldType="10" fldName="解冻" fldValue="1" fldStatus="0" fldComment="冻结操作，解冻"/>
+    <tblDictionary fldId="26" fldType="11" fldName="锁定" fldValue="0" fldStatus="0" fldComment="锁定操作，锁定"/>
+    <tblDictionary fldId="27" fldType="11" fldName="解锁" fldValue="1" fldStatus="0" fldComment="锁定操作，解锁"/>
+
+    <tblDictionary fldId="28" fldType="12" fldName="礼品" fldValue="1" fldStatus="0" fldComment="采购用途，礼品"/>
+    <tblDictionary fldId="29" fldType="12" fldName="薪资福利" fldValue="2" fldStatus="0" fldComment="采购用途，薪资福利"/>
+    <tblDictionary fldId="30" fldType="12" fldName="其它" fldValue="3" fldStatus="0" fldComment="采购用途，其它"/>
+    <tblDictionary fldId="31" fldType="12" fldName="办公用品" fldValue="4" fldStatus="0" fldComment="采购用途，办公服务器"/>
+    <tblDictionary fldId="32" fldType="12" fldName="劳防" fldValue="5" fldStatus="0" fldComment="采购用途，劳防"/>
+
+    <tblDictionary fldId="33" fldType="13" fldName="现金" fldValue="1" fldStatus="0" fldComment="付款方式，现金"/>
+    <tblDictionary fldId="34" fldType="13" fldName="支票" fldValue="2" fldStatus="0" fldComment="付款方式，支票"/>
+    <tblDictionary fldId="35" fldType="13" fldName="本票" fldValue="3" fldStatus="0" fldComment="付款方式，本票"/>
+    <tblDictionary fldId="36" fldType="13" fldName="刷卡" fldValue="4" fldStatus="0" fldComment="付款方式，刷卡"/>
+    <tblDictionary fldId="37" fldType="13" fldName="换卡" fldValue="5" fldStatus="0" fldComment="付款方式，换卡"/>
+    <tblDictionary fldId="38" fldType="13" fldName="同城转账" fldValue="6" fldStatus="0" fldComment="付款方式，同城转账"/>
+    <tblDictionary fldId="39" fldType="13" fldName="应收账款" fldValue="7" fldStatus="0" fldComment="付款方式，应收账款"/>
+
+    <tblDictionary fldId="40" fldType="14" fldName="上午" fldValue="0" fldStatus="0" fldComment="送货时间，上午"/>
+    <tblDictionary fldId="41" fldType="14" fldName="下午" fldValue="1" fldStatus="0" fldComment="送货时间，下午"/>
+
+    <tblDictionary fldId="42" fldType="15" fldName="记名" fldValue="1" fldStatus="0" fldComment="卡类型是否记名，记名"/>
+    <tblDictionary fldId="43" fldType="15" fldName="非记名" fldValue="0" fldStatus="0" fldComment="卡类型是否记名，非记名"/>
+
+    <tblDictionary fldId="44" fldType="16" fldName="实时" fldValue="0" fldStatus="0" fldComment="交易来源，队列"/>
+    <tblDictionary fldId="45" fldType="16" fldName="队列" fldValue="1" fldStatus="0" fldComment="交易来源，队列"/>
+
+    <tblDictionary fldId="46" fldType="17" fldName="有效" fldValue="0" fldStatus="0" fldComment="集团商户状态，有效"/>
+    <tblDictionary fldId="47" fldType="17" fldName="无效" fldValue="9" fldStatus="0" fldComment="集团商户状态，无效"/>
+    
+    <tblDictionary fldId="358" fldType="93" fldName="启用" fldValue="0" fldStatus="0" fldComment="代理转发主机状态，启用"/>
+    <tblDictionary fldId="359" fldType="93" fldName="停用" fldValue="1" fldStatus="0" fldComment="代理转发主机状态，停用"/>
+    <tblDictionary fldId="360" fldType="93" fldName="无效" fldValue="9" fldStatus="0" fldComment="代理转发主机状态，无效"/>
+    
+    <tblDictionary fldId="352" fldType="91" fldName="启用" fldValue="0" fldStatus="0" fldComment="商户状态，启用"/>
+    <tblDictionary fldId="353" fldType="91" fldName="停用" fldValue="1" fldStatus="0" fldComment="商户状态，停用"/>
+    <tblDictionary fldId="354" fldType="91" fldName="无效" fldValue="9" fldStatus="0" fldComment="商户状态，无效"/>
+    
+    <tblDictionary fldId="361" fldType="94" fldName="已结算" fldValue="0" fldStatus="0" fldComment="结算状态，已结算"/>
+    <tblDictionary fldId="362" fldType="94" fldName="未结算" fldValue="1" fldStatus="0" fldComment="结算状态，未结算"/>
+    
+    <tblDictionary fldId="363" fldType="95" fldName="成功" fldValue="0" fldStatus="0" fldComment="交易状态，成功"/>
+    <tblDictionary fldId="364" fldType="95" fldName="失败" fldValue="1" fldStatus="0" fldComment="交易状态，失败"/>
+    
+    <tblDictionary fldId="350" fldType="90" fldName="有效" fldValue="0" fldStatus="0" fldComment="品牌状态，有效"/>
+    <tblDictionary fldId="351" fldType="90" fldName="无效" fldValue="9" fldStatus="0" fldComment="品牌状态，无效"/>
+    
+    <tblDictionary fldId="355" fldType="92" fldName="是" fldValue="0" fldStatus="0" fldComment="是否启用MAC，是"/>
+    <tblDictionary fldId="356" fldType="92" fldName="否" fldValue="1" fldStatus="0" fldComment="是否启用MAC，否"/>
+
+    <tblDictionary fldId="48" fldType="18" fldName="预付款" fldValue="0" fldStatus="0" fldComment="结算方式，预付款"/>
+    <tblDictionary fldId="49" fldType="18" fldName="后付款" fldValue="1" fldStatus="0" fldComment="结算方式，后付款"/>
+
+    <tblDictionary fldId="50" fldType="19" fldName="年" fldValue="0" fldStatus="0" fldComment="结算周期，年"/>
+    <tblDictionary fldId="51" fldType="19" fldName="自然月" fldValue="1" fldStatus="0" fldComment="结算周期，自然月"/>
+    <tblDictionary fldId="52" fldType="19" fldName="自定义月" fldValue="2" fldStatus="0" fldComment="结算周期，自定义月"/>
+    <tblDictionary fldId="53" fldType="19" fldName="周" fldValue="3" fldStatus="0" fldComment="结算周期，周"/>
+    <tblDictionary fldId="54" fldType="19" fldName="日" fldValue="4" fldStatus="0" fldComment="结算周期，日"/>
+
+    <tblDictionary fldId="55" fldType="20" fldName="待确认" fldValue="0" fldStatus="0" fldComment="结算单状态，待确认"/>
+    <tblDictionary fldId="56" fldType="20" fldName="已确认" fldValue="1" fldStatus="0" fldComment="结算单状态，已确认"/>
+
+    <tblDictionary fldId="57" fldType="21" fldName="期初余额" fldValue="0" fldStatus="0" fldComment="结算项，期初余额"/>
+    <tblDictionary fldId="58" fldType="21" fldName="本期消费" fldValue="1" fldStatus="0" fldComment="结算项，本期消费"/>
+    <tblDictionary fldId="59" fldType="21" fldName="本期付款" fldValue="2" fldStatus="0" fldComment="结算项，本期付款"/>
+    <tblDictionary fldId="60" fldType="21" fldName="本期手续费" fldValue="3" fldStatus="0" fldComment="结算项，本期手续费"/>
+    <tblDictionary fldId="215" fldType="21" fldName="本期退货" fldValue="4" fldStatus="0" fldComment="结算项，本期退货"/>
+    <tblDictionary fldId="216" fldType="21" fldName="期末余额" fldValue="5" fldStatus="0" fldComment="结算项，期末余额"/>
+
+    <tblDictionary fldId="61" fldType="22" fldName="白名单" fldValue="0" fldStatus="0" fldComment="POS使用方式，白名单"/>
+    <tblDictionary fldId="62" fldType="22" fldName="黑名单" fldValue="1" fldStatus="0" fldComment="POS使用方式，黑名单"/>
+
+    <tblDictionary fldId="63" fldType="23" fldName="启用" fldValue="0" fldStatus="0" fldComment="终端状态，启用"/>
+    <tblDictionary fldId="64" fldType="23" fldName="停用" fldValue="1" fldStatus="0" fldComment="终端状态，停用"/>
+    <tblDictionary fldId="65" fldType="23" fldName="无效" fldValue="9" fldStatus="0" fldComment="终端状态，无效"/>
+
+    <tblDictionary fldId="66" fldType="24" fldName="网上" fldValue="0" fldStatus="0" fldComment="终端类型，网上"/>
+    <tblDictionary fldId="67" fldType="24" fldName="网下" fldValue="1" fldStatus="0" fldComment="终端类型，网下"/>
+    <tblDictionary fldId="68" fldType="24" fldName="网上网下双用" fldValue="2" fldStatus="0" fldComment="终端类型，网上网下双用"/>
+
+    <tblDictionary fldId="69" fldType="25" fldName="商户支出" fldValue="0" fldStatus="0" fldComment="手续费收取方式，商户支出"/>
+    <tblDictionary fldId="70" fldType="25" fldName="客户支出" fldValue="1" fldStatus="0" fldComment="手续费收取方式，客户支出"/>
+
+    <tblDictionary fldId="71" fldType="26" fldName="每笔百分比" fldValue="0" fldStatus="0" fldComment="扣率方式，每笔百分比"/>
+    <tblDictionary fldId="72" fldType="26" fldName="每笔固定金额" fldValue="1" fldStatus="0" fldComment="扣率方式，每笔固定金额"/>
+    <!-- 已增加 至 73 卡状态，挂失 -->
+    <tblDictionary fldId="74" fldType="27" fldName="农、林、牧、渔业" fldValue="2A" fldStatus="0"
+                   fldComment="行业类型，农、林、牧、渔业"/>
+    <tblDictionary fldId="75" fldType="27" fldName="采矿业" fldValue="2B" fldStatus="0" fldComment="行业类型，采矿业"/>
+    <tblDictionary fldId="76" fldType="27" fldName="制造业" fldValue="2C" fldStatus="0"
+                   fldComment="行业类型，制造业"/>
+    <tblDictionary fldId="77" fldType="27" fldName="电力、燃气及水的生产和供应业" fldValue="2D" fldStatus="0"
+                   fldComment="行业类型，电力、燃气及水的生产和供应业"/>
+    <tblDictionary fldId="78" fldType="27" fldName="建筑业" fldValue="2E" fldStatus="0"
+                   fldComment="行业类型，建筑业"/>
+    <tblDictionary fldId="79" fldType="27" fldName="交通运输、仓储和邮政业" fldValue="2F" fldStatus="0"
+                   fldComment="行业类型，交通运输、仓储和邮政业"/>
+    <tblDictionary fldId="80" fldType="27" fldName="信息传输、计算机服务和软件业" fldValue="2G" fldStatus="0"
+                   fldComment="行业类型，信息传输、计算机服务和软件业"/>
+    <tblDictionary fldId="81" fldType="27" fldName="批发和零售业" fldValue="2H" fldStatus="0" fldComment="行业类型，批发和零售业"/>
+    <tblDictionary fldId="82" fldType="27" fldName="住宿和餐饮业" fldValue="2I" fldStatus="0" fldComment="行业类型，住宿和餐饮业"/>
+    <tblDictionary fldId="83" fldType="27" fldName="金融业" fldValue="2J" fldStatus="0" fldComment="行业类型，金融业"/>
+    <tblDictionary fldId="84" fldType="27" fldName="房地产业" fldValue="2K" fldStatus="0"
+                   fldComment="行业类型，房地产业"/>
+
+    <tblDictionary fldId="85" fldType="28" fldName="启用" fldValue="0" fldStatus="0" fldComment="费率，启用"/>
+    <tblDictionary fldId="86" fldType="28" fldName="禁用" fldValue="1" fldStatus="0" fldComment="费率，禁用"/>
+
+    <tblDictionary fldId="87" fldType="29" fldName="未审核" fldValue="{auditStatus:0, assignStatus:0, validStatus:1}"
+                   fldStatus="0" fldComment="未审核"/>
+    <tblDictionary fldId="88" fldType="29" fldName="审核未通过" fldValue="{auditStatus:1, assignStatus:0, validStatus:1}"
+                   fldStatus="0" fldComment="审核未通过"/>
+    <tblDictionary fldId="89" fldType="29" fldName="审核通过" fldValue="{auditStatus:2, assignStatus:0, validStatus:1}"
+                   fldStatus="0" fldComment="审核通过"/>
+    <tblDictionary fldId="90" fldType="29" fldName="部分配卡"
+                   fldValue="{assignStatus:1, sendStatus:0, activeStatus:0, validStatus:1}" fldStatus="0"
+                   fldComment="部分配卡"/>
+    <tblDictionary fldId="91" fldType="29" fldName="已配卡"
+                   fldValue="{assignStatus:2, sendStatus:0, activeStatus:0, validStatus:1}" fldStatus="0"
+                   fldComment="已配卡"/>
+    <tblDictionary fldId="92" fldType="29" fldName="已送货"
+                   fldValue="{sendStatus:1, receiveStatus:0, activeStatus:0, validStatus:1}" fldStatus="0"
+                   fldComment="已送货"/>
+    <tblDictionary fldId="93" fldType="29" fldName="已收货" fldValue="{receiveStatus:1, activeStatus:0, validStatus:1}"
+                   fldStatus="0" fldComment="已收货"/>
+    <tblDictionary fldId="94" fldType="29" fldName="已激活" fldValue="{assignStatus:2, activeStatus:1, validStatus:1}"
+                   fldStatus="0" fldComment="已激活"/>
+    <tblDictionary fldId="242" fldType="29" fldName="无效" fldValue="{validStatus:0}" fldStatus="0" fldComment="无效"/>
+
+    <tblDictionary fldId="95" fldType="30" fldName="未收款" fldValue="0" fldStatus="0" fldComment="未收款"/>
+    <tblDictionary fldId="96" fldType="30" fldName="部分收款" fldValue="1" fldStatus="0" fldComment="部分收款"/>
+    <tblDictionary fldId="97" fldType="30" fldName="已收款" fldValue="2" fldStatus="0" fldComment="已收款"/>
+    <tblDictionary fldId="231" fldType="30" fldName="已复核" fldValue="3" fldStatus="0" fldComment="已复核"/>
+    <tblDictionary fldId="239" fldType="30" fldName="未通过复核" fldValue="4" fldStatus="0" fldComment="未通过复核"/>
+
+    <tblDictionary fldId="98" fldType="31" fldName="未开票" fldValue="0" fldStatus="0" fldComment="未开票"/>
+    <tblDictionary fldId="99" fldType="31" fldName="部分开票" fldValue="1" fldStatus="0" fldComment="部分开票"/>
+    <tblDictionary fldId="100" fldType="31" fldName="已开票" fldValue="2" fldStatus="0" fldComment="已开票"/>
+    <tblDictionary fldId="335" fldType="31" fldName="发票重打" fldValue="3" fldStatus="0" fldComment="发票重打"/>
+
+    <tblDictionary fldId="101" fldType="32" fldName="未审核" fldValue="[0-1][0-1][0-1]00[0-1]" fldStatus="0"
+                   fldComment="未审核"/>
+    <tblDictionary fldId="102" fldType="32" fldName="审核未通过" fldValue="[0-1][0-1][0-1]01[0-1]" fldStatus="0"
+                   fldComment="审核未通过"/>
+    <tblDictionary fldId="103" fldType="32" fldName="审核通过" fldValue="[0-1][0-1][0-1]02[0-1]" fldStatus="0"
+                   fldComment="审核通过"/>
+    <tblDictionary fldId="104" fldType="32" fldName="已配卡" fldValue="0[0-1]01[0-2][0-1]" fldStatus="0"
+                   fldComment="已配卡"/>
+    <tblDictionary fldId="105" fldType="32" fldName="已送货" fldValue="001[0-1][0-2][0-1]" fldStatus="0"
+                   fldComment="已送货"/>
+    <tblDictionary fldId="106" fldType="32" fldName="已收货" fldValue="01[0-1][0-1][0-2][0-1]" fldStatus="0"
+                   fldComment="已收货"/>
+    <tblDictionary fldId="110" fldType="32" fldName="已激活" fldValue="1[0-1][0-1]1[0-2][0-1]" fldStatus="0"
+                   fldComment="已激活"/>
+    <tblDictionary fldId="111" fldType="32" fldName="无效" fldValue="[0-1][0-1][0-1][0-1][0-2]0" fldStatus="0"
+                   fldComment="无效"/>
+
+
+    <tblDictionary fldId="112" fldType="27" fldName="租赁和商务服务业" fldValue="2L" fldStatus="0"
+                   fldComment="行业类型，租赁和商务服务业"/>
+    <tblDictionary fldId="113" fldType="27" fldName="科学研究、技术服务和地质勘查业" fldValue="2M" fldStatus="0"
+                   fldComment="行业类型，科学研究、技术服务和地质勘查业"/>
+    <tblDictionary fldId="114" fldType="27" fldName="水利、环境和公共设施管理业" fldValue="2N" fldStatus="0"
+                   fldComment="行业类型，水利、环境和公共设施管理业"/>
+    <tblDictionary fldId="115" fldType="27" fldName="居民服务和其他服务业" fldValue="2O" fldStatus="0"
+                   fldComment="行业类型，居民服务和其他服务业"/>
+    <tblDictionary fldId="116" fldType="27" fldName="教育" fldValue="2P" fldStatus="0"
+                   fldComment="行业类型，教育"/>
+    <tblDictionary fldId="117" fldType="27" fldName="卫生、社会保障和社会福利业" fldValue="2Q" fldStatus="0"
+                   fldComment="行业类型，卫生、社会保障和社会福利业"/>
+    <tblDictionary fldId="118" fldType="27" fldName="文化、体育和娱乐业" fldValue="2R" fldStatus="0"
+                   fldComment="行业类型，文化、体育和娱乐业"/>
+    <tblDictionary fldId="119" fldType="27" fldName="公共管理和社会组织" fldValue="2S" fldStatus="0"
+                   fldComment="行业类型，公共管理和社会组织"/>
+    <tblDictionary fldId="120" fldType="27" fldName="国际组织" fldValue="2T" fldStatus="0"
+                   fldComment="行业类型，国际组织"/>
+
+    <tblDictionary fldId="121" fldType="7" fldName="港澳居民往来内地身份通行证" fldValue="13" fldStatus="0"
+                   fldComment="证件类型，港澳居民往来内地身份通行证 "/>
+    <tblDictionary fldId="122" fldType="7" fldName="外国公民护照" fldValue="14" fldStatus="0" fldComment="证件类型，外国公民护照 "/>
+    <tblDictionary fldId="123" fldType="7" fldName="其他" fldValue="19" fldStatus="0" fldComment="证件类型，其他 "/>
+
+    <tblDictionary fldId="126" fldType="33" fldName="各类专业,技术人员" fldValue="1A" fldStatus="0" fldComment="职业，各类专业,技术人员"/>
+    <tblDictionary fldId="127" fldType="33" fldName="国家机关,党群组织,企事业单位的负责人" fldValue="1B" fldStatus="0"
+                   fldComment="职业，国家机关,党群组织,企事业单位的负责人"/>
+    <tblDictionary fldId="128" fldType="33" fldName="办事人员和有关人员" fldValue="1C" fldStatus="0" fldComment="职业，办事人员和有关人员"/>
+    <tblDictionary fldId="129" fldType="33" fldName="商业工作人员" fldValue="1D" fldStatus="0" fldComment="职业，商业工作人员"/>
+    <tblDictionary fldId="130" fldType="33" fldName="服务性工作人员" fldValue="1E" fldStatus="0" fldComment="职业，服务性工作人员"/>
+    <tblDictionary fldId="131" fldType="33" fldName="农林牧渔劳动者" fldValue="1F" fldStatus="0" fldComment="职业，农林牧渔劳动者"/>
+    <tblDictionary fldId="132" fldType="33" fldName="生产工作,运输工作和部分体力劳动者" fldValue="1G" fldStatus="0"
+                   fldComment="职业，生产工作,运输工作和部分体力劳动者"/>
+    <tblDictionary fldId="133" fldType="33" fldName="不便分类的其他劳动者" fldValue="1H" fldStatus="0"
+                   fldComment="职业，不便分类的其他劳动者"/>
+
+    <tblDictionary fldId="134" fldType="34" fldName="1级-正常" fldValue="1" fldStatus="0" fldComment="商户风险级别，1级"/>
+    <tblDictionary fldId="135" fldType="34" fldName="2级-监控" fldValue="2" fldStatus="0" fldComment="商户风险级别，2级"/>
+    <tblDictionary fldId="136" fldType="34" fldName="3级-重点监控" fldValue="3" fldStatus="0" fldComment="商户风险级别，3级"/>
+    <tblDictionary fldId="137" fldType="34" fldName="4级-停止交易" fldValue="4" fldStatus="0" fldComment="商户风险级别，4级"/>
+
+    <tblDictionary fldId="139" fldType="35" fldName="1级-未确认客户" fldValue="1" fldStatus="0" fldComment="客户风险级别，1级-未确认客户"/>
+    <tblDictionary fldId="140" fldType="35" fldName="2级-确认客户" fldValue="2" fldStatus="0" fldComment="客户风险级别，2级-确认客户"/>
+    <tblDictionary fldId="141" fldType="35" fldName="3级-高风险客户" fldValue="3" fldStatus="0" fldComment="客户风险级别，3级-高风险客户"/>
+    <tblDictionary fldId="202" fldType="35" fldName="4级-黑名单客户" fldValue="4" fldStatus="0" fldComment="客户风险级别，4级-黑名单客户"/>
+
+    <tblDictionary fldId="142" fldType="36" fldName="未生成" fldValue="0" fldStatus="0" fldComment="可疑交易状态，未生成"/>
+    <tblDictionary fldId="143" fldType="36" fldName="已生成" fldValue="1" fldStatus="0" fldComment="可疑交易状态，已生成"/>
+
+    <tblDictionary fldId="144" fldType="37" fldName="未审核" fldValue="0" fldStatus="0" fldComment="可疑交易审核状态，未审核"/>
+    <tblDictionary fldId="145" fldType="37" fldName="未通过" fldValue="1" fldStatus="0" fldComment="可疑交易审核状态，未通过"/>
+    <tblDictionary fldId="146" fldType="37" fldName="已审核" fldValue="2" fldStatus="0" fldComment="可疑交易审核状态，已审核"/>
+    <tblDictionary fldId="147" fldType="37" fldName="已上报" fldValue="3" fldStatus="0" fldComment="可疑交易审核状态，已审核"/>
+
+    <tblDictionary fldId="148" fldType="38" fldName="向支付账户充值-通过银行账户" fldValue="0000" fldStatus="0"
+                   fldComment="货币资金转移方式，向支付账户充值-通过银行账户"/>
+    <tblDictionary fldId="149" fldType="38" fldName="向支付账户充值-通过仅限线上实名支付账户充值的预付卡" fldValue="0001" fldStatus="0"
+                   fldComment="货币资金转移方式，向支付账户充值-通过仅限线上实名支付账户充值的预付卡"/>
+    <tblDictionary fldId="150" fldType="38" fldName="从支付账户结算提款" fldValue="0300" fldStatus="0"
+                   fldComment="货币资金转移方式，从支付账户结算提款"/>
+    <tblDictionary fldId="151" fldType="38" fldName="预付卡发行业务-现金购买" fldValue="0400" fldStatus="0"
+                   fldComment="货币资金转移方式，预付卡发行业务-现金购买"/>
+    <tblDictionary fldId="152" fldType="38" fldName="预付卡发行业务-银行转账方式购买" fldValue="0401" fldStatus="0"
+                   fldComment="货币资金转移方式，预付卡发行业务-银行转账方式购买"/>
+    <tblDictionary fldId="153" fldType="38" fldName="预付卡充值业务-通过现金充值" fldValue="0500" fldStatus="0"
+                   fldComment="货币资金转移方式，预付卡充值业务-通过现金充值"/>
+    <tblDictionary fldId="154" fldType="38" fldName="预付卡充值业务-通过银行账户充值" fldValue="0501" fldStatus="0"
+                   fldComment="货币资金转移方式，预付卡充值业务-通过银行账户充值"/>
+    <tblDictionary fldId="155" fldType="38" fldName="预付卡受理业务" fldValue="0600" fldStatus="0"
+                   fldComment="货币资金转移方式，预付卡受理业务"/>
+    <tblDictionary fldId="156" fldType="38" fldName="预付卡赎回业务-现金赎回" fldValue="0700" fldStatus="0"
+                   fldComment="货币资金转移方式，预付卡赎回业务-现金赎回"/>
+    <tblDictionary fldId="157" fldType="38" fldName="预付卡赎回业务-银行转账方式赎回" fldValue="0701" fldStatus="0"
+                   fldComment="货币资金转移方式，预付卡赎回业务-银行转账方式赎回"/>
+    <tblDictionary fldId="158" fldType="38" fldName="银行卡收单业务" fldValue="0800" fldStatus="0"
+                   fldComment="货币资金转移方式，银行卡收单业务"/>
+
+    <tblDictionary fldId="159" fldType="39" fldName="收" fldValue="01" fldStatus="0" fldComment="资金收付标志，收"/>
+    <tblDictionary fldId="160" fldType="39" fldName="付" fldValue="02" fldStatus="0" fldComment="资金收付标志，付"/>
+
+    <tblDictionary fldId="161" fldType="40" fldName="报送中国反洗钱监测分析中心" fldValue="01" fldStatus="0"
+                   fldComment="可疑交易（行为）处理情况，报送中国反洗钱监测分析中心"/>
+    <tblDictionary fldId="162" fldType="40" fldName="报送中国反洗钱监测分析中心和人民银行当地分支机构" fldValue="02" fldStatus="0"
+                   fldComment="可疑交易（行为）处理情况，报送中国反洗钱监测分析中心和人民银行当地分支机构"/>
+    <tblDictionary fldId="163" fldType="40" fldName="报送中国反洗钱监测分析中心和当地公安机关" fldValue="03" fldStatus="0"
+                   fldComment="可疑交易（行为）处理情况，报送中国反洗钱监测分析中心和当地公安机关"/>
+    <tblDictionary fldId="164" fldType="40" fldName="报送报送中国反洗钱监测分析中心、人民银行当地分支机构和当地公安机关" fldValue="04" fldStatus="0"
+                   fldComment="可疑交易（行为）处理情况，报送报送中国反洗钱监测分析中心、人民银行当地分支机构和当地公安机关"/>
+
+    <tblDictionary fldId="165" fldType="41" fldName="仅涉嫌洗钱" fldValue="01" fldStatus="0" fldComment="可疑交易（行为）特征，仅涉嫌洗钱"/>
+    <tblDictionary fldId="166" fldType="41" fldName="仅涉嫌恐怖融资" fldValue="02" fldStatus="0"
+                   fldComment="可疑交易（行为）特征，仅涉嫌恐怖融资"/>
+    <tblDictionary fldId="167" fldType="41" fldName="同时涉嫌洗钱和恐怖融资" fldValue="03" fldStatus="0"
+                   fldComment="可疑交易（行为）特征，同时涉嫌洗钱和恐怖融资"/>
+
+    <tblDictionary fldId="168" fldType="42" fldName="未复核" fldValue="0" fldStatus="0" fldComment="发票状态，未复核"/>
+    <tblDictionary fldId="169" fldType="42" fldName="已复核" fldValue="1" fldStatus="0" fldComment="发票状态，已复核"/>
+    <tblDictionary fldId="336" fldType="42" fldName="重打" fldValue="2" fldStatus="0" fldComment="发票状态，重打"/>
+
+    <tblDictionary fldId="170" fldType="43" fldName="启用" fldValue="0" fldStatus="0" fldComment="定时任务状态，启用"/>
+    <tblDictionary fldId="171" fldType="43" fldName="禁用" fldValue="1" fldStatus="0" fldComment="定时任务状态，禁用"/>
+    <tblDictionary fldId="172" fldType="43" fldName="删除" fldValue="2" fldStatus="0" fldComment="定时任务状态，删除"/>
+
+    <tblDictionary fldId="173" fldType="44" fldName="单次" fldValue="0" fldStatus="0" fldComment="定时任务类型，单次"/>
+    <tblDictionary fldId="174" fldType="44" fldName="周期" fldValue="1" fldStatus="0" fldComment="定时任务类型，周期"/>
+	
+	<tblDictionary fldId="357" fldType="45" fldName="签到" fldValue="0800990000" fldStatus="0" fldComment="交易类型 签到"/>
+    <tblDictionary fldId="176" fldType="45" fldName="消费" fldValue="0200000000" fldStatus="0" fldComment="交易类型 消费"/>
+    <tblDictionary fldId="177" fldType="45" fldName="消费撤销" fldValue="0200200000" fldStatus="0" fldComment="交易类型 消费撤销"/>
+    <tblDictionary fldId="178" fldType="45" fldName="余额查询" fldValue="0200310000" fldStatus="0" fldComment="交易类型 余额查询"/>
+    <tblDictionary fldId="179" fldType="45" fldName="冲正通知" fldValue="0400" fldStatus="0" fldComment="交交易类型 冲正通知"/>
+    <tblDictionary fldId="180" fldType="45" fldName="退货" fldValue="0220270000" fldStatus="0" fldComment="交易类型 退货"/>
+    <tblDictionary fldId="181" fldType="45" fldName="预授权" fldValue="0100030000" fldStatus="0" fldComment="交易类型 预授权"/>
+    <tblDictionary fldId="182" fldType="45" fldName="预授权撤销" fldValue="0100200000" fldStatus="0" fldComment="交易类型 预授权撤销"/>
+
+    <tblDictionary fldId="186" fldType="46" fldName="成功" fldValue="0" fldStatus="0" fldComment="报表任务状态，成功"/>
+    <tblDictionary fldId="187" fldType="46" fldName="失败" fldValue="1" fldStatus="0" fldComment="报表任务状态，失败"/>
+
+    <tblDictionary fldId="188" fldType="47" fldName="文本型" fldValue="0" fldStatus="0" fldComment="报表列类型，文本"/>
+    <tblDictionary fldId="189" fldType="47" fldName="整型" fldValue="1" fldStatus="0" fldComment="报表列类型，整型"/>
+    <tblDictionary fldId="190" fldType="47" fldName="浮点型" fldValue="2" fldStatus="0" fldComment="报表列类型，浮点型"/>
+    <tblDictionary fldId="191" fldType="47" fldName="日期型" fldValue="3" fldStatus="0" fldComment="报表列类型，日期型"/>
+    <tblDictionary fldId="192" fldType="47" fldName="货币" fldValue="4" fldStatus="0" fldComment="报表列类型，货币"/>
+    <tblDictionary fldId="193" fldType="47" fldName="百分比" fldValue="5" fldStatus="0" fldComment="报表列类型，百分比"/>
+
+    <tblDictionary fldId="194" fldType="48" fldName="文本型" fldValue="0" fldStatus="0" fldComment="报表参数类型，文本型"/>
+    <tblDictionary fldId="195" fldType="48" fldName="整数型" fldValue="1" fldStatus="0" fldComment="报表参数类型，数字型"/>
+    <tblDictionary fldId="196" fldType="48" fldName="浮点型" fldValue="2" fldStatus="0" fldComment="报表参数类型，浮点型"/>
+    <tblDictionary fldId="197" fldType="48" fldName="日期型" fldValue="3" fldStatus="0" fldComment="报表参数类型，日期型"/>
+
+    <tblDictionary fldId="198" fldType="49" fldName="未执行" fldValue="0" fldStatus="0" fldComment="报表执行状态，未执行"/>
+    <tblDictionary fldId="199" fldType="49" fldName="正在执行" fldValue="1" fldStatus="0" fldComment="报表执行状态，正在执行"/>
+    <tblDictionary fldId="200" fldType="49" fldName="执行成功" fldValue="2" fldStatus="0" fldComment="报表执行状态，执行成功"/>
+    <tblDictionary fldId="201" fldType="49" fldName="执行失败" fldValue="3" fldStatus="0" fldComment="报表执行状态，执行失败"/>
+
+    <tblDictionary fldId="203" fldType="50" fldName="待复核" fldValue="0" fldStatus="0" fldComment="付款审核状态，待复核"/>
+    <tblDictionary fldId="204" fldType="50" fldName="已复核" fldValue="1" fldStatus="0" fldComment="付款审核状态，已复核"/>
+    <tblDictionary fldId="205" fldType="50" fldName="已取消" fldValue="2" fldStatus="0" fldComment="付款审核状态，已取消"/>
+
+    <tblDictionary fldId="207" fldType="51" fldName="00" fldValue="00" fldStatus="0" fldComment="保留区域码00"/>
+    <tblDictionary fldId="208" fldType="51" fldName="02" fldValue="02" fldStatus="0" fldComment="保留区域码02"/>
+    <tblDictionary fldId="209" fldType="51" fldName="05" fldValue="05" fldStatus="0" fldComment="保留区域码05"/>
+    <tblDictionary fldId="210" fldType="51" fldName="10" fldValue="10" fldStatus="0" fldComment="保留区域码10"/>
+
+    <tblDictionary fldId="211" fldType="52" fldName="企业" fldValue="0" fldStatus="0" fldComment="客户类型，企业"/>
+    <tblDictionary fldId="212" fldType="52" fldName="个人" fldValue="1" fldStatus="0" fldComment="客户类型，个人"/>
+
+    <tblDictionary fldId="213" fldType="53" fldName="已收款" fldValue="0" fldStatus="0" fldComment="预收款类型，已收款"/>
+    <tblDictionary fldId="214" fldType="53" fldName="已退款" fldValue="1" fldStatus="0" fldComment="预收款类型，已退款"/>
+
+    <tblDictionary fldId="217" fldType="54" fldName="待确认" fldValue="2" fldStatus="0" fldComment="联系人状态，待确认"/>
+    <tblDictionary fldId="218" fldType="54" fldName="已确认" fldValue="3" fldStatus="0" fldComment="联系人状态，已确认"/>
+
+    <tblDictionary fldId="219" fldType="55" fldName="未撤销" fldValue="0" fldStatus="0" fldComment="交易撤销标示，未撤销"/>
+    <tblDictionary fldId="220" fldType="55" fldName="已撤销" fldValue="1" fldStatus="0" fldComment="交易撤销标示，已撤销"/>
+
+    <tblDictionary fldId="221" fldType="56" fldName="未冲正" fldValue="0" fldStatus="0" fldComment="交易撤销标示，未冲正"/>
+    <tblDictionary fldId="222" fldType="56" fldName="已冲正" fldValue="1" fldStatus="0" fldComment="交易撤销标示，已冲正"/>
+
+    <tblDictionary fldId="223" fldType="57" fldName="未退货" fldValue="0" fldStatus="0" fldComment="交易撤销标示，未退货"/>
+    <tblDictionary fldId="224" fldType="57" fldName="已退货" fldValue="1" fldStatus="0" fldComment="交易撤销标示，已退货"/>
+
+    <tblDictionary fldId="225" fldType="58" fldName="未送货" fldValue="0" fldStatus="0" fldComment="订单状态，未送货"/>
+    <tblDictionary fldId="226" fldType="58" fldName="已送货" fldValue="1" fldStatus="0" fldComment="订单状态，已送货"/>
+
+    <tblDictionary fldId="227" fldType="59" fldName="未收货" fldValue="0" fldStatus="0" fldComment="订单状态，未收货"/>
+    <tblDictionary fldId="228" fldType="59" fldName="已收货" fldValue="1" fldStatus="0" fldComment="订单状态，已收货"/>
+
+    <tblDictionary fldId="229" fldType="60" fldName="未复核" fldValue="0" fldStatus="0" fldComment="收款复核状态，未复核"/>
+    <tblDictionary fldId="230" fldType="60" fldName="已复核" fldValue="1" fldStatus="0" fldComment="收款复核状态，已复核"/>
+
+    <tblDictionary fldId="232" fldType="61" fldName="未复核" fldValue="0" fldStatus="0" fldComment="收款复核状态，未复核"/>
+    <tblDictionary fldId="233" fldType="61" fldName="未通过" fldValue="1" fldStatus="0" fldComment="收款复核状态，未通过"/>
+    <tblDictionary fldId="234" fldType="61" fldName="已复核" fldValue="2" fldStatus="0" fldComment="收款复核状态，已复核"/>
+
+    <tblDictionary fldId="235" fldType="62" fldName="订单收款" fldValue="0" fldStatus="0" fldComment="收款来源，订单"/>
+    <tblDictionary fldId="236" fldType="62" fldName="预收款" fldValue="1" fldStatus="0" fldComment="收款来源，预收款"/>
+    <tblDictionary fldId="328" fldType="62" fldName="赠卡补款" fldValue="2" fldStatus="0" fldComment="收款来源，赠卡补款"/>
+    <tblDictionary fldId="329" fldType="62" fldName="利息收入" fldValue="3" fldStatus="0" fldComment="收款来源，利息收入"/>
+    <tblDictionary fldId="330" fldType="62" fldName="利息支出" fldValue="4" fldStatus="0" fldComment="收款来源，利息支出"/>
+    <tblDictionary fldId="331" fldType="62" fldName="银行手续费支出" fldValue="5" fldStatus="0" fldComment="收款来源，银行手续费支出"/>
+    <tblDictionary fldId="332" fldType="62" fldName="手续费补款" fldValue="6" fldStatus="0" fldComment="收款来源，手续费补款"/>
+    <tblDictionary fldId="333" fldType="62" fldName="押金支出" fldValue="7" fldStatus="0" fldComment="收款来源，押金支出"/>
+    <tblDictionary fldId="334" fldType="62" fldName="押金收入" fldValue="8" fldStatus="0" fldComment="收款来源，押金收入"/>
+
+    <tblDictionary fldId="237" fldType="63" fldName="待确认" fldValue="0" fldStatus="0" fldComment="退货状态，未确认"/>
+    <tblDictionary fldId="238" fldType="63" fldName="已确认" fldValue="1" fldStatus="0" fldComment="退货状态，已确认"/>
+
+    <tblDictionary fldId="240" fldType="64" fldName="否" fldValue="0" fldStatus="0" fldComment="是否已入商户手册状态，否"/>
+    <tblDictionary fldId="241" fldType="64" fldName="是" fldValue="1" fldStatus="0" fldComment="是否已入商户手册状态，是"/>
+
+    <tblDictionary fldId="244" fldType="65" fldName="正常交易" fldValue="0" fldStatus="0" fldComment="交易类型，正常交易"/>
+    <tblDictionary fldId="245" fldType="65" fldName="异常交易" fldValue="1" fldStatus="0" fldComment="交易类型，异常交易"/>
+
+    <tblDictionary fldId="246" fldType="66" fldName="待确认" fldValue="0" fldStatus="0" fldComment="异常交易状态，待确认"/>
+    <tblDictionary fldId="247" fldType="66" fldName="已确认" fldValue="1" fldStatus="0" fldComment="异常交易状态，已确认"/>
+
+    <tblDictionary fldId="249" fldType="67" fldName="大型百货" fldValue="1" fldStatus="0" fldComment="品牌类型，大型百货"/>
+    <tblDictionary fldId="250" fldType="67" fldName="超市卖场" fldValue="2" fldStatus="0" fldComment="品牌类型，超市卖场"/>
+    <tblDictionary fldId="251" fldType="67" fldName="餐饮连锁" fldValue="3" fldStatus="0" fldComment="品牌类型，餐饮连锁"/>
+    <tblDictionary fldId="252" fldType="67" fldName="休闲娱乐" fldValue="4" fldStatus="0" fldComment="品牌类型，休闲娱乐"/>
+    <tblDictionary fldId="253" fldType="67" fldName="宾馆酒店" fldValue="5" fldStatus="0" fldComment="品牌类型，宾馆酒店"/>
+    <tblDictionary fldId="254" fldType="67" fldName="家电家居" fldValue="6" fldStatus="0" fldComment="品牌类型，家电家居"/>
+    <tblDictionary fldId="255" fldType="67" fldName="医疗药房" fldValue="7" fldStatus="0" fldComment="品牌类型，医疗药房"/>
+    <tblDictionary fldId="256" fldType="67" fldName="教育培训" fldValue="8" fldStatus="0" fldComment="品牌类型，教育培训"/>
+    <tblDictionary fldId="257" fldType="67" fldName="食品西点" fldValue="9" fldStatus="0" fldComment="品牌类型，食品西点"/>
+    <tblDictionary fldId="258" fldType="67" fldName="生活服务" fldValue="10" fldStatus="0" fldComment="品牌类型，生活服务"/>
+    <tblDictionary fldId="259" fldType="67" fldName="各类专卖" fldValue="11" fldStatus="0" fldComment="品牌类型，各类专卖"/>
+    <tblDictionary fldId="260" fldType="67" fldName="连锁书店" fldValue="12" fldStatus="0" fldComment="品牌类型，连锁书店"/>
+    <tblDictionary fldId="261" fldType="67" fldName="汽车美容" fldValue="13" fldStatus="0" fldComment="品牌类型，汽车美容"/>
+    <tblDictionary fldId="262" fldType="67" fldName="票务旅游" fldValue="14" fldStatus="0" fldComment="品牌类型，票务旅游"/>
+
+    <tblDictionary fldId="263" fldType="68" fldName="待确认" fldValue="0" fldStatus="0" fldComment="卡挂失状态，待确认"/>
+    <tblDictionary fldId="264" fldType="68" fldName="已确认" fldValue="1" fldStatus="0" fldComment="卡挂失状态，已确认"/>
+    <tblDictionary fldId="265" fldType="68" fldName="已撤销" fldValue="2" fldStatus="0" fldComment="卡挂失状态，已撤销"/>
+
+    <tblDictionary fldId="266" fldType="69" fldName="制卡" fldValue="0" fldStatus="0" fldComment="PSAM卡状态，制卡"/>
+    <tblDictionary fldId="267" fldType="69" fldName="入库" fldValue="1" fldStatus="0" fldComment="PSAM卡状态，入库"/>
+    <tblDictionary fldId="268" fldType="69" fldName="领卡" fldValue="2" fldStatus="0" fldComment="PSAM卡状态，领卡"/>
+    <tblDictionary fldId="269" fldType="69" fldName="销户" fldValue="3" fldStatus="0" fldComment="PSAM卡状态，销户"/>
+
+    <tblDictionary fldId="270" fldType="70" fldName="支付" fldValue="0" fldStatus="0" fldComment="押金状态，支付"/>
+    <tblDictionary fldId="271" fldType="70" fldName="退回" fldValue="1" fldStatus="0" fldComment="押金状态，退回"/>
+
+    <tblDictionary fldId="276" fldType="71" fldName="未付款" fldValue="0" fldStatus="0" fldComment="商户结算，未付款"/>
+    <tblDictionary fldId="277" fldType="71" fldName="部分付款" fldValue="1" fldStatus="0" fldComment="商户结算，部分付款"/>
+    <tblDictionary fldId="278" fldType="71" fldName="已付款" fldValue="2" fldStatus="0" fldComment="商户结算，已付款"/>
+    <tblDictionary fldId="279" fldType="71" fldName="已确认" fldValue="3" fldStatus="0" fldComment="商户结算，已确认"/>
+
+    <tblDictionary fldId="280" fldType="72" fldName="客服" fldValue="0" fldStatus="0" fldComment="客户交接类型，客服"/>
+    <tblDictionary fldId="281" fldType="72" fldName="销售" fldValue="1" fldStatus="0" fldComment="客户交接类型，销售"/>
+
+    <tblDictionary fldId="282" fldType="73" fldName="是" fldValue="0" fldStatus="0" fldComment="是否需要密码，是"/>
+    <tblDictionary fldId="283" fldType="73" fldName="否" fldValue="1" fldStatus="0" fldComment="是否需要密码，否"/>
+
+    <tblDictionary fldId="284" fldType="74" fldName="手工输入" fldValue="1" fldStatus="0" fldComment="交易卡类型，手工输入"/>
+    <tblDictionary fldId="285" fldType="74" fldName="磁条卡" fldValue="2" fldStatus="0" fldComment="交易卡类型，磁条卡"/>
+    <tblDictionary fldId="286" fldType="74" fldName="CPU卡" fldValue="7" fldStatus="0" fldComment="交易卡类型，CPU卡"/>
+
+    <tblDictionary fldId="287" fldType="75" fldName="普通" fldValue="0" fldStatus="0" fldComment="订单类型，普通"/>
+    <tblDictionary fldId="288" fldType="75" fldName="售卡" fldValue="1" fldStatus="0" fldComment="订单类型，售卡"/>
+    <tblDictionary fldId="289" fldType="75" fldName="充值" fldValue="2" fldStatus="0" fldComment="订单类型，充值"/>
+
+    <tblDictionary fldId="290" fldType="76" fldName="有效" fldValue="0" fldStatus="0" fldComment="商品状态，有效"/>
+    <tblDictionary fldId="291" fldType="76" fldName="无效" fldValue="1" fldStatus="0" fldComment="商品状态，无效"/>
+
+    <tblDictionary fldId="292" fldType="77" fldName="日" fldValue="0" fldStatus="0" fldComment="汇总方式，日"/>
+    <tblDictionary fldId="293" fldType="77" fldName="月" fldValue="1" fldStatus="0" fldComment="汇总方式，月"/>
+
+    <tblDictionary fldId="294" fldType="78" fldName="订单日期" fldValue="fldOrderDate" fldStatus="0" fldComment="查询方式，订单日期"/>
+    <tblDictionary fldId="295" fldType="78" fldName="收款日期" fldValue="fldReceiveMoneyDate" fldStatus="0" fldComment="查询方式，收款日期"/>
+
+    <tblDictionary fldId="296" fldType="79" fldName="礼品" fldValue="0" fldStatus="0" fldComment="开票内容，礼品"/>
+    <tblDictionary fldId="297" fldType="79" fldName="办公用品" fldValue="1" fldStatus="0" fldComment="开票内容，办公用品"/>
+    <tblDictionary fldId="298" fldType="79" fldName="其他" fldValue="99" fldStatus="0" fldComment="开票内容，其他"/>
+
+    <tblDictionary fldId="325" fldType="80" fldName="未到账" fldValue="0" fldStatus="0" fldComment="到账状态，未到账"/>
+    <tblDictionary fldId="326" fldType="80" fldName="部分到账" fldValue="1" fldStatus="0" fldComment="到账状态，部分到账"/>
+    <tblDictionary fldId="327" fldType="80" fldName="已到账" fldValue="2" fldStatus="0" fldComment="到账状态，已到账"/>
+
+    <tblDictionary fldId="337" fldType="81" fldName="商户结算" fldValue="0" fldStatus="0" fldComment="商户结算类型，商户结算"/>
+    <tblDictionary fldId="338" fldType="81" fldName="集团结算" fldValue="1" fldStatus="0" fldComment="商户结算类型，集团结算"/>
+
+    <tblDictionary fldId="339" fldType="82" fldName="一级" fldValue="1" fldStatus="0" fldComment="结算级别，一级结算"/>
+    <tblDictionary fldId="340" fldType="82" fldName="二级" fldValue="2" fldStatus="0" fldComment="结算级别，二级结算"/>
+
+    <tblDictionary fldId="341" fldType="83" fldName="待结算" fldValue="0" fldStatus="0" fldComment="结算状态，待结算"/>
+    <tblDictionary fldId="342" fldType="83" fldName="已结算" fldValue="1" fldStatus="0" fldComment="结算状态，已结算"/>
+
+    <tblDictionary fldId="343" fldType="84" fldName="待确认" fldValue="0" fldStatus="0" fldComment="结算单状态，待确认"/>
+    <tblDictionary fldId="345" fldType="84" fldName="已确认" fldValue="1" fldStatus="0" fldComment="结算单状态，已确认"/>
+
+    <tblDictionary fldId="346" fldType="85" fldName="消费" fldValue="10" fldStatus="0" fldComment="交易类型 消费"/>
+    <tblDictionary fldId="347" fldType="85" fldName="消费撤销" fldValue="11" fldStatus="0" fldComment="交易类型 消费撤销"/>
+    <tblDictionary fldId="348" fldType="85" fldName="退货" fldValue="20" fldStatus="0" fldComment="交易类型 退货"/>
+    <tblDictionary fldId="349" fldType="85" fldName="冲正" fldValue="30" fldStatus="0" fldComment="交易类型 冲正"/>
+    <tblDictionary fldId="434" fldType="85" fldName="预授权" fldValue="40" fldStatus="0" fldComment="交易类型 预授权"/>
+    <tblDictionary fldId="435" fldType="85" fldName="预授权撤销" fldValue="41" fldStatus="0" fldComment="交易类型 预授权撤销"/>
+    <tblDictionary fldId="436" fldType="85" fldName="预授权完成" fldValue="50" fldStatus="0" fldComment="交易类型 预授权完成"/>
+    <tblDictionary fldId="437" fldType="85" fldName="预授权完成撤销" fldValue="51" fldStatus="0" fldComment="交易类型 预授权完成撤销"/>
+    <tblDictionary fldId="454" fldType="85" fldName="签到" fldValue="90" fldStatus="0" fldComment="交易类型 签到"/>
+    <tblDictionary fldId="455" fldType="85" fldName="下载主密钥" fldValue="91" fldStatus="0" fldComment="交易类型 下载主密钥"/>
+    <tblDictionary fldId="456" fldType="85" fldName="余额查询" fldValue="92" fldStatus="0" fldComment="交易类型 余额查询"/>
+
+    <tblDictionary fldId="438" fldType="86" fldName="交易成功" fldValue="00" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="439" fldType="86" fldName="请联系发卡行，或核对卡信息后重新输入" fldValue="01" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="440" fldType="86" fldName="请联系快钱公司" fldValue="02" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="441" fldType="86" fldName="无效商户" fldValue="03" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="442" fldType="86" fldName="无效终端" fldValue="04" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="443" fldType="86" fldName="不予承兑，或核对卡信息后重新输入" fldValue="05" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="444" fldType="86" fldName="出错" fldValue="06" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="445" fldType="86" fldName="特定条件下没收卡" fldValue="07" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="446" fldType="86" fldName="请求正在处理中" fldValue="09" fldStatus="0" fldComment="应答码"/>
+
+    <tblDictionary fldId="447" fldType="86" fldName="无效交易，或核对卡信息后重新输入" fldValue="12" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="448" fldType="86" fldName="无效金额，交易金额不在许可的范围内，疑问请联系快钱公司" fldValue="13" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="365" fldType="86" fldName="无效卡号（无此号），或核对卡信息后重新输入" fldValue="14" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="366" fldType="86" fldName="无此发卡方" fldValue="15" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="367" fldType="86" fldName="客户取消" fldValue="17" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="368" fldType="86" fldName="商户保证金对应的可交易额度不足，请联系快钱公司" fldValue="18" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="369" fldType="86" fldName="您的快钱账户余额不足以进行退货，请充值到快钱账户后，再进行退货操作" fldValue="19" fldStatus="0" fldComment="应答码"/>
+
+    <tblDictionary fldId="370" fldType="86" fldName="无效响应" fldValue="20" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="371" fldType="86" fldName="不能采取行动" fldValue="21" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="372" fldType="86" fldName="故障怀疑" fldValue="22" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="373" fldType="86" fldName="不可接受的交易费" fldValue="23" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="374" fldType="86" fldName="找不到原始交易" fldValue="25" fldStatus="0" fldComment="应答码"/>
+
+    <tblDictionary fldId="375" fldType="86" fldName="格式错误" fldValue="30" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="376" fldType="86" fldName="不支持该发卡银行" fldValue="31" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="377" fldType="86" fldName="商户不受理的卡" fldValue="32" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="378" fldType="86" fldName="过期的卡" fldValue="33" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="379" fldType="86" fldName="有作弊嫌疑" fldValue="34" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="380" fldType="86" fldName="请联系快钱公司" fldValue="35" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="381" fldType="86" fldName="受限制的卡" fldValue="36" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="382" fldType="86" fldName="风险卡，请联系快钱公司" fldValue="37" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="383" fldType="86" fldName="超过允许的试输入" fldValue="38" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="384" fldType="86" fldName="无贷记账户" fldValue="39" fldStatus="0" fldComment="应答码"/>
+
+    <tblDictionary fldId="385" fldType="86" fldName="请求的功能尚不支持" fldValue="40" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="386" fldType="86" fldName="挂失卡" fldValue="41" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="387" fldType="86" fldName="无此账户" fldValue="42" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="388" fldType="86" fldName="被窃卡" fldValue="43" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="389" fldType="86" fldName="无此投资账户" fldValue="44" fldStatus="0" fldComment="应答码"/>
+
+    <tblDictionary fldId="390" fldType="86" fldName="资金不足" fldValue="51" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="391" fldType="86" fldName="无此支票账户" fldValue="52" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="392" fldType="86" fldName="无此储蓄卡账户" fldValue="53" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="393" fldType="86" fldName="过期的卡" fldValue="" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="394" fldType="86" fldName="密码错误" fldValue="55" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="395" fldType="86" fldName="无此卡记录" fldValue="56" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="396" fldType="86" fldName="不允许持卡人进行的交易" fldValue="57" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="397" fldType="86" fldName="不允许终端进行的交易" fldValue="58" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="398" fldType="86" fldName="有作弊嫌疑" fldValue="59" fldStatus="0" fldComment="应答码"/>
+
+    <tblDictionary fldId="399" fldType="86" fldName="请联系快钱公司" fldValue="60" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="400" fldType="86" fldName="超出取款转账金额限制" fldValue="61" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="401" fldType="86" fldName="受限制的卡" fldValue="62" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="402" fldType="86" fldName="侵犯安全" fldValue="63" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="403" fldType="86" fldName="原始金额错误" fldValue="64" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="404" fldType="86" fldName="超出取款次数限制" fldValue="65" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="405" fldType="86" fldName="请联系快钱公司" fldValue="66" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="406" fldType="86" fldName="强行受理（要求在自动柜员机上没收此卡）" fldValue="67" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="407" fldType="86" fldName="无法在正常时间内获得交易应答，请稍后重试" fldValue="68" fldStatus="0" fldComment="应答码"/>
+
+    <tblDictionary fldId="408" fldType="86" fldName="允许输入密码次数超限" fldValue="75" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="409" fldType="86" fldName="无效账户" fldValue="76" fldStatus="0" fldComment="应答码"/>
+
+    <tblDictionary fldId="410" fldType="86" fldName="交易拒绝" fldValue="80" fldStatus="0" fldComment="应答码"/>
+
+    <tblDictionary fldId="411" fldType="86" fldName="正在日终处理（系统终止一天的活动，开始第二天的活动，交易在几分钟后可再次发送）" fldValue="90" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="412" fldType="86" fldName="发卡方或交换中心不能操作" fldValue="91" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="413" fldType="86" fldName="网络暂时无法达到，请稍后重试" fldValue="92" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="414" fldType="86" fldName="交易违法、不能完成" fldValue="93" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="415" fldType="86" fldName="重复交易" fldValue="94" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="416" fldType="86" fldName="核对差错" fldValue="95" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="417" fldType="86" fldName="系统异常、失效" fldValue="96" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="418" fldType="86" fldName="ATM/POS 终端号找不到" fldValue="97" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="419" fldType="86" fldName="交换中心收不到发卡方应答" fldValue="98" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="420" fldType="86" fldName="密码格式错" fldValue="99" fldStatus="0" fldComment="应答码"/>
+
+    <tblDictionary fldId="421" fldType="86" fldName="正在处理中" fldValue="C0" fldStatus="0" fldComment="应答码"/>
+
+    <tblDictionary fldId="422" fldType="86" fldName="外部交易跟踪编号（如：商户订单号）发生重复" fldValue="I0" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="423" fldType="86" fldName="请提供正确的持卡人姓名，必须与申请信用卡时的姓名一致" fldValue="I1" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="424" fldType="86" fldName="请提供正确的验证码（CVV2），验证码在卡背面签名栏后的三位数字串" fldValue="I2" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="425" fldType="86" fldName="请提供正确的验证码（CVV2），验证码在卡背面签名栏后的三位数字串" fldValue="I3" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="426" fldType="86" fldName="请提供正确的卡有效期，卡有效期是在卡号下面的4位数字" fldValue="I4" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="427" fldType="86" fldName="超出持卡人设置的交易限额，请持卡人联系发卡银行调高限额" fldValue="I5" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="428" fldType="86" fldName="无效证件类型" fldValue="I6" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="429" fldType="86" fldName="不支持的报价币种" fldValue="I8" fldStatus="0" fldComment="应答码"/>
+    <tblDictionary fldId="430" fldType="86" fldName="银行结帐中，请重试交易" fldValue="I9" fldStatus="0" fldComment="应答码"/>
+
+    <tblDictionary fldId="431" fldType="86" fldName="交易不能受理，请联系快钱" fldValue="A4" fldStatus="0" fldComment="应答码"/>
+
+    <tblDictionary fldId="432" fldType="86" fldName="中信银行内部系统错误" fldValue="AA" fldStatus="0" fldComment="应答码"/>
+
+    <tblDictionary fldId="450" fldType="86" fldName="交易不能受理，请联系快钱" fldValue="L9" fldStatus="0" fldComment="应答码"/>
+
+    <tblDictionary fldId="451" fldType="87" fldName="成功" fldValue="0" fldStatus="0" fldComment="交易结果, 成功"/>
+    <tblDictionary fldId="452" fldType="87" fldName="待确认" fldValue="1" fldStatus="0" fldComment="交易结果, 待确认"/>
+    <tblDictionary fldId="453" fldType="87" fldName="失败" fldValue="9" fldStatus="0" fldComment="交易结果, 失败"/>
+
+    <tblSysParameter fldId="1" fldName="SYS_ADMIN" fldValue="1" fldUnit="" fldStatus="0" fldDisplay="1" fldComment=""/>
+    <tblSysParameter fldId="2" fldName="MAX_ERROR_LOGIN" fldValue="5" fldUnit="" fldStatus="0" fldDisplay="0"
+                     fldComment="最大登陆失败次数"/>
+    <tblSysParameter fldId="3" fldName="NODE_ROOT_NAME" fldValue="主菜单" fldUnit="" fldStatus="0" fldDisplay="1"
+                     fldComment="模块管理中根节点名称"/>
+
+    <tblSysJob fldid="1" fldJobName="日切交易" fldJobGroup="TradeGenerateTask"
+               fldTriggerName="TradeGenerateTask"
+               fldTriggerGroup="TradeGenerateTask" fldCronExpression="0 0 1 * * ?"
+               fldIntervalInSeconds="0" fldRepeatCount="0" fldTriggerType="1"
+               fldJobClass="com.redcard.task.TradeGenerateTask"
+               fldStatus="0" fldExecuteCount="0"/>
+
+    <tblSysJob fldid="2" fldJobName="日结算" fldJobGroup="SettleDayTask"
+               fldTriggerName="SettleDayTask"
+               fldTriggerGroup="SettleDayTask" fldCronExpression="0 30 1 * * ?"
+               fldIntervalInSeconds="0" fldRepeatCount="0" fldTriggerType="1"
+               fldJobClass="com.redcard.task.SettleDayTask"
+               fldStatus="0" fldExecuteCount="0"/>
+</dataset>
