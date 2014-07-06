@@ -67,4 +67,16 @@ public class DateEditor extends PropertyEditorSupport {
             dateFormat = TIMEFORMAT;
         return (value != null ? dateFormat.format(value) : "");
     }
+    
+    public static Date getDate(String dataStr) {
+    	try {
+			return DATEFORMAT.parse(dataStr);
+		} catch (ParseException e) {
+			return null;
+		}
+    }
+    
+    public static String getDateStr(Date date) {
+    	return DATEFORMAT.format(date);
+    }
 }

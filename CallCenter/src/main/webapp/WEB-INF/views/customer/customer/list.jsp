@@ -25,6 +25,8 @@
     </div>
 </div>
 <script type="text/javascript">
+	var statusData =<sys:dictList type = "6"/>;
+	
 	//搜索表单应用ligerui样式
 	$("#formsearch").ligerForm({
 	    labelWidth: 100,
@@ -37,7 +39,15 @@
 	        {display: "固定电话", name: "fldPhone", newline: true, type: "text", cssClass: "field"},
 	        {display: "所属理财经理", name: "fldFinancialUserNo", newline: false, type: "text", cssClass: "field"},
 	        {display: "瑞得卡号", name: "fldCardNo", newline: false, type: "text", cssClass: "field"},
-	        {display: "瑞得卡等级", name: "fldCardLevel", newline: true, type: "text", cssClass: "field", attr: {"op": "equal", "vt": "int"}}
+	        {display: "瑞得卡等级", name: "fldCardLevel", newline: true, type: "text", cssClass: "field", attr: {"op": "equal", "vt": "int"}},
+	        {display: "客户状态", name: "fldStatus", newline: false, type: "select", cssClass: "field",
+	            options: {
+	                valueFieldID: "fldStatus",
+	                valueField: "value",
+	                textField: "text",
+	                data: statusData
+	            }, attr: {"op": "equal", "vt": "int"}
+        	}
 	    ],
 	    toJSON: JSON2.stringify
 	});
@@ -49,15 +59,21 @@
 	    delayLoad: true,
 	    columnWidth: 180,
 	    columns: [
+	    	{display: "ID", name: "fldId", hide:1,width:1},
 	        {display: "商户姓名", name: "fldName"},
 	        {display: "身份证号", name: "fldIdentityNo"},
 	        {display: "手机号", name: "fldMobile"},
 	        {display: "固定电话", name: "fldPhone"},
+	        {display: "客户状态", name: "fldStatus",
+	        	render:function(item) {
+	        		return renderLabel(statusData,item.fldStatus);
+	        	}
+	        },
 	        {display: "所属理财经理", name: "fldFinancialUserNo"},
 	        {display: "瑞得卡号", name: "fldCardNo"},
 	        {display: "瑞得卡等级", name: "fldCardLevel"},
-	        {display: "操作人", name: "operateName"},
-	        {display: "操作时间", name: "operateDate"}
+	        {display: "操作人", name: "fldOperateUserNo"},
+	        {display: "操作时间", name: "fldOperateDate"}
 	    ], dataAction: 'server', pageSize: 20, toolbar: {}, url: '<c:url value="/customer/customer/list"/>', sortName: 'operateDate', sortOrder: 'desc',
 	    width: '98%', height: '98%', toJSON: JSON2.stringify, onReload: f_reload
 	});
@@ -80,7 +96,7 @@
 	                return;
 	            }
 	            var selected = grid.getSelected();
-	            top.f_addTab(null, '查看商户信息', '<c:url value="/merchant/merchant/find"/>' + '?menuNo=${menuNo}&merchantCode=' + selected.code);
+	            top.f_addTab(null, '查看客户信息', '<c:url value="/customer/customer/view"/>' + '?menuNo=${menuNo}&fldId=' + selected.fldId);
 	            break;
 	        case "modify":
 	            if (grid.getSelectedRows().length > 1 || grid.getSelectedRows().length == 0) {
@@ -88,7 +104,7 @@
 	                return;
 	            }
 	            var selected = grid.getSelected();
-	            top.f_addTab(null, '修改商户信息', '<c:url value="/merchant/merchant/edit"/>' + '?menuNo=${menuNo}&merchantCode=' + selected.code);
+	            top.f_addTab(null, '修改客户信息', '<c:url value="/customer/customer/edit"/>' + '?menuNo=${menuNo}&fldId=' + selected.fldId);
 	            break;
 	        case "delete":
 	            if (grid.getSelectedRows().length > 1 || grid.getSelectedRows().length == 0) {
@@ -181,19 +197,18 @@
 	    var selected = grid.getSelected();
 	    if (selected) {
 	        LG.ajax({
-	            url: '<c:url value="/merchant/merchant/delete"/>',
+	            url: '<c:url value="/customer/customer/delete"/>',
 	            loading: '正在删除中...',
-	            data: { merchantCode: selected.code },
+	            data: { fldId: selected.fldId},
 	            success: function () {
-	                LG.showSuccess('删除成功');
+	                LG.showSuccess('删除客户成功');
 	                f_reload();
 	            },
 	            error: function (message) {
 	                LG.showError(message);
 	            }
 	        });
-	    }
-	    else {
+	    } else {
 	        LG.tip('请选择行!');
 	    }
 	}

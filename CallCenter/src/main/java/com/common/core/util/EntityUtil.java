@@ -2,6 +2,7 @@ package com.common.core.util;
 
 import com.common.ContextHolder;
 import com.common.core.annotation.Comment;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
@@ -12,8 +13,10 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.metamodel.SingularAttribute;
+
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.util.UUID;
 
 /**
  * User: Allen
@@ -68,5 +71,10 @@ public class EntityUtil {
             logger.error(e.getMessage());
         }
         return null;
+    }
+    
+    public static String getId() {
+    	String uuid = UUID.randomUUID().toString();
+    	return uuid.replaceAll("-", "");
     }
 }

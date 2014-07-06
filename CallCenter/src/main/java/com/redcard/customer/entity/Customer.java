@@ -1,10 +1,17 @@
 package com.redcard.customer.entity;
 
-import java.sql.Timestamp;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
+import com.common.core.util.JsonTimestampSerializer;
+import com.common.security.util.SecurityUtil;
 
 /**
  * Customer entity. @author MyEclipse Persistence Tools
@@ -19,6 +26,8 @@ public class Customer implements java.io.Serializable {
 	private String fldName;
 	private Integer fldSource;
 	private Integer fldGender;
+	private Date fldBirthday;
+	private String fldBirthdayStr;
 	private String fldIdentityNo;
 	private String fldPhone;
 	private String fldMobile;
@@ -33,10 +42,10 @@ public class Customer implements java.io.Serializable {
 	private Double fldCardTotalMoney;
 	private Integer fldCardStatus;
 	private Integer fldStatus;
-	private String fldOperateUserNo;
-	private Timestamp fldOperateDate;
+	private String fldOperateUserNo = SecurityUtil.getCurrentUserLoginName();
+	private Date fldOperateDate;
 	private String fldCreateUserNo;
-	private Timestamp fldCreateDate;
+	private Date fldCreateDate;
 
 	// Constructors
 
@@ -56,8 +65,8 @@ public class Customer implements java.io.Serializable {
 			String fldFinancialUserNo, String fldCustomerUserNo,
 			String fldServiceUserNo, String fldCardNo, Integer fldCardLevel,
 			Double fldCardTotalMoney, Integer fldCardStatus, Integer fldStatus,
-			String fldOperateUserNo, Timestamp fldOperateDate,
-			String fldCreateUserNo, Timestamp fldCreateDate) {
+			String fldOperateUserNo, Date fldOperateDate,
+			String fldCreateUserNo, Date fldCreateDate) {
 		this.fldId = fldId;
 		this.fldSource = fldSource;
 		this.fldGender = fldGender;
@@ -117,6 +126,15 @@ public class Customer implements java.io.Serializable {
 
 	public void setFldGender(Integer fldGender) {
 		this.fldGender = fldGender;
+	}
+
+	@Column(name = "FLDBIRTHDAY")
+	public Date getFldBirthday() {
+		return fldBirthday;
+	}
+
+	public void setFldBirthday(Date fldBirthday) {
+		this.fldBirthday = fldBirthday;
 	}
 
 	@Column(name = "FLDIDENTITYNO")
@@ -255,11 +273,12 @@ public class Customer implements java.io.Serializable {
 	}
 
 	@Column(name = "FLDOPERATEDATE")
-	public Timestamp getFldOperateDate() {
+	@JsonSerialize(using = JsonTimestampSerializer.class)
+	public Date getFldOperateDate() {
 		return this.fldOperateDate;
 	}
 
-	public void setFldOperateDate(Timestamp fldOperateDate) {
+	public void setFldOperateDate(Date fldOperateDate) {
 		this.fldOperateDate = fldOperateDate;
 	}
 
@@ -273,12 +292,21 @@ public class Customer implements java.io.Serializable {
 	}
 
 	@Column(name = "FLDCREATEDATE")
-	public Timestamp getFldCreateDate() {
+	@JsonSerialize(using = JsonTimestampSerializer.class)
+	public Date getFldCreateDate() {
 		return this.fldCreateDate;
 	}
 
-	public void setFldCreateDate(Timestamp fldCreateDate) {
+	public void setFldCreateDate(Date fldCreateDate) {
 		this.fldCreateDate = fldCreateDate;
 	}
+	
+	@Transient
+	public String getFldBirthdayStr() {
+		return fldBirthdayStr;
+	}
 
+	public void setFldBirthdayStr(String fldBirthdayStr) {
+		this.fldBirthdayStr = fldBirthdayStr;
+	}
 }

@@ -6,39 +6,7 @@
 <script src='<c:url value="/static/plupload/plupload.browserplus.js" />' type="text/javascript"></script>
 <script src='<c:url value="/static/plupload/i18n/zh.js" />' type="text/javascript"></script>
 <script src='<c:url value="/static/plupload/jquery.ui.plupload/jquery.ui.plupload.js" />' type="text/javascript"></script>
-
-
 <script type="text/javascript">
-    var statusData = <sys:dictList type="17"  nullable="true"/>;
-
-    var clearingWayData = <sys:dictList type="18"  nullable="true"/>;
-
-    var clearingPeriodData = <sys:dictList type="19"  nullable="true"/>;
-
-    var clearingStatus = <sys:dictList type="20"  nullable="true"/>;
-
-    var clearingItem = <sys:dictList type="21"  nullable="true"/>;
-
-    var payWay = <sys:dictList type="13"  nullable="true"/>;
-
-    var posUsedWay = <sys:dictList type="22"  nullable="true"/>;
-
-    var posStatus =<sys:dictList type="23"  nullable="true"/>;
-
-    var posType = <sys:dictList type="24"  nullable="true"/>;
-
-    var receivedFeeWay = <sys:dictList type="25"  nullable="true"/>;
-
-    var feeWay = <sys:dictList type="26"  nullable="true"/>;
-
-    var industryType =<sys:dictList type="27"  nullable="true"/>;
-
-    var posFeeStatus = <sys:dictList type="28" nullable="true"/>;
-
-    var riskLevel = <sys:dictList type="34" nullable="true"/>;
-
-    var brandTypeData = <sys:dictList type="67" nullable="true"/>;
-
     var merchantTemplate = '商户上传模板';
     var compactTemplate = '合同上传模板';
     var brandTemplate = '品牌上传模板';
