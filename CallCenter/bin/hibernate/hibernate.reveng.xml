@@ -2,6 +2,32 @@
 <!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd" >
 
 <hibernate-reverse-engineering>
-  <table-filter match-name="ACCT_.*"/>
-  <table-filter match-name=".*" exclude="true"/>
+
+	<table-filter match-name="ACCT_.*" />
+	<table-filter match-name=".*" exclude="true" />
+	<table name="tblCustomer" schema="dbo" catalog="callcenter"
+		class="com.redcard.customer.entity.Customer">
+		<column name="fldName" exclude="true"></column>
+		<column name="fldBirthday" exclude="true"></column>
+	</table>
+	<table name="tblCustomerContract" schema="dbo" catalog="callcenter"
+		class="com.redcard.customer.entity.CustomerContract">
+	</table>
+	<table name="tblCustomerExchange" schema="dbo" catalog="callcenter"
+		class="com.redcard.customer.entity.CustomerExchange">
+	</table>
+	<table name="tblCustomerExchangeContract" schema="dbo"
+		catalog="callcenter"
+		class="com.redcard.customer.entity.CustomerExchangeContract">
+	</table>
+	<table name="tblCustomerExchangeCustomer" schema="dbo"
+		catalog="callcenter"
+		class="com.redcard.customer.entity.CustomerExchangeCustomer">
+	</table>
+	<table name="tblCustomerProduct" schema="dbo" catalog="callcenter"
+		class="com.redcard.customer.entity.CustomerProduct">
+	</table>
+	<table name="tblCustomerProductDetail" schema="dbo"
+		catalog="callcenter" class="com.redcard.customer.entity.CustomerProductDetail">
+	</table>
 </hibernate-reverse-engineering>
