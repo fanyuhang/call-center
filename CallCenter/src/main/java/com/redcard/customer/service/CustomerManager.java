@@ -24,7 +24,7 @@ public class CustomerManager extends GenericPageHQLQuery<Customer> {
 	@Autowired
 	private CustomerDao customerDao;
 	
-	public Page<Customer> findAllMerchant(GridPageRequest page, String where) {
+	public Page<Customer> findAllCustomer(GridPageRequest page, String where) {
         return (Page<Customer>) super.findAll(where, page);
     }
 	

@@ -38,7 +38,7 @@ public class CustomerController {
     @ResponseBody
     public DataResponse<Customer> list(GridPageRequest pageRequest, String where) {
         pageRequest.setSort("fldOperateDate", "desc");
-        return (new DataResponse<Customer>(customerManager.findAllMerchant(pageRequest, where)));
+        return (new DataResponse<Customer>(customerManager.findAllCustomer(pageRequest, where)));
     }
 	
 	@RequestMapping(value = "add")

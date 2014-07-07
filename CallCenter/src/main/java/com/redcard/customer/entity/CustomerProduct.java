@@ -10,7 +10,7 @@ import javax.persistence.Table;
  * CustomerProduct entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "tblCustomerProduct")
+@Table(name = "TBLCUSTOMERPRODUCT")
 public class CustomerProduct implements java.io.Serializable {
 
 	// Fields
@@ -62,7 +62,7 @@ public class CustomerProduct implements java.io.Serializable {
 
 	// Property accessors
 	@Id
-	@Column(name = "fldId", unique = true, nullable = false)
+	@Column(name = "FLDID", unique = true, nullable = false)
 	public String getFldId() {
 		return this.fldId;
 	}
@@ -71,7 +71,7 @@ public class CustomerProduct implements java.io.Serializable {
 		this.fldId = fldId;
 	}
 
-	@Column(name = "fldFullName")
+	@Column(name = "FLDFULLNAME")
 	public String getFldFullName() {
 		return this.fldFullName;
 	}
@@ -80,7 +80,7 @@ public class CustomerProduct implements java.io.Serializable {
 		this.fldFullName = fldFullName;
 	}
 
-	@Column(name = "fldShortName")
+	@Column(name = "FLDSHORTNAME")
 	public String getFldShortName() {
 		return this.fldShortName;
 	}
@@ -89,7 +89,7 @@ public class CustomerProduct implements java.io.Serializable {
 		this.fldShortName = fldShortName;
 	}
 
-	@Column(name = "fldDescription")
+	@Column(name = "FLDDESCRIPTION")
 	public String getFldDescription() {
 		return this.fldDescription;
 	}
@@ -98,7 +98,7 @@ public class CustomerProduct implements java.io.Serializable {
 		this.fldDescription = fldDescription;
 	}
 
-	@Column(name = "fldEstablishDate")
+	@Column(name = "FLDESTABLISHDATE")
 	public Timestamp getFldEstablishDate() {
 		return this.fldEstablishDate;
 	}
@@ -107,7 +107,7 @@ public class CustomerProduct implements java.io.Serializable {
 		this.fldEstablishDate = fldEstablishDate;
 	}
 
-	@Column(name = "fldValueDate")
+	@Column(name = "FLDVALUEDATE")
 	public Timestamp getFldValueDate() {
 		return this.fldValueDate;
 	}
@@ -116,7 +116,7 @@ public class CustomerProduct implements java.io.Serializable {
 		this.fldValueDate = fldValueDate;
 	}
 
-	@Column(name = "fldComment")
+	@Column(name = "FLDCOMMENT")
 	public String getFldComment() {
 		return this.fldComment;
 	}
@@ -125,7 +125,7 @@ public class CustomerProduct implements java.io.Serializable {
 		this.fldComment = fldComment;
 	}
 
-	@Column(name = "fldStatus")
+	@Column(name = "FLDSTATUS")
 	public Integer getFldStatus() {
 		return this.fldStatus;
 	}
@@ -134,7 +134,7 @@ public class CustomerProduct implements java.io.Serializable {
 		this.fldStatus = fldStatus;
 	}
 
-	@Column(name = "fldOperateUserNo")
+	@Column(name = "FLDOPERATEUSERNO")
 	public String getFldOperateUserNo() {
 		return this.fldOperateUserNo;
 	}
@@ -143,7 +143,7 @@ public class CustomerProduct implements java.io.Serializable {
 		this.fldOperateUserNo = fldOperateUserNo;
 	}
 
-	@Column(name = "fldOperateDate")
+	@Column(name = "FLDOPERATEDATE")
 	public Timestamp getFldOperateDate() {
 		return this.fldOperateDate;
 	}
@@ -152,7 +152,7 @@ public class CustomerProduct implements java.io.Serializable {
 		this.fldOperateDate = fldOperateDate;
 	}
 
-	@Column(name = "fldCreateUserNo")
+	@Column(name = "FLDCREATEUSERNO")
 	public String getFldCreateUserNo() {
 		return this.fldCreateUserNo;
 	}
@@ -161,7 +161,7 @@ public class CustomerProduct implements java.io.Serializable {
 		this.fldCreateUserNo = fldCreateUserNo;
 	}
 
-	@Column(name = "fldCreateDate")
+	@Column(name = "FLDCREATEDATE")
 	public Timestamp getFldCreateDate() {
 		return this.fldCreateDate;
 	}
