@@ -41,26 +41,18 @@
 	    delayLoad: true,
 	    columnWidth: 180,
 	    columns: [
-	        {display: "商户姓名", name: "customer.fldName"},
-	        {display: "身份证号", name: "customer.fldIdentityNo"},
-	        {display: "合同编号", name: "fldId"},
-	        {display: "产品编号", name: "fldId"},
-	        {display: "产品全称", name: "fldId"},
-	        {display: "产品实际天数", name: "fldId"},
-	        {display: "所属理财经理", name: "fldFinancialUserNo"},
-	        {display: "银行卡号", name: "fldBankNo"},
-	        {display: "瑞得卡号", name: "fldCardNo"},
-	        {display: "瑞得卡等级", name: "fldCardLevel"},
-	        {display: "合同状态", name: "fldStatus"},
-	        {display: "签订日期", name: "fldSignDate"},
-	        {display: "是否已到期", name: "fldFinishStatus"},
-	        {display: "打款日期", name: "fldMoneyDate"},
-	        {display: "购买金额", name: "fldPurchaseMoney"},
-	        {display: "预期收益", name: "fldAnnualizedMoney"},
-	        {display: "业绩系数", name: "fldPerformanceRadio"},
-	        {display: "业绩额度", name: "fldPerformanceMoney"},
-	        {display: "操作人", name: "fldOperateUserNo"},
-	        {display: "操作时间", name: "fldOperateDate"}
+	        {display: "产品全称", name: "fldFullName"},
+	        {display: "产品简称", name: "fldShortName"},
+	        {display: "产品状态", name: "fldStatus"},
+	        {display: "成立日期", name: "fldEstablishDate"},
+	        {display: "起息日期", name: "fldValueDate"},
+	        {display: "实际天数", name: "fldClearDays"},
+	        {display: "到期日期", name: "fldDueDate"},
+	        {display: "最低认购金额", name: "fldMinPurchaseMoney"},
+	        {display: "最高认购金额", name: "fldMaxPurchaseMoney"},
+	        {display: "年化收益率", name: "fldAnnualizedRate"},
+	        {display: "年化7天存款率", name: "fldDepositRate"},
+	        {display: "业绩系数", name: "fldPerformanceRadio"}
 	    ], dataAction: 'server', pageSize: 20, toolbar: {}, url: '<c:url value="/customer/product/list"/>', sortName: 'operateDate', sortOrder: 'desc',
 	    width: '98%', height: '98%', toJSON: JSON2.stringify, onReload: f_reload
 	});
@@ -75,7 +67,7 @@
 	function toolbarBtnItemClick(item) {
 	    switch (item.id) {
 	        case "add":
-	            top.f_addTab(null, '新增合同信息', '<c:url value="/customer/contract/add"/>' + '?menuNo=${menuNo}');
+	            top.f_addTab(null, '新增产品信息', '<c:url value="/customer/product/add"/>' + '?menuNo=${menuNo}');
 	            break;
 	        case "view":
 	            if (grid.getSelectedRows().length > 1 || grid.getSelectedRows().length == 0) {

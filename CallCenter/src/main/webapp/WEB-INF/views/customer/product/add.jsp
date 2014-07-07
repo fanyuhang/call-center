@@ -1,8 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="../../include/formHeader.jsp" %>
 <body style="padding-bottom:31px;">
-<form:form id="mainform" name="mainform" method="post" modelAttribute="contract">
-</form:form>
+<form:form id="mainform" name="mainform" method="post" modelAttribute="product"></form:form>
+<div position="bottom" title="产品明细">
+	<div id="dtlDiv"><form:form id="detailform" name="detailform" method="post" modelAttribute="productDetail"></form:form></div>
+</div>
 <script type="text/javascript">
 	var genderData =<sys:dictList type = "1"/>;
 	
@@ -16,23 +18,16 @@
         labelWidth: 100,
         space: 30,
         fields: [
-            {display: "客户姓名",name: "fldCustomerId", newline: true, type: "text", validate: {required: true}, group: "<label style=white-space:nowrap;>基本信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'},
-            {display: "产品", name: "fldProductId", newline: false, type: "text", validate: {required: true}},
-            {display: "合同签订日期", name: "fldSignDateStr", newline: true, type: "date", attr:{readonly: "readonly"}},
-            {display: "打款日期", name: "fldMoneyDateStr", newline: false, type: "date", attr:{readonly: "readonly"}},
-            {display: "购买金额", name: "fldPurchaseMoney", newline: true, type: "text"},
-            {display: "银行卡号", name: "fldBankNo", newline: false, type: "text", validate: { maxlength: 64}},
-            {display: "开户银行", name: "fldBankName", newline: true, type: "text", validate: { maxlength: 64}},
-            {display: "理财经理", name: "fldFinancialUserNo", newline: false, type: "text"},
-            {display: "瑞得卡金额", name: "fldCardMoney", newline: true, type: "text"},
-            {display: "瑞得卡卡号", name: "fldCardNo", newline: false, type: "text", validate: { maxlength: 32}},
-            {display: "瑞德卡等级", name: "fldCardLevel", newline: true, type: "text"},
-            {display: "瑞得卡", name: "fldCardNo", newline: false, type: "text", validate: { maxlength: 32}},
-            {display: "瑞得卡等级", name: "fldCardLevel", newline: true, type: "text"}
+            {display: "产品编号",name: "fldId", newline: true, type: "text", validate: {required: true}, group: "<label style=white-space:nowrap;>基本信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'},
+            {display: "产品全称", name: "fldFullName", newline: false, type: "text", validate: {required: true}},
+            {display: "产品简称", name: "fldShortName", newline: true, type: "date", attr:{readonly: "readonly"}},
+            {display: "成立日期", name: "fldEstablishDate", newline: false, type: "date", attr:{readonly: "readonly"}},
+            {display: "起息日期", name: "fldValueDate", newline: true, type: "text"},
+            {display: "产品描述", name: "fldDescription", newline: false, type: "text", validate: { maxlength: 64}}
         ]
     });
 
-    mainform.attr("action", '<c:url value="/customer/customer/save"/>');
+    mainform.attr("action", '<c:url value="/customer/product/save"/>');
 
     //表单底部按钮
     LG.setFormDefaultBtn(f_cancel, f_check);
@@ -86,6 +81,15 @@
         var win = parent || window;
         win.LG.closeCurrentTab(null);
     }
+    
+    var detailForm = $("#dtlDiv");
+    detailForm.ligerGrid({
+    	checkbox:false,
+    	columns:[
+    		{display: "产品明细编号", name: "fldId"}
+    	], dataAction: 'server', pageSize: 20, url: '<c:url value="/customer/product/list"/>', sortName: 'operateDate', sortOrder: 'desc',
+	    width: '96%', height: '98%', toJSON: JSON2.stringify
+    });
 </script>
 </body>
 </html>
