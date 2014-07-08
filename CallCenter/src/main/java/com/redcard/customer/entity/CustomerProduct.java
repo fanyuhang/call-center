@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.common.security.util.SecurityUtil;
+
 /**
  * CustomerProduct entity. @author MyEclipse Persistence Tools
  */
@@ -24,7 +26,7 @@ public class CustomerProduct implements java.io.Serializable {
 	private Date fldValueDate;
 	private String fldComment;
 	private Integer fldStatus;
-	private String fldOperateUserNo;
+	private String fldOperateUserNo = SecurityUtil.getCurrentUserLoginName();
 	private Date fldOperateDate;
 	private String fldCreateUserNo;
 	private Date fldCreateDate;

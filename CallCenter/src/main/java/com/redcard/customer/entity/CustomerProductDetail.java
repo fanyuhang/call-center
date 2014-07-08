@@ -1,16 +1,19 @@
 package com.redcard.customer.entity;
 
-import java.sql.Timestamp;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.common.security.util.SecurityUtil;
+
 /**
  * CustomerProductDetail entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "tblCustomerProductDetail")
+@Table(name = "TBLCUSTOMERPRODUCTDETAIL")
 public class CustomerProductDetail implements java.io.Serializable {
 
 	// Fields
@@ -18,17 +21,17 @@ public class CustomerProductDetail implements java.io.Serializable {
 	private String fldId;
 	private String fldProductId;
 	private Integer fldClearDays;
-	private Timestamp fldDueDate;
+	private Date fldDueDate;
 	private Double fldMinPurchaseMoney;
 	private Double fldMaxPurchaseMoney;
 	private Double fldAnnualizedRate;
 	private Double fldDepositRate;
 	private Double fldPerformanceRadio;
 	private Double fldCommissionRadio;
-	private String fldOperateUserNo;
-	private Timestamp fldOperateDate;
+	private String fldOperateUserNo = SecurityUtil.getCurrentUserLoginName();
+	private Date fldOperateDate;
 	private String fldCreateUserNo;
-	private Timestamp fldCreateDate;
+	private Date fldCreateDate;
 
 	// Constructors
 
@@ -43,12 +46,12 @@ public class CustomerProductDetail implements java.io.Serializable {
 
 	/** full constructor */
 	public CustomerProductDetail(String fldId, String fldProductId,
-			Integer fldClearDays, Timestamp fldDueDate,
+			Integer fldClearDays, Date fldDueDate,
 			Double fldMinPurchaseMoney, Double fldMaxPurchaseMoney,
 			Double fldAnnualizedRate, Double fldDepositRate,
 			Double fldPerformanceRadio, Double fldCommissionRadio,
-			String fldOperateUserNo, Timestamp fldOperateDate,
-			String fldCreateUserNo, Timestamp fldCreateDate) {
+			String fldOperateUserNo, Date fldOperateDate,
+			String fldCreateUserNo, Date fldCreateDate) {
 		this.fldId = fldId;
 		this.fldProductId = fldProductId;
 		this.fldClearDays = fldClearDays;
@@ -67,7 +70,7 @@ public class CustomerProductDetail implements java.io.Serializable {
 
 	// Property accessors
 	@Id
-	@Column(name = "fldId", unique = true, nullable = false)
+	@Column(name = "FLDID", unique = true, nullable = false)
 	public String getFldId() {
 		return this.fldId;
 	}
@@ -76,7 +79,7 @@ public class CustomerProductDetail implements java.io.Serializable {
 		this.fldId = fldId;
 	}
 
-	@Column(name = "fldProductId")
+	@Column(name = "FLDPRODUCTID")
 	public String getFldProductId() {
 		return this.fldProductId;
 	}
@@ -85,7 +88,7 @@ public class CustomerProductDetail implements java.io.Serializable {
 		this.fldProductId = fldProductId;
 	}
 
-	@Column(name = "fldClearDays")
+	@Column(name = "FLDCLEARDAYS")
 	public Integer getFldClearDays() {
 		return this.fldClearDays;
 	}
@@ -94,16 +97,16 @@ public class CustomerProductDetail implements java.io.Serializable {
 		this.fldClearDays = fldClearDays;
 	}
 
-	@Column(name = "fldDueDate")
-	public Timestamp getFldDueDate() {
+	@Column(name = "FLDDUEDATE")
+	public Date getFldDueDate() {
 		return this.fldDueDate;
 	}
 
-	public void setFldDueDate(Timestamp fldDueDate) {
+	public void setFldDueDate(Date fldDueDate) {
 		this.fldDueDate = fldDueDate;
 	}
 
-	@Column(name = "fldMinPurchaseMoney")
+	@Column(name = "FLDMINPURCHASEMONEY")
 	public Double getFldMinPurchaseMoney() {
 		return this.fldMinPurchaseMoney;
 	}
@@ -112,7 +115,7 @@ public class CustomerProductDetail implements java.io.Serializable {
 		this.fldMinPurchaseMoney = fldMinPurchaseMoney;
 	}
 
-	@Column(name = "fldMaxPurchaseMoney")
+	@Column(name = "FLDMAXPURCHASEMONEY")
 	public Double getFldMaxPurchaseMoney() {
 		return this.fldMaxPurchaseMoney;
 	}
@@ -121,7 +124,7 @@ public class CustomerProductDetail implements java.io.Serializable {
 		this.fldMaxPurchaseMoney = fldMaxPurchaseMoney;
 	}
 
-	@Column(name = "fldAnnualizedRate")
+	@Column(name = "FLDANNUALIZEDRATE")
 	public Double getFldAnnualizedRate() {
 		return this.fldAnnualizedRate;
 	}
@@ -130,7 +133,7 @@ public class CustomerProductDetail implements java.io.Serializable {
 		this.fldAnnualizedRate = fldAnnualizedRate;
 	}
 
-	@Column(name = "fldDepositRate")
+	@Column(name = "FLDDEPOSITRATE")
 	public Double getFldDepositRate() {
 		return this.fldDepositRate;
 	}
@@ -139,7 +142,7 @@ public class CustomerProductDetail implements java.io.Serializable {
 		this.fldDepositRate = fldDepositRate;
 	}
 
-	@Column(name = "fldPerformanceRadio")
+	@Column(name = "FLDPERFORMANCERADIO")
 	public Double getFldPerformanceRadio() {
 		return this.fldPerformanceRadio;
 	}
@@ -148,7 +151,7 @@ public class CustomerProductDetail implements java.io.Serializable {
 		this.fldPerformanceRadio = fldPerformanceRadio;
 	}
 
-	@Column(name = "fldCommissionRadio")
+	@Column(name = "FLDCOMMISSIONRADIO")
 	public Double getFldCommissionRadio() {
 		return this.fldCommissionRadio;
 	}
@@ -157,7 +160,7 @@ public class CustomerProductDetail implements java.io.Serializable {
 		this.fldCommissionRadio = fldCommissionRadio;
 	}
 
-	@Column(name = "fldOperateUserNo")
+	@Column(name = "FLDOPERATEUSERNO")
 	public String getFldOperateUserNo() {
 		return this.fldOperateUserNo;
 	}
@@ -166,16 +169,16 @@ public class CustomerProductDetail implements java.io.Serializable {
 		this.fldOperateUserNo = fldOperateUserNo;
 	}
 
-	@Column(name = "fldOperateDate")
-	public Timestamp getFldOperateDate() {
+	@Column(name = "FLDOPERATEDATE")
+	public Date getFldOperateDate() {
 		return this.fldOperateDate;
 	}
 
-	public void setFldOperateDate(Timestamp fldOperateDate) {
+	public void setFldOperateDate(Date fldOperateDate) {
 		this.fldOperateDate = fldOperateDate;
 	}
 
-	@Column(name = "fldCreateUserNo")
+	@Column(name = "FLDCREATEUSERNO")
 	public String getFldCreateUserNo() {
 		return this.fldCreateUserNo;
 	}
@@ -184,12 +187,12 @@ public class CustomerProductDetail implements java.io.Serializable {
 		this.fldCreateUserNo = fldCreateUserNo;
 	}
 
-	@Column(name = "fldCreateDate")
-	public Timestamp getFldCreateDate() {
+	@Column(name = "FLDCREATEDATE")
+	public Date getFldCreateDate() {
 		return this.fldCreateDate;
 	}
 
-	public void setFldCreateDate(Timestamp fldCreateDate) {
+	public void setFldCreateDate(Date fldCreateDate) {
 		this.fldCreateDate = fldCreateDate;
 	}
 
