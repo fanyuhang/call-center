@@ -151,8 +151,12 @@
             width:700, height:400, top:30,
             buttons:[
                 { text:'确定', onclick:function () {
-                	LG.validate(detailMainform);
-                	//saveProduct();
+                	//LG.validate(detailMainform);
+                	if(!detailMainform.valid()) {
+    					LG.showInvalid();
+    				}
+                    
+                    saveProduct();
                   } 
                 },
                 { text:'取消', onclick:function () {
@@ -164,18 +168,21 @@
 	}
 	
 	function saveProduct() {
-		
-    	
-        /*var data = detailGrid.getData();
-        var fldId = $("#fldId").val();
+        var data = detailGrid.getData();
+        var dtlId = $("#dtlId").val();
         for (var i = 0; i < data.length; i++) {
-            if (fldId == data[i].fldId) {
+            if (dtlId == data[i].fldId) {
                 LG.showError("产品明细编号已存在");
                 return;
             }
         }
-        showLoading();
-        saveProductDetail(data);*/
+        //showLoading();
+        
+        var detailData = {};
+        detailData.fldId = dtlId;
+        detailGrid.addRow(detailData);
+        
+        detailWin.hide();
 	}
 	
 	function showLoading(){
@@ -229,7 +236,14 @@
     var detailGrid = $("#contactgrid").ligerGrid({
     	checkbox:false,
     	columns:[
-    		{display: "产品明细编号", name: "fldId"}
+    		{display: "产品明细编号", name: "fldId"},
+    		{display:"业绩系数", name:"dtlPerformanceRadio"},
+            {display:"实际天数", name:"dtlClearDays"},
+            {display:"到期日期", name:"dtlDueDate"},
+            {display:"最低认购金额", name:"dtlMinPurchaseMoney"},
+            {display:"最高认购金额", name:"dtlMaxPurchaseMoney"},
+            {display:"年化收益率", name:"dtlAnnualizedRate"},
+            {display:"年化7天存款率", name:"dtlDepositRate"}
     	], dataAction: 'server', pageSize: 20, toolbar:toolbarOptions, url: '<c:url value="/customer/product/list"/>', sortName: 'operateDate', sortOrder: 'desc',
 	    height: '98%', toJSON: JSON2.stringify
     });
