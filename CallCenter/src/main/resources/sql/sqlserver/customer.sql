@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      Microsoft SQL Server 2008                    */
-/* Created on:     2014-07-03 19:39:52                          */
+/* Created on:     2014-07-13 10:04:10                          */
 /*==============================================================*/
 
 
@@ -179,9 +179,10 @@ go
 /* Table: tblCustomerProduct                                    */
 /*==============================================================*/
 create table tblCustomerProduct (
-   fldId                nvarchar(40)         not null,
+   fldId                nvarchar(40)         null,
    fldFullName          nvarchar(256)        null,
    fldShortName         nvarchar(256)        null,
+   fldType              int                  null,
    fldDescription       nvarchar(256)        null,
    fldEstablishDate     datetime             null,
    fldValueDate         datetime             null,
@@ -190,8 +191,7 @@ create table tblCustomerProduct (
    fldOperateUserNo     nvarchar(32)         null,
    fldOperateDate       datetime             null,
    fldCreateUserNo      nvarchar(32)         null,
-   fldCreateDate        datetime             null,
-   constraint PK_TBLCUSTOMERPRODUCT primary key (fldId)
+   fldCreateDate        datetime             null
 )
 go
 
@@ -199,7 +199,7 @@ go
 /* Table: tblCustomerProductDetail                              */
 /*==============================================================*/
 create table tblCustomerProductDetail (
-   fldId                nvarchar(40)         not null,
+   fldId                nvarchar(40)         null,
    fldProductId         nvarchar(40)         null,
    fldClearDays         int                  null,
    fldDueDate           datetime             null,
@@ -212,8 +212,7 @@ create table tblCustomerProductDetail (
    fldOperateUserNo     nvarchar(32)         null,
    fldOperateDate       datetime             null,
    fldCreateUserNo      nvarchar(32)         null,
-   fldCreateDate        datetime             null,
-   constraint PK_CUSTOMERPRODUCTDETAIL primary key (fldId)
+   fldCreateDate        datetime             null
 )
 go
 
