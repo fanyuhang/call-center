@@ -668,6 +668,12 @@
                                     <classpath refid="maven.test.classpath"/>
                                 </sql>
 
+                                <sql driver="${jdbc.driver}" url="${jdbc.url}" userid="${jdbc.username}"
+                                     password="${jdbc.password}" src="src/main/resources/sql/${sql.type}/telephone.sql"
+                                     onerror="continue" delimiter="${sql.delimiter}">
+                                    <classpath refid="maven.test.classpath"/>
+                                </sql>
+
                                 <dbunit driver="${jdbc.driver}" url="${jdbc.url}" userid="${jdbc.username}"
                                         password="${jdbc.password}">
                                     <dbconfig>
