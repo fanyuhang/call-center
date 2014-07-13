@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      Microsoft SQL Server 2008                    */
-/* Created on:     2014-07-13 14:58:09                          */
+/* Created on:     2014-07-13 16:00:43                          */
 /*==============================================================*/
 
 
@@ -51,6 +51,13 @@ if exists (select 1
            where  id = object_id('tblTelephoneImportDetail')
             and   type = 'U')
    drop table tblTelephoneImportDetail
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('tblTelephoneRecord')
+            and   type = 'U')
+   drop table tblTelephoneRecord
 go
 
 if exists (select 1
@@ -231,6 +238,64 @@ create table tblTelephoneImportDetail (
 go
 
 /*==============================================================*/
+/* Table: tblTelephoneRecord                                    */
+/*==============================================================*/
+create table tblTelephoneRecord (
+   fldId                numeric              identity,
+   fldTaskId            numeric              null,
+   fldCustomerName      nvarchar(256)        null,
+   fldPhone             nvarchar(40)         null,
+   fldCallDate          datetime             null,
+   fldCallType          int                  null,
+   fldResultType        int                  null,
+   fldComment           nvarchar(1000)       null,
+   fldCallLong          int                  null,
+   fldCallBeginTime     datetime             null,
+   fldCallEndTime       datetime             null,
+   fldRecordFilePath    nvarchar(1000)       null,
+   fldCallButtons       nvarchar(1000)       null,
+   fldChannelNo         nvarchar(256)        null,
+   fldAuditStatus       int                  null,
+   fldAuditComment      nvarchar(1000)       null,
+   fldAuditFraction     int                  null,
+   fldAuditUserNo       nvarchar(40)         null,
+   fldOperateUserNo     nvarchar(32)         null,
+   fldOperateDate       datetime             null,
+   fldCreateUserNo      nvarchar(32)         null,
+   fldCreateDate        datetime             null,
+   constraint PK_TBLTELEPHONERECORD primary key (fldId)
+)
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '0：呼出
+   1：呼入',
+   'user', @CurrentUser, 'table', 'tblTelephoneRecord', 'column', 'fldCallType'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '0：未知
+   1：错号
+   2：空号
+   3：待跟踪
+   4：有意向
+   9：其他',
+   'user', @CurrentUser, 'table', 'tblTelephoneRecord', 'column', 'fldResultType'
+go
+
+declare @CurrentUser sysname
+select @CurrentUser = user_name()
+execute sp_addextendedproperty 'MS_Description', 
+   '0：待审查
+   1：已审查',
+   'user', @CurrentUser, 'table', 'tblTelephoneRecord', 'column', 'fldAuditStatus'
+go
+
+/*==============================================================*/
 /* Table: tblTelephoneTask                                      */
 /*==============================================================*/
 create table tblTelephoneTask (
@@ -242,37 +307,22 @@ create table tblTelephoneTask (
    fldAssignDate        datetime             null,
    fldTaskDate          datetime             null,
    fldCallDate          datetime             null,
-   fldCallType          int                  null,
    fldTaskType          int                  null,
    fldCallStatus        int                  null,
    fldTaskStatus        int                  null,
-   fldPhone             nvarchar(40)         null,
    fldContentType       int                  null,
    fldResultType        int                  null,
    fldComment           nvarchar(1000)       null,
-   fldCallLong          int                  null,
-   fldCallBeginTime     datetime             null,
-   fldCallEndTime       datetime             null,
-   fldRecordFilePath    nvarchar(1000)       null,
    fldAuditStatus       int                  null,
    fldAuditComment      nvarchar(1000)       null,
    fldAuditFraction     int                  null,
-   fldCallButtons       nvarchar(1000)       null,
-   fldChannelNo         nvarchar(256)        null,
+   fldAuditUserNo       nvarchar(40)         null,
    fldOperateUserNo     nvarchar(32)         null,
    fldOperateDate       datetime             null,
    fldCreateUserNo      nvarchar(32)         null,
    fldCreateDate        datetime             null,
    constraint PK_TBLTELEPHONETASK primary key (fldId)
 )
-go
-
-declare @CurrentUser sysname
-select @CurrentUser = user_name()
-execute sp_addextendedproperty 'MS_Description', 
-   '0：呼出
-   1：呼入',
-   'user', @CurrentUser, 'table', 'tblTelephoneTask', 'column', 'fldCallType'
 go
 
 declare @CurrentUser sysname

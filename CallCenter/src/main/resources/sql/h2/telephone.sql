@@ -6,6 +6,7 @@ DROP TABLE IF EXISTS tblTelephoneExchangeDetail;
 DROP TABLE IF EXISTS tblTelephoneImport;
 DROP TABLE IF EXISTS tblTelephoneImportDetail;
 DROP TABLE IF EXISTS tblTelephoneTask;
+DROP TABLE IF EXISTS tblTelephoneRecord;
 
 /*==============================================================*/
 /* Table: tblTelephoneAssign                                    */
@@ -173,27 +174,46 @@ CREATE TABLE tblTelephoneTask (
   fldAssignDate     DATETIME       NULL,
   fldTaskDate       DATETIME       NULL,
   fldCallDate       DATETIME       NULL,
-  fldCallType       INT            NULL,
   fldTaskType       INT            NULL,
   fldCallStatus     INT            NULL,
   fldTaskStatus     INT            NULL,
-  fldPhone          NVARCHAR(40)   NULL,
   fldContentType    INT            NULL,
+  fldResultType     INT            NULL,
+  fldComment        NVARCHAR(1000) NULL,
+  fldAuditStatus    INT            NULL,
+  fldAuditComment   NVARCHAR(1000) NULL,
+  fldAuditFraction  INT            NULL,
+  fldAuditUserNo    NVARCHAR(40)   NULL,
+  fldOperateUserNo  NVARCHAR(32)   NULL,
+  fldOperateDate    DATETIME       NULL,
+  fldCreateUserNo   NVARCHAR(32)   NULL,
+  fldCreateDate     DATETIME       NULL,
+  CONSTRAINT PK_TBLTELEPHONETASK PRIMARY KEY (fldId)
+);
+
+CREATE TABLE tblTelephoneRecord (
+  fldId             NUMERIC IDENTITY,
+  fldTaskId         NUMERIC        NULL,
+  fldCustomerName   NVARCHAR(256)  NULL,
+  fldPhone          NVARCHAR(40)   NULL,
+  fldCallDate       DATETIME       NULL,
+  fldCallType       INT            NULL,
   fldResultType     INT            NULL,
   fldComment        NVARCHAR(1000) NULL,
   fldCallLong       INT            NULL,
   fldCallBeginTime  DATETIME       NULL,
   fldCallEndTime    DATETIME       NULL,
   fldRecordFilePath NVARCHAR(1000) NULL,
+  fldCallButtons    NVARCHAR(1000) NULL,
+  fldChannelNo      NVARCHAR(256)  NULL,
   fldAuditStatus    INT            NULL,
   fldAuditComment   NVARCHAR(1000) NULL,
   fldAuditFraction  INT            NULL,
-  fldCallButtons    NVARCHAR(1000) NULL,
-  fldChannelNo      NVARCHAR(256)  NULL,
+  fldAuditUserNo    NVARCHAR(40)   NULL,
   fldOperateUserNo  NVARCHAR(32)   NULL,
   fldOperateDate    DATETIME       NULL,
   fldCreateUserNo   NVARCHAR(32)   NULL,
   fldCreateDate     DATETIME       NULL,
-  CONSTRAINT PK_TBLTELEPHONETASK PRIMARY KEY (fldId)
+  CONSTRAINT PK_TBLTELEPHONERECORD PRIMARY KEY (fldId)
 );
 
