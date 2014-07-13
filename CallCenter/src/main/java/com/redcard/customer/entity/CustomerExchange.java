@@ -10,7 +10,7 @@ import javax.persistence.Table;
  * CustomerExchange entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "tblCustomerExchange")
+@Table(name = "TBLCUSTOMEREXCHANGE")
 public class CustomerExchange implements java.io.Serializable {
 
 	// Fields
@@ -65,7 +65,7 @@ public class CustomerExchange implements java.io.Serializable {
 
 	// Property accessors
 	@Id
-	@Column(name = "fldId", unique = true, nullable = false)
+	@Column(name = "FLDID", unique = true, nullable = false)
 	public String getFldId() {
 		return this.fldId;
 	}
@@ -74,7 +74,7 @@ public class CustomerExchange implements java.io.Serializable {
 		this.fldId = fldId;
 	}
 
-	@Column(name = "fldOldUserNo")
+	@Column(name = "FLDOLDUSERNO")
 	public String getFldOldUserNo() {
 		return this.fldOldUserNo;
 	}
@@ -83,7 +83,7 @@ public class CustomerExchange implements java.io.Serializable {
 		this.fldOldUserNo = fldOldUserNo;
 	}
 
-	@Column(name = "fldNewUserNo")
+	@Column(name = "FLDNEWUSERNO")
 	public String getFldNewUserNo() {
 		return this.fldNewUserNo;
 	}
@@ -92,7 +92,7 @@ public class CustomerExchange implements java.io.Serializable {
 		this.fldNewUserNo = fldNewUserNo;
 	}
 
-	@Column(name = "fldOldCustomerNum")
+	@Column(name = "FLDOLDCUSTOMERNUM")
 	public Integer getFldOldCustomerNum() {
 		return this.fldOldCustomerNum;
 	}
@@ -101,7 +101,7 @@ public class CustomerExchange implements java.io.Serializable {
 		this.fldOldCustomerNum = fldOldCustomerNum;
 	}
 
-	@Column(name = "fldOldContractNum")
+	@Column(name = "FLDOLDCONTRACTNUM")
 	public Integer getFldOldContractNum() {
 		return this.fldOldContractNum;
 	}
@@ -110,7 +110,7 @@ public class CustomerExchange implements java.io.Serializable {
 		this.fldOldContractNum = fldOldContractNum;
 	}
 
-	@Column(name = "fldNewCustomerNum")
+	@Column(name = "FLDNEWCUSTOMERNUM")
 	public Integer getFldNewCustomerNum() {
 		return this.fldNewCustomerNum;
 	}
@@ -119,7 +119,7 @@ public class CustomerExchange implements java.io.Serializable {
 		this.fldNewCustomerNum = fldNewCustomerNum;
 	}
 
-	@Column(name = "fldNewContractNum")
+	@Column(name = "FLDNEWCONTRACTNUM")
 	public Integer getFldNewContractNum() {
 		return this.fldNewContractNum;
 	}
@@ -128,7 +128,7 @@ public class CustomerExchange implements java.io.Serializable {
 		this.fldNewContractNum = fldNewContractNum;
 	}
 
-	@Column(name = "fldCustomerNum")
+	@Column(name = "FLDCUSTOMERNUM")
 	public Integer getFldCustomerNum() {
 		return this.fldCustomerNum;
 	}
@@ -137,7 +137,7 @@ public class CustomerExchange implements java.io.Serializable {
 		this.fldCustomerNum = fldCustomerNum;
 	}
 
-	@Column(name = "fldContractNum")
+	@Column(name = "FLDCONTRACTNUM")
 	public Integer getFldContractNum() {
 		return this.fldContractNum;
 	}
@@ -146,7 +146,7 @@ public class CustomerExchange implements java.io.Serializable {
 		this.fldContractNum = fldContractNum;
 	}
 
-	@Column(name = "fldOperateUserNo")
+	@Column(name = "FLDOPERATEUSERNO")
 	public String getFldOperateUserNo() {
 		return this.fldOperateUserNo;
 	}
@@ -155,7 +155,7 @@ public class CustomerExchange implements java.io.Serializable {
 		this.fldOperateUserNo = fldOperateUserNo;
 	}
 
-	@Column(name = "fldOperateDate")
+	@Column(name = "FLDOPERATEDATE")
 	public Timestamp getFldOperateDate() {
 		return this.fldOperateDate;
 	}
@@ -164,7 +164,7 @@ public class CustomerExchange implements java.io.Serializable {
 		this.fldOperateDate = fldOperateDate;
 	}
 
-	@Column(name = "fldCreateUserNo")
+	@Column(name = "FLDCREATEUSERNO")
 	public String getFldCreateUserNo() {
 		return this.fldCreateUserNo;
 	}
@@ -173,7 +173,7 @@ public class CustomerExchange implements java.io.Serializable {
 		this.fldCreateUserNo = fldCreateUserNo;
 	}
 
-	@Column(name = "fldCreateDate")
+	@Column(name = "FLDCREATEDATE")
 	public Timestamp getFldCreateDate() {
 		return this.fldCreateDate;
 	}

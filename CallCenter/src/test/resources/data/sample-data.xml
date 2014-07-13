@@ -247,6 +247,12 @@
     <tblDictionary fldId="16" fldType="7" fldName="资管" fldValue="1" fldStatus="0" fldComment="产品类型，资管"/>
     <tblDictionary fldId="17" fldType="7" fldName="聚金系列" fldValue="2" fldStatus="0" fldComment="产品类型，聚金系列"/>
     <tblDictionary fldId="18" fldType="7" fldName="其他" fldValue="9" fldStatus="0" fldComment="产品类型，其他"/>
+    
+    <tblDictionary fldId="19" fldType="8" fldName="有效" fldValue="0" fldStatus="0" fldComment="合同状态，有效"/>
+    <tblDictionary fldId="20" fldType="8" fldName="无效" fldValue="9" fldStatus="0" fldComment="合同状态，无效"/>
+    
+    <tblDictionary fldId="21" fldType="9" fldName="有效" fldValue="0" fldStatus="0" fldComment="产品状态，有效"/>
+    <tblDictionary fldId="22" fldType="9" fldName="无效" fldValue="9" fldStatus="0" fldComment="产品状态，无效"/>
 
     <tblSysParameter fldId="1" fldName="SYS_ADMIN" fldValue="1" fldUnit="" fldStatus="0" fldDisplay="1" fldComment=""/>
     <tblSysParameter fldId="2" fldName="MAX_ERROR_LOGIN" fldValue="5" fldUnit="" fldStatus="0" fldDisplay="0"

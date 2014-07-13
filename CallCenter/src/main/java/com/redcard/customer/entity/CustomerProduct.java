@@ -6,7 +6,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.common.core.util.JsonDateSerializer;
 import com.common.security.util.SecurityUtil;
 
 /**
@@ -22,7 +27,9 @@ public class CustomerProduct implements java.io.Serializable {
 	private String fldFullName;
 	private String fldShortName;
 	private String fldDescription;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date fldEstablishDate;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date fldValueDate;
 	private String fldComment;
 	private Integer fldStatus;
@@ -30,6 +37,7 @@ public class CustomerProduct implements java.io.Serializable {
 	private Date fldOperateDate;
 	private String fldCreateUserNo;
 	private Date fldCreateDate;
+	private String productDetailStr;
 
 	// Constructors
 
@@ -102,6 +110,7 @@ public class CustomerProduct implements java.io.Serializable {
 	}
 
 	@Column(name = "FLDESTABLISHDATE")
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getFldEstablishDate() {
 		return this.fldEstablishDate;
 	}
@@ -111,6 +120,7 @@ public class CustomerProduct implements java.io.Serializable {
 	}
 
 	@Column(name = "FLDVALUEDATE")
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getFldValueDate() {
 		return this.fldValueDate;
 	}
@@ -172,5 +182,13 @@ public class CustomerProduct implements java.io.Serializable {
 	public void setFldCreateDate(Date fldCreateDate) {
 		this.fldCreateDate = fldCreateDate;
 	}
+	
+	@Transient
+	public String getProductDetailStr() {
+		return productDetailStr;
+	}
 
+	public void setProductDetailStr(String productDetailStr) {
+		this.productDetailStr = productDetailStr;
+	}
 }
