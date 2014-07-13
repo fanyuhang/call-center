@@ -1,10 +1,13 @@
 package com.redcard.customer.entity;
 
-import java.sql.Timestamp;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.common.security.util.SecurityUtil;
 
 /**
  * CustomerExchange entity. @author MyEclipse Persistence Tools
@@ -24,10 +27,10 @@ public class CustomerExchange implements java.io.Serializable {
 	private Integer fldNewContractNum;
 	private Integer fldCustomerNum;
 	private Integer fldContractNum;
-	private String fldOperateUserNo;
-	private Timestamp fldOperateDate;
+	private String fldOperateUserNo = SecurityUtil.getCurrentUserLoginName();
+	private Date fldOperateDate;
 	private String fldCreateUserNo;
-	private Timestamp fldCreateDate;
+	private Date fldCreateDate;
 
 	// Constructors
 
@@ -46,8 +49,8 @@ public class CustomerExchange implements java.io.Serializable {
 			Integer fldOldContractNum, Integer fldNewCustomerNum,
 			Integer fldNewContractNum, Integer fldCustomerNum,
 			Integer fldContractNum, String fldOperateUserNo,
-			Timestamp fldOperateDate, String fldCreateUserNo,
-			Timestamp fldCreateDate) {
+			Date fldOperateDate, String fldCreateUserNo,
+			Date fldCreateDate) {
 		this.fldId = fldId;
 		this.fldOldUserNo = fldOldUserNo;
 		this.fldNewUserNo = fldNewUserNo;
@@ -156,11 +159,11 @@ public class CustomerExchange implements java.io.Serializable {
 	}
 
 	@Column(name = "FLDOPERATEDATE")
-	public Timestamp getFldOperateDate() {
+	public Date getFldOperateDate() {
 		return this.fldOperateDate;
 	}
 
-	public void setFldOperateDate(Timestamp fldOperateDate) {
+	public void setFldOperateDate(Date fldOperateDate) {
 		this.fldOperateDate = fldOperateDate;
 	}
 
@@ -174,11 +177,11 @@ public class CustomerExchange implements java.io.Serializable {
 	}
 
 	@Column(name = "FLDCREATEDATE")
-	public Timestamp getFldCreateDate() {
+	public Date getFldCreateDate() {
 		return this.fldCreateDate;
 	}
 
-	public void setFldCreateDate(Timestamp fldCreateDate) {
+	public void setFldCreateDate(Date fldCreateDate) {
 		this.fldCreateDate = fldCreateDate;
 	}
 

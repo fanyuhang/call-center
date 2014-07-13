@@ -114,4 +114,12 @@ public class CustomerController {
         model.addAttribute("customer", customer);
         return "customer/customer/view";
     }
+	
+	@RequestMapping(value = "addContract")
+    public String addContract(String menuNo, String fldId,String custName,Model model) {
+        model.addAttribute("menuNo", menuNo);
+        model.addAttribute("custId",fldId);
+        model.addAttribute("custName",custName);
+        return "customer/customer/addContract";
+    }
 }
