@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      Microsoft SQL Server 2008                    */
-/* Created on:     2014-07-03 19:05:01                          */
+/* Created on:     2014-07-14 10:56:51                          */
 /*==============================================================*/
 
 
@@ -9,13 +9,6 @@ if exists (select 1
            where  id = object_id('tblEmailOperate')
             and   type = 'U')
    drop table tblEmailOperate
-go
-
-if exists (select 1
-            from  sysobjects
-           where  id = object_id('tblEmailOperateDetail')
-            and   type = 'U')
-   drop table tblEmailOperateDetail
 go
 
 if exists (select 1
@@ -43,26 +36,6 @@ create table tblEmailOperate (
    fldCreateUserNo      nvarchar(32)         null,
    fldCreateDate        datetime             null,
    constraint PK_TBLEMAILOPERATE primary key (fldId)
-)
-go
-
-/*==============================================================*/
-/* Table: tblEmailOperateDetail                                 */
-/*==============================================================*/
-create table tblEmailOperateDetail (
-   fldId                int                  identity,
-   fldEmailOperateId    nvarchar(40)         null,
-   fldSenderEmail       nvarchar(1000)       null,
-   fldReceiverEmail     nvarchar(1000)       null,
-   fldSendDate          datetime             null,
-   fldTitle             nvarchar(1000)       null,
-   fldContent           nvarchar(3000)       null,
-   fldAttachPath        nvarchar(1000)       null,
-   fldOperateUserNo     nvarchar(32)         null,
-   fldOperateDate       datetime             null,
-   fldCreateUserNo      nvarchar(32)         null,
-   fldCreateDate        datetime             null,
-   constraint PK_TBLEMAILOPERATEDETAIL primary key (fldId)
 )
 go
 

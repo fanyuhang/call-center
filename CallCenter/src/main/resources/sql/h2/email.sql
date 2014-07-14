@@ -1,5 +1,4 @@
 DROP TABLE IF EXISTS tblEmailOperate;
-DROP TABLE IF EXISTS tblEmailOperateDetail;
 DROP TABLE IF EXISTS tblEmailTemplate;
 
 /*==============================================================*/
@@ -20,25 +19,6 @@ CREATE TABLE tblEmailOperate (
   fldCreateUserNo    NVARCHAR(32)   NULL,
   fldCreateDate      DATETIME       NULL,
   CONSTRAINT PK_TBLEMAILOPERATE PRIMARY KEY (fldId)
-);
-
-/*==============================================================*/
-/* Table: tblEmailOperateDetail                                 */
-/*==============================================================*/
-CREATE TABLE tblEmailOperateDetail (
-  fldId             INT IDENTITY,
-  fldEmailOperateId NVARCHAR(40)   NULL,
-  fldSenderEmail    NVARCHAR(1000) NULL,
-  fldReceiverEmail  NVARCHAR(1000) NULL,
-  fldSendDate       DATETIME       NULL,
-  fldTitle          NVARCHAR(1000) NULL,
-  fldContent        NVARCHAR(3000) NULL,
-  fldAttachPath     NVARCHAR(1000) NULL,
-  fldOperateUserNo  NVARCHAR(32)   NULL,
-  fldOperateDate    DATETIME       NULL,
-  fldCreateUserNo   NVARCHAR(32)   NULL,
-  fldCreateDate     DATETIME       NULL,
-  CONSTRAINT PK_TBLEMAILOPERATEDETAIL PRIMARY KEY (fldId)
 );
 
 /*==============================================================*/

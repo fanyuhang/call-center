@@ -1,5 +1,4 @@
 DROP TABLE IF EXISTS tblMessageOperate;
-DROP TABLE IF EXISTS tblMessageOperateDetail;
 DROP TABLE IF EXISTS tblMessageTemplate;
 
 /*==============================================================*/
@@ -14,28 +13,12 @@ CREATE TABLE tblMessageOperate (
   fldComment           NVARCHAR(1000) NULL,
   fldSendStatus        INT            NULL,
   fldSendResult        NVARCHAR(1000) NULL,
+  fldTaskId            nvarchar(300)        null,
   fldOperateUserNo     NVARCHAR(32)   NULL,
   fldOperateDate       DATETIME       NULL,
   fldCreateUserNo      NVARCHAR(32)   NULL,
   fldCreateDate        DATETIME       NULL,
   CONSTRAINT PK_TBLMESSAGEOPERATE PRIMARY KEY (fldId)
-);
-
-/*==============================================================*/
-/* Table: tblMessageOperateDetail                               */
-/*==============================================================*/
-CREATE TABLE tblMessageOperateDetail (
-  fldId               INT IDENTITY,
-  fldMessageOperateId NVARCHAR(40)   NULL,
-  fldMobile           NVARCHAR(32)   NULL,
-  fldContent          NVARCHAR(1000) NULL,
-  fldSendStatus       INT            NULL,
-  fldSendResult       NVARCHAR(1000) NULL,
-  fldOperateUserNo    NVARCHAR(32)   NULL,
-  fldOperateDate      DATETIME       NULL,
-  fldCreateUserNo     NVARCHAR(32)   NULL,
-  fldCreateDate       DATETIME       NULL,
-  CONSTRAINT PK_TBLMESSAGEOPERATEDETAIL PRIMARY KEY (fldId)
 );
 
 /*==============================================================*/
