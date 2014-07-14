@@ -449,6 +449,12 @@ public class Constant {
     public static final Integer OBJECT_VALID = 0;               //有效
     public static final Integer OBJECT_INVALID = 1;             //无效
     
-    public static final Integer CUSTOMER_STATUS_NORMAL = 0;          //商户状态，有效
-    public static final Integer CUSTOMER_STATUS_DIABLED = 9;         //商户状态，无效
+    public static final Integer CUSTOMER_STATUS_NORMAL = 0;          //客户状态，有效
+    public static final Integer CUSTOMER_STATUS_DIABLED = 9;         //客户状态，无效
+    
+    public static final Integer CONTRACT_STATUS_NORMAL = 0;          //合同状态，有效
+    public static final Integer CONTRACT_STATUS_DIABLED = 9;         //合同状态，无效
+    
+    public static final Integer PRODUCT_STATUS_NORMAL = 0;           //产品状态，有效
+    public static final Integer PRODUCT_STATUS_DIABLED = 9;          //产品状态，无效
 }

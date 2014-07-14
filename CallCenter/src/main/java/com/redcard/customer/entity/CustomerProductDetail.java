@@ -4,9 +4,18 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
+import com.common.core.util.JsonDateSerializer;
+import com.common.security.entity.User;
 import com.common.security.util.SecurityUtil;
 
 /**
@@ -32,6 +41,8 @@ public class CustomerProductDetail implements java.io.Serializable {
 	private Date fldOperateDate;
 	private String fldCreateUserNo;
 	private Date fldCreateDate;
+	
+	private CustomerProduct customerProduct;
 
 	// Constructors
 
@@ -79,7 +90,7 @@ public class CustomerProductDetail implements java.io.Serializable {
 		this.fldId = fldId;
 	}
 
-	@Column(name = "FLDPRODUCTID")
+	@Column(name="FLDPRODUCTID")
 	public String getFldProductId() {
 		return this.fldProductId;
 	}
@@ -98,6 +109,7 @@ public class CustomerProductDetail implements java.io.Serializable {
 	}
 
 	@Column(name = "FLDDUEDATE")
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getFldDueDate() {
 		return this.fldDueDate;
 	}
@@ -196,4 +208,59 @@ public class CustomerProductDetail implements java.io.Serializable {
 		this.fldCreateDate = fldCreateDate;
 	}
 
+	@JsonIgnore
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "FLDPRODUCTID", referencedColumnName="FLDID", insertable = false, updatable = false)
+	public CustomerProduct getCustomerProduct() {
+		return customerProduct;
+	}
+
+	public void setCustomerProduct(CustomerProduct customerProduct) {
+		this.customerProduct = customerProduct;
+	}
+	
+	@Transient
+	public String getFldFullName() {
+		return customerProduct.getFldFullName();
+	}
+	
+	@Transient
+	public String getFldShortName() {
+		return customerProduct.getFldShortName();
+	}
+	
+	@Transient
+	public Integer getFldStatus() {
+		return customerProduct.getFldStatus();
+	}
+	
+	@Transient
+	@JsonSerialize(using = JsonDateSerializer.class)
+	public Date getFldEstablishDate() {
+		return customerProduct.getFldEstablishDate();
+	}
+	
+	@Transient
+	@JsonSerialize(using = JsonDateSerializer.class)
+	public Date getFldValueDate() {
+		return customerProduct.getFldValueDate();
+	}
+	
+	protected User operateUser;
+    
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "FLDOPERATEUSERNO",referencedColumnName = "FLDLOGINNAME", insertable = false, updatable = false)
+    public User getOperateUser() {
+        return operateUser;
+    }
+
+    public void setOperateUser(User operateUser) {
+        this.operateUser = operateUser;
+    }
+
+    @Transient
+    public String getOperateName() {
+    	return operateUser.getLoginName();
+    }
 }

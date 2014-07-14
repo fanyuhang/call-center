@@ -18,13 +18,9 @@
     </div>
 </div>
 <div id="maingrid"></div>
-<div id="detail" style="display:none;"><form:form id="mainform" method="post"></form:form></div>
-<div id="upload" style="display:none;">
-    <div id="uploader">
-        <p>Your browser doesn't have Flash, Silverlight, Gears, BrowserPlus or HTML5 support.</p>
-    </div>
-</div>
 <script type="text/javascript">
+	var statusData =<sys:dictList type = "8"/>;
+	
 	//搜索表单应用ligerui样式
 	$("#formsearch").ligerForm({
 	    labelWidth: 100,
@@ -35,8 +31,8 @@
 	        {display: "身份证号", name: "customer.fldIdentityNo", newline: false, type: "text", cssClass: "field"},
 	        {display: "合同编号", name: "fldId", newline: false, type: "text", cssClass: "field"},
 	        {display: "产品编号", name: "fldProductId", newline: true, type: "text", cssClass: "field"},
-	        {display: "产品全称", name: "#", newline: false, type: "text", cssClass: "field"},
-	        {display: "产品实际天数", name: "#", newline: false, type: "text", cssClass: "field"},
+	        {display: "产品全称", name: "productDetail.customerProduct.fldFullName", newline: false, type: "text", cssClass: "field"},
+	        {display: "产品实际天数", name: "productDetail.fldClearDays", newline: false, type: "text", attr: {"op": "equal", "vt": "int"}, cssClass: "field"},
 	        {display: "所属理财经理", name: "fldFinancialUserNo", newline: true, type: "text", cssClass: "field"},
 	        {display: "银行卡号", name: "fldBankNo", newline: false, type: "text", cssClass: "field"},
 	        {display: "瑞得卡号", name: "fldCardNo", newline: false, type: "text", cssClass: "field"},
@@ -51,17 +47,21 @@
 	    delayLoad: true,
 	    columnWidth: 180,
 	    columns: [
-	        {display: "商户姓名", name: "customer.fldName"},
-	        {display: "身份证号", name: "customer.fldIdentityNo"},
+	        {display: "商户姓名", name: "customerName"},
+	        {display: "身份证号", name: "identityNo"},
 	        {display: "合同编号", name: "fldId"},
-	        {display: "产品编号", name: "fldId"},
-	        {display: "产品全称", name: "fldId"},
-	        {display: "产品实际天数", name: "fldId"},
+	        {display: "产品编号", name: "fldProductDetailId"},
+	        {display: "产品全称", name: "productFullName"},
+	        {display: "产品实际天数", name: "productClearDays"},
 	        {display: "所属理财经理", name: "fldFinancialUserNo"},
 	        {display: "银行卡号", name: "fldBankNo"},
 	        {display: "瑞得卡号", name: "fldCardNo"},
 	        {display: "瑞得卡等级", name: "fldCardLevel"},
-	        {display: "合同状态", name: "fldStatus"},
+	        {display: "合同状态", name: "fldStatus",
+	        	render:function(item) {
+	        		return renderLabel(statusData,item.fldStatus);
+	        	}
+	        },
 	        {display: "签订日期", name: "fldSignDate"},
 	        {display: "是否已到期", name: "fldFinishStatus"},
 	        {display: "打款日期", name: "fldMoneyDate"},
@@ -93,7 +93,7 @@
 	                return;
 	            }
 	            var selected = grid.getSelected();
-	            top.f_addTab(null, '查看客户信息', '<c:url value="/customer/customer/view"/>' + '?menuNo=${menuNo}&fldId=' + selected.fldId);
+	            top.f_addTab(null, '查看合同信息', '<c:url value="/customer/contract/view"/>' + '?menuNo=${menuNo}&fldId=' + selected.fldId);
 	            break;
 	        case "modify":
 	            if (grid.getSelectedRows().length > 1 || grid.getSelectedRows().length == 0) {
@@ -101,7 +101,7 @@
 	                return;
 	            }
 	            var selected = grid.getSelected();
-	            top.f_addTab(null, '修改客户信息', '<c:url value="/customer/customer/edit"/>' + '?menuNo=${menuNo}&fldId=' + selected.fldId);
+	            top.f_addTab(null, '修改合同信息', '<c:url value="/customer/contract/edit"/>' + '?menuNo=${menuNo}&fldId=' + selected.fldId);
 	            break;
 	        case "delete":
 	            if (grid.getSelectedRows().length > 1 || grid.getSelectedRows().length == 0) {
@@ -113,76 +113,6 @@
 	                    f_delete();
 	            });
 	            break;
-	        case "upload":
-	            f_upload();
-	            break;
-	        case "template":
-	            f_template(merchantTemplate);
-	            break;
-	        case "export":
-	            f_export('<c:url value="/merchant/merchant/export"/>');
-	            break;
-	        case "settle":
-	            if (grid.getSelectedRows().length > 1 || grid.getSelectedRows().length == 0) {
-	                LG.tip('请选择一行数据!');
-	                return;
-	            }
-	            var selected = grid.getSelected();
-	            top.f_addTab(null, '设置商户结算信息', '<c:url value="/merchant/merchant/settle"/>' + '?menuNo=01030108&code=' + selected.code);
-	            break;
-	    }
-	}
-
-
-	$("#uploader").plupload({
-	    runtimes: 'flash',
-	    url: '<c:url value="/merchant/common/upload/0"/>',
-	    max_file_size: '100mb',
-	    max_file_count: 1,
-	    chunk_size: '1mb',
-	    rename: true,
-	    multiple_queues: false,
-	    resize: {width: 600, height: 500, quality: 30},
-	    rename: true,
-	    sortable: true,
-	    filters: [
-	        {title: "Excel files", extensions: "xls"}
-	    ],
-	    flash_swf_url: '<c:url value="/static/plupload/plupload.flash.swf" />'
-	});
-
-	var uploader = $('#uploader').plupload('getUploader');
-
-	uploader.bind('ChunkUploaded', function (uploader, file, response) {
-	    if (response.response) {
-	        var rep = JSON.parse(response.response);
-	        if (rep.IsError == false) {
-	            uploader.removeFile(file);
-	            uploader.stop();
-	            detailWin.hide();
-	            LG.showSuccess(rep.Message);
-	            f_reload();
-	        } else {
-	            LG.showError(rep.Message);
-	        }
-	    }
-	});
-
-	var detailWin = null;
-	function f_upload() {
-	    if (detailWin) {
-	        detailWin.show();
-	    } else {
-	        detailWin = $.ligerDialog.open({
-	            title: '商户导入',
-	            target: $("#upload"),
-	            width: 600, height: 420, top: 90,
-	            buttons: [
-	                { text: '取消', onclick: function () {
-	                    detailWin.hide();
-	                } }
-	            ]
-	        });
 	    }
 	}
 
@@ -194,11 +124,11 @@
 	    var selected = grid.getSelected();
 	    if (selected) {
 	        LG.ajax({
-	            url: '<c:url value="/customer/customer/delete"/>',
+	            url: '<c:url value="/customer/contract/delete"/>',
 	            loading: '正在删除中...',
 	            data: { fldId: selected.fldId},
 	            success: function () {
-	                LG.showSuccess('删除客户成功');
+	                LG.showSuccess('删除合同成功');
 	                f_reload();
 	            },
 	            error: function (message) {

@@ -10,7 +10,7 @@ import javax.persistence.Table;
  * CustomerExchangeContract entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "tblCustomerExchangeContract")
+@Table(name = "TBLCUSTOMEREXCHANGECONTRACT")
 public class CustomerExchangeContract implements java.io.Serializable {
 
 	// Fields
@@ -59,7 +59,7 @@ public class CustomerExchangeContract implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@Column(name = "fldCustomerExchangeId")
+	@Column(name = "FLDCUSTOMEREXCHANGEID")
 	public String getFldCustomerExchangeId() {
 		return this.fldCustomerExchangeId;
 	}
@@ -68,7 +68,7 @@ public class CustomerExchangeContract implements java.io.Serializable {
 		this.fldCustomerExchangeId = fldCustomerExchangeId;
 	}
 
-	@Column(name = "fldContractId")
+	@Column(name = "FLDCONTRACTID")
 	public String getFldContractId() {
 		return this.fldContractId;
 	}
@@ -77,7 +77,7 @@ public class CustomerExchangeContract implements java.io.Serializable {
 		this.fldContractId = fldContractId;
 	}
 
-	@Column(name = "fldOperateUserNo")
+	@Column(name = "FLDOPERATEUSERNO")
 	public String getFldOperateUserNo() {
 		return this.fldOperateUserNo;
 	}
@@ -86,7 +86,7 @@ public class CustomerExchangeContract implements java.io.Serializable {
 		this.fldOperateUserNo = fldOperateUserNo;
 	}
 
-	@Column(name = "fldOperateDate")
+	@Column(name = "FLDOPERATEDATE")
 	public Timestamp getFldOperateDate() {
 		return this.fldOperateDate;
 	}
@@ -95,7 +95,7 @@ public class CustomerExchangeContract implements java.io.Serializable {
 		this.fldOperateDate = fldOperateDate;
 	}
 
-	@Column(name = "fldCreateUserNo")
+	@Column(name = "FLDCREATEUSERNO")
 	public String getFldCreateUserNo() {
 		return this.fldCreateUserNo;
 	}
@@ -104,7 +104,7 @@ public class CustomerExchangeContract implements java.io.Serializable {
 		this.fldCreateUserNo = fldCreateUserNo;
 	}
 
-	@Column(name = "fldCreateDate")
+	@Column(name = "FLDCREATEDATE")
 	public Timestamp getFldCreateDate() {
 		return this.fldCreateDate;
 	}

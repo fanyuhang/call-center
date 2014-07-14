@@ -172,10 +172,13 @@
     <tblNode fldCode="01030104" fldParent="010301" fldName="查看" fldDesc="" fldTarget="view"
              fldIcon="/static/ligerUI/icons/silkicons/application_view_detail.png"
              fldLink="/customer/customer/view" fldType="2" fldPosition="4"/>
+    <tblNode fldCode="01030105" fldParent="010301" fldName="新增合同" fldDesc="" fldTarget="addContract"
+             fldIcon="/static/ligerUI/icons/silkicons/application_cascade.png"
+             fldLink="/customer/customer/addContract" fldType="2" fldPosition="5"/>
              
     <tblNode fldCode="010302" fldParent="0103" fldName="客户交接" fldDesc="" fldTarget=""
              fldIcon="/static/ligerUI/icons/32X32/communication.gif"
-             fldLink="" fldType="1" fldPosition="1"/>
+             fldLink="/customer/exchange/init" fldType="1" fldPosition="1"/>
              
     <tblNode fldCode="010303" fldParent="0103" fldName="产品管理" fldDesc="" fldTarget=""
              fldIcon="/static/ligerUI/icons/32X32/product.gif"
@@ -242,6 +245,17 @@
     
     <tblDictionary fldId="13" fldType="6" fldName="有效" fldValue="0" fldStatus="0" fldComment="客户状态，有效"/>
     <tblDictionary fldId="14" fldType="6" fldName="无效" fldValue="9" fldStatus="0" fldComment="客户状态，无效"/>
+
+    <tblDictionary fldId="15" fldType="7" fldName="信托" fldValue="0" fldStatus="0" fldComment="产品类型，信托"/>
+    <tblDictionary fldId="16" fldType="7" fldName="资管" fldValue="1" fldStatus="0" fldComment="产品类型，资管"/>
+    <tblDictionary fldId="17" fldType="7" fldName="聚金系列" fldValue="2" fldStatus="0" fldComment="产品类型，聚金系列"/>
+    <tblDictionary fldId="18" fldType="7" fldName="其他" fldValue="9" fldStatus="0" fldComment="产品类型，其他"/>
+    
+    <tblDictionary fldId="19" fldType="8" fldName="有效" fldValue="0" fldStatus="0" fldComment="合同状态，有效"/>
+    <tblDictionary fldId="20" fldType="8" fldName="无效" fldValue="9" fldStatus="0" fldComment="合同状态，无效"/>
+    
+    <tblDictionary fldId="21" fldType="9" fldName="有效" fldValue="0" fldStatus="0" fldComment="产品状态，有效"/>
+    <tblDictionary fldId="22" fldType="9" fldName="无效" fldValue="9" fldStatus="0" fldComment="产品状态，无效"/>
 
     <tblSysParameter fldId="1" fldName="SYS_ADMIN" fldValue="1" fldUnit="" fldStatus="0" fldDisplay="1" fldComment=""/>
     <tblSysParameter fldId="2" fldName="MAX_ERROR_LOGIN" fldValue="5" fldUnit="" fldStatus="0" fldDisplay="0"

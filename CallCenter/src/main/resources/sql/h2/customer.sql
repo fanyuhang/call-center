@@ -131,6 +131,7 @@ CREATE TABLE tblCustomerProduct (
   fldFullName      NVARCHAR(256) NULL,
   fldShortName     NVARCHAR(256) NULL,
   fldDescription   NVARCHAR(256) NULL,
+  fldType              int                  null,
   fldEstablishDate DATETIME      NULL,
   fldValueDate     DATETIME      NULL,
   fldComment       NVARCHAR(256) NULL,
