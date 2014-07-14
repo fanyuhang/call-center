@@ -6,10 +6,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import org.codehaus.jackson.map.annotate.JsonSerialize;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import com.common.core.util.JsonDateSerializer;
 import com.common.core.util.JsonTimestampSerializer;
 import com.common.security.util.SecurityUtil;
 
@@ -26,8 +27,8 @@ public class Customer implements java.io.Serializable {
 	private String fldName;
 	private Integer fldSource;
 	private Integer fldGender;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date fldBirthday;
-	private String fldBirthdayStr;
 	private String fldIdentityNo;
 	private String fldPhone;
 	private String fldMobile;
@@ -129,6 +130,7 @@ public class Customer implements java.io.Serializable {
 	}
 
 	@Column(name = "FLDBIRTHDAY")
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getFldBirthday() {
 		return fldBirthday;
 	}
@@ -299,14 +301,5 @@ public class Customer implements java.io.Serializable {
 
 	public void setFldCreateDate(Date fldCreateDate) {
 		this.fldCreateDate = fldCreateDate;
-	}
-	
-	@Transient
-	public String getFldBirthdayStr() {
-		return fldBirthdayStr;
-	}
-
-	public void setFldBirthdayStr(String fldBirthdayStr) {
-		this.fldBirthdayStr = fldBirthdayStr;
 	}
 }
