@@ -12,6 +12,12 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.common.core.util.JsonDateSerializer;
+import com.common.core.util.JsonTimestampSerializer;
+import com.common.security.util.SecurityUtil;
 
 /**
  * CustomerContract entity. @author MyEclipse Persistence Tools
@@ -26,10 +32,10 @@ public class CustomerContract implements java.io.Serializable {
 	private String fldCustomerId;
 	private String fldProductId;
 	private String fldProductDetailId;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date fldSignDate;
-	private String fldSignDateStr;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date fldMoneyDate;
-	private String fldMoneyDateStr;
 	private Integer fldCollectDays;
 	private Double fldDepositRate;
 	private Double fldCollectMoney;
@@ -52,7 +58,7 @@ public class CustomerContract implements java.io.Serializable {
 	private Integer fldCardStatus;
 	private Integer fldStatus;
 	private Integer fldFinishStatus;
-	private String fldOperateUserNo;
+	private String fldOperateUserNo = SecurityUtil.getCurrentUserLoginName();
 	private Date fldOperateDate;
 	private String fldCreateUserNo;
 	private Date fldCreateDate;
@@ -157,6 +163,7 @@ public class CustomerContract implements java.io.Serializable {
 	}
 
 	@Column(name = "FLDSIGNDATE")
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getFldSignDate() {
 		return this.fldSignDate;
 	}
@@ -165,31 +172,14 @@ public class CustomerContract implements java.io.Serializable {
 		this.fldSignDate = fldSignDate;
 	}
 
-	@Transient
-	public String getFldSignDateStr() {
-		return fldSignDateStr;
-	}
-
-	public void setFldSignDateStr(String fldSignDateStr) {
-		this.fldSignDateStr = fldSignDateStr;
-	}
-
 	@Column(name = "FLDMONEYDATE")
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getFldMoneyDate() {
 		return this.fldMoneyDate;
 	}
 
 	public void setFldMoneyDate(Date fldMoneyDate) {
 		this.fldMoneyDate = fldMoneyDate;
-	}
-
-	@Transient
-	public String getFldMoneyDateStr() {
-		return fldMoneyDateStr;
-	}
-
-	public void setFldMoneyDateStr(String fldMoneyDateStr) {
-		this.fldMoneyDateStr = fldMoneyDateStr;
 	}
 
 	@Column(name = "FLDCOLLECTDAYS")
@@ -400,6 +390,7 @@ public class CustomerContract implements java.io.Serializable {
 	}
 
 	@Column(name = "FLDOPERATEDATE")
+	@JsonSerialize(using = JsonTimestampSerializer.class)
 	public Date getFldOperateDate() {
 		return this.fldOperateDate;
 	}
@@ -437,5 +428,38 @@ public class CustomerContract implements java.io.Serializable {
 
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
+	}
+	
+	@Transient
+	public String getCustomerName() {
+		return customer.getFldName();
+	}
+	
+	@Transient
+	public String getIdentityNo() {
+		return customer.getFldIdentityNo();
+	}
+	
+	private CustomerProductDetail productDetail;
+
+	@JsonIgnore
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "FLDPRODUCTDETAILID", insertable = false, updatable = false)
+	public CustomerProductDetail getProductDetail() {
+		return productDetail;
+	}
+
+	public void setProductDetail(CustomerProductDetail productDetail) {
+		this.productDetail = productDetail;
+	}
+	
+	@Transient
+	public String getProductFullName() {
+		return productDetail.getFldFullName();
+	}
+	
+	@Transient
+	public Integer getProductClearDays() {
+		return productDetail.getFldClearDays();
 	}
 }

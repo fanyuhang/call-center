@@ -20,24 +20,18 @@
 <div id="maingrid"></div>
 <div id="detail" style="display:none;"><form:form id="mainform" method="post"></form:form></div>
 <script type="text/javascript">
-	var statusData =<sys:dictList type = "9"/>;
-
 	//搜索表单应用ligerui样式
 	$("#formsearch").ligerForm({
 	    labelWidth: 100,
 	    inputWidth: 150,
 	    space: 30,
 	    fields: [
-	        {display: "产品全称", name: "fldFullName", newline: true, type: "text", cssClass: "field"},
-	        {display: "产品简称", name: "fldShortName", newline: false, type: "text", cssClass: "field"},
-	        {display: "产品状态", name: "fldStatus", newline: false, type: "select", cssClass: "field",
-	        	options: {
-	                valueFieldID: "fldStatus",
-	                valueField: "value",
-	                textField: "text",
-	                data: statusData
-	            }, attr: {"op": "equal", "vt": "int"}
-        	}
+	        {display: "原客服", name: "fldOldUserNo", newline: true, type: "text", cssClass: "field"},
+	        {display: "新客服", name: "fldNewUserNo", newline: false, type: "text", cssClass: "field"},
+	        {display: "交接开始时间", name: "startDate", newline: true, type: "date", cssClass: "field",
+	        	attr:{op:'greaterorequal', vt:'date', field:"fldOperateDate"}},
+	        {display: "交接结束时间", name: "endDate", newline: false, type: "date", cssClass: "field",
+	        	attr:{op:'lessorequal', vt:'date', field:"fldOperateDate"}}
 	    ],
 	    toJSON: JSON2.stringify
 	});
@@ -50,13 +44,13 @@
 	    columnWidth: 180,
 	    columns: [
 	    	{display: "ID", name: "fldId", hide:1,width:1},
-	        {display: "产品全称", name: "fldFullName"},
-	        {display: "产品简称", name: "fldShortName"},
-	        {display: "产品状态", name: "fldStatus"},
-	        {display: "成立日期", name: "fldEstablishDate"},
-	        {display: "起息日期", name: "fldValueDate"},
-	        {display: "操作人", name: "fldOperateUserNo"}
-	    ], dataAction: 'server', pageSize: 20, toolbar: {}, url: '<c:url value="/customer/product/list"/>', sortName: 'operateDate', sortOrder: 'desc',
+	        {display: "原客服", name: "fldOldUserNo"},
+	        {display: "新客服", name: "fldNewUserNo"},
+	        {display: "交接时间", name: "fldOperateDate"},
+	        {display: "原客服客户数量", name: "fldOldCustomerNum"},
+	        {display: "新客服客户数量", name: "fldNewCustomerNum"},
+	        {display: "交接客户数量", name: "fldCustomerNum"}
+	    ], dataAction: 'server', pageSize: 20, toolbar: {}, url: '<c:url value="/customer/exchange/list"/>', sortName: 'operateDate', sortOrder: 'desc',
 	    width: '98%', height: '98%', toJSON: JSON2.stringify, onReload: f_reload
 	});
 
@@ -70,7 +64,7 @@
 	function toolbarBtnItemClick(item) {
 	    switch (item.id) {
 	        case "add":
-	            top.f_addTab(null, '新增产品信息', '<c:url value="/customer/product/add"/>' + '?menuNo=${menuNo}');
+	            top.f_addTab(null, '新增客户信息', '<c:url value="/customer/customer/add"/>' + '?menuNo=${menuNo}');
 	            break;
 	        case "view":
 	            if (grid.getSelectedRows().length > 1 || grid.getSelectedRows().length == 0) {
@@ -78,7 +72,7 @@
 	                return;
 	            }
 	            var selected = grid.getSelected();
-	            top.f_addTab(null, '查看产品信息', '<c:url value="/customer/product/view"/>' + '?menuNo=${menuNo}&fldId=' + selected.fldId);
+	            top.f_addTab(null, '查看客户信息', '<c:url value="/customer/customer/view"/>' + '?menuNo=${menuNo}&fldId=' + selected.fldId);
 	            break;
 	        case "modify":
 	            if (grid.getSelectedRows().length > 1 || grid.getSelectedRows().length == 0) {
@@ -86,7 +80,7 @@
 	                return;
 	            }
 	            var selected = grid.getSelected();
-	            top.f_addTab(null, '修改产品信息', '<c:url value="/customer/product/edit"/>' + '?menuNo=${menuNo}&fldId=' + selected.fldId);
+	            top.f_addTab(null, '修改客户信息', '<c:url value="/customer/customer/edit"/>' + '?menuNo=${menuNo}&fldId=' + selected.fldId);
 	            break;
 	        case "delete":
 	            if (grid.getSelectedRows().length > 1 || grid.getSelectedRows().length == 0) {
@@ -109,11 +103,11 @@
 	    var selected = grid.getSelected();
 	    if (selected) {
 	        LG.ajax({
-	            url: '<c:url value="/customer/product/delete"/>',
+	            url: '<c:url value="/customer/customer/delete"/>',
 	            loading: '正在删除中...',
 	            data: { fldId: selected.fldId},
 	            success: function () {
-	                LG.showSuccess('删除产品成功');
+	                LG.showSuccess('删除客户成功');
 	                f_reload();
 	            },
 	            error: function (message) {

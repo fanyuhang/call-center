@@ -1,16 +1,19 @@
 package com.redcard.customer.entity;
 
-import java.sql.Timestamp;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.common.security.util.SecurityUtil;
+
 /**
  * CustomerExchange entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "tblCustomerExchange")
+@Table(name = "TBLCUSTOMEREXCHANGE")
 public class CustomerExchange implements java.io.Serializable {
 
 	// Fields
@@ -24,10 +27,10 @@ public class CustomerExchange implements java.io.Serializable {
 	private Integer fldNewContractNum;
 	private Integer fldCustomerNum;
 	private Integer fldContractNum;
-	private String fldOperateUserNo;
-	private Timestamp fldOperateDate;
+	private String fldOperateUserNo = SecurityUtil.getCurrentUserLoginName();
+	private Date fldOperateDate;
 	private String fldCreateUserNo;
-	private Timestamp fldCreateDate;
+	private Date fldCreateDate;
 
 	// Constructors
 
@@ -46,8 +49,8 @@ public class CustomerExchange implements java.io.Serializable {
 			Integer fldOldContractNum, Integer fldNewCustomerNum,
 			Integer fldNewContractNum, Integer fldCustomerNum,
 			Integer fldContractNum, String fldOperateUserNo,
-			Timestamp fldOperateDate, String fldCreateUserNo,
-			Timestamp fldCreateDate) {
+			Date fldOperateDate, String fldCreateUserNo,
+			Date fldCreateDate) {
 		this.fldId = fldId;
 		this.fldOldUserNo = fldOldUserNo;
 		this.fldNewUserNo = fldNewUserNo;
@@ -65,7 +68,7 @@ public class CustomerExchange implements java.io.Serializable {
 
 	// Property accessors
 	@Id
-	@Column(name = "fldId", unique = true, nullable = false)
+	@Column(name = "FLDID", unique = true, nullable = false)
 	public String getFldId() {
 		return this.fldId;
 	}
@@ -74,7 +77,7 @@ public class CustomerExchange implements java.io.Serializable {
 		this.fldId = fldId;
 	}
 
-	@Column(name = "fldOldUserNo")
+	@Column(name = "FLDOLDUSERNO")
 	public String getFldOldUserNo() {
 		return this.fldOldUserNo;
 	}
@@ -83,7 +86,7 @@ public class CustomerExchange implements java.io.Serializable {
 		this.fldOldUserNo = fldOldUserNo;
 	}
 
-	@Column(name = "fldNewUserNo")
+	@Column(name = "FLDNEWUSERNO")
 	public String getFldNewUserNo() {
 		return this.fldNewUserNo;
 	}
@@ -92,7 +95,7 @@ public class CustomerExchange implements java.io.Serializable {
 		this.fldNewUserNo = fldNewUserNo;
 	}
 
-	@Column(name = "fldOldCustomerNum")
+	@Column(name = "FLDOLDCUSTOMERNUM")
 	public Integer getFldOldCustomerNum() {
 		return this.fldOldCustomerNum;
 	}
@@ -101,7 +104,7 @@ public class CustomerExchange implements java.io.Serializable {
 		this.fldOldCustomerNum = fldOldCustomerNum;
 	}
 
-	@Column(name = "fldOldContractNum")
+	@Column(name = "FLDOLDCONTRACTNUM")
 	public Integer getFldOldContractNum() {
 		return this.fldOldContractNum;
 	}
@@ -110,7 +113,7 @@ public class CustomerExchange implements java.io.Serializable {
 		this.fldOldContractNum = fldOldContractNum;
 	}
 
-	@Column(name = "fldNewCustomerNum")
+	@Column(name = "FLDNEWCUSTOMERNUM")
 	public Integer getFldNewCustomerNum() {
 		return this.fldNewCustomerNum;
 	}
@@ -119,7 +122,7 @@ public class CustomerExchange implements java.io.Serializable {
 		this.fldNewCustomerNum = fldNewCustomerNum;
 	}
 
-	@Column(name = "fldNewContractNum")
+	@Column(name = "FLDNEWCONTRACTNUM")
 	public Integer getFldNewContractNum() {
 		return this.fldNewContractNum;
 	}
@@ -128,7 +131,7 @@ public class CustomerExchange implements java.io.Serializable {
 		this.fldNewContractNum = fldNewContractNum;
 	}
 
-	@Column(name = "fldCustomerNum")
+	@Column(name = "FLDCUSTOMERNUM")
 	public Integer getFldCustomerNum() {
 		return this.fldCustomerNum;
 	}
@@ -137,7 +140,7 @@ public class CustomerExchange implements java.io.Serializable {
 		this.fldCustomerNum = fldCustomerNum;
 	}
 
-	@Column(name = "fldContractNum")
+	@Column(name = "FLDCONTRACTNUM")
 	public Integer getFldContractNum() {
 		return this.fldContractNum;
 	}
@@ -146,7 +149,7 @@ public class CustomerExchange implements java.io.Serializable {
 		this.fldContractNum = fldContractNum;
 	}
 
-	@Column(name = "fldOperateUserNo")
+	@Column(name = "FLDOPERATEUSERNO")
 	public String getFldOperateUserNo() {
 		return this.fldOperateUserNo;
 	}
@@ -155,16 +158,16 @@ public class CustomerExchange implements java.io.Serializable {
 		this.fldOperateUserNo = fldOperateUserNo;
 	}
 
-	@Column(name = "fldOperateDate")
-	public Timestamp getFldOperateDate() {
+	@Column(name = "FLDOPERATEDATE")
+	public Date getFldOperateDate() {
 		return this.fldOperateDate;
 	}
 
-	public void setFldOperateDate(Timestamp fldOperateDate) {
+	public void setFldOperateDate(Date fldOperateDate) {
 		this.fldOperateDate = fldOperateDate;
 	}
 
-	@Column(name = "fldCreateUserNo")
+	@Column(name = "FLDCREATEUSERNO")
 	public String getFldCreateUserNo() {
 		return this.fldCreateUserNo;
 	}
@@ -173,12 +176,12 @@ public class CustomerExchange implements java.io.Serializable {
 		this.fldCreateUserNo = fldCreateUserNo;
 	}
 
-	@Column(name = "fldCreateDate")
-	public Timestamp getFldCreateDate() {
+	@Column(name = "FLDCREATEDATE")
+	public Date getFldCreateDate() {
 		return this.fldCreateDate;
 	}
 
-	public void setFldCreateDate(Timestamp fldCreateDate) {
+	public void setFldCreateDate(Date fldCreateDate) {
 		this.fldCreateDate = fldCreateDate;
 	}
 

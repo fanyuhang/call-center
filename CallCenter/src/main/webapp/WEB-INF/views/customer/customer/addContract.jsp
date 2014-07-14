@@ -33,28 +33,7 @@
         ]
     });
     
-    $.ligerui.get("customerName").openSelect({
-	    grid:{
-	    	columnWidth: 110,
-	        columns:[
-	        	{display: "ID", name: "fldId", hide:1,width:1},
-	        	{display: "商户姓名", name: "fldName", newline: true, type: "text", cssClass: "field"},
-		        {display: "身份证号", name: "fldIdentityNo", newline: false, type: "text", cssClass: "field"},
-		        {display: "手机号", name: "fldMobile", newline: false, type: "text", cssClass: "field"},
-		        {display: "固定电话", name: "fldPhone", newline: true, type: "text", cssClass: "field"},
-		        {display: "所属理财经理", name: "fldFinancialUserNo", newline: false, type: "text", cssClass: "field"},
-		        {display: "瑞得卡号", name: "fldCardNo", newline: false, type: "text", cssClass: "field"},
-		        {display: "瑞得卡等级", name: "fldCardLevel", newline: true, type: "text", cssClass: "field"}
-	        ], pageSize:20,heightDiff:-10,
-	        url:'<c:url value="/customer/customer/list"/>',checkbox:false
-	    },
-	    search:{
-	        fields:[
-	            {display:"商户姓名", name:"fldName", newline:true, type:"text", cssClass:"field"}
-	        ]
-	    },
-	    valueField:'fldId', textField:'fldName', top:30
-	});
+    $.ligerui.get("customerName")._changeValue('${custId}', '${custName}');
     
     $.ligerui.get("productId").openSelect({
 	    grid:{

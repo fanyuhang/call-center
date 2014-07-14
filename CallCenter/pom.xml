@@ -31,6 +31,7 @@
         <digester.version>3.2</digester.version>
         <jxls.version>1.0.5</jxls.version>
         <com.fasterxml.jackson.version>2.1.4</com.fasterxml.jackson.version>
+        <gson.version>1.7.1</gson.version>
 
         <jdbc.driver.groupId>com.h2database</jdbc.driver.groupId>
         <jdbc.driver.artifactId>h2</jdbc.driver.artifactId>
@@ -487,6 +488,12 @@
             <scope>provided</scope>
         </dependency>
         <!-- fasterxml end -->
+        
+        <dependency>
+        	<groupId>com.google.code.gson</groupId>
+        	<artifactId>gson</artifactId>
+        	<version>${gson.version}</version>
+        </dependency>
     </dependencies>
 
     <!-- 插件配置 -->

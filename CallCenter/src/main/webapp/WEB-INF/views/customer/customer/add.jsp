@@ -26,7 +26,7 @@
                     data:genderData,
                     valueFieldID:"fldGender"
                 }},
-            {display: "出生日期", name: "fldBirthdayStr", newline: false, type: "date", attr:{readonly: "readonly"}},
+            {display: "出生日期", name: "fldBirthday", newline: false, type: "date", attr:{readonly: "readonly"}},
             {display: "身份证号", name: "fldIdentityNo", newline: true, type: "text", validate: {maxlength: 32}},
             {display: "固定电话", name: "fldPhone", newline: true, type: "text", validate: { maxlength: 32}, group: "<label style=white-space:nowrap;>联系信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'},
             {display: "手机", name: "fldMobile", newline: false, type: "text", validate: { maxlength: 100}},

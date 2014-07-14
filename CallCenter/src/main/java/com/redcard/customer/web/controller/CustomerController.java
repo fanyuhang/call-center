@@ -66,7 +66,6 @@ public class CustomerController {
         customer.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
         customer.setFldCreateDate(new Date());
         customer.setFldOperateDate(new Date());
-        customer.setFldBirthday(DateEditor.getDate(customer.getFldBirthdayStr()));
         customer.setFldStatus(Constant.CUSTOMER_STATUS_NORMAL);
         customerManager.save(customer);
         return result;
@@ -75,8 +74,6 @@ public class CustomerController {
 	@RequestMapping(value = "edit")
     public String edit(String menuNo, String fldId, Model model) {
         Customer customer = customerManager.find(fldId);
-        if(null != customer.getFldBirthday())
-        	customer.setFldBirthdayStr(DateEditor.getDateStr(customer.getFldBirthday()));
         model.addAttribute("menuNo", menuNo);
         model.addAttribute("customer", customer);
         return "customer/customer/edit";
@@ -108,10 +105,16 @@ public class CustomerController {
 	@RequestMapping(value = "view")
     public String view(String menuNo, String fldId, Model model) {
         Customer customer = customerManager.find(fldId);
-        if(null != customer.getFldBirthday())
-        	customer.setFldBirthdayStr(DateEditor.getDateStr(customer.getFldBirthday()));
         model.addAttribute("menuNo", menuNo);
         model.addAttribute("customer", customer);
         return "customer/customer/view";
+    }
+	
+	@RequestMapping(value = "addContract")
+    public String addContract(String menuNo, String fldId,String custName,Model model) {
+        model.addAttribute("menuNo", menuNo);
+        model.addAttribute("custId",fldId);
+        model.addAttribute("custName",custName);
+        return "customer/customer/addContract";
     }
 }

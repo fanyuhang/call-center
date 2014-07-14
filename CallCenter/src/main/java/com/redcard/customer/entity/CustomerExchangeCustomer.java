@@ -10,7 +10,7 @@ import javax.persistence.Table;
  * CustomerExchangeCustomer entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "tblCustomerExchangeCustomer")
+@Table(name = "TBLCUSTOMEREXCHANGECUSTOMER")
 public class CustomerExchangeCustomer implements java.io.Serializable {
 
 	// Fields
@@ -50,7 +50,7 @@ public class CustomerExchangeCustomer implements java.io.Serializable {
 
 	// Property accessors
 	@Id
-	@Column(name = "fldId", unique = true, nullable = false)
+	@Column(name = "FLDID", unique = true, nullable = false)
 	public Integer getFldId() {
 		return this.fldId;
 	}
@@ -59,7 +59,7 @@ public class CustomerExchangeCustomer implements java.io.Serializable {
 		this.fldId = fldId;
 	}
 
-	@Column(name = "fldCustomerExchangeId")
+	@Column(name = "FLDCUSTOMEREXCHANGEID")
 	public String getFldCustomerExchangeId() {
 		return this.fldCustomerExchangeId;
 	}
@@ -68,7 +68,7 @@ public class CustomerExchangeCustomer implements java.io.Serializable {
 		this.fldCustomerExchangeId = fldCustomerExchangeId;
 	}
 
-	@Column(name = "fldCustomerId")
+	@Column(name = "FLDCUSTOMERID")
 	public String getFldCustomerId() {
 		return this.fldCustomerId;
 	}
@@ -77,7 +77,7 @@ public class CustomerExchangeCustomer implements java.io.Serializable {
 		this.fldCustomerId = fldCustomerId;
 	}
 
-	@Column(name = "fldOperateUserNo")
+	@Column(name = "FLDOPERATEUSERNO")
 	public String getFldOperateUserNo() {
 		return this.fldOperateUserNo;
 	}
@@ -86,7 +86,7 @@ public class CustomerExchangeCustomer implements java.io.Serializable {
 		this.fldOperateUserNo = fldOperateUserNo;
 	}
 
-	@Column(name = "fldOperateDate")
+	@Column(name = "FLDOPERATEDATE")
 	public Timestamp getFldOperateDate() {
 		return this.fldOperateDate;
 	}
@@ -95,7 +95,7 @@ public class CustomerExchangeCustomer implements java.io.Serializable {
 		this.fldOperateDate = fldOperateDate;
 	}
 
-	@Column(name = "fldCreateUserNo")
+	@Column(name = "FLDCREATEUSERNO")
 	public String getFldCreateUserNo() {
 		return this.fldCreateUserNo;
 	}
@@ -104,7 +104,7 @@ public class CustomerExchangeCustomer implements java.io.Serializable {
 		this.fldCreateUserNo = fldCreateUserNo;
 	}
 
-	@Column(name = "fldCreateDate")
+	@Column(name = "FLDCREATEDATE")
 	public Timestamp getFldCreateDate() {
 		return this.fldCreateDate;
 	}
