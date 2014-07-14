@@ -53,6 +53,7 @@ public class Customer implements java.io.Serializable {
 	private Date fldOperateDate;
 	private String fldCreateUserNo;
 	private Date fldCreateDate;
+	private String newServiceUserNo;
 
 	// Constructors
 
@@ -380,5 +381,14 @@ public class Customer implements java.io.Serializable {
 	@Transient
 	public String getServiceUserName() {
 		return serviceUser!=null ? serviceUser.getUserName() : "";
+	}
+
+	@Transient
+	public String getNewServiceUserNo() {
+		return newServiceUserNo;
+	}
+
+	public void setNewServiceUserNo(String newServiceUserNo) {
+		this.newServiceUserNo = newServiceUserNo;
 	}
 }

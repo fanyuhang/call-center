@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.common.Constant;
 import com.common.core.grid.GridPageRequest;
 import com.common.core.util.GenericPageHQLQuery;
+import com.redcard.customer.dao.ContractDao;
 import com.redcard.customer.dao.CustomerDao;
 import com.redcard.customer.entity.Customer;
 
@@ -23,6 +24,9 @@ public class CustomerManager extends GenericPageHQLQuery<Customer> {
 	
 	@Autowired
 	private CustomerDao customerDao;
+	
+	@Autowired
+	private ContractDao contractDao;
 	
 	public Page<Customer> findAllCustomer(GridPageRequest page, String where) {
         return (Page<Customer>) super.findAll(where, page);
@@ -52,5 +56,17 @@ public class CustomerManager extends GenericPageHQLQuery<Customer> {
         customer.setFldStatus(Constant.CUSTOMER_STATUS_DIABLED);
         customer.setFldOperateDate(new Date());
         customerDao.save(customer);
+    }
+	
+	@Transactional(readOnly = false)
+    public void updateFinancialUser(Customer customer) {
+		//1.更新客户信息
+		customer.setFldServiceUserNo(customer.getNewServiceUserNo());
+		customerDao.save(customer);
+		
+		//2.更新合同
+		contractDao.updateFinancialUser(customer.getNewServiceUserNo(), customer.getFldServiceUserNo());
+		
+		//3.记录交接历史
     }
 }

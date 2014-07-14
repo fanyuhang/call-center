@@ -14,7 +14,6 @@ import com.common.Constant;
 import com.common.core.grid.AsyncResponse;
 import com.common.core.grid.DataResponse;
 import com.common.core.grid.GridPageRequest;
-import com.common.core.util.DateEditor;
 import com.common.core.util.EntityUtil;
 import com.common.security.util.SecurityUtil;
 import com.redcard.customer.entity.Customer;
@@ -116,5 +115,28 @@ public class CustomerController {
         model.addAttribute("custId",fldId);
         model.addAttribute("custName",custName);
         return "customer/customer/addContract";
+    }
+	
+	@RequestMapping(value = "exchange")
+    public String exchange(String menuNo, String fldId, Model model) {
+        Customer customer = customerManager.find(fldId);
+        model.addAttribute("menuNo", menuNo);
+        model.addAttribute("customer", customer);
+        return "customer/customer/exchange";
+    }
+    
+    @RequestMapping(value = "updateFinancialUser")
+    @ResponseBody
+    public AsyncResponse updateFinancialUser(Customer customer) {
+        AsyncResponse result = new AsyncResponse(false, "客户交接成功");
+        customer.setFldOperateDate(new Date());
+        
+        Customer oldCustomer = customerManager.find(customer.getFldId());
+        customer.setFldStatus(oldCustomer.getFldStatus());
+        customer.setFldCreateUserNo(oldCustomer.getFldCreateUserNo());
+        customer.setFldCreateDate(oldCustomer.getFldCreateDate());
+        
+        customerManager.updateFinancialUser(customer);
+        return result;
     }
 }

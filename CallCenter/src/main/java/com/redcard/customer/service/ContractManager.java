@@ -12,7 +12,6 @@ import com.common.core.grid.GridPageRequest;
 import com.common.core.util.GenericPageHQLQuery;
 import com.redcard.customer.dao.ContractDao;
 import com.redcard.customer.dao.CustomerProductDetailDao;
-import com.redcard.customer.entity.Customer;
 import com.redcard.customer.entity.CustomerContract;
 
 @Component
