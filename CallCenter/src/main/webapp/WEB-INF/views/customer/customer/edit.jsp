@@ -4,6 +4,7 @@
 <form:form id="mainform" name="mainform" method="post" modelAttribute="customer"></form:form>
 <script type="text/javascript">
 	var genderData =<sys:dictList type = "1"/>;
+	var sourceData =<sys:dictList type = "10"/>;
 	
 	//覆盖本页面grid的loading效果
 	LG.overrideGridLoading();
@@ -20,7 +21,15 @@
         fields: [
         	{display: "ID", name: "fldId", type:"hidden", attr:{value:"${customer.fldId}"}},
             {display: "客户姓名",name: "fldName", newline: true, type: "text", attr: {value: "${customer.fldName}", readonly: "readonly"}, validate: {required: true, maxlength: 64}, group: "<label style=white-space:nowrap;>基本信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'},
-            {display: "客户来源", name: "fldSource", newline: false, type: "text", attr:{value:"${customer.fldSource}"}},
+            {display: "客户来源", name: "fldSource", newline: false, type: "select",
+                options:{
+                    valueField: 'value',
+                    textField: 'text',
+                    isMultiSelect:false,
+                    data:genderData,
+                    initValue: '${customer.fldSource}',
+                    valueFieldID:"fldSource"
+                }},
             {display:"性别",name:"fldGender",newline:true,type:"select",
                 options:{
                     valueField: 'value',
@@ -36,14 +45,74 @@
             {display: "手机", name: "fldMobile", newline: false, type: "text", attr: {value: "${customer.fldMobile}"}, validate: { maxlength: 100}},
             {display: "地址", name: "fldAddress", newline: true, type: "text", attr: {value: "${customer.fldAddress}"}, validate: { maxlength: 64}},
             {display: "邮箱", name: "fldEmail", newline: false, type: "text", attr: {value: "${customer.fldEmail}"}, validate: { maxlength: 100}},
-            {display: "所属理财经理", name: "fldFinancialUserNo", newline: true, type: "text", attr: {value: "${customer.fldFinancialUserNo}"}, validate: { maxlength: 32}, group: "<label style=white-space:nowrap;>其他信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'},
-            {display: "所属客户经理", name: "fldCustomerUserNo", newline: false, type: "text", attr: {value: "${customer.fldCustomerUserNo}"}, validate: { maxlength: 32}},
-            {display: "所属客服", name: "fldServiceUserNo", newline: true, type: "text", attr: {value: "${customer.fldServiceUserNo}"}, validate: { maxlength: 32}},
+            {display: "所属理财经理", name: "fldFinancialUserNo", newline: true, type: "select", group: "<label style=white-space:nowrap;>其他信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>',
+            	comboboxName: "financialUserNo", options: {valueFieldID: "financialUserNo"}},
+            {display: "所属客户经理", name: "fldCustomerUserNo", newline: false, type: "select", 
+				comboboxName: "customerUserNo", options: {valueFieldID: "customerUserNo"}},
+            {display: "所属客服", name: "fldServiceUserNo", newline: true, type: "select", 
+            	comboboxName: "serviceUserNo", options: {valueFieldID: "serviceUserNo"}},
             {display: "瑞得卡", name: "fldCardNo", newline: false, type: "text", attr: {value: "${customer.fldCardNo}"}, validate: { maxlength: 32}},
             {display: "瑞得卡等级", name: "fldCardLevel", newline: true, type: "text", attr: {value: "${customer.fldCardLevel}"}},
             {display: "备注", name: "fldComment", newline: false, type: "text", attr: {value: "${customer.fldComment}"}, validate: { maxlength: 64}}
         ]
     });
+    
+    $.ligerui.get("financialUserNo").openSelect({
+	    grid:{
+	    	columnWidth: 255,
+	        columns:[
+	            {display:"用户名称", name:"userName"},
+	            {display:"登录名称", name:"loginName"},
+	            {display:"部门", name:"deptName"},
+	        ], pageSize:20,heightDiff:-10,
+	        url:'<c:url value="/security/user/list"/>', sortName:'userName', checkbox:false
+	    },
+	    search:{
+	        fields:[
+	            {display:"用户名称", name:"userName", newline:true, type:"text", cssClass:"field"}
+	        ]
+	    },
+	    valueField:'loginName', textField:'userName', top:30
+	});
+	$.ligerui.get("financialUserNo")._changeValue('${customer.fldFinancialUserNo}', '${customer.financialUserName}');
+	
+	$.ligerui.get("customerUserNo").openSelect({
+	    grid:{
+	    	columnWidth: 255,
+	        columns:[
+	            {display:"用户名称", name:"userName"},
+	            {display:"登录名称", name:"loginName"},
+	            {display:"部门", name:"deptName"},
+	        ], pageSize:20,heightDiff:-10,
+	        url:'<c:url value="/security/user/list"/>', sortName:'userName', checkbox:false
+	    },
+	    search:{
+	        fields:[
+	            {display:"用户名称", name:"userName", newline:true, type:"text", cssClass:"field"}
+	        ]
+	    },
+	    valueField:'loginName', textField:'userName', top:30
+	});
+	$.ligerui.get("customerUserNo")._changeValue('${customer.fldCustomerUserNo}', '${customer.customerUserName}');
+	
+	$.ligerui.get("serviceUserNo").openSelect({
+	    grid:{
+	    	columnWidth: 255,
+	        columns:[
+	            {display:"用户名称", name:"userName"},
+	            {display:"登录名称", name:"loginName"},
+	            {display:"部门", name:"deptName"},
+	        ], pageSize:20,heightDiff:-10,
+	        url:'<c:url value="/security/user/list"/>', sortName:'userName', checkbox:false
+	    },
+	    search:{
+	        fields:[
+	            {display:"用户名称", name:"userName", newline:true, type:"text", cssClass:"field"}
+	        ]
+	    },
+	    valueField:'loginName', textField:'userName', top:30
+	});
+	$.ligerui.get("serviceUserNo")._changeValue('${customer.fldServiceUserNo}', '${customer.serviceUserName}');
 
     mainform.attr("action", '<c:url value="/customer/customer/update"/>');
 

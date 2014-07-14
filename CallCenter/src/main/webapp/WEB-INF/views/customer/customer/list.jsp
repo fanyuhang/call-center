@@ -69,7 +69,7 @@
 	        		return renderLabel(statusData,item.fldStatus);
 	        	}
 	        },
-	        {display: "所属理财经理", name: "fldFinancialUserNo"},
+	        {display: "所属理财经理", name: "financialUserName"},
 	        {display: "瑞得卡号", name: "fldCardNo"},
 	        {display: "瑞得卡等级", name: "fldCardLevel"},
 	        {display: "操作人", name: "fldOperateUserNo"},
@@ -123,6 +123,14 @@
 	            }
 	            var selected = grid.getSelected();
 	            top.f_addTab(null, '新增合同', '<c:url value="/customer/customer/addContract"/>' + '?menuNo=${menuNo}&fldId=' + selected.fldId+'&custName='+selected.fldName);
+	        	break;
+	        case "exchange":
+	        	if (grid.getSelectedRows().length > 1 || grid.getSelectedRows().length == 0) {
+	                LG.tip('请选择一行数据!');
+	                return;
+	            }
+	            var selected = grid.getSelected();
+	            top.f_addTab(null, '客户交接', '<c:url value="/customer/customer/exchange"/>' + '?menuNo=${menuNo}&fldId=' + selected.fldId);
 	        	break;
 	        case "upload":
 	            f_upload();
