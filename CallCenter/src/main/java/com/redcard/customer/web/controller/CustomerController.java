@@ -139,4 +139,11 @@ public class CustomerController {
         customerManager.updateFinancialUser(customer);
         return result;
     }
+    
+    @RequestMapping(value = "viewContract")
+    public String viewContract(String menuNo, String fldId, Model model) {
+        model.addAttribute("menuNo", menuNo);
+        model.addAttribute("customerId", fldId);
+        return "customer/customer/viewContract";
+    }
 }

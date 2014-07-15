@@ -71,7 +71,7 @@
 	        {display: "业绩额度", name: "fldPerformanceMoney"},
 	        {display: "操作人", name: "operateUserName"},
 	        {display: "操作时间", name: "fldOperateDate"}
-	    ], dataAction: 'server', pageSize: 20, toolbar: {}, url: '<c:url value="/customer/contract/list"/>', sortName: 'operateDate', sortOrder: 'desc',
+	    ], dataAction: 'server', pageSize: 20, toolbar: {}, url: '<c:url value="/customer/contract/list"/>', sortName: 'fldOperateDate', sortOrder: 'desc',
 	    width: '98%', height: '98%', toJSON: JSON2.stringify, onReload: f_reload
 	});
 

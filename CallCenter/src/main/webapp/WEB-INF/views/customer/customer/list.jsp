@@ -124,6 +124,14 @@
 	            var selected = grid.getSelected();
 	            top.f_addTab(null, '新增合同', '<c:url value="/customer/customer/addContract"/>' + '?menuNo=${menuNo}&fldId=' + selected.fldId+'&custName='+selected.fldName);
 	        	break;
+	        case "viewContract":
+	        	if (grid.getSelectedRows().length > 1 || grid.getSelectedRows().length == 0) {
+	                LG.tip('请选择一行数据!');
+	                return;
+	            }
+	            var selected = grid.getSelected();
+	            top.f_addTab(null, '查看合同', '<c:url value="/customer/customer/viewContract"/>' + '?menuNo=${menuNo}&fldId=' + selected.fldId+'&custName='+selected.fldName);
+	        	break;
 	        case "exchange":
 	        	if (grid.getSelectedRows().length > 1 || grid.getSelectedRows().length == 0) {
 	                LG.tip('请选择一行数据!');

@@ -1,10 +1,15 @@
 package com.redcard.customer.entity;
 
-import java.sql.Timestamp;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.common.security.util.SecurityUtil;
 
 /**
  * CustomerExchangeCustomer entity. @author MyEclipse Persistence Tools
@@ -19,9 +24,9 @@ public class CustomerExchangeCustomer implements java.io.Serializable {
 	private String fldCustomerExchangeId;
 	private String fldCustomerId;
 	private String fldOperateUserNo;
-	private Timestamp fldOperateDate;
-	private String fldCreateUserNo;
-	private Timestamp fldCreateDate;
+	private Date fldOperateDate;
+	private String fldCreateUserNo = SecurityUtil.getCurrentUserLoginName();
+	private Date fldCreateDate;
 
 	// Constructors
 
@@ -37,8 +42,8 @@ public class CustomerExchangeCustomer implements java.io.Serializable {
 	/** full constructor */
 	public CustomerExchangeCustomer(Integer fldId,
 			String fldCustomerExchangeId, String fldCustomerId,
-			String fldOperateUserNo, Timestamp fldOperateDate,
-			String fldCreateUserNo, Timestamp fldCreateDate) {
+			String fldOperateUserNo, Date fldOperateDate,
+			String fldCreateUserNo, Date fldCreateDate) {
 		this.fldId = fldId;
 		this.fldCustomerExchangeId = fldCustomerExchangeId;
 		this.fldCustomerId = fldCustomerId;
@@ -51,6 +56,7 @@ public class CustomerExchangeCustomer implements java.io.Serializable {
 	// Property accessors
 	@Id
 	@Column(name = "FLDID", unique = true, nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Integer getFldId() {
 		return this.fldId;
 	}
@@ -87,11 +93,11 @@ public class CustomerExchangeCustomer implements java.io.Serializable {
 	}
 
 	@Column(name = "FLDOPERATEDATE")
-	public Timestamp getFldOperateDate() {
+	public Date getFldOperateDate() {
 		return this.fldOperateDate;
 	}
 
-	public void setFldOperateDate(Timestamp fldOperateDate) {
+	public void setFldOperateDate(Date fldOperateDate) {
 		this.fldOperateDate = fldOperateDate;
 	}
 
@@ -105,11 +111,11 @@ public class CustomerExchangeCustomer implements java.io.Serializable {
 	}
 
 	@Column(name = "FLDCREATEDATE")
-	public Timestamp getFldCreateDate() {
+	public Date getFldCreateDate() {
 		return this.fldCreateDate;
 	}
 
-	public void setFldCreateDate(Timestamp fldCreateDate) {
+	public void setFldCreateDate(Date fldCreateDate) {
 		this.fldCreateDate = fldCreateDate;
 	}
 

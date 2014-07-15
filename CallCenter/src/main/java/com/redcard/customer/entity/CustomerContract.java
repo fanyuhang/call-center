@@ -17,6 +17,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.common.core.util.JsonDateSerializer;
 import com.common.core.util.JsonTimestampSerializer;
+import com.common.security.entity.User;
 import com.common.security.util.SecurityUtil;
 
 /**
@@ -461,5 +462,23 @@ public class CustomerContract implements java.io.Serializable {
 	@Transient
 	public Integer getProductClearDays() {
 		return productDetail.getFldClearDays();
+	}
+	
+	protected User operateUser;
+
+	@JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "FLDOPERATEUSERNO", referencedColumnName="FLDLOGINNAME", insertable = false, updatable = false)
+	public User getOperateUser() {
+		return operateUser;
+	}
+
+	public void setOperateUser(User operateUser) {
+		this.operateUser = operateUser;
+	}
+	
+	@Transient
+	public String getOperateUserName() {
+		return operateUser!=null ? operateUser.getUserName() : "";
 	}
 }

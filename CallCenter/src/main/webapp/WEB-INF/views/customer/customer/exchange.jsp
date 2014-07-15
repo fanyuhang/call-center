@@ -88,9 +88,9 @@
 	function f_save() {
 	    LG.validate(mainform);
 	
-	    var newFinancialUserNo = $("#newFinancialUserNo").val();
-           if (!newFinancialUserNo) {
-       		LG.showError("请选择新客户经理");
+	    var newServiceUser = $("#newServiceUser").val();
+           if (!newServiceUser) {
+       		LG.showError("请选择新客服");
        		return;
    		}
 	

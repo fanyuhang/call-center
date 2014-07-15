@@ -175,9 +175,12 @@
     <tblNode fldCode="01030105" fldParent="010301" fldName="新增合同" fldDesc="" fldTarget="addContract"
              fldIcon="/static/ligerUI/icons/silkicons/application_cascade.png"
              fldLink="/customer/customer/addContract" fldType="2" fldPosition="5"/>
-    <tblNode fldCode="01030106" fldParent="010301" fldName="交接" fldDesc="" fldTarget="exchange"
+    <tblNode fldCode="01030106" fldParent="010301" fldName="查看合同" fldDesc="" fldTarget="viewContract"
+             fldIcon="/static/ligerUI/icons/silkicons/application_form.png"
+             fldLink="/customer/customer/viewContract" fldType="2" fldPosition="6"/>
+    <tblNode fldCode="01030107" fldParent="010301" fldName="交接" fldDesc="" fldTarget="exchange"
              fldIcon="/static/ligerUI/icons/silkicons/application_link.png"
-             fldLink="/customer/customer/exchange" fldType="2" fldPosition="6"/>
+             fldLink="/customer/customer/exchange" fldType="2" fldPosition="7"/>
              
     <tblNode fldCode="010302" fldParent="0103" fldName="客户交接" fldDesc="" fldTarget=""
              fldIcon="/static/ligerUI/icons/32X32/communication.gif"

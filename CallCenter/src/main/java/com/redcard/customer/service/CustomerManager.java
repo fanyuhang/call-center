@@ -12,10 +12,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.common.Constant;
 import com.common.core.grid.GridPageRequest;
+import com.common.core.util.EntityUtil;
 import com.common.core.util.GenericPageHQLQuery;
+import com.common.security.util.SecurityUtil;
 import com.redcard.customer.dao.ContractDao;
 import com.redcard.customer.dao.CustomerDao;
+import com.redcard.customer.dao.CustomerExchangeCustomerDao;
+import com.redcard.customer.dao.CustomerExchangeDao;
 import com.redcard.customer.entity.Customer;
+import com.redcard.customer.entity.CustomerExchange;
+import com.redcard.customer.entity.CustomerExchangeCustomer;
 
 @Component
 @Transactional(readOnly = true)
@@ -24,9 +30,12 @@ public class CustomerManager extends GenericPageHQLQuery<Customer> {
 	
 	@Autowired
 	private CustomerDao customerDao;
-	
 	@Autowired
 	private ContractDao contractDao;
+	@Autowired
+	private CustomerExchangeDao customerExchangeDao;
+	@Autowired
+	private CustomerExchangeCustomerDao customerExchangeCustomerDao;
 	
 	public Page<Customer> findAllCustomer(GridPageRequest page, String where) {
         return (Page<Customer>) super.findAll(where, page);
@@ -68,5 +77,21 @@ public class CustomerManager extends GenericPageHQLQuery<Customer> {
 		contractDao.updateFinancialUser(customer.getNewServiceUserNo(), customer.getFldServiceUserNo());
 		
 		//3.记录交接历史
+		CustomerExchange customerExchange = new CustomerExchange();
+		customerExchange.setFldId(EntityUtil.getId());
+		customerExchange.setFldOldUserNo(customer.getFldServiceUserNo());//原客服
+		customerExchange.setFldNewUserNo(customer.getNewServiceUserNo());//新客服
+		customerExchange.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
+		customerExchange.setFldCreateDate(new Date());
+		customerExchange.setFldOperateDate(new Date());
+		customerExchangeDao.save(customerExchange);
+		
+		CustomerExchangeCustomer customerExchangeCustomer = new CustomerExchangeCustomer();
+		customerExchangeCustomer.setFldCustomerExchangeId(customerExchange.getFldId());
+		customerExchangeCustomer.setFldCustomerId(customer.getFldId());
+		customerExchangeCustomer.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
+		customerExchangeCustomer.setFldCreateDate(new Date());
+		customerExchangeCustomer.setFldOperateDate(new Date());
+		customerExchangeCustomerDao.save(customerExchangeCustomer);
     }
 }
