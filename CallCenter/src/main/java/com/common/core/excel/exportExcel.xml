@@ -28,4 +28,20 @@
     	<column cell="S1" propertyName="operateUserName" columnName="操作人" nullAllowed="true"></column>
     	<column cell="T1" propertyName="fldOperateDate" columnName="操作时间" nullAllowed="true"></column>
     </table>
+    
+    <table class="com.redcard.customer.entity.Customer" startRow="1">
+    	<column cell="A1" propertyName="fldName" columnName="商户姓名" nullAllowed="false"></column>
+    	<column cell="B1" propertyName="fldIdentityNo" columnName="身份证号" nullAllowed="true"></column>
+    	<column cell="C1" propertyName="fldMobile" columnName="手机号" nullAllowed="true"></column>
+    	<column cell="D1" propertyName="fldPhone" columnName="固定电话" nullAllowed="true"></column>
+    	<column cell="E1" propertyName="fldStatus" columnName="客户状态" nullAllowed="true">
+    		<mapping value="0" text="有效"></mapping>
+    		<mapping value="9" text="无效"></mapping>
+    	</column>
+    	<column cell="F1" propertyName="financialUserName" columnName="所属理财经理" nullAllowed="true"></column>
+    	<column cell="G1" propertyName="fldCardNo" columnName="瑞得卡号" nullAllowed="true"></column>
+    	<column cell="H1" propertyName="fldCardLevel" columnName="瑞得卡等级" nullAllowed="true"></column>
+    	<column cell="I1" propertyName="operateUserName" columnName="操作人" nullAllowed="true"></column>
+    	<column cell="J1" propertyName="fldOperateDate" columnName="操作时间" nullAllowed="true"></column>
+    </table>
 </tables>

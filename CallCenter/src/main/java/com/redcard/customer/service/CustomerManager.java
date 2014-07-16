@@ -1,6 +1,7 @@
 package com.redcard.customer.service;
 
 import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -53,6 +54,11 @@ public class CustomerManager extends GenericPageHQLQuery<Customer> {
 	@Transactional(readOnly = false)
     public void save(Customer customer) {
 		customerDao.save(customer);
+    }
+	
+	@Transactional(readOnly = false)
+    public void save(List<Customer> customerList) {
+		customerDao.save(customerList);
     }
 	
 	public Customer find(String fldId) {

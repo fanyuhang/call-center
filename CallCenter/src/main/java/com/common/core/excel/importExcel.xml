@@ -1,117 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <tables>
-    <table class="com.redcard.merchant.entity.Merchant" primaryKey="code" startRow="1">
-        <column cell="A1" propertyName="code"></column>
-        <column cell="B1" nullAllowed="true" propertyName="fullName"></column>
-        <column cell="C1" nullAllowed="true" propertyName="shortName"></column>
-        <column cell="E1" nullAllowed="true" propertyName="address"></column>
-        <column cell="F1" nullAllowed="true" propertyName="website"></column>
-        <column cell="G1" nullAllowed="true" propertyName="bank"></column>
-        <column cell="H1" nullAllowed="true" propertyName="bankNo"></column>
-        <column cell="I1" nullAllowed="true" propertyName="tradeTimesPerDay"></column>
-        <column cell="J1" nullAllowed="true" propertyName="tradeLimitMoneyPerTime"></column>
-        <column cell="K1" nullAllowed="true" propertyName="tradeLimitMoneyPerDay"></column>
-        <column cell="L1" nullAllowed="true" propertyName="contacter"></column>
-        <column cell="M1" nullAllowed="true" propertyName="phone"></column>
-        <column cell="N1" nullAllowed="true" propertyName="fax"></column>
-        <column cell="O1" nullAllowed="true" propertyName="postcode"></column>
-        <column cell="P1" nullAllowed="true" propertyName="clearingPeriod">
-            <mapping value="0" text="年"></mapping>
-            <mapping value="1" text="自然月"></mapping>
-            <mapping value="2" text="自定义月"></mapping>
-            <mapping value="3" text="周"></mapping>
-            <mapping value="4" text="日"></mapping>
-        </column>
-        <column cell="Q1" nullAllowed="true" propertyName="clearingDate">
-        </column>
-        <column cell="R1" nullAllowed="true" propertyName="feeEnable">
-            <mapping value="0" text="否"></mapping>
-            <mapping value="1" text="是"></mapping>
-        </column>
-    </table>
-    <table class="com.redcard.merchant.entity.Compact" primaryKey="code" startRow="1">
-        <column cell="A1" propertyName="merchantCode"></column>
-        <column cell="B1" propertyName="code"></column>
-        <column cell="C1" nullAllowed="true" propertyName="title"></column>
-        <column cell="D1" nullAllowed="true" propertyName="startDate"></column>
-        <column cell="E1" nullAllowed="true" propertyName="endDate"></column>
-        <column cell="F1" nullAllowed="true" propertyName="partyA"></column>
-        <column cell="G1" nullAllowed="true" propertyName="partyB"></column>
-    </table>
-    <table class="com.redcard.merchant.entity.Brand" primaryKey="brandCode" startRow="1">
-        <column cell="A1" propertyName="brandCode"></column>
-        <column cell="B1" nullAllowed="true" propertyName="brandFullName"></column>
-        <column cell="C1" nullAllowed="true" propertyName="brandShortName"></column>
-        <column cell="D1" nullAllowed="true" propertyName="type">
-            <mapping value="1" text="大型百货"></mapping>
-            <mapping value="2" text="超市卖场"></mapping>
-            <mapping value="3" text="餐饮连锁"></mapping>
-            <mapping value="4" text="休闲娱乐"></mapping>
-            <mapping value="5" text="宾馆酒店"></mapping>
-            <mapping value="6" text="家电家居"></mapping>
-            <mapping value="7" text="医疗药房"></mapping>
-            <mapping value="8" text="教育培训"></mapping>
-            <mapping value="9" text="食品西点"></mapping>
-            <mapping value="10" text="生活服务"></mapping>
-            <mapping value="11" text="各类专卖"></mapping>
-            <mapping value="12" text="连锁书店"></mapping>
-            <mapping value="13" text="汽车美容"></mapping>
-            <mapping value="14" text="票务旅游"></mapping>
-        </column>
-    </table>
-    <table class="com.redcard.merchant.entity.Shop" primaryKey="shopCode" startRow="1">
-        <column cell="A1" propertyName="merchantCode"></column>
-        <column cell="B1" propertyName="brandCode"></column>
-        <column cell="D1" propertyName="shopCode"></column>
-        <column cell="E1" nullAllowed="true" propertyName="name"></column>
-        <column cell="F1" nullAllowed="true" propertyName="address"></column>
-        <column cell="G1" nullAllowed="true" propertyName="contacter"></column>
-        <column cell="H1" nullAllowed="true" propertyName="phone"></column>
-        <column cell="I1" nullAllowed="true" propertyName="area"></column>
-    </table>
-    <table class="com.redcard.merchant.entity.Pos" primaryKey="terminalNo" startRow="1">
-        <column cell="A1" propertyName="merchantCode"></column>
-        <column cell="D1" propertyName="shopCode"></column>
-        <column cell="F1" propertyName="terminalNo"></column>
-        <column cell="G1" nullAllowed="true" propertyName="type">
-            <mapping value="0" text="网上"></mapping>
-            <mapping value="1" text="网下"></mapping>
-            <mapping value="2" text="网上网下双用"></mapping>
-        </column>
-        <column cell="H1" nullAllowed="true" propertyName="posUsedWay">
-            <mapping value="0" text="白名单"></mapping>
-            <mapping value="1" text="黑名单"></mapping>
-        </column>
-        <column cell="I1" nullAllowed="true" propertyName="outerMerchantCode"></column>
-        <column cell="J1" nullAllowed="true" propertyName="outerMerchantName"></column>
-        <column cell="K1" nullAllowed="true" propertyName="outerTerminalName"></column>
-        <column cell="L1" nullAllowed="true" propertyName="outerMerchantAddr"></column>
-        <column cell="M1" nullAllowed="true" propertyName="outerMerchantLinkMan"></column>
-        <column cell="N1" nullAllowed="true" propertyName="outerMerchantLinkPhone"></column>
-    </table>
-    <table class="com.redcard.merchant.entity.PosFee" primaryKey="terminalNo" startRow="1">
-        <column cell="F1" propertyName="terminalNo"></column>
-        <column cell="G1" nullAllowed="true" propertyName="receivedFeeWay">
-            <mapping value="0" text="商户支出"></mapping>
-            <mapping value="1" text="客户支出"></mapping>
-        </column>
-        <column cell="H1" nullAllowed="true" propertyName="feeWay">
-            <mapping value="0" text="每笔百分比"></mapping>
-            <mapping value="1" text="每笔固定金额"></mapping>
-        </column>
-        <column cell="I1" nullAllowed="true" propertyName="feeValue"></column>
-        <column cell="J1" nullAllowed="true" propertyName="startDate"></column>
-        <column cell="K1" nullAllowed="true" propertyName="endDate"></column>
-    </table>
-    <table class="com.redcard.order.entity.OrderAwardMoney" startRow="1">
-        <column cell="A1" propertyName="orderId"></column>
-        <column cell="Q1" nullAllowed="true" propertyName="money"></column>
-        <column cell="R1" nullAllowed="true" propertyName="awardDate"></column>
-        <column cell="S1" nullAllowed="true" propertyName="comment"></column>
-    </table>
-    <table class="com.redcard.account.entity.AccountBalance" startRow="1">
-        <column cell="A1" propertyName="ownAccountNo"></column>
-        <column cell="B1" nullAllowed="true" propertyName="billingDate"></column>
-        <column cell="C1" nullAllowed="true" propertyName="endingBalance"></column>
+    <table class="com.redcard.customer.entity.Customer" startRow="1">
+    	<column cell="A1" propertyName="fldName" nullAllowed="false"></column>
+    	<column cell="B1" propertyName="fldSource" nullAllowed="true">
+    		<mapping value="0" text="缘故"></mapping>
+        	<mapping value="1" text="电话"></mapping>
+        	<mapping value="2" text="传单"></mapping>
+    	</column>
+    	<column cell="C1" propertyName="fldGender" nullAllowed="true">
+    		<mapping value="1" text="男"></mapping>
+    		<mapping value="0" text="女"></mapping>
+    	</column>
+    	<column cell="D1" propertyName="fldBirthday" nullAllowed="true"></column>
+    	<column cell="E1" propertyName="fldIdentityNo" nullAllowed="true"></column>
+    	<column cell="F1" propertyName="fldPhone" nullAllowed="true"></column>
+    	<column cell="G1" propertyName="fldMobile" nullAllowed="true"></column>
+    	<column cell="H1" propertyName="fldAddress" nullAllowed="true"></column>
+    	<column cell="I1" propertyName="fldEmail" nullAllowed="true"></column>
+    	<column cell="J1" propertyName="fldFinancialUserNo" nullAllowed="true"></column>
+    	<column cell="K1" propertyName="fldCardNo" nullAllowed="true"></column>
+    	<column cell="L1" propertyName="fldCardLevel" nullAllowed="true"></column>
     </table>
 </tables>

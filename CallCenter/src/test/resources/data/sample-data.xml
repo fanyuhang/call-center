@@ -220,6 +220,15 @@
     <tblNode fldCode="01030107" fldParent="010301" fldName="交接" fldDesc="" fldTarget="exchange"
              fldIcon="/static/ligerUI/icons/silkicons/application_link.png"
              fldLink="/customer/customer/exchange" fldType="2" fldPosition="7"/>
+    <tblNode fldCode="01030108" fldParent="010301" fldName="下载导入模板" fldDesc="" fldTarget="template"
+             fldIcon="/static/ligerUI/icons/silkicons/application_put.png"
+             fldLink="/customer/customer/template" fldType="2" fldPosition="8"/>
+    <tblNode fldCode="01030109" fldParent="010301" fldName="导入" fldDesc="" fldTarget="import"
+             fldIcon="/static/ligerUI/icons/silkicons/application_get.png"
+             fldLink="/customer/customer/import" fldType="2" fldPosition="9"/>
+    <tblNode fldCode="01030110" fldParent="010301" fldName="导出" fldDesc="" fldTarget="export"
+             fldIcon="/static/ligerUI/icons/miniicons/action_save.gif"
+             fldLink="/customer/customer/export" fldType="2" fldPosition="10"/>
     
     <!-- 二级菜单 -->
     <tblNode fldCode="010302" fldParent="0103" fldName="客户交接" fldDesc="" fldTarget=""

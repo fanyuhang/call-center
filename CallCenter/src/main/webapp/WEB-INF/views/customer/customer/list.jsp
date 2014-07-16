@@ -72,7 +72,7 @@
 	        {display: "所属理财经理", name: "financialUserName"},
 	        {display: "瑞得卡号", name: "fldCardNo"},
 	        {display: "瑞得卡等级", name: "fldCardLevel"},
-	        {display: "操作人", name: "fldOperateUserNo"},
+	        {display: "操作人", name: "operateUserName"},
 	        {display: "操作时间", name: "fldOperateDate"}
 	    ], dataAction: 'server', pageSize: 20, toolbar: {}, url: '<c:url value="/customer/customer/list"/>', sortName: 'operateDate', sortOrder: 'desc',
 	    width: '98%', height: '98%', toJSON: JSON2.stringify, onReload: f_reload
@@ -140,30 +140,22 @@
 	            var selected = grid.getSelected();
 	            top.f_addTab(null, '客户交接', '<c:url value="/customer/customer/exchange"/>' + '?menuNo=${menuNo}&fldId=' + selected.fldId);
 	        	break;
-	        case "upload":
+	        case "import":
 	            f_upload();
 	            break;
 	        case "template":
-	            f_template(merchantTemplate);
+	            f_template(customerTemplate);
 	            break;
 	        case "export":
-	            f_export('<c:url value="/merchant/merchant/export"/>');
-	            break;
-	        case "settle":
-	            if (grid.getSelectedRows().length > 1 || grid.getSelectedRows().length == 0) {
-	                LG.tip('请选择一行数据!');
-	                return;
-	            }
-	            var selected = grid.getSelected();
-	            top.f_addTab(null, '设置商户结算信息', '<c:url value="/merchant/merchant/settle"/>' + '?menuNo=01030108&code=' + selected.code);
-	            break;
+	        	f_export('<c:url value="/customer/customer/export"/>');
+	        	break;
 	    }
 	}
 
 
 	$("#uploader").plupload({
 	    runtimes: 'flash',
-	    url: '<c:url value="/merchant/common/upload/0"/>',
+	    url: '<c:url value="/customer/common/upload/0"/>',
 	    max_file_size: '100mb',
 	    max_file_count: 1,
 	    chunk_size: '1mb',
@@ -201,7 +193,7 @@
 	        detailWin.show();
 	    } else {
 	        detailWin = $.ligerDialog.open({
-	            title: '商户导入',
+	            title: '客户导入',
 	            target: $("#upload"),
 	            width: 600, height: 420, top: 90,
 	            buttons: [

@@ -7,16 +7,10 @@
 <script src='<c:url value="/static/plupload/i18n/zh.js" />' type="text/javascript"></script>
 <script src='<c:url value="/static/plupload/jquery.ui.plupload/jquery.ui.plupload.js" />' type="text/javascript"></script>
 <script type="text/javascript">
-    var merchantTemplate = '商户上传模板';
-    var compactTemplate = '合同上传模板';
-    var brandTemplate = '品牌上传模板';
-    var shopTemplate = '门店上传模板';
-    var posTemplate = '终端上传模板';
-    var posfeeTemplate = '终端费率上传模板';
-    var merchantGroupTemplate="集团商户上传模板";
+    var customerTemplate = '客户上传模板';
 
     function f_template(filename) {
-        window.location.href = '<c:url value="/merchant/common/template"/>' + '/' +filename;
+        window.location.href = '<c:url value="/customer/common/template"/>' + '/' +filename;
     }
 
     function f_export(exportUrl) {
@@ -26,7 +20,7 @@
             url:exportUrl,
             data:{where:JSON2.stringify(rule)},
             success:function (data, message) {
-                window.location.href = '<c:url value="/merchant/common/download?filepath="/>' + encodeURIComponent(data[0]);
+                window.location.href = '<c:url value="/customer/common/download?filepath="/>' + encodeURIComponent(data[0]);
                 LG.tip(message);
             },
             error:function (message) {
@@ -34,5 +28,4 @@
             }
         });
     }
-
 </script>

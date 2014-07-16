@@ -177,4 +177,25 @@ public class CustomerController {
         }
         return result;
     }
+    
+    @SuppressWarnings("unchecked")
+	@RequestMapping(value = "export")
+    @ResponseBody
+    public AsyncResponse export(String where, HttpServletRequest request, HttpServletResponse response) {
+        AsyncResponse result = new AsyncResponse(false, "导出客户列表成功");
+        try {
+            ExcelExportUtil<Customer> listToExcel = new ExcelExportUtil<Customer>(customerManager.findAllCustomer(null, where).getContent());
+            String date = new SimpleDateFormat("yyyyMMddHHmmssS").format(new Date());
+            String reportPath = request.getSession().getServletContext().getRealPath("/") + "/export/";
+            String fileName = SecurityUtil.getCurrentUserId() + "_" + date + ".xls";
+            File pathFile = new File(reportPath);
+            if (!pathFile.exists())
+                pathFile.mkdirs();
+            result.getData().add(listToExcel.generate(reportPath + fileName));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new AsyncResponse(true, "系统内部错误");
+        }
+        return result;
+    }
 }

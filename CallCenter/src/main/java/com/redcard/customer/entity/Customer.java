@@ -325,6 +325,9 @@ public class Customer implements java.io.Serializable {
 	}
 	
 	@Transient
+	private String operateUserName;
+	
+	@Transient
 	public String getOperateUserName() {
 		return operateUser!=null ? operateUser.getUserName() : "";
 	}
@@ -341,6 +344,9 @@ public class Customer implements java.io.Serializable {
 	public void setFinancialUser(User financialUser) {
 		this.financialUser = financialUser;
 	}
+	
+	@Transient
+	private String financialUserName;
 	
 	@Transient
 	public String getFinancialUserName() {
