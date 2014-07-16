@@ -1,21 +1,30 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <dataset>
-    <tblNode fldCode="0198" fldParent="01" fldName="登陆" fldDesc="" fldTarget=""
+
+	<!-- 一级菜单 -->
+    <tblNode fldCode="0198" fldParent="01" fldName="登录" fldDesc="" fldTarget=""
              fldIcon="/static/ligerUI/icons/32X32/sitemap.gif"
              fldLink="/login" fldType="1" fldPosition="19"/>
-
+	
+	<!-- 一级菜单 -->
     <tblNode fldCode="0199" fldParent="01" fldName="注销" fldDesc="" fldTarget=""
              fldIcon="/static/ligerUI/icons/32X32/sitemap.gif"
              fldLink="/logout" fldType="1" fldPosition="19"/>
 
     <tblNode fldCode="01" fldParent="" fldName="redcard" fldDesc="root" fldTarget="#" fldIcon="" fldLink="" fldType="1"
              fldPosition="1"/>
+    
+    <!-- 一级菜单 -->
     <tblNode fldCode="0101" fldParent="01" fldName="安全管理" fldDesc="" fldTarget="#"
              fldIcon="/static/ligerUI/icons/silkicons/application.png" fldLink="" fldType="1"
              fldPosition="1"/>
+    
+    <!-- 二级菜单 -->
     <tblNode fldCode="010101" fldParent="0101" fldName="用户管理" fldDesc="" fldTarget=""
              fldIcon="/static/ligerUI/icons/32X32/user.gif"
              fldLink="/security/user/init" fldType="1" fldPosition="1"/>
+	
+    <!-- 三级菜单 -->
     <tblNode fldCode="01010101" fldParent="010101" fldName="增加" fldDesc="" fldTarget="add"
              fldIcon="/static/ligerUI/icons/silkicons/add.png"
              fldLink="/security/user/save" fldType="2" fldPosition="1"/>
@@ -40,10 +49,13 @@
     <tblNode fldCode="01010109" fldParent="010101" fldName="注销" fldDesc="" fldTarget="cancel"
              fldIcon="/static/ligerUI/icons/32X32/sign_out.gif"
              fldLink="/security/user/signoff" fldType="2" fldPosition="9"/>
-
+	
+	<!-- 二级菜单 -->
     <tblNode fldCode="010102" fldParent="0101" fldName="部门管理" fldDesc="" fldTarget=""
              fldIcon="/static/ligerUI/icons/32X32/customers.gif"
              fldLink="/security/dept/init" fldType="1" fldPosition="2"/>
+    
+    <!-- 三级菜单 -->
     <tblNode fldCode="01010201" fldParent="010102" fldName="增加" fldDesc="" fldTarget="add"
              fldIcon="/static/ligerUI/icons/silkicons/add.png"
              fldLink="/security/dept/save" fldType="2" fldPosition="1"/>
@@ -53,10 +65,13 @@
     <tblNode fldCode="01010203" fldParent="010102" fldName="删除" fldDesc="" fldTarget="delete"
              fldIcon="/static/ligerUI/icons/miniicons/page_delete.gif"
              fldLink="/security/dept/delete" fldType="2" fldPosition="3"/>
-
+	
+	<!-- 二级菜单 -->
     <tblNode fldCode="010103" fldParent="0101" fldName="模块管理" fldDesc="" fldTarget=""
              fldIcon="/static/ligerUI/icons/32X32/sitemap.gif"
              fldLink="/security/node/init" fldType="1" fldPosition="3"/>
+    
+    <!-- 三级菜单 -->
     <tblNode fldCode="01010301" fldParent="010103" fldName="增加" fldDesc="" fldTarget="add"
              fldIcon="/static/ligerUI/icons/silkicons/add.png"
              fldLink="" fldType="2" fldPosition="1"/>
@@ -75,10 +90,13 @@
     <tblNode fldCode="01010306" fldParent="010103" fldName="操作按钮" fldDesc="" fldTarget="button"
              fldIcon="/static/ligerUI/icons/32X32/document_library.gif"
              fldLink="" fldType="2" fldPosition="6"/>
-
+	
+	<!-- 二级菜单 -->
     <tblNode fldCode="010104" fldParent="0101" fldName="角色管理" fldDesc="" fldTarget=""
              fldIcon="/static/ligerUI/icons/32X32/role.gif"
              fldLink="/security/role/init" fldType="1" fldPosition="4"/>
+    
+    <!-- 三级菜单 -->
     <tblNode fldCode="01010401" fldParent="010104" fldName="增加" fldDesc="" fldTarget="add"
              fldIcon="/static/ligerUI/icons/silkicons/add.png"
              fldLink="/security/role/save" fldType="2" fldPosition="1"/>
@@ -88,17 +106,23 @@
     <tblNode fldCode="01010403" fldParent="010104" fldName="删除" fldDesc="" fldTarget="delete"
              fldIcon="/static/ligerUI/icons/miniicons/page_delete.gif"
              fldLink="/security/role/delete" fldType="2" fldPosition="3"/>
-
+	
+	<!-- 二级菜单 -->
     <tblNode fldCode="010105" fldParent="0101" fldName="功能权限管理" fldDesc="" fldTarget=""
              fldIcon="/static/ligerUI/icons/32X32/config.gif"
              fldLink="/security/privilege/init" fldType="1" fldPosition="5"/>
+             
+    <!-- 三级菜单 -->
     <tblNode fldCode="01010501" fldParent="010105" fldName="保存" fldDesc="" fldTarget="save"
              fldIcon="/static/ligerUI/icons/silkicons/page_save.png"
              fldLink="/security/privilege/saveRolePrivilege" fldType="2" fldPosition="1"/>
-
+	
+	<!-- 二级菜单 -->
     <tblNode fldCode="010106" fldParent="0101" fldName="数据权限管理" fldDesc="" fldTarget=""
              fldIcon="/static/ligerUI/icons/32X32/setup.gif"
              fldLink="/security/dataPrivilege/init" fldType="1" fldPosition="6"/>
+    
+    <!-- 三级菜单 -->
     <tblNode fldCode="01010601" fldParent="010106" fldName="增加" fldDesc="" fldTarget="add"
              fldIcon="/static/ligerUI/icons/silkicons/add.png"
              fldLink="/security/dataPrivilege/add" fldType="2" fldPosition="1"/>
@@ -108,14 +132,18 @@
     <tblNode fldCode="01010603" fldParent="010106" fldName="删除" fldDesc="" fldTarget="delete"
              fldIcon="/static/ligerUI/icons/miniicons/page_delete.gif"
              fldLink="/security/dataPrivilege/delete" fldType="2" fldPosition="3"/>
-
+	
+	<!-- 一级菜单 -->
     <tblNode fldCode="0102" fldParent="01" fldName="系统设置" fldDesc="" fldTarget="#"
              fldIcon="/static/ligerUI/icons/silkicons/application.png" fldLink="" fldType="1"
              fldPosition="2"/>
-
+	
+	<!-- 二级菜单 -->
     <tblNode fldCode="010204" fldParent="0102" fldName="数据字典管理" fldDesc="" fldTarget=""
              fldIcon="/static/ligerUI/icons/32X32/document_library.gif"
              fldLink="/system/dictionary/init" fldType="1" fldPosition="5"/>
+             
+    <!-- 三级菜单 -->
     <tblNode fldCode="01020401" fldParent="010204" fldName="增加" fldDesc="" fldTarget="add"
              fldIcon="/static/ligerUI/icons/silkicons/add.png"
              fldLink="/system/dictionary/save" fldType="2" fldPosition="1"/>
@@ -125,17 +153,23 @@
     <tblNode fldCode="01020403" fldParent="010204" fldName="删除" fldDesc="" fldTarget="delete"
              fldIcon="/static/ligerUI/icons/miniicons/page_delete.gif"
              fldLink="/system/dictionary/delete" fldType="2" fldPosition="3"/>
-
+	
+	<!-- 二级菜单 -->
     <tblNode fldCode="010205" fldParent="0102" fldName="系统参数管理" fldDesc="" fldTarget=""
              fldIcon="/static/ligerUI/icons/32X32/attibutes.gif"
              fldLink="/system/parameter/init" fldType="1" fldPosition="6"/>
+    
+    <!-- 三级菜单 -->
     <tblNode fldCode="01020501" fldParent="010205" fldName="修改" fldDesc="" fldTarget="modify"
              fldIcon="/static/ligerUI/icons/miniicons/page_edit.gif"
              fldLink="/system/parameter/update" fldType="2" fldPosition="2"/>
-
+	
+	<!-- 二级菜单 -->
     <tblNode fldCode="010206" fldParent="0102" fldName="定时任务管理" fldDesc="" fldTarget=""
              fldIcon="/static/ligerUI/icons/32X32/product_169.gif"
              fldLink="/system/sysJob/init" fldType="1" fldPosition="7"/>
+    
+    <!-- 三级菜单 -->
     <tblNode fldCode="01020601" fldParent="010206" fldName="增加" fldDesc="" fldTarget="add"
              fldIcon="/static/ligerUI/icons/silkicons/add.png"
              fldLink="/system/sysJob/save" fldType="2" fldPosition="1"/>
@@ -148,18 +182,23 @@
     <tblNode fldCode="01020605" fldParent="010206" fldName="查看" fldDesc="" fldTarget="view"
              fldIcon="/static/ligerUI/icons/silkicons/application_view_detail.png"
              fldLink="" fldType="2" fldPosition="4"/>
-
+	
+	<!-- 二级菜单 -->
     <tblNode fldCode="010208" fldParent="0102" fldName="系统日志" fldDesc="" fldTarget=""
              fldIcon="/static/ligerUI/icons/32X32/search.gif"
              fldLink="/system/sysLog/init" fldType="1" fldPosition="8"/>
-
+	
+	<!-- 一级菜单 -->
     <tblNode fldCode="0103" fldParent="01" fldName="客户管理" fldDesc="" fldTarget="#"
              fldIcon="/static/ligerUI/icons/silkicons/application.png" fldLink="" fldType="1"
              fldPosition="3"/>
-
+	
+	<!-- 二级菜单 -->
     <tblNode fldCode="010301" fldParent="0103" fldName="客户管理" fldDesc="" fldTarget=""
              fldIcon="/static/ligerUI/icons/32X32/customers.gif"
              fldLink="/customer/customer/init" fldType="1" fldPosition="0"/>
+    
+    <!-- 三级菜单 -->
     <tblNode fldCode="01030101" fldParent="010301" fldName="新增" fldDesc="" fldTarget="add"
              fldIcon="/static/ligerUI/icons/silkicons/add.png"
              fldLink="/customer/customer/add" fldType="2" fldPosition="1"/>
@@ -181,14 +220,18 @@
     <tblNode fldCode="01030107" fldParent="010301" fldName="交接" fldDesc="" fldTarget="exchange"
              fldIcon="/static/ligerUI/icons/silkicons/application_link.png"
              fldLink="/customer/customer/exchange" fldType="2" fldPosition="7"/>
-             
+    
+    <!-- 二级菜单 -->
     <tblNode fldCode="010302" fldParent="0103" fldName="客户交接" fldDesc="" fldTarget=""
              fldIcon="/static/ligerUI/icons/32X32/communication.gif"
              fldLink="/customer/exchange/init" fldType="1" fldPosition="1"/>
-             
+    
+    <!-- 二级菜单 -->
     <tblNode fldCode="010303" fldParent="0103" fldName="产品管理" fldDesc="" fldTarget=""
              fldIcon="/static/ligerUI/icons/32X32/product.gif"
              fldLink="/customer/product/init" fldType="1" fldPosition="2"/>
+    
+    <!-- 三级菜单 -->
    	<tblNode fldCode="01030301" fldParent="010303" fldName="新增" fldDesc="" fldTarget="add"
              fldIcon="/static/ligerUI/icons/silkicons/add.png"
              fldLink="/customer/product/add" fldType="2" fldPosition="1"/>
@@ -201,10 +244,13 @@
     <tblNode fldCode="01030304" fldParent="010303" fldName="查看" fldDesc="" fldTarget="view"
              fldIcon="/static/ligerUI/icons/silkicons/application_view_detail.png"
              fldLink="/customer/product/view" fldType="2" fldPosition="4"/>
-             
+    
+    <!-- 二级菜单 -->    
     <tblNode fldCode="010304" fldParent="0103" fldName="合同管理" fldDesc="" fldTarget=""
              fldIcon="/static/ligerUI/icons/32X32/billing.gif"
              fldLink="/customer/contract/init" fldType="1" fldPosition="3"/>
+    
+    <!-- 三级菜单 -->
     <tblNode fldCode="01030401" fldParent="010304" fldName="新增" fldDesc="" fldTarget="add"
              fldIcon="/static/ligerUI/icons/silkicons/add.png"
              fldLink="/customer/contract/add" fldType="2" fldPosition="1"/>
@@ -217,11 +263,27 @@
     <tblNode fldCode="01030404" fldParent="010304" fldName="查看" fldDesc="" fldTarget="view"
              fldIcon="/static/ligerUI/icons/silkicons/application_view_detail.png"
              fldLink="/customer/contract/view" fldType="2" fldPosition="4"/>
-             
+    
+    <!-- 二级菜单 -->  
     <tblNode fldCode="010305" fldParent="0103" fldName="绩效管理" fldDesc="" fldTarget=""
              fldIcon="/static/ligerUI/icons/32X32/report.gif"
              fldLink="" fldType="1" fldPosition="4"/>
-
+    
+	<!-- 一级菜单 -->
+    <tblNode fldCode="0104" fldParent="01" fldName="短信管理" fldDesc="" fldTarget="#"
+             fldIcon="/static/ligerUI/icons/silkicons/application.png" fldLink="" fldType="1"
+             fldPosition="4"/>
+	
+	<!-- 二级菜单 -->
+    <tblNode fldCode="010401" fldParent="0104" fldName="短信模板管理" fldDesc="" fldTarget=""
+             fldIcon="/static/ligerUI/icons/32X32/document_library.gif"
+             fldLink="/message/template/init" fldType="1" fldPosition="0"/>
+			 
+	<!-- 二级菜单 -->
+    <tblNode fldCode="010402" fldParent="0104" fldName="短信记录管理" fldDesc="" fldTarget=""
+             fldIcon="/static/ligerUI/icons/32X32/comment.gif"
+             fldLink="/message/operate/init" fldType="1" fldPosition="1"/>
+	
     <tblRole fldId="1" fldRoleName="sysadmin"/>
 
     <tblUser fldId="1" fldLoginName="admin" fldUserName="admin" fldPassword="5ba7e14af239a0e31a7741c727339198"
