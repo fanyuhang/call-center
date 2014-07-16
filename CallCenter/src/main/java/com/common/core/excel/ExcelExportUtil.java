@@ -143,7 +143,7 @@ public class ExcelExportUtil<T> {
                     column = columnList.get(i);
                     Object value = BeanUtils.getBeanProperty(obj, column.getPropertyName());
                     if (column.getKeyToLabelMap().size() != 0) {
-                        value = column.getKeyToLabelMap().get(Integer.parseInt(value.toString()));
+                    	value = (null != value) ? column.getKeyToLabelMap().get(Integer.parseInt(value.toString())) : "";
                     }
                     writeCell(row, i, value, formatTypes.get(i));
                 }

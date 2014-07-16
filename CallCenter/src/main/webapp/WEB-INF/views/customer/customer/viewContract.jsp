@@ -13,6 +13,35 @@
 	var statusData =<sys:dictList type = "8"/>;
 	
 	var where = '{"op":"and","rules":[{"op":"like","field":"fldCustomerId","value":"${customerId}","type":"string"}]}';
+	
+	var toolbarOptions = {
+    	items:[
+        {
+            id:'add', text:'导出',
+            img:'<c:url value="/static/ligerUI/icons/miniicons/action_save.gif"/>',
+            click:function (item) {
+            	var url = '<c:url value="/customer/customer/exportContract?where='+where+'"/>';
+            	exportContract(url);
+            }
+        }
+    	]
+	};
+	
+	function exportContract(url) {
+		LG.ajax({
+            loading:'正在导出数据中...',
+            url:url,
+            data:{where:where},
+            success:function (data, message) {
+                window.location.href = '<c:url value="/customer/common/download?filepath="/>' + encodeURIComponent(data[0]);
+                LG.tip(message);
+            },
+            error:function (message) {
+                LG.tip(message);
+            }
+        });
+	}
+	
 	//列表结构
 	var grid = $("#maingrid").ligerGrid({
 	    checkbox: false,
@@ -44,10 +73,10 @@
 	        {display: "业绩额度", name: "fldPerformanceMoney"},
 	        {display: "操作人", name: "operateUserName"},
 	        {display: "操作时间", name: "fldOperateDate"}
-	    ], dataAction: 'server', pageSize: 20, toolbar: {}, url: '<c:url value="/customer/contract/list?where='+where+'"/>', sortName: 'fldOperateDate', sortOrder: 'desc',
+	    ], dataAction: 'server', pageSize: 20, toolbar: toolbarOptions, url: '<c:url value="/customer/contract/list?where='+where+'"/>', sortName: 'fldOperateDate', sortOrder: 'desc',
 	    width: '98%', height: '98%', toJSON: JSON2.stringify, onReload: f_reload
 	});
-
+	
 	function f_reload() {
 	    grid.loadData();
 	}

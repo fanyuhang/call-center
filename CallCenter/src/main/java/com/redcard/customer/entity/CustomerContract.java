@@ -432,9 +432,15 @@ public class CustomerContract implements java.io.Serializable {
 	}
 	
 	@Transient
+	private String customerName;
+	
+	@Transient
 	public String getCustomerName() {
 		return customer.getFldName();
 	}
+	
+	@Transient
+	private String identityNo;
 	
 	@Transient
 	public String getIdentityNo() {
@@ -455,9 +461,15 @@ public class CustomerContract implements java.io.Serializable {
 	}
 	
 	@Transient
+	private String productFullName;
+	
+	@Transient
 	public String getProductFullName() {
 		return productDetail.getFldFullName();
 	}
+	
+	@Transient
+	private Integer productClearDays;
 	
 	@Transient
 	public Integer getProductClearDays() {
@@ -476,6 +488,9 @@ public class CustomerContract implements java.io.Serializable {
 	public void setOperateUser(User operateUser) {
 		this.operateUser = operateUser;
 	}
+	
+	@Transient
+	private String operateUserName;
 	
 	@Transient
 	public String getOperateUserName() {

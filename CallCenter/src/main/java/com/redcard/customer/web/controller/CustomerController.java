@@ -1,6 +1,11 @@
 package com.redcard.customer.web.controller;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,12 +16,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.common.Constant;
+import com.common.core.excel.ExcelExportUtil;
 import com.common.core.grid.AsyncResponse;
 import com.common.core.grid.DataResponse;
 import com.common.core.grid.GridPageRequest;
 import com.common.core.util.EntityUtil;
 import com.common.security.util.SecurityUtil;
 import com.redcard.customer.entity.Customer;
+import com.redcard.customer.entity.CustomerContract;
+import com.redcard.customer.service.ContractManager;
 import com.redcard.customer.service.CustomerManager;
 
 @Controller
@@ -26,6 +34,8 @@ public class CustomerController {
 	
 	@Autowired
 	private CustomerManager customerManager;
+	@Autowired
+	private ContractManager contractManager;
 	
 	@RequestMapping(value = "init")
     public String init(String menuNo, Model model) {
@@ -145,5 +155,26 @@ public class CustomerController {
         model.addAttribute("menuNo", menuNo);
         model.addAttribute("customerId", fldId);
         return "customer/customer/viewContract";
+    }
+    
+    @SuppressWarnings("unchecked")
+	@RequestMapping(value = "exportContract")
+    @ResponseBody
+    public AsyncResponse exportContract(String where, HttpServletRequest request, HttpServletResponse response) {
+        AsyncResponse result = new AsyncResponse(false, "导出客户合同列表成功");
+        try {
+        	ExcelExportUtil<CustomerContract> listToExcel = new ExcelExportUtil<CustomerContract>(contractManager.findAllContract(null, where).getContent());
+            String date = new SimpleDateFormat("yyyyMMddHHmmssS").format(new Date());
+            String reportPath = request.getSession().getServletContext().getRealPath("/") + "/export/";
+            String fileName = SecurityUtil.getCurrentUserId() + "_" + date + ".xls";
+            File pathFile = new File(reportPath);
+            if (!pathFile.exists())
+                pathFile.mkdirs();
+            result.getData().add(listToExcel.generate(reportPath + fileName));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new AsyncResponse(true, "系统内部错误");
+        }
+        return result;
     }
 }
