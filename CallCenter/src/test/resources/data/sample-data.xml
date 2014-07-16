@@ -341,6 +341,9 @@
     <tblDictionary fldId="26" fldType="11" fldName="否" fldValue="0" fldStatus="0" fldComment="是否已到期，否"/>
     <tblDictionary fldId="27" fldType="11" fldName="是" fldValue="1" fldStatus="0" fldComment="是否已到期，是"/>
 
+    <tblDictionary fldId="28" fldType="12" fldName="有效" fldValue="0" fldStatus="0" fldComment="短信模板状态，有效"/>
+    <tblDictionary fldId="29" fldType="12" fldName="无效" fldValue="9" fldStatus="0" fldComment="短信模板状态，无效"/>
+    
     <tblSysParameter fldId="1" fldName="SYS_ADMIN" fldValue="1" fldUnit="" fldStatus="0" fldDisplay="1" fldComment=""/>
     <tblSysParameter fldId="2" fldName="MAX_ERROR_LOGIN" fldValue="5" fldUnit="" fldStatus="0" fldDisplay="0"
                      fldComment="最大登陆失败次数"/>
