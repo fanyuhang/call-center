@@ -24,10 +24,10 @@ public class MessageTemplateController {
 		return "message/template/list";
 	}
 	
-	@RequestMapping(value = "list")
-    @ResponseBody
-    public DataResponse<CustomerExchange> list(GridPageRequest pageRequest, String where) {
-        pageRequest.setSort("fldOperateDate", "desc");
-        return (new DataResponse<CustomerExchange>(exchangeManager.findAllCustomerExchange(pageRequest, where)));
-    }
+//	@RequestMapping(value = "list")
+//    @ResponseBody
+//    public DataResponse<CustomerExchange> list(GridPageRequest pageRequest, String where) {
+//        pageRequest.setSort("fldOperateDate", "desc");
+//        return (new DataResponse<CustomerExchange>(exchangeManager.findAllCustomerExchange(pageRequest, where)));
+//    }
 }
