@@ -77,7 +77,7 @@
 				}
 			}, {
 				display : "操作人",
-				name : "user.fldOperateUserNo",
+				name : "operateUser.userName",
 				newline : true,
 				type : "text",
 				cssClass : "field"
@@ -105,7 +105,7 @@
 				}
 			}, {
 				display : "创建人",
-				name : "user.fldCreateUserNo",
+				name : "createUser.userName",
 				newline : true,
 				type : "text",
 				cssClass : "field"
@@ -159,17 +159,17 @@
 				display : "模板状态",
 				name : "fldStatus",
 				render : function(item) {
-					return renderLabel(statusData, item.fldStatus);
+					return renderLabel(messageTemplateStatusData, item.fldStatus);
 				}
 			}, {
 				display : "操作人",
-				name : "fldOperateUserNo"
+				name : "operateUserName"
 			}, {
 				display : "操作时间",
 				name : "fldOperateDate"
 			}, {
 				display : "创建人",
-				name : "fldCreateUserNo"
+				name : "createUserName"
 			}, {
 				display : "创建时间",
 				name : "fldCreateDate"
@@ -191,6 +191,76 @@
 
 		//加载toolbar
 		LG.loadToolbar(grid, toolbarBtnItemClick);
+
+		//工具条事件
+		function toolbarBtnItemClick(item) {
+			switch (item.id) {
+			case "add":
+				top.f_addTab(null, '新增短信模板',
+						'<c:url value="/message/template/add"/>'
+								+ '?menuNo=${menuNo}');
+				break;
+			case "view":
+				if (grid.getSelectedRows().length > 1
+						|| grid.getSelectedRows().length == 0) {
+					LG.tip('请选择一行数据!');
+					return;
+				}
+				var selected = grid.getSelected();
+				top.f_addTab(null, '查看客户信息',
+						'<c:url value="/message/template/view"/>'
+								+ '?menuNo=${menuNo}&fldId=' + selected.fldId);
+				break;
+			case "modify":
+				if (grid.getSelectedRows().length > 1
+						|| grid.getSelectedRows().length == 0) {
+					LG.tip('请选择一行数据!');
+					return;
+				}
+				var selected = grid.getSelected();
+				top.f_addTab(null, '修改客户信息',
+						'<c:url value="/message/template/edit"/>'
+								+ '?menuNo=${menuNo}&fldId=' + selected.fldId);
+				break;
+			case "delete":
+				if (grid.getSelectedRows().length > 1
+						|| grid.getSelectedRows().length == 0) {
+					LG.tip('请选择一行数据!');
+					return;
+				}
+				jQuery.ligerDialog.confirm('确定删除吗?', function(confirm) {
+					if (confirm)
+						f_delete();
+				});
+				break;
+			}
+		}
+
+		function f_reload() {
+			grid.loadData();
+		}
+
+		function f_delete() {
+			var selected = grid.getSelected();
+			if (selected) {
+				LG.ajax({
+					url : '<c:url value="/message/template/delete"/>',
+					loading : '正在删除中...',
+					data : {
+						fldId : selected.fldId
+					},
+					success : function() {
+						LG.showSuccess('删除短信模板成功！');
+						f_reload();
+					},
+					error : function(message) {
+						LG.showError(message);
+					}
+				});
+			} else {
+				LG.tip('请选择行!');
+			}
+		}
 
 		resizeDataGrid(grid);
 	</script>

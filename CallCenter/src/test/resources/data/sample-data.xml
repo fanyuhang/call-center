@@ -287,7 +287,21 @@
     <tblNode fldCode="010401" fldParent="0104" fldName="短信模板管理" fldDesc="" fldTarget=""
              fldIcon="/static/ligerUI/icons/32X32/document_library.gif"
              fldLink="/message/template/init" fldType="1" fldPosition="0"/>
-			 
+	
+	<!-- 三级菜单 -->
+   	<tblNode fldCode="01040101" fldParent="010401" fldName="新增" fldDesc="" fldTarget="add"
+             fldIcon="/static/ligerUI/icons/silkicons/add.png"
+             fldLink="/message/template/add" fldType="2" fldPosition="1"/>
+    <tblNode fldCode="01040102" fldParent="010401" fldName="修改" fldDesc="" fldTarget="modify"
+             fldIcon="/static/ligerUI/icons/miniicons/page_edit.gif"
+             fldLink="/message/template/edit" fldType="2" fldPosition="2"/>
+    <tblNode fldCode="01040103" fldParent="010401" fldName="删除" fldDesc="" fldTarget="delete"
+             fldIcon="/static/ligerUI/icons/miniicons/page_delete.gif"
+             fldLink="/message/template/delete" fldType="2" fldPosition="3"/>
+    <tblNode fldCode="01040104" fldParent="010401" fldName="查看" fldDesc="" fldTarget="view"
+             fldIcon="/static/ligerUI/icons/silkicons/application_view_detail.png"
+             fldLink="/message/template/view" fldType="2" fldPosition="4"/>
+             
 	<!-- 二级菜单 -->
     <tblNode fldCode="010402" fldParent="0104" fldName="短信记录管理" fldDesc="" fldTarget=""
              fldIcon="/static/ligerUI/icons/32X32/comment.gif"
