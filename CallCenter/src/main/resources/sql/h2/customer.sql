@@ -150,6 +150,7 @@ CREATE TABLE tblCustomerProductDetail (
   fldProductId     NVARCHAR(40) NULL,
   fldClearDays     INT          NULL,
   fldDueDate       DATETIME     NULL,
+  fldDayUnit           int                  null,
   fldMinPurchaseMoney  decimal(20,2) NULL,
   fldMaxPurchaseMoney  decimal(20,2) NULL,
   fldAnnualizedRate    decimal(20,2) NULL,
