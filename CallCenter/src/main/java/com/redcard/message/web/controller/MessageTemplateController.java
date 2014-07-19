@@ -73,4 +73,12 @@ public class MessageTemplateController {
 		messageTemplateManager.save(messageTemplate);
 		return result;
 	}
+
+	@RequestMapping(value = "view")
+	public String view(String menuNo, String fldId, Model model) {
+		MessageTemplate messageTemplate = messageTemplateManager.find(fldId);
+		model.addAttribute("menuNo", menuNo);
+		model.addAttribute("messageTemplate", messageTemplate);
+		return "message/template/view";
+	}
 }

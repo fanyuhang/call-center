@@ -25,6 +25,10 @@ public class MessageTemplateManager extends GenericPageHQLQuery<MessageTemplate>
 		messageTemplateDao.save(messageTemplate);
 	}
 
+	public MessageTemplate find(String fldId) {
+		return messageTemplateDao.findOne(fldId);
+	}
+
 	public boolean isExistMessageTemplate(MessageTemplate messageTemplate) {
 		Long messageTemplateCount = messageTemplateDao.countByTemplateName(messageTemplate.getFldName());
 		if (messageTemplateCount > 0) {

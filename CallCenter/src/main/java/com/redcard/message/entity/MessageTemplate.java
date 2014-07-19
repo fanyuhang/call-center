@@ -50,9 +50,8 @@ public class MessageTemplate implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public MessageTemplate(String fldId, String fldName, String fldContent,
-			Integer fldStatus, String fldComment, String fldOperateUserNo,
-			Date fldOperateDate, String fldCreateUserNo, Date fldCreateDate) {
+	public MessageTemplate(String fldId, String fldName, String fldContent, Integer fldStatus, String fldComment,
+			String fldOperateUserNo, Date fldOperateDate, String fldCreateUserNo, Date fldCreateDate) {
 		this.fldId = fldId;
 		this.fldName = fldName;
 		this.fldContent = fldContent;

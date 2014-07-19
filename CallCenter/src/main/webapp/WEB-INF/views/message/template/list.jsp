@@ -74,6 +74,10 @@
 					valueField : "value",
 					textField : "text",
 					data : messageTemplateStatusData
+				},
+				attr : {
+					"op" : "equal",
+					"vt" : "int"
 				}
 			}, {
 				display : "操作人",
@@ -136,55 +140,59 @@
 		});
 
 		//列表结构
-		var grid = $("#maingrid").ligerGrid({
-			checkbox : true,
-			rownumbers : true,
-			delayLoad : true,
-			columnWidth : 180,
-			columns : [ {
-				display : "ID",
-				name : "fldId",
-				hide : 1,
-				width : 1
-			}, {
-				display : "模板编号",
-				name : "fldId"
-			}, {
-				display : "模板名称",
-				name : "fldName"
-			}, {
-				display : "模板内容",
-				name : "fldContent"
-			}, {
-				display : "模板状态",
-				name : "fldStatus",
-				render : function(item) {
-					return renderLabel(messageTemplateStatusData, item.fldStatus);
-				}
-			}, {
-				display : "操作人",
-				name : "operateUserName"
-			}, {
-				display : "操作时间",
-				name : "fldOperateDate"
-			}, {
-				display : "创建人",
-				name : "createUserName"
-			}, {
-				display : "创建时间",
-				name : "fldCreateDate"
-			} ],
-			dataAction : 'server',
-			pageSize : 20,
-			toolbar : {},
-			url : '<c:url value="/message/template/list"/>',
-			sortName : 'operateDate',
-			sortOrder : 'desc',
-			width : '98%',
-			height : '98%',
-			toJSON : JSON2.stringify,
-			onReload : f_reload
-		});
+		var grid = $("#maingrid").ligerGrid(
+				{
+					checkbox : true,
+					rownumbers : true,
+					delayLoad : true,
+					columnWidth : 180,
+					columns : [
+							{
+								display : "ID",
+								name : "fldId",
+								hide : 1,
+								width : 1
+							},
+							{
+								display : "模板编号",
+								name : "fldId"
+							},
+							{
+								display : "模板名称",
+								name : "fldName"
+							},
+							{
+								display : "模板状态",
+								name : "fldStatus",
+								render : function(item) {
+									return renderLabel(
+											messageTemplateStatusData,
+											item.fldStatus);
+								}
+							}, {
+								display : "操作人",
+								name : "operateUserName"
+							}, {
+								display : "操作时间",
+								name : "fldOperateDate"
+							}, {
+								display : "创建人",
+								name : "createUserName"
+							}, {
+								display : "创建时间",
+								name : "fldCreateDate"
+							} ],
+					dataAction : 'server',
+					pageSize : 20,
+					toolbar : {},
+					url : '<c:url value="/message/template/list"/>',
+					sortName : 'operateDate',
+					sortOrder : 'desc',
+					width : '98%',
+					height : '98%',
+					toJSON : JSON2.stringify,
+					onReload : f_reload
+				});
 
 		//增加搜索按钮,并创建事件
 		LG.appendSearchButtons("#formsearch", grid, true, true);
