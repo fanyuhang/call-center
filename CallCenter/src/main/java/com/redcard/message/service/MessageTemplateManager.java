@@ -1,7 +1,5 @@
 package com.redcard.message.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
@@ -15,7 +13,8 @@ import com.redcard.message.entity.MessageTemplate;
 @Component
 public class MessageTemplateManager extends GenericPageHQLQuery<MessageTemplate> {
 
-	private static Logger logger = LoggerFactory.getLogger(MessageTemplateManager.class);
+	// private static Logger logger =
+	// LoggerFactory.getLogger(MessageTemplateManager.class);
 
 	@Autowired
 	private MessageTemplateDao messageTemplateDao;
@@ -41,4 +40,5 @@ public class MessageTemplateManager extends GenericPageHQLQuery<MessageTemplate>
 	public Page<MessageTemplate> queryMessageTemplates(GridPageRequest page, String where) {
 		return (Page<MessageTemplate>) super.findAll(where, page);
 	}
+
 }

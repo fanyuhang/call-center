@@ -215,7 +215,7 @@
 					return;
 				}
 				var selected = grid.getSelected();
-				top.f_addTab(null, '查看客户信息',
+				top.f_addTab(null, '查看短信模板',
 						'<c:url value="/message/template/view"/>'
 								+ '?menuNo=${menuNo}&fldId=' + selected.fldId);
 				break;
@@ -226,7 +226,7 @@
 					return;
 				}
 				var selected = grid.getSelected();
-				top.f_addTab(null, '修改客户信息',
+				top.f_addTab(null, '修改短信模板',
 						'<c:url value="/message/template/edit"/>'
 								+ '?menuNo=${menuNo}&fldId=' + selected.fldId);
 				break;

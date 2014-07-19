@@ -2,8 +2,6 @@ package com.redcard.message.web.controller;
 
 import java.util.Date;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +14,6 @@ import com.common.core.grid.DataResponse;
 import com.common.core.grid.GridPageRequest;
 import com.common.core.util.EntityUtil;
 import com.common.security.util.SecurityUtil;
-import com.redcard.customer.entity.Customer;
 import com.redcard.message.entity.MessageTemplate;
 import com.redcard.message.service.MessageTemplateManager;
 
@@ -24,7 +21,8 @@ import com.redcard.message.service.MessageTemplateManager;
 @RequestMapping(value = "/message/template")
 public class MessageTemplateController {
 
-	private static Logger log = LoggerFactory.getLogger(MessageTemplateController.class);
+	// private static Logger log =
+	// LoggerFactory.getLogger(MessageTemplateController.class);
 
 	@Autowired
 	private MessageTemplateManager messageTemplateManager;
@@ -80,5 +78,36 @@ public class MessageTemplateController {
 		model.addAttribute("menuNo", menuNo);
 		model.addAttribute("messageTemplate", messageTemplate);
 		return "message/template/view";
+	}
+
+	@RequestMapping(value = "edit")
+	public String edit(String menuNo, String fldId, Model model) {
+		MessageTemplate messageTemplate = messageTemplateManager.find(fldId);
+		model.addAttribute("menuNo", menuNo);
+		model.addAttribute("messageTemplate", messageTemplate);
+		return "message/template/edit";
+	}
+
+	@RequestMapping(value = "update")
+	@ResponseBody
+	public AsyncResponse update(MessageTemplate messageTemplate) {
+		AsyncResponse result = new AsyncResponse(false, "修改短信模板成功！");
+		messageTemplate.setFldOperateDate(new Date());
+		MessageTemplate originalMessageTemplate = messageTemplateManager.find(messageTemplate.getFldId());
+		messageTemplate.setFldCreateUserNo(originalMessageTemplate.getFldCreateUserNo());
+		messageTemplate.setFldCreateDate(originalMessageTemplate.getFldCreateDate());
+		messageTemplateManager.save(messageTemplate);
+		return result;
+	}
+
+	@RequestMapping(value = "delete")
+	@ResponseBody
+	public AsyncResponse delete(String fldId) {
+		AsyncResponse result = new AsyncResponse(false, "删除短信模板成功！");
+		MessageTemplate messageTemplate = messageTemplateManager.find(fldId);
+		messageTemplate.setFldOperateDate(new Date());
+		messageTemplate.setFldStatus(Constant.MESSAGE_TEMPLATE_STATUS_DIABLED);
+		messageTemplateManager.save(messageTemplate);
+		return result;
 	}
 }
