@@ -434,7 +434,6 @@
 	<tblDictionary fldId="37" fldType="15" fldName="无效"
 		fldValue="9" fldStatus="0" fldComment="产品明细状态，无效" />
 
-
 	<tblDictionary fldId="38" fldType="16" fldName="成功"
 		fldValue="0" fldStatus="0" fldComment="短信发送状态，成功" />
 	<tblDictionary fldId="39" fldType="16" fldName="失败"
@@ -446,6 +445,5 @@
 		fldValue="5" fldUnit="" fldStatus="0" fldDisplay="0" fldComment="最大登陆失败次数" />
 	<tblSysParameter fldId="3" fldName="NODE_ROOT_NAME"
 		fldValue="主菜单" fldUnit="" fldStatus="0" fldDisplay="1" fldComment="模块管理中根节点名称" />
-
 
 </dataset>
