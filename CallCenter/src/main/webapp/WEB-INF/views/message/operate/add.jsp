@@ -5,6 +5,8 @@
 		modelAttribute="messageOperate">
 	</form:form>
 	<script type="text/javascript">
+		var messageTemplateStatusData = <sys:dictList type = "12"/>;
+
 		//覆盖本页面grid的loading效果
 		LG.overrideGridLoading();
 
@@ -19,7 +21,6 @@
 							{
 								display : "短信内容（务必以'【聚金理财】'结束）",
 								name : "fldContent",
-								comboboxName : "messageTemplateContent",
 								newline : true,
 								type : "textarea",
 								validate : {
@@ -29,13 +30,13 @@
 								group : "<label style=white-space:nowrap;>短信发送</label>",
 								groupicon : '<c:url value="/static/ligerUI/icons/32X32/business_contact.gif"/>'
 							}, {
-								display : "短信模板选择",
-								name : "sendedmessageTemplate",
+								display : "短信模板",
+								name : "fldMessageTemplateId",
 								newline : false,
 								type : "select",
-								comboboxName : "messageTemplateName",
+								comboboxName : "messageTemplateId",
 								options : {
-									valueFieldID : "messageTemplateName"
+									valueFieldID : "messageTemplateId"
 								}
 							}, {
 								display : "手机列表（多个手机号以';'隔开，头尾不加分号！）",
@@ -53,43 +54,91 @@
 								validate : {
 									maxlength : 500
 								}
-							}, ]
+							} ]
 				});
 
 		mainform.attr("action", '<c:url value="/message/operate/save"/>');
 
-		$.ligerui.get("messageTemplateName").openSelect({
-			grid : {
-				columnWidth : 255,
-				columns : [ {
-					display : "短信模板名称",
-					name : "fldName"
-				}, {
-					display : "短信模板内容",
-					name : "fldContent"
-				}, {
-					display : "短信模板备注",
-					name : "fldComment"
-				} ],
-				pageSize : 20,
-				heightDiff : -10,
-				url : '<c:url value="/message/template/list"/>',
-				sortName : 'fldName',
-				checkbox : false
-			},
-			search : {
-				fields : [ {
-					display : "短信模板名称",
-					name : "fldName",
-					newline : true,
-					type : "text",
-					cssClass : "field"
-				} ]
-			},
-			valueField : 'fldName',
-			textField : 'fldContent',
-			top : 30
-		});
+		$("#messageTemplateId")
+				.change(
+						function() {
+							var chosedMessageTemplateId = $(
+									"#fldMessageTemplateId").val();
+							if (chosedMessageTemplateId == ""
+									|| chosedMessageTemplateId == null) {
+								$("#fldContent").val('');
+								return;
+							}
+							LG
+									.ajax({
+										url : '<c:url value="/message/template/findMessageTemplateDetail"/>',
+										data : {
+											fldId : chosedMessageTemplateId
+										},
+										beforeSend : function() {
+										},
+										complete : function() {
+										},
+										success : function(data) {
+											$("#fldContent").val(
+													data[0].fldContent);
+										},
+										error : function(message) {
+										}
+									});
+						});
+
+		$.ligerui
+				.get("messageTemplateId")
+				.openSelect(
+						{
+							grid : {
+								columnWidth : 255,
+								columns : [
+										{
+											display : "ID",
+											name : "fldId",
+											hide : 1,
+											width : 1
+										},
+										{
+											display : "短信模板名称",
+											name : "fldName"
+										},
+										{
+											display : "短信模板状态",
+											name : "fldStatus",
+											render : function(item) {
+												return renderLabel(
+														messageTemplateStatusData,
+														item.fldStatus);
+											}
+										}, {
+											display : "短信模板内容",
+											name : "fldContent"
+										}, {
+											display : "短信模板备注",
+											name : "fldComment"
+										}, ],
+								pageSize : 20,
+								heightDiff : -10,
+								url : '<c:url value="/message/template/conditionalList"/>',
+								sortName : 'fldName',
+								checkbox : false
+							},
+							search : {
+								fields : [ {
+									display : "短信模板名称",
+									name : "fldName",
+									newline : true,
+									type : "text",
+									cssClass : "field"
+								} ]
+							},
+							valueField : 'fldId',
+							textField : 'fldName',
+							top : 30
+						});
 
 		//表单底部按钮
 		LG.setFormDefaultBtn(f_cancel, f_check);

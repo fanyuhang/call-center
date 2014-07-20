@@ -14,6 +14,8 @@ import javax.persistence.Transient;
 import org.apache.commons.lang3.StringUtils;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import com.common.core.util.JsonTimestampSerializer;
 import com.common.security.entity.User;
@@ -199,6 +201,7 @@ public class MessageOperate implements java.io.Serializable {
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "FLDMESSAGETEMPLATEID", referencedColumnName = "FLDID", insertable = false, updatable = false)
+	@NotFound(action = NotFoundAction.IGNORE)
 	public MessageTemplate getMessageTemplate() {
 		return messageTemplate;
 	}
