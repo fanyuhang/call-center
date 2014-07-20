@@ -37,6 +37,14 @@ public class CustomerManager extends GenericPageHQLQuery<Customer> {
 	private CustomerExchangeDao customerExchangeDao;
 	@Autowired
 	private CustomerExchangeCustomerDao customerExchangeCustomerDao;
+
+    public List<Customer> findCustomerByMobile(String mobile){
+        return customerDao.findCustomerByMobile(mobile);
+    }
+
+    public List<Customer> findCustomerByPhone(String phone){
+        return customerDao.findCustomerByPhone(phone);
+    }
 	
 	public Page<Customer> findAllCustomer(GridPageRequest page, String where) {
         return (Page<Customer>) super.findAll(where, page);

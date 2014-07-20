@@ -1,6 +1,7 @@
 package com.redcard.customer.service;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,39 +20,43 @@ import com.redcard.customer.entity.CustomerContract;
 @Component
 @Transactional(readOnly = true)
 public class ContractManager extends GenericPageHQLQuery<CustomerContract> {
-	@Autowired
-	private ContractDao contractDao;
-	@Autowired
-	private CustomerProductDetailDao customerProductDetailDao;
-	@Autowired
-	private CustomerDao customerDao;
-	
-	public Page<CustomerContract> findAllContract(GridPageRequest page, String where) {
+    @Autowired
+    private ContractDao contractDao;
+    @Autowired
+    private CustomerProductDetailDao customerProductDetailDao;
+    @Autowired
+    private CustomerDao customerDao;
+
+    public Page<CustomerContract> findAllContract(GridPageRequest page, String where) {
         return (Page<CustomerContract>) super.findAll(where, page);
     }
-	
-	@Transactional(readOnly = false)
-    public void save(CustomerContract customerContract) {
-		String fldProductId = customerProductDetailDao.findOne(customerContract.getFldProductDetailId()).getFldProductId();
-		customerContract.setFldProductId(fldProductId);
-		contractDao.save(customerContract);
-		
-		//更新客户的卡相关信息
-		Customer customer = customerDao.findOne(customerContract.getFldCustomerId());
-		customer.setFldCardLevel(customerContract.getFldCardLevel());
-		customer.setFldCardTotalMoney(customer.getFldCardTotalMoney()+customerContract.getFldCardMoney());
-		customerDao.save(customer);
+
+    public List<CustomerContract> findAllContractByCustomerId(List<String> customerId) {
+        return contractDao.findAllContractByCustomerId(customerId);
     }
-	
-	public CustomerContract find(String fldId) {
+
+    @Transactional(readOnly = false)
+    public void save(CustomerContract customerContract) {
+        String fldProductId = customerProductDetailDao.findOne(customerContract.getFldProductDetailId()).getFldProductId();
+        customerContract.setFldProductId(fldProductId);
+        contractDao.save(customerContract);
+
+        //更新客户的卡相关信息
+        Customer customer = customerDao.findOne(customerContract.getFldCustomerId());
+        customer.setFldCardLevel(customerContract.getFldCardLevel());
+        customer.setFldCardTotalMoney((customer.getFldCardTotalMoney() == null ? 0 : customer.getFldCardTotalMoney()) + (customerContract.getFldCardMoney() == null ? 0 : customerContract.getFldCardMoney()));
+        customerDao.save(customer);
+    }
+
+    public CustomerContract find(String fldId) {
         return contractDao.findOne(fldId);
     }
-	
-	@Transactional(readOnly = false)
+
+    @Transactional(readOnly = false)
     public void delete(String fldId) {
-		CustomerContract customerContract = contractDao.findOne(fldId);
-		customerContract.setFldStatus(Constant.CONTRACT_STATUS_DIABLED);
-		customerContract.setFldOperateDate(new Date());
+        CustomerContract customerContract = contractDao.findOne(fldId);
+        customerContract.setFldStatus(Constant.CONTRACT_STATUS_DIABLED);
+        customerContract.setFldOperateDate(new Date());
         contractDao.save(customerContract);
     }
 }
