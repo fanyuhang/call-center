@@ -42,6 +42,9 @@
     </div>
 </div>
 <script type="text/javascript">
+	var dayUnitData =<sys:dictList type = "14"/>;
+	var productTypeData =<sys:dictList type = "7"/>;
+	
 	function updateGridHeight() {
     	var topHeight = $("#layout > .l-layout-center").height();
     	var bottomHeight = $("#layout > .l-layout-bottom").height();
@@ -71,7 +74,16 @@
             {display: "产品简称", name: "fldShortName", newline: true, type: "text",attr:{value:"${customerProduct.fldShortName}"}},
             {display: "产品描述", name: "fldDescription", newline: false, type: "text", attr:{value:"${customerProduct.fldDescription}"},validate: { maxlength: 64}},
             {display: "成立日期", name: "fldEstablishDate", newline: true, type: "date", validate: {required: true}, attr:{value:"<fmt:formatDate value='${customerProduct.fldEstablishDate}' pattern='yyyy-MM-dd'/>",readonly: "readonly"},format:'yyyy-MM-dd',editor:{ type:'date' }},
-            {display: "起息日期", name: "fldValueDate", newline: false, type: "date", validate: {required: true}, attr:{value:"<fmt:formatDate value='${customerProduct.fldValueDate}' pattern='yyyy-MM-dd'/>",readonly: "readonly"},format:'yyyy-MM-dd',editor:{ type:'date' }}
+            {display: "起息日期", name: "fldValueDate", newline: false, type: "date", validate: {required: true}, attr:{value:"<fmt:formatDate value='${customerProduct.fldValueDate}' pattern='yyyy-MM-dd'/>",readonly: "readonly"},format:'yyyy-MM-dd',editor:{ type:'date' }},
+            {display: "产品类型", name: "fldType", newline: true, type: "select",
+            	options:{
+                    valueField: 'value',
+                    textField: 'text',
+                    isMultiSelect:false,
+                    data:productTypeData,
+                    initValue: '${customerProduct.fldType}',
+                    valueFieldID:"fldType"
+            }}
         ]
     });
 
@@ -120,6 +132,14 @@
     var currentEditRowDom = null;
     var detailWin = null;
     function showDetail(type) {
+    	var editData = null;
+    	try
+    	{
+    		editData = currentEditRow[0];
+    	} catch(e){
+    		editData = null;
+    	}
+    	
         var detailMainform = $("#detailMainform");
         detailMainform.ligerForm({
             labelWidth:100,
@@ -127,35 +147,95 @@
             fields:[
                 {display:"产品明细编号", name:"dtlId", newline:true, type:"text", validate:{required:true,maxlength:40}},
                 {display:"业绩系数", name:"dtlPerformanceRadio", newline:false, type:"text", validate:{required:true}},
-                {display:"实际天数", name:"dtlClearDays", newline:true, type:"text", validate:{required:true}},
-                {display:"到期日期", name:"dtlDueDate", newline:false, type: "text", attr:{readonly: "readonly"},format:'yyyy-MM-dd'},
-                {display:"最低认购金额", name:"dtlMinPurchaseMoney", newline:true, type:"text", validate:{required:true}},
-                {display:"最高认购金额", name:"dtlMaxPurchaseMoney", newline:false, type:"text", validate:{required:true}},
-                {display:"年化收益率", name:"dtlAnnualizedRate", newline:true, type:"text", validate:{required:true}},
-                {display:"年化7天存款率", name:"dtlDepositRate", newline:false, type:"text", validate:{required:true}}
+                {display:"天数单位", name:"dtlDayUnit", newline:true, type:"select", comboboxName:"dayUnit", validate:{required:true},
+	                	options:{
+                    	valueField: 'value',
+                    	textField: 'text',
+                    	isMultiSelect:false,
+                    	data:dayUnitData,
+                    	initValue: editData!=null ? editData.fldDayUnit : '',
+                    	valueFieldID:"dtlDayUnit"
+                	}},
+                {display:"实际天数", name:"dtlClearDays", newline:false, type:"text", validate:{required:true}},
+                {display:"到期日期", name:"dtlDueDate", newline:true, type: "text", attr:{readonly: "readonly"},format:'yyyy-MM-dd'},
+                {display:"最低认购金额", name:"dtlMinPurchaseMoney", newline:false, type:"text", validate:{required:true}},
+                {display:"最高认购金额", name:"dtlMaxPurchaseMoney", newline:true, type:"text", validate:{required:true}},
+                {display:"年化收益率", name:"dtlAnnualizedRate", newline:false, type:"text", validate:{required:true}},
+                {display:"年化7天存款率", name:"dtlDepositRate", newline:true, type:"text", validate:{required:true}},
+                {display:"佣金系数", name:"dtlCommissionRadio", newline:false, type:"text", validate:{required:true}}
             ]
         });
         
+        $("#dayUnit").change(function(){
+	       	//到期日期=成立日期+实际天数
+	       	var dayUnit = $("#dtlDayUnit").val();
+	       	if(dayUnit == "") {
+	       		$("#dtlClearDays").val("");
+	        	$("#dtlDueDate").val("");
+	       		return;
+	       	}
+	       	var clearDays = $("#dtlClearDays").val();
+	       	if(clearDays == "") {
+	       		return;
+	       	}
+	       	
+	       	if(dayUnit == '0') {
+	       		var dueDate = new Date(Date.parse($("#fldEstablishDate").val()));
+	       		dueDate.setDate(dueDate.getDate()+parseInt($("#dtlClearDays").val()));
+	       		$("#dtlDueDate").val(dueDate.getFullYear()+"-"+parseInt(parseInt(dueDate.getMonth())+1)+"-"+dueDate.getDate());
+	       	} else {
+	       		var dueDate = new Date(Date.parse($("#fldEstablishDate").val()));
+	       		dueDate.setMonth(dueDate.getMonth()+parseInt($("#dtlClearDays").val()));
+	       		$("#dtlDueDate").val(dueDate.getFullYear()+"-"+parseInt(parseInt(dueDate.getMonth())+1)+"-"+dueDate.getDate());
+	       	}
+	    });
+        
         $.ligerui.get("dtlClearDays").bind("blur",function(){
         	//到期日期=成立日期+实际天数
-        	var dueDate = new Date(Date.parse($("#fldEstablishDate").val()));
-        	dueDate.setDate(dueDate.getDate()+parseInt($("#dtlClearDays").val()));
-        	$("#dtlDueDate").val(dueDate.getFullYear()+"-"+parseInt(parseInt(dueDate.getMonth())+1)+"-"+dueDate.getDate());
+        	var dayUnit = $("#dtlDayUnit").val();
+        	if(dayUnit == "") {
+	        	$("#dtlClearDays").val("");
+	        	LG.showError("请先选择天数单位");
+	        	return;
+	        }
+        	if($("#dtlClearDays").val()=="") {
+        		$("#dtlDueDate").val("");
+        		return;
+        	}
+        	
+	        	
+        	if(dayUnit == 0) {
+        		var dueDate = new Date(Date.parse($("#fldEstablishDate").val()));
+        		dueDate.setDate(dueDate.getDate()+parseInt($("#dtlClearDays").val()));
+        		$("#dtlDueDate").val(dueDate.getFullYear()+"-"+parseInt(parseInt(dueDate.getMonth())+1)+"-"+dueDate.getDate());
+        	} else {
+        		var dueDate = new Date(Date.parse($("#fldEstablishDate").val()));
+        		dueDate.setMonth(dueDate.getMonth()+parseInt($("#dtlClearDays").val()));
+        		$("#dtlDueDate").val(dueDate.getFullYear()+"-"+parseInt(parseInt(dueDate.getMonth())+1)+"-"+dueDate.getDate());
+        	}
         });
         
         if(type == 'edit') {
-        	var editData = currentEditRow[0];
         	$("#dtlId").val(editData.fldId);
         	$("#dtlPerformanceRadio").val(editData.fldPerformanceRadio);
+        	//$("#dayUnit").val(editData.fldDayUnit);
         	$("#dtlClearDays").val(editData.fldClearDays);
         	$("#dtlMinPurchaseMoney").val(editData.fldMinPurchaseMoney);
         	$("#dtlMaxPurchaseMoney").val(editData.fldMaxPurchaseMoney);
         	$("#dtlAnnualizedRate").val(editData.fldAnnualizedRate);
         	$("#dtlDepositRate").val(editData.fldDepositRate);
+        	$("#dtlCommissionRadio").val(editData.fldCommissionRadio);
         	
-        	var dueDate = new Date(Date.parse($("#fldEstablishDate").val()));
-        	dueDate.setDate(dueDate.getDate()+parseInt($("#dtlClearDays").val()));
-        	$("#dtlDueDate").val(dueDate.getFullYear()+"-"+parseInt(parseInt(dueDate.getMonth())+1)+"-"+dueDate.getDate());
+        	var dayUnit = $("#dtlDayUnit").val();
+        	if(dayUnit == 0) {
+        		var dueDate = new Date(Date.parse($("#fldEstablishDate").val()));
+        		dueDate.setDate(dueDate.getDate()+parseInt($("#dtlClearDays").val()));
+        		$("#dtlDueDate").val(dueDate.getFullYear()+"-"+parseInt(parseInt(dueDate.getMonth())+1)+"-"+dueDate.getDate());
+        	} else {
+        		var dueDate = new Date(Date.parse($("#fldEstablishDate").val()));
+        		dueDate.setMonth(dueDate.getMonth()+parseInt($("#dtlClearDays").val()));
+        		$("#dtlDueDate").val(dueDate.getFullYear()+"-"+parseInt(parseInt(dueDate.getMonth())+1)+"-"+dueDate.getDate());
+        	}
         	
         	$("#dtlId", detailMainform).attr("readonly", "readonly");
         }
@@ -197,6 +277,52 @@
                 complete: function () {
                 },
                 success: function () {
+			        showLoading();
+			        
+			        var detailData = {};
+			        detailData.fldProductId = $("#fldId").val();
+			        detailData.fldId = dtlId;
+			        detailData.fldPerformanceRadio = $("#dtlPerformanceRadio").val();
+			        detailData.fldDayUnit = $("#dtlDayUnit").val();
+			        detailData.fldClearDays = $("#dtlClearDays").val();
+			        detailData.fldDueDate = $("#dtlDueDate").val();
+			        detailData.fldMinPurchaseMoney = $("#dtlMinPurchaseMoney").val();
+			        detailData.fldMaxPurchaseMoney = $("#dtlMaxPurchaseMoney").val();
+			        detailData.fldAnnualizedRate = $("#dtlAnnualizedRate").val();
+			        detailData.fldDepositRate = $("#dtlDepositRate").val();
+			        detailData.fldCommissionRadio = $("#dtlCommissionRadio").val();
+			        
+			        if(type == 'add') {
+			        	LG.ajax({
+				            url:'<c:url value="/customer/product/saveProductDetail"/>',
+				            data:{productDetail:JSON.stringify(detailData)},
+				            dataType:'json', type:'post',
+				            success:function (data) {
+				               LG.showSuccess('保存成功');
+				               detailGrid.loadData();
+				            },
+				            error:function (message) {
+				                LG.showError(message);
+				            }
+				        });
+			        } else {
+			        	LG.ajax({
+				            url:'<c:url value="/customer/product/updateProductDetail"/>',
+				            data:{productDetail:JSON.stringify(detailData)},
+				            dataType:'json', type:'post',
+				            success:function (data) {
+				               LG.showSuccess('保存成功');
+				               detailGrid.loadData();
+				            },
+				            error:function (message) {
+				                LG.showError(message);
+				            }
+				        });
+			        }
+			        
+			        detailWin.hide();
+			        
+			        hideLoading();
                 },
                 error: function (message) {
 		            LG.showError(message);
@@ -204,50 +330,6 @@
                 }
             });
         }
-        showLoading();
-        
-        var detailData = {};
-        detailData.fldProductId = $("#fldId").val();
-        detailData.fldId = dtlId;
-        detailData.fldPerformanceRadio = $("#dtlPerformanceRadio").val();
-        detailData.fldClearDays = $("#dtlClearDays").val();
-        detailData.fldDueDate = $("#dtlDueDate").val();
-        detailData.fldMinPurchaseMoney = $("#dtlMinPurchaseMoney").val();
-        detailData.fldMaxPurchaseMoney = $("#dtlMaxPurchaseMoney").val();
-        detailData.fldAnnualizedRate = $("#dtlAnnualizedRate").val();
-        detailData.fldDepositRate = $("#dtlDepositRate").val();
-        
-        if(type == 'add') {
-        	LG.ajax({
-	            url:'<c:url value="/customer/product/saveProductDetail"/>',
-	            data:{productDetail:JSON.stringify(detailData)},
-	            dataType:'json', type:'post',
-	            success:function (data) {
-	               LG.showSuccess('保存成功');
-	               detailGrid.loadData();
-	            },
-	            error:function (message) {
-	                LG.showError(message);
-	            }
-	        });
-        } else {
-        	LG.ajax({
-	            url:'<c:url value="/customer/product/updateProductDetail"/>',
-	            data:{productDetail:JSON.stringify(detailData)},
-	            dataType:'json', type:'post',
-	            success:function (data) {
-	               LG.showSuccess('保存成功');
-	               detailGrid.loadData();
-	            },
-	            error:function (message) {
-	                LG.showError(message);
-	            }
-	        });
-        }
-        
-        detailWin.hide();
-        
-        hideLoading();
 	}
 	
 	function showLoading(){
@@ -340,6 +422,9 @@
     		{display:"业绩系数", name:"dtlPerformanceRadio",render:function(item){
     			return item.fldPerformanceRadio;
     		}},
+    		{display:"天数单位", name:"dtlDayUnit",render:function(item){
+    			return renderLabel(dayUnitData,item.fldDayUnit);
+    		}},
             {display:"实际天数", name:"dtlClearDays",render:function(item){
     			return item.fldClearDays;
     		}},
@@ -357,6 +442,9 @@
     		}},
             {display:"年化7天存款率", name:"dtlDepositRate",render:function(item){
     			return item.fldDepositRate;
+    		}},
+    		{display:"佣金系数", name:"dtlCommissionRadio",render:function(item){
+    			return item.fldCommissionRadio;
     		}}
     	], dataAction: 'server', pageSize: 20, toolbar:toolbarOptions, url: '/customer/product/listDetail', sortName: 'operateDate', sortOrder: 'desc',
 	    width:'99%',height: '98%', toJSON: JSON2.stringify

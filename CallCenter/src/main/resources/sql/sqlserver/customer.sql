@@ -210,6 +210,7 @@ create table tblCustomerProductDetail (
    fldDepositRate       money                null,
    fldPerformanceRadio  money                null,
    fldCommissionRadio   money                null,
+   fldStatus            int                  null,
    fldOperateUserNo     nvarchar(32)         null,
    fldOperateDate       datetime             null,
    fldCreateUserNo      nvarchar(32)         null,

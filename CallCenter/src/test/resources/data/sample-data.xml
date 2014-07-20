@@ -358,6 +358,17 @@
     <tblDictionary fldId="28" fldType="12" fldName="有效" fldValue="0" fldStatus="0" fldComment="短信模板状态，有效"/>
     <tblDictionary fldId="29" fldType="12" fldName="无效" fldValue="9" fldStatus="0" fldComment="短信模板状态，无效"/>
     
+    <tblDictionary fldId="30" fldType="13" fldName="不做卡" fldValue="0" fldStatus="0" fldComment="瑞德卡等级，不做卡"/>
+    <tblDictionary fldId="31" fldType="13" fldName="贵宾卡" fldValue="1" fldStatus="0" fldComment="瑞德卡等级，贵宾卡"/>
+    <tblDictionary fldId="32" fldType="13" fldName="黄金卡" fldValue="2" fldStatus="0" fldComment="瑞德卡等级，黄金卡"/>
+    <tblDictionary fldId="33" fldType="13" fldName="铂金卡" fldValue="3" fldStatus="0" fldComment="瑞德卡等级，铂金卡"/>
+    
+    <tblDictionary fldId="34" fldType="14" fldName="天" fldValue="0" fldStatus="0" fldComment="天数单位，天"/>
+    <tblDictionary fldId="35" fldType="14" fldName="月" fldValue="1" fldStatus="0" fldComment="天数单位，月"/>
+    
+    <tblDictionary fldId="36" fldType="15" fldName="有效" fldValue="0" fldStatus="0" fldComment="产品明细状态，有效"/>
+    <tblDictionary fldId="37" fldType="15" fldName="无效" fldValue="9" fldStatus="0" fldComment="产品明细状态，无效"/>
+    
     <tblSysParameter fldId="1" fldName="SYS_ADMIN" fldValue="1" fldUnit="" fldStatus="0" fldDisplay="1" fldComment=""/>
     <tblSysParameter fldId="2" fldName="MAX_ERROR_LOGIN" fldValue="5" fldUnit="" fldStatus="0" fldDisplay="0"
                      fldComment="最大登陆失败次数"/>

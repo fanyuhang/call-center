@@ -1,10 +1,13 @@
 package com.redcard.customer.service;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.common.Constant;
 import com.common.core.grid.GridPageRequest;
 import com.common.core.util.GenericPageHQLQuery;
 import com.redcard.customer.dao.CustomerProductDetailDao;
@@ -34,7 +37,10 @@ public class ProductDetailManager extends GenericPageHQLQuery<CustomerProductDet
     }
 	
 	@Transactional(readOnly = false)
-    public void delete(CustomerProductDetail customerProductDetail) {
-		customerProductDetailDao.delete(customerProductDetail);
+    public void delete(String detId) {
+		CustomerProductDetail customerProductDetail = customerProductDetailDao.findOne(detId);
+		customerProductDetail.setFldStatus(Constant.PRODUCT_DETAIL_STATUS_DIABLED);
+		customerProductDetail.setFldOperateDate(new Date());
+		customerProductDetailDao.save(customerProductDetail);
     }
 }

@@ -26,6 +26,7 @@
 </div>
 <script type="text/javascript">
 	var statusData =<sys:dictList type = "6"/>;
+	var cardLevelData =<sys:dictList type = "13"/>;
 	
 	//搜索表单应用ligerui样式
 	$("#formsearch").ligerForm({
@@ -37,9 +38,17 @@
 	        {display: "身份证号", name: "fldIdentityNo", newline: false, type: "text", cssClass: "field"},
 	        {display: "手机号", name: "fldMobile", newline: false, type: "text", cssClass: "field"},
 	        {display: "固定电话", name: "fldPhone", newline: true, type: "text", cssClass: "field"},
-	        {display: "所属理财经理", name: "fldFinancialUserNo", newline: false, type: "text", cssClass: "field"},
+	        {display: "所属理财经理", name: "fldFinancialUserNo", newline: false, type: "select", 
+	        	comboboxName: "financialUserNo", options: {valueFieldID: "financialUserNo"}},
 	        {display: "瑞得卡号", name: "fldCardNo", newline: false, type: "text", cssClass: "field"},
-	        {display: "瑞得卡等级", name: "fldCardLevel", newline: true, type: "text", cssClass: "field", attr: {"op": "equal", "vt": "int"}},
+	        {display: "瑞得卡等级", name: "fldCardLevel", newline: true, type: "select", cssClass: "field", 
+	        	options: {
+	                valueFieldID: "fldCardLevel",
+	                valueField: "value",
+	                textField: "text",
+	                data: cardLevelData
+	            }, attr: {"op": "equal", "vt": "int"}
+        	},
 	        {display: "客户状态", name: "fldStatus", newline: false, type: "select", cssClass: "field",
 	            options: {
 	                valueFieldID: "fldStatus",
@@ -50,6 +59,24 @@
         	}
 	    ],
 	    toJSON: JSON2.stringify
+	});
+	
+	$.ligerui.get("financialUserNo").openSelect({
+	    grid:{
+	    	columnWidth: 255,
+	        columns:[
+	            {display:"用户名称", name:"userName"},
+	            {display:"登录名称", name:"loginName"},
+	            {display:"部门", name:"deptName"},
+	        ], pageSize:20,heightDiff:-10,
+	        url:'<c:url value="/security/user/list"/>', sortName:'userName', checkbox:false
+	    },
+	    search:{
+	        fields:[
+	            {display:"用户名称", name:"userName", newline:true, type:"text", cssClass:"field"}
+	        ]
+	    },
+	    valueField:'loginName', textField:'userName', top:30
 	});
 
 	//列表结构
@@ -71,7 +98,11 @@
 	        },
 	        {display: "所属理财经理", name: "financialUserName"},
 	        {display: "瑞得卡号", name: "fldCardNo"},
-	        {display: "瑞得卡等级", name: "fldCardLevel"},
+	        {display: "瑞得卡等级", name: "fldCardLevel",
+	        	render:function(item) {
+	        		return renderLabel(cardLevelData,item.fldCardLevel);
+	        	}
+	        },
 	        {display: "操作人", name: "operateUserName"},
 	        {display: "操作时间", name: "fldOperateDate"}
 	    ], dataAction: 'server', pageSize: 20, toolbar: {}, url: '<c:url value="/customer/customer/list"/>', sortName: 'operateDate', sortOrder: 'desc',
@@ -122,6 +153,10 @@
 	                return;
 	            }
 	            var selected = grid.getSelected();
+	            if(selected.fldStatus != 0) {
+	            	LG.tip('客户状态无效!');
+	            	return;
+	            }
 	            top.f_addTab(null, '新增合同', '<c:url value="/customer/customer/addContract"/>' + '?menuNo=${menuNo}&fldId=' + selected.fldId+'&custName='+selected.fldName);
 	        	break;
 	        case "viewContract":

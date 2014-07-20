@@ -11,7 +11,9 @@ import com.common.Constant;
 import com.common.core.grid.GridPageRequest;
 import com.common.core.util.GenericPageHQLQuery;
 import com.redcard.customer.dao.ContractDao;
+import com.redcard.customer.dao.CustomerDao;
 import com.redcard.customer.dao.CustomerProductDetailDao;
+import com.redcard.customer.entity.Customer;
 import com.redcard.customer.entity.CustomerContract;
 
 @Component
@@ -21,6 +23,8 @@ public class ContractManager extends GenericPageHQLQuery<CustomerContract> {
 	private ContractDao contractDao;
 	@Autowired
 	private CustomerProductDetailDao customerProductDetailDao;
+	@Autowired
+	private CustomerDao customerDao;
 	
 	public Page<CustomerContract> findAllContract(GridPageRequest page, String where) {
         return (Page<CustomerContract>) super.findAll(where, page);
@@ -31,6 +35,12 @@ public class ContractManager extends GenericPageHQLQuery<CustomerContract> {
 		String fldProductId = customerProductDetailDao.findOne(customerContract.getFldProductDetailId()).getFldProductId();
 		customerContract.setFldProductId(fldProductId);
 		contractDao.save(customerContract);
+		
+		//更新客户的卡相关信息
+		Customer customer = customerDao.findOne(customerContract.getFldCustomerId());
+		customer.setFldCardLevel(customerContract.getFldCardLevel());
+		customer.setFldCardTotalMoney(customer.getFldCardTotalMoney()+customerContract.getFldCardMoney());
+		customerDao.save(customer);
     }
 	
 	public CustomerContract find(String fldId) {

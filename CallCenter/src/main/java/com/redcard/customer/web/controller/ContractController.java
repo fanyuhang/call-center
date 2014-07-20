@@ -12,7 +12,6 @@ import com.common.Constant;
 import com.common.core.grid.AsyncResponse;
 import com.common.core.grid.DataResponse;
 import com.common.core.grid.GridPageRequest;
-import com.common.core.util.EntityUtil;
 import com.common.security.util.SecurityUtil;
 import com.redcard.customer.entity.CustomerContract;
 import com.redcard.customer.service.ContractManager;
@@ -42,11 +41,21 @@ public class ContractController {
         return "customer/contract/add";
     }
 	
+	@RequestMapping(value = "isExist")
+    @ResponseBody
+    public AsyncResponse isExist(String fldId) {
+        AsyncResponse result = new AsyncResponse(true, "合同已存在");
+        CustomerContract customerContract = contractManager.find(fldId);
+        if (null == customerContract) {
+            return new AsyncResponse(false, "合同不存在");
+        }
+        return result;
+    }
+	
 	@RequestMapping(value = "save")
     @ResponseBody
     public AsyncResponse save(CustomerContract customerContract) {
         AsyncResponse result = new AsyncResponse(false, "保存合同成功");
-        customerContract.setFldId(EntityUtil.getId());
         customerContract.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
         customerContract.setFldCreateDate(new Date());
         customerContract.setFldOperateDate(new Date());
