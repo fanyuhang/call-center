@@ -157,6 +157,7 @@ CREATE TABLE tblCustomerProductDetail (
   fldDepositRate       decimal(20,2) NULL,
   fldPerformanceRadio  decimal(20,2) NULL,
   fldCommissionRadio   decimal(20,2) NULL,
+  fldStatus            INT           NULL,
   fldOperateUserNo NVARCHAR(32) NULL,
   fldOperateDate   DATETIME     NULL,
   fldCreateUserNo  NVARCHAR(32) NULL,
