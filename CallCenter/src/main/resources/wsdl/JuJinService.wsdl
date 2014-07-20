@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://service.ws.redcard.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="JuJinServiceService" targetNamespace="http://service.ws.redcard.com/">
+    <wsdl:types>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://service.ws.redcard.com/" elementFormDefault="unqualified" targetNamespace="http://service.ws.redcard.com/" version="1.0">
+            <xs:element name="findCustomerContractByMobile" type="tns:findCustomerContractByMobile"/>
+            <xs:element name="findCustomerContractByMobileResponse" type="tns:findCustomerContractByMobileResponse"/>
+            <xs:complexType name="findCustomerContractByMobile">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="findCustomerContractByMobileResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="findCustomerContractByMobile">
+        <wsdl:part element="tns:findCustomerContractByMobile" name="parameters">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="findCustomerContractByMobileResponse">
+        <wsdl:part element="tns:findCustomerContractByMobileResponse" name="parameters">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="IService">
+        <wsdl:operation name="findCustomerContractByMobile">
+            <wsdl:input message="tns:findCustomerContractByMobile" name="findCustomerContractByMobile">
+            </wsdl:input>
+            <wsdl:output message="tns:findCustomerContractByMobileResponse" name="findCustomerContractByMobileResponse">
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="JuJinServiceServiceSoapBinding" type="tns:IService">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="findCustomerContractByMobile">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="findCustomerContractByMobile">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="findCustomerContractByMobileResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="JuJinServiceService">
+        <wsdl:port binding="tns:JuJinServiceServiceSoapBinding" name="JuJinServicePort">
+            <soap:address location="http://127.0.0.1:8080/services/juJinService"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
