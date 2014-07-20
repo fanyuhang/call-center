@@ -19,6 +19,11 @@
     	<column cell="I1" propertyName="fldEmail" nullAllowed="true"></column>
     	<column cell="J1" propertyName="fldFinancialUserNo" nullAllowed="true"></column>
     	<column cell="K1" propertyName="fldCardNo" nullAllowed="true"></column>
-    	<column cell="L1" propertyName="fldCardLevel" nullAllowed="true"></column>
+    	<column cell="L1" propertyName="fldCardLevel" nullAllowed="true">
+    		<mapping value="0" text="不做卡"></mapping>
+    		<mapping value="1" text="贵宾卡"></mapping>
+    		<mapping value="2" text="黄金卡"></mapping>
+    		<mapping value="3" text="铂金卡"></mapping>
+    	</column>
     </table>
 </tables>

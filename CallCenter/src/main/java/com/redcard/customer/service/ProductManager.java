@@ -11,11 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.common.Constant;
 import com.common.core.grid.GridPageRequest;
+import com.common.core.util.DateUtil;
 import com.common.core.util.GenericPageHQLQuery;
 import com.common.security.util.SecurityUtil;
 import com.redcard.customer.dao.CustomerProductDao;
 import com.redcard.customer.dao.CustomerProductDetailDao;
-import com.redcard.customer.entity.Customer;
 import com.redcard.customer.entity.CustomerProduct;
 import com.redcard.customer.entity.CustomerProductDetail;
 
@@ -48,6 +48,13 @@ public class ProductManager extends GenericPageHQLQuery<CustomerProduct> {
 				productDetail.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
 				productDetail.setFldCreateDate(new Date());
 				productDetail.setFldOperateDate(new Date());
+				//计算到期日期
+				if(productDetail.getFldDayUnit() == Constant.DAY_UNIT_DAY) {
+					productDetail.setFldDueDate(DateUtil.getDateAfterDays(product.getFldEstablishDate(), productDetail.getFldClearDays()));
+				} else if(productDetail.getFldDayUnit() == Constant.DAY_UNIT_MONTH) {
+					productDetail.setFldDueDate(DateUtil.getDateAfterMonths(product.getFldEstablishDate(), productDetail.getFldClearDays()));
+				}
+				productDetail.setFldStatus(Constant.PRODUCT_DETAIL_STATUS_NORMAL);
 				list.add(productDetail);
 			}
 			customerProductDetailDao.save(list);
@@ -56,6 +63,24 @@ public class ProductManager extends GenericPageHQLQuery<CustomerProduct> {
 	
 	@Transactional(readOnly = false)
     public void saveProduct(CustomerProduct product) {
+		//如果产品的成立日期有修改，则修改对应产品明细的到期日期
+		CustomerProduct oldCustomerProduct = find(product.getFldId());
+		if(product.getFldEstablishDate() != oldCustomerProduct.getFldEstablishDate()) {
+			List<CustomerProductDetail> list = customerProductDetailDao.findByProductId(product.getFldId());
+			
+			List<CustomerProductDetail> tmpList = new ArrayList<CustomerProductDetail>();
+			for(CustomerProductDetail customerProductDetail : list) {
+				//计算到期日期
+				if(customerProductDetail.getFldDayUnit() == Constant.DAY_UNIT_DAY) {
+					customerProductDetail.setFldDueDate(DateUtil.getDateAfterDays(product.getFldEstablishDate(), customerProductDetail.getFldClearDays()));
+				} else if(customerProductDetail.getFldDayUnit() == Constant.DAY_UNIT_MONTH) {
+					customerProductDetail.setFldDueDate(DateUtil.getDateAfterMonths(product.getFldEstablishDate(), customerProductDetail.getFldClearDays()));
+				}
+				tmpList.add(customerProductDetail);
+			}
+			customerProductDetailDao.save(tmpList);
+		}
+		
 		customerProductDao.save(product);
     }
 	
@@ -69,5 +94,7 @@ public class ProductManager extends GenericPageHQLQuery<CustomerProduct> {
 		product.setFldStatus(Constant.PRODUCT_STATUS_DIABLED);
 		product.setFldOperateDate(new Date());
 		customerProductDao.save(product);
+		
+		customerProductDetailDao.updateProductDetailByProductId(Constant.PRODUCT_DETAIL_STATUS_DIABLED, fldId);
     }
 }

@@ -41,6 +41,8 @@ public class CustomerProductDetail implements java.io.Serializable {
 	private Date fldOperateDate;
 	private String fldCreateUserNo;
 	private Date fldCreateDate;
+	private Integer fldStatus;
+	private Integer fldDayUnit;
 	
 	private CustomerProduct customerProduct;
 
@@ -230,7 +232,7 @@ public class CustomerProductDetail implements java.io.Serializable {
 	}
 	
 	@Transient
-	public Integer getFldStatus() {
+	public Integer getProductFldStatus() {
 		return customerProduct.getFldStatus();
 	}
 	
@@ -263,4 +265,22 @@ public class CustomerProductDetail implements java.io.Serializable {
     public String getOperateName() {
     	return operateUser.getLoginName();
     }
+
+    @Column(name = "FLDSTATUS")
+	public Integer getFldStatus() {
+		return fldStatus;
+	}
+
+	public void setFldStatus(Integer fldStatus) {
+		this.fldStatus = fldStatus;
+	}
+
+	@Column(name = "FLDDAYUNIT")
+	public Integer getFldDayUnit() {
+		return fldDayUnit;
+	}
+
+	public void setFldDayUnit(Integer fldDayUnit) {
+		this.fldDayUnit = fldDayUnit;
+	}
 }

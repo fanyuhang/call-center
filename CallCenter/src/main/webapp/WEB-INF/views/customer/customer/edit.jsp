@@ -5,6 +5,7 @@
 <script type="text/javascript">
 	var genderData =<sys:dictList type = "1"/>;
 	var sourceData =<sys:dictList type = "10"/>;
+	var cardLevelData =<sys:dictList type = "13"/>;
 	
 	//覆盖本页面grid的loading效果
 	LG.overrideGridLoading();
@@ -26,7 +27,7 @@
                     valueField: 'value',
                     textField: 'text',
                     isMultiSelect:false,
-                    data:genderData,
+                    data:sourceData,
                     initValue: '${customer.fldSource}',
                     valueFieldID:"fldSource"
                 }},
@@ -52,7 +53,15 @@
             {display: "所属客服", name: "fldServiceUserNo", newline: true, type: "select", 
             	comboboxName: "serviceUserNo", options: {valueFieldID: "serviceUserNo"}},
             {display: "瑞得卡", name: "fldCardNo", newline: false, type: "text", attr: {value: "${customer.fldCardNo}"}, validate: { maxlength: 32}},
-            {display: "瑞得卡等级", name: "fldCardLevel", newline: true, type: "text", attr: {value: "${customer.fldCardLevel}"}},
+            {display: "瑞得卡等级", name: "fldCardLevel", newline: true, type: "select", 
+            	options:{
+                    valueField: 'value',
+                    textField: 'text',
+                    isMultiSelect:false,
+                    data:cardLevelData,
+                    initValue: '${customer.fldCardLevel}',
+                    valueFieldID:"fldCardLevel"
+                }},
             {display: "备注", name: "fldComment", newline: false, type: "text", attr: {value: "${customer.fldComment}"}, validate: { maxlength: 64}}
         ]
     });

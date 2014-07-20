@@ -18,7 +18,6 @@
     </div>
 </div>
 <div id="maingrid"></div>
-<div id="detail" style="display:none;"><form:form id="mainform" method="post"></form:form></div>
 <script type="text/javascript">
 	var statusData =<sys:dictList type = "9"/>;
 
@@ -52,10 +51,14 @@
 	    	{display: "ID", name: "fldId", hide:1,width:1},
 	        {display: "产品全称", name: "fldFullName"},
 	        {display: "产品简称", name: "fldShortName"},
-	        {display: "产品状态", name: "fldStatus"},
+	        {display: "产品状态", name: "fldStatus",
+	        	render:function(item) {
+	        		return renderLabel(statusData,item.fldStatus);
+	        	}
+	        },
 	        {display: "成立日期", name: "fldEstablishDate"},
 	        {display: "起息日期", name: "fldValueDate"},
-	        {display: "操作人", name: "fldOperateUserNo"}
+	        {display: "操作人", name: "operateUserName"}
 	    ], dataAction: 'server', pageSize: 20, toolbar: {}, url: '<c:url value="/customer/product/list"/>', sortName: 'operateDate', sortOrder: 'desc',
 	    width: '98%', height: '98%', toJSON: JSON2.stringify, onReload: f_reload
 	});

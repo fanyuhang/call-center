@@ -33,11 +33,30 @@
 	        {display: "产品编号", name: "fldProductId", newline: true, type: "text", cssClass: "field"},
 	        {display: "产品全称", name: "productDetail.customerProduct.fldFullName", newline: false, type: "text", cssClass: "field"},
 	        {display: "产品实际天数", name: "productDetail.fldClearDays", newline: false, type: "text", attr: {"op": "equal", "vt": "int"}, cssClass: "field"},
-	        {display: "所属理财经理", name: "fldFinancialUserNo", newline: true, type: "text", cssClass: "field"},
+	        {display: "所属理财经理", name: "fldFinancialUserNo", newline: true, type: "select", 
+				comboboxName: "financialUserNo", options: {valueFieldID: "financialUserNo"}},
 	        {display: "银行卡号", name: "fldBankNo", newline: false, type: "text", cssClass: "field"},
 	        {display: "瑞得卡号", name: "fldCardNo", newline: false, type: "text", cssClass: "field"},
 	    ],
 	    toJSON: JSON2.stringify
+	});
+	
+	$.ligerui.get("financialUserNo").openSelect({
+	    grid:{
+	    	columnWidth: 255,
+	        columns:[
+	            {display:"用户名称", name:"userName"},
+	            {display:"登录名称", name:"loginName"},
+	            {display:"部门", name:"deptName"},
+	        ], pageSize:20,heightDiff:-10,
+	        url:'<c:url value="/security/user/list"/>', sortName:'userName', checkbox:false
+	    },
+	    search:{
+	        fields:[
+	            {display:"用户名称", name:"userName", newline:true, type:"text", cssClass:"field"}
+	        ]
+	    },
+	    valueField:'loginName', textField:'userName', top:30
 	});
 
 	//列表结构

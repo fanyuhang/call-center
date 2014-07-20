@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.common.Constant;
 import com.common.core.grid.AsyncResponse;
 import com.common.core.grid.DataResponse;
 import com.common.core.grid.GridPageRequest;
@@ -48,6 +49,7 @@ public class ProductController {
     @ResponseBody
     public DataResponse<CustomerProductDetail> listDetail(GridPageRequest pageRequest, String where) {
         pageRequest.setSort("fldOperateDate", "desc");
+        where = "{\"op\":\"and\",\"rules\":[{\"op\":\"equal\",\"field\":\"fldStatus\",\"value\":\"0\",\"type\":\"int\"}]}";
         return (new DataResponse<CustomerProductDetail>(productDetailManager.findAllProductDetail(pageRequest, where)));
     }
 	
@@ -71,7 +73,7 @@ public class ProductController {
 	@RequestMapping(value = "isDetailExist")
     @ResponseBody
     public AsyncResponse isDetailExist(String fldId) {
-        AsyncResponse result = new AsyncResponse(false, "产品明细已存在");
+        AsyncResponse result = new AsyncResponse(true, "产品明细已存在");
         Long num = productDetailManager.countById(fldId);
         if ((num == null) || (num == 0)) {
             return new AsyncResponse(false, "产品明细不存在");
@@ -88,6 +90,10 @@ public class ProductController {
         CustomerProductDetail customerProductDetail = new CustomerProductDetail();
         customerProductDetail = gson.fromJson(productDetail, CustomerProductDetail.class);
         
+        customerProductDetail.setFldOperateDate(new Date());
+        customerProductDetail.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
+        customerProductDetail.setFldCreateDate(new Date());
+        customerProductDetail.setFldStatus(Constant.PRODUCT_DETAIL_STATUS_NORMAL);
         productDetailManager.save(customerProductDetail);
         
         return result;
@@ -102,6 +108,12 @@ public class ProductController {
         CustomerProductDetail customerProductDetail = new CustomerProductDetail();
         customerProductDetail = gson.fromJson(productDetail, CustomerProductDetail.class);
         
+        CustomerProductDetail oldCustomerProductDetail = productDetailManager.find(customerProductDetail.getFldId());
+        
+        customerProductDetail.setFldStatus(oldCustomerProductDetail.getFldStatus());
+        customerProductDetail.setFldCreateDate(oldCustomerProductDetail.getFldCreateDate());
+        customerProductDetail.setFldCreateUserNo(oldCustomerProductDetail.getFldCreateUserNo());
+        customerProductDetail.setFldOperateDate(new Date());
         productDetailManager.save(customerProductDetail);
         
         return result;
@@ -112,9 +124,7 @@ public class ProductController {
     public AsyncResponse deleteProductDetail(String dtlId) {
         AsyncResponse result = new AsyncResponse(false, "删除产品明细成功");
         
-        CustomerProductDetail customerProductDetail = new CustomerProductDetail();
-        customerProductDetail.setFldId(dtlId);
-        productDetailManager.delete(customerProductDetail);
+        productDetailManager.delete(dtlId);
         
         return result;
     }
@@ -178,5 +188,17 @@ public class ProductController {
         AsyncResponse result = new AsyncResponse(false, "删除产品成功");
         productManager.delete(fldId);
         return result;
+    }
+	
+	@RequestMapping(value = "findProductDetail")
+    @ResponseBody
+    public AsyncResponse findProductDetail(String fldId) {
+		AsyncResponse response = new AsyncResponse();
+		List<CustomerProductDetail> list = new ArrayList<CustomerProductDetail>();
+		CustomerProductDetail customerProductDetail = productDetailManager.find(fldId);
+		list.add(customerProductDetail);
+		response.addData(list);
+		response.setIsError(false);
+        return response;
     }
 }

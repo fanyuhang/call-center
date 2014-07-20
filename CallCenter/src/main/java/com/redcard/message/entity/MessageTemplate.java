@@ -22,7 +22,7 @@ import com.common.security.util.SecurityUtil;
  * MessageTemplate entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "TBLMESSAGETEMPLATE ")
+@Table(name = "TBLMESSAGETEMPLATE")
 public class MessageTemplate implements java.io.Serializable {
 
 	private static final long serialVersionUID = 9083002786919450651L;
