@@ -241,6 +241,8 @@
 	<tblNode fldCode="01030110" fldParent="010301" fldName="导出"
 		fldDesc="" fldTarget="export" fldIcon="/static/ligerUI/icons/miniicons/action_save.gif"
 		fldLink="/customer/customer/export" fldType="2" fldPosition="10" />
+	<tblNode fldCode="01030111" fldParent="010301" fldName="初始导入" fldDesc="" fldTarget="initimport" 
+		fldIcon="/static/ligerUI/icons/silkicons/application_get.png" fldLink="/customer/customer/initimport" fldType="2" fldPosition="11" />
 
 	<!-- 二级菜单 -->
 	<tblNode fldCode="010302" fldParent="0103" fldName="客户交接"

@@ -26,4 +26,44 @@
     		<mapping value="3" text="铂金卡"></mapping>
     	</column>
     </table>
+    
+    <table class="com.redcard.customer.entity.ImportEntity" startRow="1">
+    	<column cell="B1" propertyName="custName" nullAllowed="false"/>
+    	<column cell="D1" propertyName="productName" nullAllowed="false"/>
+    	<column cell="E1" propertyName="contractNo" nullAllowed="false"/>
+    	<column cell="F1" propertyName="signDate" nullAllowed="true"/>
+    	<column cell="G1" propertyName="establishDate" nullAllowed="true"/>
+    	<column cell="H1" propertyName="valueDate" nullAllowed="true"/>
+    	<column cell="I1" propertyName="dueDate" nullAllowed="true"/>
+    	<column cell="J1" propertyName="clearDays" nullAllowed="true"/>
+    	<column cell="K1" propertyName="purchaseMoney" nullAllowed="false"/>
+    	<column cell="L1" propertyName="performanceRadio" nullAllowed="true"/>
+    	<column cell="M1" propertyName="performanceMoney" nullAllowed="true"/>
+    	<column cell="N1" propertyName="annualizedRate" nullAllowed="true"/>
+    	<column cell="O1" propertyName="annualizedMoney" nullAllowed="true"/>
+    	<column cell="P1" propertyName="moneyDate" nullAllowed="true"/>
+    	<column cell="Q1" propertyName="fldCollectDays" nullAllowed="true"/>
+    	<column cell="R1" propertyName="fldDepositRate" nullAllowed="true"/>
+    	<column cell="S1" propertyName="fldCollectMoney" nullAllowed="true"/>
+    	<column cell="T1" propertyName="financialUserNo" nullAllowed="true"/>
+    	<column cell="U1" propertyName="source" nullAllowed="true">
+    		<mapping value="0" text="缘故"></mapping>
+    		<mapping value="1" text="电话"></mapping>
+    		<mapping value="2" text="传单"></mapping>
+    	</column>
+    	<column cell="V1" propertyName="birthday" nullAllowed="true"/>
+    	<column cell="W1" propertyName="phone" nullAllowed="true"/>
+    	<column cell="X1" propertyName="identityNo" nullAllowed="true"/>
+    	<column cell="Y1" propertyName="bankNo" nullAllowed="true"/>
+    	<column cell="Z1" propertyName="bankName" nullAllowed="true"/>
+    	<column cell="AA" propertyName="cardMoney" nullAllowed="true"/>
+    	<column cell="AB" propertyName="cardLevel" nullAllowed="true">
+    		<mapping value="0" text="不做卡"></mapping>
+    		<mapping value="1" text="贵宾卡"></mapping>
+    		<mapping value="2" text="黄金卡"></mapping>
+    		<mapping value="3" text="铂金卡"></mapping>
+    	</column>
+    	<column cell="AC" propertyName="fldCardNo" nullAllowed="true"/>
+    	<column cell="AD" propertyName="comment" nullAllowed="true"/>
+    </table>
 </tables>

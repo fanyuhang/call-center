@@ -12,6 +12,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +24,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.common.Constant;
 import com.common.core.excel.ExcelImportUtil;
 import com.common.core.grid.AsyncResponse;
+import com.common.core.util.DateUtil;
 import com.common.core.util.EntityUtil;
 import com.common.core.util.FileHelper;
+import com.common.security.entity.User;
 import com.common.security.service.UserManager;
 import com.common.security.util.SecurityUtil;
 import com.redcard.customer.entity.Customer;
+import com.redcard.customer.entity.ImportEntity;
 import com.redcard.customer.service.CustomerManager;
 
 @Controller
@@ -129,6 +133,46 @@ public class CommonController {
                         	customerManager.save(objects);
                         }
                         break;
+                    }
+                    case 1:{
+                    	List<ImportEntity> objects = ExcelImportUtil.excelImport(ImportEntity.class, savedFileName);
+                    	if(null != objects && objects.size()>0) {
+                    		for(ImportEntity importEntity : objects) {
+                    			Customer customer = new Customer();
+                    			customer.setFldName(importEntity.getCustName());
+                    			if(!StringUtils.isEmpty(importEntity.getPhone())) {
+                    				if(importEntity.getPhone().length() == 11) {
+                    					customer.setFldMobile(importEntity.getPhone());
+                    				} else {
+                    					customer.setFldPhone(importEntity.getPhone());
+                    				}
+                    				Long count = customerManager.countByPhoneOrMobile(customer.getFldName(),customer.getFldPhone(),customer.getFldMobile());
+                    				if(count <= 0) {
+                    					customer.setFldId(EntityUtil.getId());
+                    					customer.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
+                    			        customer.setFldCreateDate(new Date());
+                    			        customer.setFldOperateDate(new Date());
+                    			        customer.setFldStatus(Constant.CUSTOMER_STATUS_NORMAL);
+                    			        customer.setFldCardTotalMoney((double) 0);
+                    			        customer.setFldSource(importEntity.getSource());
+                    			        customer.setFldBirthday(DateUtil.getDateByStr(importEntity.getBirthday()));
+                    			        customer.setFldIdentityNo(importEntity.getIdentityNo());
+                    			        if(!StringUtils.isEmpty(importEntity.getFinancialUserNo())) {
+                    			        	List<User> listUser = userManager.findByUserName(importEntity.getFinancialUserNo());
+                    			        	if(listUser != null && listUser.size() > 0)
+                    			        		customer.setFldFinancialUserNo(listUser.get(0).getLoginName());
+                    			        }
+                    			        if(!StringUtils.isEmpty(importEntity.getCardMoney())) {
+                    			        	customer.setFldCardTotalMoney(Double.valueOf(importEntity.getCardMoney()));
+                    			        }
+                    			        customer.setFldCardLevel(importEntity.getCardLevel());
+                    					customerManager.save(customer);
+                    				}
+                    			}
+                    			
+                    		}                    		
+                    	}
+                    	break;
                     }
                     default:
                         break;
