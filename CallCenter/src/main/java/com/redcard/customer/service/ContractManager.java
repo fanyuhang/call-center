@@ -20,14 +20,14 @@ import com.redcard.customer.entity.CustomerContract;
 @Component
 @Transactional(readOnly = true)
 public class ContractManager extends GenericPageHQLQuery<CustomerContract> {
-	@Autowired
-	private ContractDao contractDao;
-	@Autowired
-	private CustomerProductDetailDao customerProductDetailDao;
-	@Autowired
-	private CustomerDao customerDao;
-	
-	public Page<CustomerContract> findAllContract(GridPageRequest page, String where) {
+    @Autowired
+    private ContractDao contractDao;
+    @Autowired
+    private CustomerProductDetailDao customerProductDetailDao;
+    @Autowired
+    private CustomerDao customerDao;
+
+    public Page<CustomerContract> findAllContract(GridPageRequest page, String where) {
         return (Page<CustomerContract>) super.findAll(where, page);
     }
 
@@ -48,16 +48,16 @@ public class ContractManager extends GenericPageHQLQuery<CustomerContract> {
 			customer.setFldCardTotalMoney(customer.getFldCardTotalMoney()+customerContract.getFldCardMoney());
 		customerDao.save(customer);
     }
-	
-	public CustomerContract find(String fldId) {
+
+    public CustomerContract find(String fldId) {
         return contractDao.findOne(fldId);
     }
-	
-	@Transactional(readOnly = false)
+
+    @Transactional(readOnly = false)
     public void delete(String fldId) {
-		CustomerContract customerContract = contractDao.findOne(fldId);
-		customerContract.setFldStatus(Constant.CONTRACT_STATUS_DIABLED);
-		customerContract.setFldOperateDate(new Date());
+        CustomerContract customerContract = contractDao.findOne(fldId);
+        customerContract.setFldStatus(Constant.CONTRACT_STATUS_DIABLED);
+        customerContract.setFldOperateDate(new Date());
         contractDao.save(customerContract);
     }
 }

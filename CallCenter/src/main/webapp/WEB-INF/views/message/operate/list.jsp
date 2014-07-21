@@ -45,35 +45,22 @@
 		</div>
 	</div>
 	<script type="text/javascript">
-		var messageSendStatusData = <sys:dictList type = "13"/>;
-
+		var messageSendStatusData = <sys:dictList type = "16"/>;
 		//搜索表单应用ligerui样式
 		$("#formsearch").ligerForm({
 			labelWidth : 120,
 			inputWidth : 150,
 			space : 30,
 			fields : [ {
-				display : "短信发送记录编号",
-				name : "fldId",
-				newline : true,
-				type : "text",
-				cssClass : "field"
-			}, {
-				display : "短信发送模板编号",
-				name : "fldMessageTemplateId",
-				newline : false,
-				type : "text",
-				cssClass : "field"
-			}, {
 				display : "短信发送模板名称",
 				name : "messageTemplate.fldName",
-				newline : false,
+				newline : true,
 				type : "text",
 				cssClass : "field"
 			}, {
 				display : "短信发送状态",
 				name : "fldSendStatus",
-				newline : true,
+				newline : false,
 				type : "select",
 				cssClass : "field",
 				options : {
@@ -146,6 +133,14 @@
 								render : function(item) {
 									return renderLabel(messageSendStatusData,
 											item.fldSendStatus);
+								}
+							}, {
+								display : "短信内容",
+								name : "fldContent",
+								newline : true,
+								type : "textarea",
+								attr : {
+									readonly : "readonly"
 								}
 							}, {
 								display : "发送人",

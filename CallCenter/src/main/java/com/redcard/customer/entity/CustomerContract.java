@@ -496,4 +496,67 @@ public class CustomerContract implements java.io.Serializable {
 	public String getOperateUserName() {
 		return operateUser!=null ? operateUser.getUserName() : "";
 	}
+	
+	protected User financialUser;
+
+	@JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "FLDFINANCIALUSERNO", referencedColumnName="FLDLOGINNAME", insertable = false, updatable = false)
+	public User getFinancialUser() {
+		return financialUser;
+	}
+
+	public void setFinancialUser(User financialUser) {
+		this.financialUser = financialUser;
+	}
+	
+	@Transient
+	private String financialUserName;
+	
+	@Transient
+	public String getFinancialUserName() {
+		return financialUser!=null ? financialUser.getUserName() : "";
+	}
+	
+	private CustomerProduct customerProduct;
+
+	@JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "FLDPRODUCTID", referencedColumnName="FLDID", insertable = false, updatable = false)
+	public CustomerProduct getCustomerProduct() {
+		return customerProduct;
+	}
+
+	public void setCustomerProduct(CustomerProduct customerProduct) {
+		this.customerProduct = customerProduct;
+	}
+	
+	@Transient
+	public Date getEstablishDate() {
+		return customerProduct.getFldEstablishDate();
+	}
+	
+	private CustomerProductDetail customerProductDetail;
+
+	@JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "FLDPRODUCTDETAILID", referencedColumnName="FLDID", insertable = false, updatable = false)
+	public CustomerProductDetail getCustomerProductDetail() {
+		return customerProductDetail;
+	}
+
+	public void setCustomerProductDetail(CustomerProductDetail customerProductDetail) {
+		this.customerProductDetail = customerProductDetail;
+	}
+	
+	@Transient
+	public Integer getClearDays() {
+		return customerProductDetail.getFldClearDays();
+	}
+	
+	@Transient
+	public Integer getDayUnit() {
+		return customerProductDetail.getFldDayUnit();
+	}
+	
 }

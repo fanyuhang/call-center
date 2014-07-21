@@ -1,6 +1,8 @@
 package com.redcard.message.web.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,6 +42,14 @@ public class MessageTemplateController {
 	@ResponseBody
 	public DataResponse<MessageTemplate> list(GridPageRequest pageRequest, String where) {
 		pageRequest.setSort("fldOperateDate", "desc");
+		return (new DataResponse<MessageTemplate>(messageTemplateManager.queryMessageTemplates(pageRequest, where)));
+	}
+
+	@RequestMapping(value = "conditionalList")
+	@ResponseBody
+	public DataResponse<MessageTemplate> conditionalList(GridPageRequest pageRequest, String where) {
+		pageRequest.setSort("fldOperateDate", "desc");
+		where = "{\"op\":\"and\",\"rules\":[{\"op\":\"equal\",\"field\":\"fldStatus\",\"value\":\"0\",\"type\":\"int\"}]}";
 		return (new DataResponse<MessageTemplate>(messageTemplateManager.queryMessageTemplates(pageRequest, where)));
 	}
 
@@ -109,5 +119,17 @@ public class MessageTemplateController {
 		messageTemplate.setFldStatus(Constant.MESSAGE_TEMPLATE_STATUS_DIABLED);
 		messageTemplateManager.save(messageTemplate);
 		return result;
+	}
+
+	@RequestMapping(value = "findMessageTemplateDetail")
+	@ResponseBody
+	public AsyncResponse findMessageTemplateDetail(String fldId) {
+		AsyncResponse response = new AsyncResponse();
+		List<MessageTemplate> list = new ArrayList<MessageTemplate>();
+		MessageTemplate messageTemplate = messageTemplateManager.find(fldId);
+		list.add(messageTemplate);
+		response.addData(list);
+		response.setIsError(false);
+		return response;
 	}
 }
