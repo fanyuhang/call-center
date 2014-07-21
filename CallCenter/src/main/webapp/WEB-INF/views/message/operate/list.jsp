@@ -45,78 +45,44 @@
 		</div>
 	</div>
 	<script type="text/javascript">
-		var messageTemplateStatusData = <sys:dictList type = "12"/>;
+		var messageSendStatusData = <sys:dictList type = "16"/>;
 		//搜索表单应用ligerui样式
 		$("#formsearch").ligerForm({
-			labelWidth : 100,
+			labelWidth : 120,
 			inputWidth : 150,
 			space : 30,
 			fields : [ {
-				display : "模板编号",
-				name : "fldId",
+				display : "短信发送模板名称",
+				name : "messageTemplate.fldName",
 				newline : true,
 				type : "text",
 				cssClass : "field"
 			}, {
-				display : "模板名称",
-				name : "fldName",
-				newline : false,
-				type : "text",
-				cssClass : "field"
-			}, {
-				display : "模板状态",
-				name : "fldStatus",
+				display : "短信发送状态",
+				name : "fldSendStatus",
 				newline : false,
 				type : "select",
 				cssClass : "field",
 				options : {
-					valueFieldID : "fldStatus",
+					valueFieldID : "fldSendStatus",
 					valueField : "value",
 					textField : "text",
-					data : messageTemplateStatusData
+					data : messageSendStatusData
 				},
 				attr : {
 					"op" : "equal",
 					"vt" : "int"
 				}
 			}, {
-				display : "操作人",
-				name : "operateUser.userName",
-				newline : true,
-				type : "text",
-				cssClass : "field"
-			}, {
-				display : "操作开始时间",
-				name : "operateStartDate",
-				newline : false,
-				type : "date",
-				cssClass : "field",
-				attr : {
-					op : 'greaterorequal',
-					vt : 'date',
-					field : "fldOperateDate"
-				}
-			}, {
-				display : "操作结束时间",
-				name : "operateEndDate",
-				newline : false,
-				type : "date",
-				cssClass : "field",
-				attr : {
-					op : 'lessorequal',
-					vt : 'date',
-					field : "fldOperateDate"
-				}
-			}, {
-				display : "创建人",
+				display : "短信发送人",
 				name : "createUser.userName",
-				newline : true,
+				newline : false,
 				type : "text",
 				cssClass : "field"
 			}, {
-				display : "创建开始时间",
-				name : "createStartDate",
-				newline : false,
+				display : "发送开始时间",
+				name : "sendMessageStartDate",
+				newline : true,
 				type : "date",
 				cssClass : "field",
 				attr : {
@@ -125,8 +91,8 @@
 					field : "fldCreateDate"
 				}
 			}, {
-				display : "创建结束时间",
-				name : "createEndDate",
+				display : "发送结束时间",
+				name : "sendMessageEndDate",
 				newline : false,
 				type : "date",
 				cssClass : "field",
@@ -154,38 +120,39 @@
 								width : 1
 							},
 							{
-								display : "模板编号",
-								name : "fldId"
+								display : "短信模板名称",
+								name : "messageTemplateName"
 							},
 							{
-								display : "模板名称",
-								name : "fldName"
+								display : "短信数量",
+								name : "fldMessageNum"
 							},
 							{
-								display : "模板状态",
-								name : "fldStatus",
+								display : "短信发送状态",
+								name : "fldSendStatus",
 								render : function(item) {
-									return renderLabel(
-											messageTemplateStatusData,
-											item.fldStatus);
+									return renderLabel(messageSendStatusData,
+											item.fldSendStatus);
 								}
 							}, {
-								display : "操作人",
-								name : "operateUserName"
+								display : "短信内容",
+								name : "fldContent",
+								newline : true,
+								type : "textarea",
+								attr : {
+									readonly : "readonly"
+								}
 							}, {
-								display : "操作时间",
-								name : "fldOperateDate"
-							}, {
-								display : "创建人",
+								display : "发送人",
 								name : "createUserName"
 							}, {
-								display : "创建时间",
+								display : "发送时间",
 								name : "fldCreateDate"
 							} ],
 					dataAction : 'server',
 					pageSize : 20,
 					toolbar : {},
-					url : '<c:url value="/message/template/list"/>',
+					url : '<c:url value="/message/operate/list"/>',
 					sortName : 'operateDate',
 					sortOrder : 'desc',
 					width : '98%',
@@ -204,8 +171,8 @@
 		function toolbarBtnItemClick(item) {
 			switch (item.id) {
 			case "add":
-				top.f_addTab(null, '新增短信模板',
-						'<c:url value="/message/template/add"/>'
+				top.f_addTab(null, '短信发送',
+						'<c:url value="/message/operate/add"/>'
 								+ '?menuNo=${menuNo}');
 				break;
 			case "view":
@@ -215,59 +182,15 @@
 					return;
 				}
 				var selected = grid.getSelected();
-				top.f_addTab(null, '查看短信模板',
-						'<c:url value="/message/template/view"/>'
+				top.f_addTab(null, '查看短信发送详情',
+						'<c:url value="/message/operate/view"/>'
 								+ '?menuNo=${menuNo}&fldId=' + selected.fldId);
-				break;
-			case "modify":
-				if (grid.getSelectedRows().length > 1
-						|| grid.getSelectedRows().length == 0) {
-					LG.tip('请选择一行数据!');
-					return;
-				}
-				var selected = grid.getSelected();
-				top.f_addTab(null, '修改短信模板',
-						'<c:url value="/message/template/edit"/>'
-								+ '?menuNo=${menuNo}&fldId=' + selected.fldId);
-				break;
-			case "delete":
-				if (grid.getSelectedRows().length > 1
-						|| grid.getSelectedRows().length == 0) {
-					LG.tip('请选择一行数据!');
-					return;
-				}
-				jQuery.ligerDialog.confirm('确定删除吗?', function(confirm) {
-					if (confirm)
-						f_delete();
-				});
 				break;
 			}
 		}
 
 		function f_reload() {
 			grid.loadData();
-		}
-
-		function f_delete() {
-			var selected = grid.getSelected();
-			if (selected) {
-				LG.ajax({
-					url : '<c:url value="/message/template/delete"/>',
-					loading : '正在删除中...',
-					data : {
-						fldId : selected.fldId
-					},
-					success : function() {
-						LG.showSuccess('删除短信模板成功！');
-						f_reload();
-					},
-					error : function(message) {
-						LG.showError(message);
-					}
-				});
-			} else {
-				LG.tip('请选择行!');
-			}
 		}
 
 		resizeDataGrid(grid);

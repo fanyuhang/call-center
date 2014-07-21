@@ -22,7 +22,7 @@ import com.common.security.util.SecurityUtil;
  * MessageTemplate entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "TBLMESSAGETEMPLATE ")
+@Table(name = "TBLMESSAGETEMPLATE")
 public class MessageTemplate implements java.io.Serializable {
 
 	private static final long serialVersionUID = 9083002786919450651L;
@@ -50,9 +50,8 @@ public class MessageTemplate implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public MessageTemplate(String fldId, String fldName, String fldContent,
-			Integer fldStatus, String fldComment, String fldOperateUserNo,
-			Date fldOperateDate, String fldCreateUserNo, Date fldCreateDate) {
+	public MessageTemplate(String fldId, String fldName, String fldContent, Integer fldStatus, String fldComment,
+			String fldOperateUserNo, Date fldOperateDate, String fldCreateUserNo, Date fldCreateDate) {
 		this.fldId = fldId;
 		this.fldName = fldName;
 		this.fldContent = fldContent;

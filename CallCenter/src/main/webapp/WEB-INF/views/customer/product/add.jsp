@@ -42,6 +42,9 @@
     </div>
 </div>
 <script type="text/javascript">
+	var dayUnitData =<sys:dictList type = "14"/>;
+	var productTypeData =<sys:dictList type = "7"/>;
+	
 	function updateGridHeight() {
     	var topHeight = $("#layout > .l-layout-center").height();
     	var bottomHeight = $("#layout > .l-layout-bottom").height();
@@ -71,7 +74,15 @@
             {display: "产品简称", name: "fldShortName", newline: true, type: "text"},
             {display: "产品描述", name: "fldDescription", newline: false, type: "text", validate: { maxlength: 64}},
             {display: "成立日期", name: "fldEstablishDate", newline: true, type: "date", validate: {required: true}, attr:{readonly: "readonly"}},
-            {display: "起息日期", name: "fldValueDate", newline: false, type: "date", validate: {required: true}, attr:{readonly: "readonly"}}
+            {display: "起息日期", name: "fldValueDate", newline: false, type: "date", validate: {required: true}, attr:{readonly: "readonly"}},
+            {display: "产品类型", name: "fldType", newline: true, type: "select",
+            	options:{
+                    valueField: 'value',
+                    textField: 'text',
+                    isMultiSelect:false,
+                    data:productTypeData,
+                    valueFieldID:"fldType"
+            }}
         ]
     });
 
@@ -125,12 +136,14 @@
     		var detail = {};
     		detail.fldId = detailData[i].dtlId;
         	detail.fldPerformanceRadio = detailData[i].dtlPerformanceRadio;
+        	detail.fldDayUnit = detailData[i].dtlDayUnit;
         	detail.fldClearDays = detailData[i].dtlClearDays;
         	detail.fldDueDate = detailData[i].dtlDueDate;
         	detail.fldMinPurchaseMoney = detailData[i].dtlMinPurchaseMoney;
         	detail.fldMaxPurchaseMoney = detailData[i].dtlMaxPurchaseMoney;
         	detail.fldAnnualizedRate = detailData[i].dtlAnnualizedRate;
         	detail.fldDepositRate = detailData[i].dtlDepositRate;
+        	detail.fldCommissionRadio = detailData[i].dtlCommissionRadio;
         	
         	productDetailArr.push(detail);
     	}
@@ -181,20 +194,71 @@
 	            fields:[
 	                {display:"产品明细编号", name:"dtlId", newline:true, type:"text", validate:{required:true,maxlength:40}},
 	                {display:"业绩系数", name:"dtlPerformanceRadio", newline:false, type:"text", validate:{required:true}},
-	                {display:"实际天数", name:"dtlClearDays", newline:true, type:"text", validate:{required:true}},
-	                {display:"到期日期", name:"dtlDueDate", newline:false, type: "text", attr:{readonly: "readonly"}},
-	                {display:"最低认购金额", name:"dtlMinPurchaseMoney", newline:true, type:"text", validate:{required:true}},
-	                {display:"最高认购金额", name:"dtlMaxPurchaseMoney", newline:false, type:"text", validate:{required:true}},
-	                {display:"年化收益率", name:"dtlAnnualizedRate", newline:true, type:"text", validate:{required:true}},
-	                {display:"年化7天存款率", name:"dtlDepositRate", newline:false, type:"text", validate:{required:true}}
+	                {display:"天数单位", name:"dtlDayUnit", newline:true, type:"select", comboboxName:"dayUnit", validate:{required:true},
+	                	options:{
+                    	valueField: 'value',
+                    	textField: 'text',
+                    	isMultiSelect:false,
+                    	data:dayUnitData,
+                    	valueFieldID:"dtlDayUnit"
+                	}},
+	                {display:"实际天数", name:"dtlClearDays", newline:false, type:"text", validate:{required:true}},
+	                {display:"到期日期", name:"dtlDueDate", newline:true, type: "text", attr:{readonly: "readonly"}},
+	                {display:"最低认购金额", name:"dtlMinPurchaseMoney", newline:false, type:"text", validate:{required:true}},
+	                {display:"最高认购金额", name:"dtlMaxPurchaseMoney", newline:true, type:"text", validate:{required:true}},
+	                {display:"年化收益率", name:"dtlAnnualizedRate", newline:false, type:"text", validate:{required:true}},
+	                {display:"年化7天存款率", name:"dtlDepositRate", newline:true, type:"text", validate:{required:true}},
+	                {display:"佣金系数", name:"dtlCommissionRadio", newline:false, type:"text", validate:{required:true}}
 	            ]
+	        });
+	        
+	        $("#dayUnit").change(function(){
+	        	//到期日期=成立日期+实际天数
+	        	var dayUnit = $("#dtlDayUnit").val();
+	        	if(dayUnit == "") {
+	        		$("#dtlClearDays").val("");
+	        		$("#dtlDueDate").val("");
+	        		return;
+	        	}
+	        	var clearDays = $("#dtlClearDays").val();
+	        	if(clearDays == "") {
+	        		return;
+	        	}
+	        	
+	        	if(dayUnit == '0') {
+	        		var dueDate = new Date(Date.parse($("#fldEstablishDate").val()));
+	        		dueDate.setDate(dueDate.getDate()+parseInt($("#dtlClearDays").val()));
+	        		$("#dtlDueDate").val(dueDate.getFullYear()+"-"+parseInt(parseInt(dueDate.getMonth())+1)+"-"+dueDate.getDate());
+	        	} else {
+	        		var dueDate = new Date(Date.parse($("#fldEstablishDate").val()));
+	        		dueDate.setMonth(dueDate.getMonth()+parseInt($("#dtlClearDays").val()));
+	        		$("#dtlDueDate").val(dueDate.getFullYear()+"-"+parseInt(parseInt(dueDate.getMonth())+1)+"-"+dueDate.getDate());
+	        	}
 	        });
 	        
 	        $.ligerui.get("dtlClearDays").bind("blur",function(){
 	        	//到期日期=成立日期+实际天数
-	        	var dueDate = new Date(Date.parse($("#fldEstablishDate").val()));
-	        	dueDate.setDate(dueDate.getDate()+parseInt($("#dtlClearDays").val()));
-	        	$("#dtlDueDate").val(dueDate.getFullYear()+"-"+parseInt(parseInt(dueDate.getMonth())+1)+"-"+dueDate.getDate());
+	        	var dayUnit = $("#dtlDayUnit").val();
+	        	if(dayUnit == "") {
+	        		$("#dtlClearDays").val("");
+	        		LG.showError("请先选择天数单位");
+	        		return;
+	        	}
+	        	
+	        	if($("#dtlClearDays").val()=="") {
+        			$("#dtlDueDate").val("");
+        			return;
+        		}
+	        	
+	        	if(dayUnit == '0') {
+	        		var dueDate = new Date(Date.parse($("#fldEstablishDate").val()));
+	        		dueDate.setDate(dueDate.getDate()+parseInt($("#dtlClearDays").val()));
+	        		$("#dtlDueDate").val(dueDate.getFullYear()+"-"+parseInt(parseInt(dueDate.getMonth())+1)+"-"+dueDate.getDate());
+	        	} else {
+	        		var dueDate = new Date(Date.parse($("#fldEstablishDate").val()));
+	        		dueDate.setMonth(dueDate.getMonth()+parseInt($("#dtlClearDays").val()));
+	        		$("#dtlDueDate").val(dueDate.getFullYear()+"-"+parseInt(parseInt(dueDate.getMonth())+1)+"-"+dueDate.getDate());
+	        	}
 	        });
 	        
 	      	//创建表单结构
@@ -225,22 +289,26 @@
         	var editData = currentEditRow[0];
         	$("#dtlId").val(editData.dtlId);
         	$("#dtlPerformanceRadio").val(editData.dtlPerformanceRadio);
+        	$("#dtlDayUnit").val(editData.dtlDayUnit);
         	$("#dtlClearDays").val(editData.dtlClearDays);
         	$("#dtlMinPurchaseMoney").val(editData.dtlMinPurchaseMoney);
         	$("#dtlMaxPurchaseMoney").val(editData.dtlMaxPurchaseMoney);
         	$("#dtlAnnualizedRate").val(editData.dtlAnnualizedRate);
         	$("#dtlDepositRate").val(editData.dtlDepositRate);
+        	$("#dtlCommissionRadio").val(editData.dtlCommissionRadio);
         	$("#dtlDueDate").val(editData.dtlDueDate);
         	
         	$("#dtlId", detailMainform).attr("readonly", "readonly");
         } else {
         	$("#dtlId").val("");
         	$("#dtlPerformanceRadio").val("");
+        	$("#dtlDayUnit").val("");
         	$("#dtlClearDays").val("");
         	$("#dtlMinPurchaseMoney").val("");
         	$("#dtlMaxPurchaseMoney").val("");
         	$("#dtlAnnualizedRate").val("");
         	$("#dtlDepositRate").val("");
+        	$("#dtlCommissionRadio").val("");
         	$("#dtlDueDate").val("");
         }
 	}
@@ -261,12 +329,15 @@
         var detailData = {};
         detailData.dtlId = dtlId;
         detailData.dtlPerformanceRadio = $("#dtlPerformanceRadio").val();
+        detailData.dtlDayUnitText = renderLabel(dayUnitData,$("#dtlDayUnit").val());
+        detailData.dtlDayUnit = $("#dtlDayUnit").val();
         detailData.dtlClearDays = $("#dtlClearDays").val();
         detailData.dtlDueDate = $("#dtlDueDate").val();
         detailData.dtlMinPurchaseMoney = $("#dtlMinPurchaseMoney").val();
         detailData.dtlMaxPurchaseMoney = $("#dtlMaxPurchaseMoney").val();
         detailData.dtlAnnualizedRate = $("#dtlAnnualizedRate").val();
         detailData.dtlDepositRate = $("#dtlDepositRate").val();
+        detailData.dtlCommissionRadio = $("#dtlCommissionRadio").val();
         
         if($("#dtlId", detailMainform).attr("readonly") != "readonly") {
         	detailGrid.addRow(detailData);
@@ -347,19 +418,21 @@
         }
     	]
 	};
-    
     var detailGrid = $("#contactgrid").ligerGrid({
     	checkbox:true,
     	columnWidth: 130,
     	columns:[
     		{display: "产品明细编号", name: "dtlId"},
     		{display:"业绩系数", name:"dtlPerformanceRadio"},
+    		{display:"天数单位", name:"dtlDayUnitText"},
+    		{display:"天数单位VALUE", name: "dtlDayUnit",hide:1,width:1},
             {display:"实际天数", name:"dtlClearDays"},
             {display:"到期日期", name:"dtlDueDate"},
             {display:"最低认购金额", name:"dtlMinPurchaseMoney"},
             {display:"最高认购金额", name:"dtlMaxPurchaseMoney"},
             {display:"年化收益率", name:"dtlAnnualizedRate"},
-            {display:"年化7天存款率", name:"dtlDepositRate"}
+            {display:"年化7天存款率", name:"dtlDepositRate"},
+            {display:"佣金系数", name:"dtlCommissionRadio"}
     	], dataAction: 'server', pageSize: 20, toolbar:toolbarOptions, url: '', sortName: 'operateDate', sortOrder: 'desc',
 	    width:'99%',height: '98%', toJSON: JSON2.stringify
     });

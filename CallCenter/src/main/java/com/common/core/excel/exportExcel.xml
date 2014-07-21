@@ -10,7 +10,12 @@
     	<column cell="G1" propertyName="fldFinancialUserNo" columnName="所属理财经理" nullAllowed="true"></column>
     	<column cell="H1" propertyName="fldBankNo" columnName="银行卡号" nullAllowed="true"></column>
     	<column cell="I1" propertyName="fldCardNo" columnName="瑞得卡号" nullAllowed="true"></column>
-    	<column cell="J1" propertyName="fldCardLevel" columnName="瑞得卡等级" nullAllowed="true"></column>
+    	<column cell="J1" propertyName="fldCardLevel" columnName="瑞得卡等级" nullAllowed="true">
+    		<mapping value="0" text="不做卡"></mapping>
+    		<mapping value="1" text="贵宾卡"></mapping>
+    		<mapping value="2" text="黄金卡"></mapping>
+    		<mapping value="3" text="铂金卡"></mapping>
+    	</column>
     	<column cell="K1" propertyName="fldStatus" columnName="合同状态" nullAllowed="true">
     		<mapping value="0" text="有效"></mapping>
         	<mapping value="9" text="无效"></mapping>
@@ -40,7 +45,12 @@
     	</column>
     	<column cell="F1" propertyName="financialUserName" columnName="所属理财经理" nullAllowed="true"></column>
     	<column cell="G1" propertyName="fldCardNo" columnName="瑞得卡号" nullAllowed="true"></column>
-    	<column cell="H1" propertyName="fldCardLevel" columnName="瑞得卡等级" nullAllowed="true"></column>
+    	<column cell="H1" propertyName="fldCardLevel" columnName="瑞得卡等级" nullAllowed="true">
+    		<mapping value="0" text="不做卡"></mapping>
+    		<mapping value="1" text="贵宾卡"></mapping>
+    		<mapping value="2" text="黄金卡"></mapping>
+    		<mapping value="3" text="铂金卡"></mapping>
+    	</column>
     	<column cell="I1" propertyName="operateUserName" columnName="操作人" nullAllowed="true"></column>
     	<column cell="J1" propertyName="fldOperateDate" columnName="操作时间" nullAllowed="true"></column>
     </table>

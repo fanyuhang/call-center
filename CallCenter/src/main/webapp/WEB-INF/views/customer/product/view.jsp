@@ -42,6 +42,9 @@
     </div>
 </div>
 <script type="text/javascript">
+	var dayUnitData =<sys:dictList type = "14"/>;
+	var productTypeData =<sys:dictList type = "7"/>;
+	
 	function updateGridHeight() {
     	var topHeight = $("#layout > .l-layout-center").height();
     	var bottomHeight = $("#layout > .l-layout-bottom").height();
@@ -71,7 +74,16 @@
             {display: "产品简称", name: "fldShortName", newline: true, type: "text",attr:{value:"${customerProduct.fldShortName}",readonly: "readonly"}},
             {display: "产品描述", name: "fldDescription", newline: false, type: "text", attr:{value:"${customerProduct.fldDescription}",readonly: "readonly"},validate: { maxlength: 64}},
             {display: "成立日期", name: "fldEstablishDate", newline: true, type: "date", validate: {required: true}, attr:{value:"<fmt:formatDate value='${customerProduct.fldEstablishDate}' pattern='yyyy-MM-dd'/>",readonly: "readonly"},format:'yyyy-MM-dd',editor:{ type:'date' }},
-            {display: "起息日期", name: "fldValueDate", newline: false, type: "date", validate: {required: true}, attr:{value:"<fmt:formatDate value='${customerProduct.fldValueDate}' pattern='yyyy-MM-dd'/>",readonly: "readonly"},format:'yyyy-MM-dd',editor:{ type:'date' }}
+            {display: "起息日期", name: "fldValueDate", newline: false, type: "date", validate: {required: true}, attr:{value:"<fmt:formatDate value='${customerProduct.fldValueDate}' pattern='yyyy-MM-dd'/>",readonly: "readonly"},format:'yyyy-MM-dd',editor:{ type:'date' }},
+            {display: "产品类型", name: "fldType", newline: true, type: "select",
+            	options:{
+                    valueField: 'value',
+                    textField: 'text',
+                    isMultiSelect:false,
+                    data:productTypeData,
+                    initValue: '${customerProduct.fldType}',
+                    valueFieldID:"fldType"
+            }}
         ]
     });
 
@@ -95,6 +107,9 @@
     		{display:"业绩系数", name:"dtlPerformanceRadio",render:function(item){
     			return item.fldPerformanceRadio;
     		}},
+    		{display:"天数单位", name:"dtlDayUnit",render:function(item){
+    			return renderLabel(dayUnitData,item.fldDayUnit);
+    		}},
             {display:"实际天数", name:"dtlClearDays",render:function(item){
     			return item.fldClearDays;
     		}},
@@ -112,6 +127,9 @@
     		}},
             {display:"年化7天存款率", name:"dtlDepositRate",render:function(item){
     			return item.fldDepositRate;
+    		}},
+    		{display:"佣金系数", name:"dtlCommissionRadio",render:function(item){
+    			return item.fldCommissionRadio;
     		}}
     	], dataAction: 'server', pageSize: 20,url: '/customer/product/listDetail', sortName: 'operateDate', sortOrder: 'desc',
 	    width:'99%',height: '98%', toJSON: JSON2.stringify

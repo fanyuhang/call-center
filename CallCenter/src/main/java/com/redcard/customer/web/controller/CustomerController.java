@@ -76,6 +76,7 @@ public class CustomerController {
         customer.setFldCreateDate(new Date());
         customer.setFldOperateDate(new Date());
         customer.setFldStatus(Constant.CUSTOMER_STATUS_NORMAL);
+        customer.setFldCardTotalMoney((double) 0);
         customerManager.save(customer);
         return result;
     }
@@ -98,6 +99,8 @@ public class CustomerController {
         customer.setFldStatus(oldCustomer.getFldStatus());
         customer.setFldCreateUserNo(oldCustomer.getFldCreateUserNo());
         customer.setFldCreateDate(oldCustomer.getFldCreateDate());
+        customer.setFldCardStatus(oldCustomer.getFldCardStatus());
+        customer.setFldCardTotalMoney(oldCustomer.getFldCardTotalMoney());
         
         customerManager.save(customer);
         return result;

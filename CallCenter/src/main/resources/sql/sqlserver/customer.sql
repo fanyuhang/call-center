@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      Microsoft SQL Server 2008                    */
-/* Created on:     2014-07-13 10:04:10                          */
+/* Created on:     2014-07-18 21:29:59                          */
 /*==============================================================*/
 
 
@@ -202,6 +202,7 @@ create table tblCustomerProductDetail (
    fldId                nvarchar(40)         null,
    fldProductId         nvarchar(40)         null,
    fldClearDays         int                  null,
+   fldDayUnit           int                  null,
    fldDueDate           datetime             null,
    fldMinPurchaseMoney  money                null,
    fldMaxPurchaseMoney  money                null,
@@ -209,6 +210,7 @@ create table tblCustomerProductDetail (
    fldDepositRate       money                null,
    fldPerformanceRadio  money                null,
    fldCommissionRadio   money                null,
+   fldStatus            int                  null,
    fldOperateUserNo     nvarchar(32)         null,
    fldOperateDate       datetime             null,
    fldCreateUserNo      nvarchar(32)         null,
