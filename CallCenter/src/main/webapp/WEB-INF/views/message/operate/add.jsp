@@ -18,42 +18,49 @@
 					labelWidth : 160,
 					space : 10,
 					fields : [
-							{
-								display : "短信内容（务必以'【聚金理财】'结束）",
+                            {
+                                display : "模板",
+                                name : "fldMessageTemplateId",
+                                newline : true,
+                                type : "select",
+                                comboboxName : "messageTemplateId",
+                                options : {
+                                    valueFieldID : "messageTemplateId"
+                                },
+                                group : "<label style=white-space:nowrap;>短信发送</label>",
+                                groupicon : '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'
+                            },{
+                                display : "手机列表<br/>（多个手机号以';'隔开，头尾不加分号！）",
+                                name : "fldMobiles",
+                                newline : true,
+                                width:"630",
+                                type : "textarea",
+                                validate : {
+                                    required : true
+                                }
+                            },{
+								display : "内容<br/>（务必以'【聚金理财】'结束）",
 								name : "fldContent",
 								newline : true,
 								type : "textarea",
-								validate : {
+                                width:"630",
+                                validate : {
 									required : true,
 									maxlength : 200
 								},
-								group : "<label style=white-space:nowrap;>短信发送</label>",
-								groupicon : '<c:url value="/static/ligerUI/icons/32X32/business_contact.gif"/>'
-							}, {
-								display : "短信模板",
-								name : "fldMessageTemplateId",
-								newline : false,
-								type : "select",
-								comboboxName : "messageTemplateId",
-								options : {
-									valueFieldID : "messageTemplateId"
-								}
-							}, {
-								display : "手机列表（多个手机号以';'隔开，头尾不加分号！）",
-								name : "fldMobiles",
-								newline : true,
-								type : "textarea",
-								validate : {
-									required : true
-								}
-							}, {
-								display : "短信发送备注",
+								group : "<label style=white-space:nowrap;>内容</label>",
+								groupicon : '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'
+							},   {
+								display : "备注",
 								name : "fldComment",
-								newline : false,
-								type : "textarea",
+								newline : true,
+                                width:"630",
+                                type : "textarea",
 								validate : {
 									maxlength : 500
-								}
+								},
+                            group : "<label style=white-space:nowrap;>备注</label>",
+                            groupicon : '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'
 							} ]
 				});
 

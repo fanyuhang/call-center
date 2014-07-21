@@ -25,25 +25,31 @@
 									required : true,
 									maxlength : 25
 								},
-								group : "<label style=white-space:nowrap;>短信模板信息</label>",
+								group : "<label style=white-space:nowrap;>基本信息</label>",
 								groupicon : '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'
 							}, {
 								display : "模板内容",
 								name : "fldContent",
 								newline : true,
 								type : "textarea",
+                                width:"630",
 								validate : {
 									required : true,
 									maxlength : 500
-								}
+								},
+                                group : "<label style=white-space:nowrap;>内容</label>",
+                                groupicon : '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'
 							}, {
 								display : "模板备注",
 								name : "fldComment",
 								newline : true,
 								type : "textarea",
-								validate : {
+                                width:"630",
+                                validate : {
 									maxlength : 500
-								}
+								},
+                                group : "<label style=white-space:nowrap;>备注</label>",
+                                groupicon : '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'
 							} ]
 				});
 

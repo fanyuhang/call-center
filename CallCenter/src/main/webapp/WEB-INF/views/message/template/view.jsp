@@ -22,7 +22,7 @@
 					space : 30,
 					fields : [
 							{
-								display : "短信模板名称",
+								display : "模板名称",
 								name : "fldName",
 								newline : true,
 								type : "text",
@@ -30,10 +30,10 @@
 									value : "${messageTemplate.fldName}",
 									readonly : "readonly"
 								},
-								group : "<label style=white-space:nowrap;>短信模板基本信息</label>",
+								group : "<label style=white-space:nowrap;>基本信息</label>",
 								groupicon : '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'
 							}, {
-								display : "短信模板状态",
+								display : "模板状态",
 								name : "fldStatus",
 								newline : false,
 								type : "select",
@@ -43,25 +43,31 @@
 									isMultiSelect : false,
 									data : messageTemplateStatusData,
 									initValue : '${messageTemplate.fldStatus}',
-									valueFieldID : "fldStatus",
+									valueFieldID : "fldStatus"
 								}
 							}, {
-								display : "短信模板内容",
+								display : "模板内容",
 								name : "fldContent",
 								newline : true,
 								type : "textarea",
+                                width:"630",
 								attr : {
 									readonly : "readonly"
-								}
+								},
+                            group : "<label style=white-space:nowrap;>内容</label>",
+                            groupicon : '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'
 							}, {
-								display : "短信模板备注",
+								display : "模板备注",
 								name : "fldComment",
 								newline : false,
 								type : "textarea",
+                                width:"630",
 								attr : {
 									readonly : "readonly"
-								}
-							}, ]
+								},
+                            group : "<label style=white-space:nowrap;>备注</label>",
+                            groupicon : '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'
+							} ]
 				});
 
 		$("#fldContent").text('${messageTemplate.fldContent}');	
