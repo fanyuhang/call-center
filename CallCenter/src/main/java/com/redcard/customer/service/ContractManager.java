@@ -1,6 +1,7 @@
 package com.redcard.customer.service;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -29,8 +30,12 @@ public class ContractManager extends GenericPageHQLQuery<CustomerContract> {
 	public Page<CustomerContract> findAllContract(GridPageRequest page, String where) {
         return (Page<CustomerContract>) super.findAll(where, page);
     }
-	
-	@Transactional(readOnly = false)
+
+    public List<CustomerContract> findAllContractByCustomerId(List<String> customerId) {
+        return contractDao.findAllContractByCustomerId(customerId);
+    }
+
+    @Transactional(readOnly = false)
     public void save(CustomerContract customerContract) {
 		String fldProductId = customerProductDetailDao.findOne(customerContract.getFldProductDetailId()).getFldProductId();
 		customerContract.setFldProductId(fldProductId);
@@ -39,7 +44,8 @@ public class ContractManager extends GenericPageHQLQuery<CustomerContract> {
 		//更新客户的卡相关信息
 		Customer customer = customerDao.findOne(customerContract.getFldCustomerId());
 		customer.setFldCardLevel(customerContract.getFldCardLevel());
-		customer.setFldCardTotalMoney(customer.getFldCardTotalMoney()+customerContract.getFldCardMoney());
+		if(null != customerContract.getFldCardMoney())
+			customer.setFldCardTotalMoney(customer.getFldCardTotalMoney()+customerContract.getFldCardMoney());
 		customerDao.save(customer);
     }
 	
