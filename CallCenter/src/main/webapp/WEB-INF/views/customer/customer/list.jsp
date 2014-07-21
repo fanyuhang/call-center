@@ -23,6 +23,11 @@
         <p>Your browser doesn't have Flash, Silverlight, Gears, BrowserPlus or HTML5 support.</p>
     </div>
 </div>
+<div id="initupload" style="display:none;">
+    <div id="inituploader">
+        <p>Your browser doesn't have Flash, Silverlight, Gears, BrowserPlus or HTML5 support.</p>
+    </div>
+</div>
 <script type="text/javascript">
 	var statusData =<sys:dictList type = "6"/>;
 	var cardLevelData =<sys:dictList type = "13"/>;
@@ -191,14 +196,29 @@
 
 	$("#uploader").plupload({
 	    runtimes: 'flash',
-	    url: '<c:url value="/customer/common/upload/1"/>',
-	    max_file_size: '100mb',
+	    url: '<c:url value="/customer/common/upload/0"/>',
+	    //max_file_size: '5mb',
 	    max_file_count: 1,
-	    chunk_size: '100mb',
+	    //chunk_size: '1mb',
 	    rename: true,
 	    multiple_queues: false,
 	    resize: {width: 600, height: 500, quality: 30},
+	    sortable: true,
+	    filters: [
+	        {title: "Excel files", extensions: "xls"}
+	    ],
+	    flash_swf_url: '<c:url value="/static/plupload/plupload.flash.swf" />'
+	});
+	
+	$("#inituploader").plupload({
+	    runtimes: 'flash',
+	    url: '<c:url value="/customer/common/upload/1"/>',
+	    //max_file_size: '5mb',
+	    max_file_count: 1,
+	    //chunk_size: '1mb',
 	    rename: true,
+	    multiple_queues: false,
+	    resize: {width: 600, height: 500, quality: 30},
 	    sortable: true,
 	    filters: [
 	        {title: "Excel files", extensions: "xls"}
@@ -207,6 +227,7 @@
 	});
 
 	var uploader = $('#uploader').plupload('getUploader');
+	var inituploader = $('#inituploader').plupload('getUploader');
 
 	uploader.bind('ChunkUploaded', function (uploader, file, response) {
 	    if (response.response) {
@@ -214,6 +235,21 @@
 	        if (rep.IsError == false) {
 	            uploader.removeFile(file);
 	            uploader.stop();
+	            detailWin.hide();
+	            LG.showSuccess(rep.Message);
+	            f_reload();
+	        } else {
+	            LG.showError(rep.Message);
+	        }
+	    }
+	});
+	
+	inituploader.bind('ChunkUploaded', function (inituploader, file, response) {
+	    if (response.response) {
+	        var rep = JSON.parse(response.response);
+	        if (rep.IsError == false) {
+	            inituploader.removeFile(file);
+	            inituploader.stop();
 	            initdetailWin.hide();
 	            LG.showSuccess(rep.Message);
 	            f_reload();
@@ -222,6 +258,24 @@
 	        }
 	    }
 	});
+	
+	var detailWin = null;
+	function f_upload() {
+	    if (detailWin) {
+	        detailWin.show();
+	    } else {
+	        detailWin = $.ligerDialog.open({
+	            title: '客户导入',
+	            target: $("#upload"),
+	            width: 600, height: 420, top: 90,
+	            buttons: [
+	                { text: '取消', onclick: function () {
+	                    detailWin.hide();
+	                } }
+	            ]
+	        });
+	    }
+	}
 
 	var initdetailWin = null;
 	function f_initupload() {
@@ -230,7 +284,7 @@
 	    } else {
 	        initdetailWin = $.ligerDialog.open({
 	            title: '客户初始导入',
-	            target: $("#upload"),
+	            target: $("#initupload"),
 	            width: 600, height: 420, top: 90,
 	            buttons: [
 	                { text: '取消', onclick: function () {

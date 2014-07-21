@@ -156,9 +156,9 @@ public class FileHelper {
         CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
         commonsMultipartResolver.setDefaultEncoding("utf-8");
         MultipartHttpServletRequest multipartRequest = commonsMultipartResolver.resolveMultipart(request);
-        int chunk = Integer.valueOf(multipartRequest.getParameter("chunk"));
+        int chunk = null != multipartRequest.getParameter("chunk") ? Integer.valueOf(multipartRequest.getParameter("chunk")) : 0;
         //分块上传总数
-        int chunks = Integer.valueOf(multipartRequest.getParameter("chunks"));
+        int chunks = null != multipartRequest.getParameter("chunks") ? Integer.valueOf(multipartRequest.getParameter("chunks")) : 1;
         // 判断当前表单是否为"multipart/form-data"
         if (commonsMultipartResolver.isMultipart(request)) {
             try {

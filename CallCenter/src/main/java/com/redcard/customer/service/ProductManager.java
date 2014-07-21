@@ -36,6 +36,11 @@ public class ProductManager extends GenericPageHQLQuery<CustomerProduct> {
 	}
 	
 	@Transactional(readOnly = false)
+	public void saveProductInfo(CustomerProduct product) {
+		customerProductDao.save(product);
+	}
+	
+	@Transactional(readOnly = false)
     public void save(CustomerProduct product,List<CustomerProductDetail> productDetailList) {
 		product.setFldStatus(Constant.PRODUCT_STATUS_NORMAL);
 		customerProductDao.save(product);
@@ -87,6 +92,10 @@ public class ProductManager extends GenericPageHQLQuery<CustomerProduct> {
 	public CustomerProduct find(String fldId) {
         return customerProductDao.findOne(fldId);
     }
+	
+	public List<CustomerProduct> findByName(String name) {
+		return customerProductDao.findByName(name);
+	}
 	
 	@Transactional(readOnly = false)
     public void delete(String fldId) {
