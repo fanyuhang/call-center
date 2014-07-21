@@ -1,49 +1,20 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@include file="../../include/formHeader.jsp"%>
-<link
-	href='<c:url value="/static/plupload/jquery.ui.plupload/css/jquery.ui.plupload.css"/>'
-	rel="stylesheet" type="text/css" />
-<script src='<c:url value="/static/plupload/plupload.js" />'
-	type="text/javascript"></script>
-<script src='<c:url value="/static/plupload/plupload.flash.js" />'
-	type="text/javascript"></script>
-<script src='<c:url value="/static/plupload/plupload.browserplus.js" />'
-	type="text/javascript"></script>
-<script src='<c:url value="/static/plupload/i18n/zh.js" />'
-	type="text/javascript"></script>
-<script
-	src='<c:url value="/static/plupload/jquery.ui.plupload/jquery.ui.plupload.js" />'
-	type="text/javascript"></script>
-<style>
-.ui-autocomplete-loading {
-	background: white
-		url('<c:url value="/static/ligerUI/jquery/themes/base/images/ui-anim_basic_16x16.gif"/>')
-		right center no-repeat;
-}
-</style>
 <body style="padding: 10px; height: 100%; text-align: center;">
-	<ipnut type="hidden" id="MenuNo" value="${menuNo}" />
-	<div id="mainsearch" style="width: 98%">
-		<div class="searchtitle">
-			<span>搜索</span><img
-				src='<c:url value="/static/ligerUI/icons/32X32/searchtool.gif"/>' />
-			<div class="togglebtn"></div>
-		</div>
-		<div class="navline" style="margin-bottom: 4px; margin-top: 4px;"></div>
-		<div class="searchbox">
-			<form id="formsearch" class="l-form"></form>
-		</div>
-	</div>
-	<div id="maingrid"></div>
-	<div id="detail" style="display: none;">
-		<form:form id="mainform" method="post"></form:form>
-	</div>
-	<div id="upload" style="display: none;">
-		<div id="uploader">
-			<p>Your browser doesn't have Flash, Silverlight, Gears,
-				BrowserPlus or HTML5 support.</p>
-		</div>
-	</div>
+<ipnut type="hidden" id="MenuNo" value="${menuNo}"/>
+<div id="mainsearch" style="width: 98%">
+    <div class="searchtitle">
+        <span>搜索</span><img
+            src='<c:url value="/static/ligerUI/icons/32X32/searchtool.gif"/>'/>
+
+        <div class="togglebtn"></div>
+    </div>
+    <div class="navline" style="margin-bottom: 4px; margin-top: 4px;"></div>
+    <div class="searchbox">
+        <form id="formsearch" class="l-form"></form>
+    </div>
+</div>
+<div id="maingrid"></div>
 	<script type="text/javascript">
 		var messageTemplateStatusData = <sys:dictList type = "12"/>;
 		//搜索表单应用ligerui样式

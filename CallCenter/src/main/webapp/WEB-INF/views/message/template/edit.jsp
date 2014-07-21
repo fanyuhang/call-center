@@ -34,16 +34,16 @@
 								newline : false,
 								type : "text",
 								attr : {
-									value : "${messageTemplate.fldName}",
+									value : "${messageTemplate.fldName}"
 								},
 								validate : {
 									required : true,
 									maxlength : 25
 								},
-								group : "<label style=white-space:nowrap;>短信模板信息</label>",
+								group : "<label style=white-space:nowrap;>基本信息</label>",
 								groupicon : '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'
 							}, {
-								display : "短信模板状态",
+								display : "模板状态",
 								name : "fldStatus",
 								newline : false,
 								type : "select",
@@ -53,28 +53,34 @@
 									isMultiSelect : false,
 									data : messageTemplateStatusData,
 									initValue : '${messageTemplate.fldStatus}',
-									valueFieldID : "fldStatus",
+									valueFieldID : "fldStatus"
 								},
 								validate : {
 									required : true
-								},
+								}
 							}, {
 								display : "模板内容",
 								name : "fldContent",
 								newline : true,
-								type : "textarea",
+                                width:"630",
+                                type : "textarea",
 								validate : {
 									required : true,
 									maxlength : 500
-								}
+								},
+                            group : "<label style=white-space:nowrap;>内容</label>",
+                            groupicon : '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'
 							}, {
 								display : "模板备注",
 								name : "fldComment",
 								newline : false,
-								type : "textarea",
+                                width:"630",
+                                type : "textarea",
 								validate : {
 									maxlength : 500
-								}
+								},
+                            group : "<label style=white-space:nowrap;>备注</label>",
+                            groupicon : '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'
 							} ]
 				});
 
