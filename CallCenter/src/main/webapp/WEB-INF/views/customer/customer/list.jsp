@@ -18,7 +18,6 @@
     </div>
 </div>
 <div id="maingrid"></div>
-<div id="detail" style="display:none;"><form:form id="mainform" method="post"></form:form></div>
 <div id="upload" style="display:none;">
     <div id="uploader">
         <p>Your browser doesn't have Flash, Silverlight, Gears, BrowserPlus or HTML5 support.</p>
@@ -184,16 +183,18 @@
 	        case "export":
 	        	f_export('<c:url value="/customer/customer/export"/>');
 	        	break;
+	       	case "initimport":
+	       		f_initupload();
+	            break;
 	    }
 	}
 
-
 	$("#uploader").plupload({
 	    runtimes: 'flash',
-	    url: '<c:url value="/customer/common/upload/0"/>',
+	    url: '<c:url value="/customer/common/upload/1"/>',
 	    max_file_size: '100mb',
 	    max_file_count: 1,
-	    chunk_size: '1mb',
+	    chunk_size: '100mb',
 	    rename: true,
 	    multiple_queues: false,
 	    resize: {width: 600, height: 500, quality: 30},
@@ -213,7 +214,7 @@
 	        if (rep.IsError == false) {
 	            uploader.removeFile(file);
 	            uploader.stop();
-	            detailWin.hide();
+	            initdetailWin.hide();
 	            LG.showSuccess(rep.Message);
 	            f_reload();
 	        } else {
@@ -222,18 +223,18 @@
 	    }
 	});
 
-	var detailWin = null;
-	function f_upload() {
-	    if (detailWin) {
-	        detailWin.show();
+	var initdetailWin = null;
+	function f_initupload() {
+	    if (initdetailWin) {
+	        initdetailWin.show();
 	    } else {
-	        detailWin = $.ligerDialog.open({
-	            title: '客户导入',
+	        initdetailWin = $.ligerDialog.open({
+	            title: '客户初始导入',
 	            target: $("#upload"),
 	            width: 600, height: 420, top: 90,
 	            buttons: [
 	                { text: '取消', onclick: function () {
-	                    detailWin.hide();
+	                    initdetailWin.hide();
 	                } }
 	            ]
 	        });
