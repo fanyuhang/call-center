@@ -5,6 +5,7 @@ import java.util.Date;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +31,9 @@ public class MessageOperateController {
 	@Autowired
 	private MessageOperateManager messageOperateManager;
 
+	@Value("#{settingsMap['messageSignFlag']}")
+	private String sendMessageSignFlag;
+
 	@RequestMapping(value = "init")
 	public String init(String menuNo, Model model) {
 		model.addAttribute("menuNo", menuNo);
@@ -52,6 +56,7 @@ public class MessageOperateController {
 	@RequestMapping(value = "add")
 	public String add(String menuNo, Model model) {
 		model.addAttribute("menuNo", menuNo);
+		model.addAttribute("sendMessageSignFlag", sendMessageSignFlag);
 		return "message/operate/add";
 	}
 
@@ -94,5 +99,13 @@ public class MessageOperateController {
 		model.addAttribute("menuNo", menuNo);
 		model.addAttribute("messageOperate", messageOperate);
 		return "message/operate/view";
+	}
+
+	public String getSendMessageSignFlag() {
+		return sendMessageSignFlag;
+	}
+
+	public void setSendMessageSignFlag(String sendMessageSignFlag) {
+		this.sendMessageSignFlag = sendMessageSignFlag;
 	}
 }

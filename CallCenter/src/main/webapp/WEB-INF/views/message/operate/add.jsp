@@ -18,53 +18,60 @@
 					labelWidth : 160,
 					space : 10,
 					fields : [
-                            {
-                                display : "模板",
-                                name : "fldMessageTemplateId",
-                                newline : true,
-                                type : "select",
-                                comboboxName : "messageTemplateId",
-                                options : {
-                                    valueFieldID : "messageTemplateId"
-                                },
-                                group : "<label style=white-space:nowrap;>短信发送</label>",
-                                groupicon : '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'
-                            },{
-                                display : "手机列表<br/>（多个手机号以';'隔开，头尾不加分号！）",
-                                name : "fldMobiles",
-                                newline : true,
-                                width:"630",
-                                type : "textarea",
-                                validate : {
-                                    required : true
-                                }
-                            },{
-								display : "内容<br/>（务必以'【聚金理财】'结束）",
+							{
+								display : "模板",
+								name : "fldMessageTemplateId",
+								newline : true,
+								type : "select",
+								comboboxName : "messageTemplateId",
+								options : {
+									valueFieldID : "messageTemplateId"
+								},
+								group : "<label style=white-space:nowrap;>短信发送</label>",
+								groupicon : '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'
+							},
+							{
+								display : "手机列表<br/>（多个手机号以';'隔开，头尾不加分号！）",
+								name : "fldMobiles",
+								newline : true,
+								width : "630",
+								type : "textarea",
+								validate : {
+									required : true
+								}
+							},
+							{
+								display : "内容",
 								name : "fldContent",
 								newline : true,
 								type : "textarea",
-                                width:"630",
-                                validate : {
+								width : "630",
+								validate : {
 									required : true,
 									maxlength : 200
 								},
 								group : "<label style=white-space:nowrap;>内容</label>",
 								groupicon : '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'
-							},   {
+							},
+							{
 								display : "备注",
 								name : "fldComment",
 								newline : true,
-                                width:"630",
-                                type : "textarea",
+								width : "630",
+								type : "textarea",
 								validate : {
 									maxlength : 500
 								},
-                            group : "<label style=white-space:nowrap;>备注</label>",
-                            groupicon : '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'
+								group : "<label style=white-space:nowrap;>备注</label>",
+								groupicon : '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'
 							} ]
 				});
 
 		mainform.attr("action", '<c:url value="/message/operate/save"/>');
+
+		$("#fldContent").blur(function() {
+			f_operateMessageSignFlag($(this));
+		});
 
 		$("#messageTemplateId")
 				.change(
@@ -89,6 +96,7 @@
 										success : function(data) {
 											$("#fldContent").val(
 													data[0].fldContent);
+											f_operateMessageSignFlag($("#fldContent"));
 										},
 										error : function(message) {
 										}
@@ -153,16 +161,6 @@
 		//校验短信内容必须包含签名目前为【聚金理财】、【瑞得支付】
 		//校验手机列表的格式必须是以;隔开的一系列的手机号，否则提示具体的第几个手机号格式有误！
 		function f_check() {
-			var messageContent = $("#fldContent").val();
-			if (messageContent.indexOf("【聚金理财】") < 0) {
-				$.ligerDialog.alert('短信内容必须包含【聚金理财】签名！');
-				return;
-			}
-			var signIndex = messageContent.indexOf("【聚金理财】");
-			if (signIndex != messageContent.length - 6) {
-				$.ligerDialog.alert('短信内容必须以【聚金理财】签名结束！');
-				return;
-			}
 			var mobileNos = $("#fldMobiles").val();//手机号必须以;隔开
 			if (mobileNos.indexOf(";") < 0) { //如果只是一个手机号则没有问题；
 				if (!(/^1[3|4|5|8][0-9]\d{4,8}$/.test(mobileNos))) {
@@ -199,6 +197,19 @@
 		function f_cancel() {
 			var win = parent || window;
 			win.LG.closeCurrentTab(null);
+		}
+
+		function f_operateMessageSignFlag(obj) {//处理是否需要在短信内容里加短信签名
+			var messageContent = obj.val();
+			if (messageContent.indexOf("${sendMessageSignFlag}") < 0) {
+				obj.val(messageContent + '${sendMessageSignFlag}');
+			} else {
+				var signIndex = messageContent
+						.lastIndexOf("${sendMessageSignFlag}");
+				if (signIndex != messageContent.length - 6) {
+					obj.val(messageContent + '${sendMessageSignFlag}');
+				}
+			}
 		}
 	</script>
 </body>
