@@ -6,6 +6,7 @@
 <script type="text/javascript">
 	var genderData =<sys:dictList type = "1"/>;
 	var cardLevelData =<sys:dictList type = "13"/>;
+	var dayUnitData =<sys:dictList type = "14"/>;
 	
     //覆盖本页面grid的loading效果
     LG.overrideGridLoading();
@@ -21,9 +22,22 @@
             	comboboxName: "customerName", options: {valueFieldID: "customerName"}},
             {display: "产品", name: "fldProductDetailId", newline: false, type: "select", comboboxName:"productId", options:{valueFieldID:'productId'}, validate: {required: true}},
             {display: "合同编号", name: "fldId", newline: true, type: "text", validate: {required: true, maxlength: 40}},
-            {display: "合同签订日期", name: "fldSignDate", newline: false, type: "date", attr:{readonly: "readonly"}},
-            {display: "打款日期", name: "fldMoneyDate", newline: true, type: "date", attr:{readonly: "readonly"}},
-            {display: "购买金额", name: "fldPurchaseMoney", newline: false, type: "text"},
+            {display: "合同签订日期", name: "fldSignDate", newline: false, type: "date", validate: {required: true},attr:{readonly: "readonly"}},
+            {display: "打款日期", name: "fldMoneyDate", newline: true, type: "date", validate: {required: true},attr:{readonly: "readonly"}},
+            {display: "购买金额", name: "fldPurchaseMoney", newline: false, validate: {required: true},type: "text"},
+            {display: "募集期天数", name: "fldCollectDays", newline: true, type: "text", attr:{readonly: "readonly"}},
+            {display: "年化收益率", name: "fldAnnualizedRate", newline: true, type: "text", attr:{readonly: "readonly"},group: "<label style=white-space:nowrap;>产品信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'},
+            {display: "预期收益", name: "fldAnnualizedMoney", newline: false, type: "text", attr:{readonly: "readonly"}},
+            {display: "年化7天存款率", name: "fldDepositRate", newline: true, type: "text", attr:{readonly: "readonly"}},
+            {display: "募集期贴息", name: "fldCollectMoney", newline: false, type: "text", attr:{readonly: "readonly"}},
+            {display: "业绩系数", name: "fldPerformanceRadio", newline: true, type: "text", attr:{readonly: "readonly"}},
+            {display: "业绩额度", name: "fldPerformanceMoney", newline: false, type: "text", attr:{readonly: "readonly"}},
+            {display: "佣金系数", name: "fldCommissionRadio", newline: true, type: "text", attr:{readonly: "readonly"}},
+            {display: "佣金金额", name: "fldCommissionMoney", newline: false, type: "text", attr:{readonly: "readonly"}},
+            {display: "成立日期", name: "fldEstablishDate", newline: true, type: "text", attr:{readonly: "readonly"}},
+            {display: "天数单位", name: "fldDayUnitText", newline: false, type: "text", attr:{readonly: "readonly"}},
+            {display: "天数单位", name: "fldDayUnit", newline: false, type: "hidden", attr:{readonly: "readonly"}},
+            {display: "实际天数", name: "fldClearDays", newline: true, type: "text", attr:{readonly: "readonly"}},
             {display: "银行卡号", name: "fldBankNo", newline: true, type: "text", validate: { maxlength: 64},group: "<label style=white-space:nowrap;>银行卡信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'},
             {display: "开户银行", name: "fldBankName", newline: false, type: "text", validate: { maxlength: 64}},
             {display: "理财经理", name: "fldFinancialUserNo", newline: true, type: "select", group: "<label style=white-space:nowrap;>其他信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>',
@@ -39,6 +53,154 @@
                     valueFieldID:"fldCardLevel"
             }}
         ]
+    });
+    
+    $.ligerui.get("fldMoneyDate").bind("changedate",function(){
+    	var fldMoneyDate = $("#fldMoneyDate").val();
+    	if(fldMoneyDate == "") {
+    		$("#fldCollectDays").val(0);
+    		$("#fldCollectMoney").val(0);
+    		return;
+    	}
+    	
+    	var fldPurchaseMoney = $("#fldPurchaseMoney").val();
+    	var fldEstablishDate = $("#fldEstablishDate").val();
+    	if(Date.parse(fldEstablishDate) > Date.parse(fldMoneyDate)) {//成立日期晚于打款日期
+    		var collectDays = (new Date(Date.parse(fldEstablishDate)) - new Date(Date.parse(fldMoneyDate)))/(1000*60*60*24);
+    		$("#fldCollectDays").val(collectDays);
+    		if(fldPurchaseMoney!="") {
+    			//募集期贴息=购买金额*(年化7天存款率*募集期天数/365)
+    			var fldCollectMoney = parseFloat(fldPurchaseMoney)*(parseFloat($("#fldDepositRate").val())*collectDays/365);
+    			$("#fldCollectMoney").val(fldCollectMoney);
+    		} else {
+    			$("#fldCollectMoney").val(0);
+    		}
+    	} else {
+    		$("#fldCollectMoney").val(0);
+    	}
+    });
+    
+    $("#fldPurchaseMoney").change(function(){
+    	var fldPurchaseMoney = $("#fldPurchaseMoney").val();
+    	if(fldPurchaseMoney == "") {
+    		$("#fldAnnualizedMoney").val(0);
+    		$("#fldCollectMoney").val(0);
+    		$("#fldPerformanceMoney").val(0);
+    		$("#fldCommissionMoney").val(0);
+    		return;
+    	}
+    	
+    	if($("#fldProductDetailId").val() == "") {
+    		return;
+    	}
+    	
+    	//预期收益=购买金额*(年化收益率*实际天数/365)
+		var days = parseInt($("#fldClearDays").val());
+		var dayUnit = parseInt($("#fldDayUnit").val());
+		var fldAnnualizedMoney = 0;
+		if(dayUnit == 0) {
+			fldAnnualizedMoney = parseFloat(fldPurchaseMoney)*($("#fldAnnualizedRate").val()*days/365);
+		} else if(dayUnit == 1) {
+			fldAnnualizedMoney = parseFloat(fldPurchaseMoney)*($("#fldAnnualizedRate").val()*days/12);
+		}
+    	$("#fldAnnualizedMoney").val(fldAnnualizedMoney);
+    	
+    	//募集期贴息=购买金额*(年化7天存款率*募集期天数/365)
+    	var collectDays = parseInt($("#fldCollectDays").val());
+    	var fldCollectMoney = parseFloat(fldPurchaseMoney)*(parseFloat($("#fldDepositRate").val())*collectDays/365);
+    	$("#fldCollectMoney").val(fldCollectMoney);
+    	
+    	//佣金金额=购买金额*佣金系数
+		var fldCommissionMoney = parseFloat(fldPurchaseMoney)*parseFloat(parseFloat($("#fldCommissionRadio").val()));
+		$("#fldCommissionMoney").val(fldCommissionMoney);
+		
+		//业绩额度=购买金额*业绩系数
+		var fldPerformanceMoney = parseFloat(fldPurchaseMoney)*parseFloat(parseFloat($("#fldPerformanceRadio").val()));
+		$("#fldPerformanceMoney").val(fldPerformanceMoney);
+    });
+    
+    $("#productId").change(function(){
+    	var productId = $("#fldProductDetailId").val();
+    	if(productId == "") {
+    		$("#fldAnnualizedRate").val("");
+    		$("#fldAnnualizedMoney").val("");
+    		$("#fldDepositRate").val("");
+    		$("#fldCollectMoney").val("");
+    		$("#fldCommissionRadio").val("");
+    		$("#fldCommissionMoney").val("");
+    		$("#fldPerformanceRadio").val("");
+    		$("#fldPerformanceMoney").val("");
+    		return;
+    	}
+    	
+    	LG.ajax({
+            url: '<c:url value="/customer/product/findProductDetail"/>',
+            data: {fldId:productId},
+            beforeSend: function () {
+            	
+            },
+            complete: function () {
+            },
+            success: function (data) {
+		    	var productDetail = data[0];
+		    	var fldAnnualizedRate = productDetail.fldAnnualizedRate;
+		    	$("#fldAnnualizedRate").val(fldAnnualizedRate);
+		    	$("#fldClearDays").val(productDetail.fldClearDays);
+		    	$("#fldDayUnit").val(productDetail.fldDayUnit);
+		    	$("#fldDayUnitText").val(renderLabel(dayUnitData,productDetail.fldDayUnit));
+		    	$("#fldEstablishDate").val(productDetail.fldEstablishDate);
+		    	
+		    	var fldPurchaseMoney = $("#fldPurchaseMoney").val();
+		    	if(fldPurchaseMoney != "") {
+		    		//预期收益=购买金额*(年化收益率*实际天数/365)
+		    		var days = parseInt(productDetail.fldClearDays);
+		    		var dayUnit = parseInt(productDetail.fldDayUnit);
+		    		var fldAnnualizedMoney = 0;
+		    		if(dayUnit == 0) {
+		    			fldAnnualizedMoney = parseFloat(fldPurchaseMoney)*(fldAnnualizedRate*days/365);
+		    		} else if(dayUnit == 1) {
+		    			fldAnnualizedMoney = parseFloat(fldPurchaseMoney)*(fldAnnualizedRate*days/12);
+		    		}
+    				$("#fldAnnualizedMoney").val(fldAnnualizedMoney);
+    			} else {
+    				$("#fldAnnualizedMoney").val(0);
+    			}
+    			$("#fldDepositRate").val(productDetail.fldDepositRate);
+    			if($("#fldMoneyDate").val()!="" && productDetail.fldEstablishDate > $("#fldMoneyDate").val()) {//成立日期晚于打款日期
+    				var collectDays = (new Date(Date.parse(productDetail.fldEstablishDate)) - new Date(Date.parse($("#fldMoneyDate").val())))/(1000*60*60*24);
+    				$("#fldCollectDays").val(collectDays);
+    				if(fldPurchaseMoney!="") {
+    					//募集期贴息=购买金额*(年化7天存款率*募集期天数/365)
+    					var fldCollectMoney = parseFloat(fldPurchaseMoney)*(parseFloat(productDetail.fldDepositRate)*collectDays/365);
+    					$("#fldCollectMoney").val(fldCollectMoney);
+    				} else {
+    					$("#fldCollectMoney").val(0);
+    				}
+    			} else {
+    				$("#fldCollectMoney").val(0);
+    				$("#fldCollectDays").val(0);
+    			}
+    			$("#fldCommissionRadio").val(productDetail.fldCommissionRadio);
+    			//佣金金额=购买金额*佣金系数
+    			if(fldPurchaseMoney != "") {
+    				var fldCommissionMoney = parseFloat(fldPurchaseMoney)*parseFloat(productDetail.fldCommissionRadio);
+    				$("#fldCommissionMoney").val(fldCommissionMoney);
+    			} else {
+    				$("#fldCommissionMoney").val(0);
+    			}
+    			$("#fldPerformanceRadio").val(productDetail.fldPerformanceRadio);
+    			//业绩额度=购买金额*业绩系数
+    			if(fldPurchaseMoney != "") {
+    				var fldPerformanceMoney = parseFloat(fldPurchaseMoney)*parseFloat(productDetail.fldPerformanceRadio);
+    				$("#fldPerformanceMoney").val(fldPerformanceMoney);
+    			} else {
+    				$("#fldPerformanceMoney").val(0);
+    			}
+            },
+            error: function (message) {
+          		
+            }
+        });
     });
     
     $.ligerui.get("customerName").openSelect({

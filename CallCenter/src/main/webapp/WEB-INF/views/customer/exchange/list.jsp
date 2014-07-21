@@ -26,14 +26,52 @@
 	    inputWidth: 150,
 	    space: 30,
 	    fields: [
-	        {display: "原客服", name: "fldOldUserNo", newline: true, type: "text", cssClass: "field"},
-	        {display: "新客服", name: "fldNewUserNo", newline: false, type: "text", cssClass: "field"},
+	        {display: "原客服", name: "fldOldUserNo", newline: true, type: "select",
+	        	comboboxName: "oldUserNo", options: {valueFieldID: "oldUserNo"}},
+	        {display: "新客服", name: "fldNewUserNo", newline: false, type: "select",
+	        	comboboxName: "newUserNo", options: {valueFieldID: "newUserNo"}},
 	        {display: "交接开始时间", name: "startDate", newline: true, type: "date", cssClass: "field",
 	        	attr:{op:'greaterorequal', vt:'date', field:"fldOperateDate"}},
 	        {display: "交接结束时间", name: "endDate", newline: false, type: "date", cssClass: "field",
 	        	attr:{op:'lessorequal', vt:'date', field:"fldOperateDate"}}
 	    ],
 	    toJSON: JSON2.stringify
+	});
+	
+	$.ligerui.get("oldUserNo").openSelect({
+	    grid:{
+	    	columnWidth: 255,
+	        columns:[
+	            {display:"用户名称", name:"userName"},
+	            {display:"登录名称", name:"loginName"},
+	            {display:"部门", name:"deptName"},
+	        ], pageSize:20,heightDiff:-10,
+	        url:'<c:url value="/security/user/list"/>', sortName:'userName', checkbox:false
+	    },
+	    search:{
+	        fields:[
+	            {display:"用户名称", name:"userName", newline:true, type:"text", cssClass:"field"}
+	        ]
+	    },
+	    valueField:'loginName', textField:'userName', top:30
+	});
+	
+	$.ligerui.get("newUserNo").openSelect({
+	    grid:{
+	    	columnWidth: 255,
+	        columns:[
+	            {display:"用户名称", name:"userName"},
+	            {display:"登录名称", name:"loginName"},
+	            {display:"部门", name:"deptName"},
+	        ], pageSize:20,heightDiff:-10,
+	        url:'<c:url value="/security/user/list"/>', sortName:'userName', checkbox:false
+	    },
+	    search:{
+	        fields:[
+	            {display:"用户名称", name:"userName", newline:true, type:"text", cssClass:"field"}
+	        ]
+	    },
+	    valueField:'loginName', textField:'userName', top:30
 	});
 
 	//列表结构

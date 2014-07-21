@@ -37,15 +37,16 @@ public class ContractManager extends GenericPageHQLQuery<CustomerContract> {
 
     @Transactional(readOnly = false)
     public void save(CustomerContract customerContract) {
-        String fldProductId = customerProductDetailDao.findOne(customerContract.getFldProductDetailId()).getFldProductId();
-        customerContract.setFldProductId(fldProductId);
-        contractDao.save(customerContract);
-
-        //更新客户的卡相关信息
-        Customer customer = customerDao.findOne(customerContract.getFldCustomerId());
-        customer.setFldCardLevel(customerContract.getFldCardLevel());
-        customer.setFldCardTotalMoney((customer.getFldCardTotalMoney() == null ? 0 : customer.getFldCardTotalMoney()) + (customerContract.getFldCardMoney() == null ? 0 : customerContract.getFldCardMoney()));
-        customerDao.save(customer);
+		String fldProductId = customerProductDetailDao.findOne(customerContract.getFldProductDetailId()).getFldProductId();
+		customerContract.setFldProductId(fldProductId);
+		contractDao.save(customerContract);
+		
+		//更新客户的卡相关信息
+		Customer customer = customerDao.findOne(customerContract.getFldCustomerId());
+		customer.setFldCardLevel(customerContract.getFldCardLevel());
+		if(null != customerContract.getFldCardMoney())
+			customer.setFldCardTotalMoney(customer.getFldCardTotalMoney()+customerContract.getFldCardMoney());
+		customerDao.save(customer);
     }
 
     public CustomerContract find(String fldId) {
