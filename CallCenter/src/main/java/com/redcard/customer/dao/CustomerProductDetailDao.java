@@ -15,6 +15,9 @@ public interface CustomerProductDetailDao extends PagingAndSortingRepository <Cu
 	@Query(" from CustomerProductDetail m where m.fldProductId = ?1")
     public List<CustomerProductDetail> findByProductId(String productId);
 	
+	@Query(" from CustomerProductDetail m where m.fldProductId = ?1 and m.fldClearDays = ?2")
+    public CustomerProductDetail findByProductIdAndDayUnit(String productId,Integer clearDays);
+	
 	@Modifying
     @Query("update CustomerProductDetail m set m.fldStatus=?1 where m.fldProductId = ?2")
     public void updateProductDetailByProductId(Integer status,String productId);

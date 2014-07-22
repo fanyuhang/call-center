@@ -11,28 +11,32 @@ public class ImportEntity implements Serializable {
 	private String identityNo;//身份证号码
 	private String financialUserNo;//理财经理
 	private String comment;//备注
+	private String cardNo;//瑞得卡卡号
 	
+	//产品相关
 	private String productName;//产品名称
-	private String contractNo;//合同编号
-	private String signDate;//合同签订日期
 	private String establishDate;//成立日期
 	private String valueDate;//起息日期
+	
+	//产品明细
 	private String dueDate;//到期日期
 	private String clearDays;//实际天数
-	private float purchaseMoney;//购买金额
 	private float performanceRadio;//业绩系数
-	private float performanceMoney;//业绩额度
 	private float annualizedRate;//年化收益率
+	private float depositRate;//年化7天存款率
+	
+	private String contractNo;//合同编号
+	private String signDate;//合同签订日期
+	private float purchaseMoney;//购买金额
+	private float performanceMoney;//业绩额度
 	private float annualizedMoney;//预期收益
 	private String moneyDate;//打款日期
-	private int fldCollectDays;//募集期天数
-	private float fldDepositRate;//年化7天存款率
-	private float fldCollectMoney;//募集期贴息
+	private int collectDays;//募集期天数
+	private float collectMoney;//募集期贴息
 	private String bankNo;//银行卡号
 	private String bankName;//开户银行
 	private String cardMoney;//瑞得卡金额
 	private Integer cardLevel;//瑞得卡等级
-	private String fldCardNo;//瑞得卡卡号
 	
 	public String getCustName() {
 		return custName;
@@ -118,24 +122,6 @@ public class ImportEntity implements Serializable {
 	public void setMoneyDate(String moneyDate) {
 		this.moneyDate = moneyDate;
 	}
-	public int getFldCollectDays() {
-		return fldCollectDays;
-	}
-	public void setFldCollectDays(int fldCollectDays) {
-		this.fldCollectDays = fldCollectDays;
-	}
-	public float getFldDepositRate() {
-		return fldDepositRate;
-	}
-	public void setFldDepositRate(float fldDepositRate) {
-		this.fldDepositRate = fldDepositRate;
-	}
-	public float getFldCollectMoney() {
-		return fldCollectMoney;
-	}
-	public void setFldCollectMoney(float fldCollectMoney) {
-		this.fldCollectMoney = fldCollectMoney;
-	}
 	public String getFinancialUserNo() {
 		return financialUserNo;
 	}
@@ -190,16 +176,34 @@ public class ImportEntity implements Serializable {
 	public void setCardLevel(Integer cardLevel) {
 		this.cardLevel = cardLevel;
 	}
-	public String getFldCardNo() {
-		return fldCardNo;
-	}
-	public void setFldCardNo(String fldCardNo) {
-		this.fldCardNo = fldCardNo;
-	}
 	public String getComment() {
 		return comment;
 	}
 	public void setComment(String comment) {
 		this.comment = comment;
+	}
+	public String getCardNo() {
+		return cardNo;
+	}
+	public void setCardNo(String cardNo) {
+		this.cardNo = cardNo;
+	}
+	public int getCollectDays() {
+		return collectDays;
+	}
+	public void setCollectDays(int collectDays) {
+		this.collectDays = collectDays;
+	}
+	public float getDepositRate() {
+		return depositRate;
+	}
+	public void setDepositRate(float depositRate) {
+		this.depositRate = depositRate;
+	}
+	public float getCollectMoney() {
+		return collectMoney;
+	}
+	public void setCollectMoney(float collectMoney) {
+		this.collectMoney = collectMoney;
 	}
 }

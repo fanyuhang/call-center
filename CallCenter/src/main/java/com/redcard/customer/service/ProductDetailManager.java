@@ -27,6 +27,10 @@ public class ProductDetailManager extends GenericPageHQLQuery<CustomerProductDet
         return customerProductDetailDao.findOne(fldId);
     }
 	
+	public CustomerProductDetail findByProductIdAndClearDays(String productId,Integer clearDays) {
+		return customerProductDetailDao.findByProductIdAndDayUnit(productId, clearDays);
+	}
+	
 	public Long countById(String id) {
 		return customerProductDetailDao.countById(id);
 	}
