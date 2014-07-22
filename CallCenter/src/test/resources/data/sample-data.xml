@@ -300,7 +300,13 @@
 	<!-- 二级菜单 -->
 	<tblNode fldCode="010305" fldParent="0103" fldName="绩效管理"
 		fldDesc="" fldTarget="" fldIcon="/static/ligerUI/icons/32X32/report.gif"
-		fldLink="" fldType="1" fldPosition="4" />
+		fldLink="/customer/contract/initPerformance" fldType="1" fldPosition="4" />
+	<tblNode fldCode="01030501" fldParent="010305" fldName="查看合同" fldDesc="" fldTarget="view"
+		fldIcon="/static/ligerUI/icons/silkicons/application_view_detail.png"
+		fldLink="/customer/contract/view" fldType="2" fldPosition="1" />
+	<tblNode fldCode="01030502" fldParent="010305" fldName="导出"
+		fldDesc="" fldTarget="export" fldIcon="/static/ligerUI/icons/miniicons/action_save.gif"
+		fldLink="/customer/contract/export" fldType="2" fldPosition="2" />
 
 	<!-- 一级菜单 -->
 	<tblNode fldCode="0104" fldParent="01" fldName="短信管理" fldDesc=""
