@@ -54,4 +54,15 @@
     	<column cell="I1" propertyName="operateUserName" columnName="操作人" nullAllowed="true"></column>
     	<column cell="J1" propertyName="fldOperateDate" columnName="操作时间" nullAllowed="true"></column>
     </table>
+    
+    <table class="com.redcard.customer.entity.Performance" startRow="1">
+    	<column cell="A1" propertyName="fldFinancialUserNo" columnName="理财经理"></column>
+    	<column cell="B1" propertyName="fldSignDate" columnName="合同签订日期"></column>
+    	<column cell="C1" propertyName="fldId" columnName="合同编号"></column>
+    	<column cell="D1" propertyName="fldFullName" columnName="产品全称"></column>
+    	<column cell="E1" propertyName="fldClearDays" columnName="产品实际天数"></column>
+    	<column cell="F1" propertyName="fldPurchaseMoney" columnName="购买金额"></column>
+    	<column cell="G1" propertyName="fldPerformanceRadio" columnName="业绩系数"></column>
+    	<column cell="H1" propertyName="fldPerformanceMoney" columnName="业绩额度"></column>
+    </table>
 </tables>

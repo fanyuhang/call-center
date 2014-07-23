@@ -75,7 +75,7 @@
             {display: "产品描述", name: "fldDescription", newline: false, type: "text", attr:{value:"${customerProduct.fldDescription}"},validate: { maxlength: 64}},
             {display: "成立日期", name: "fldEstablishDate", newline: true, type: "date", validate: {required: true}, attr:{value:"<fmt:formatDate value='${customerProduct.fldEstablishDate}' pattern='yyyy-MM-dd'/>",readonly: "readonly"},format:'yyyy-MM-dd',editor:{ type:'date' }},
             {display: "起息日期", name: "fldValueDate", newline: false, type: "date", validate: {required: true}, attr:{value:"<fmt:formatDate value='${customerProduct.fldValueDate}' pattern='yyyy-MM-dd'/>",readonly: "readonly"},format:'yyyy-MM-dd',editor:{ type:'date' }},
-            {display: "产品类型", name: "fldType", newline: true, type: "select",
+            {display: "产品类型", name: "fldType", newline: true, type: "select",validate: {required: true},
             	options:{
                     valueField: 'value',
                     textField: 'text',
