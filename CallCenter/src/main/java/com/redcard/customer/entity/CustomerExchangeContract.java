@@ -23,9 +23,9 @@ public class CustomerExchangeContract implements java.io.Serializable {
 	private Integer id;
 	private String fldCustomerExchangeId;
 	private String fldContractId;
-	private String fldOperateUserNo;
+	private String fldOperateUserNo = SecurityUtil.getCurrentUserLoginName();
 	private Date fldOperateDate;
-	private String fldCreateUserNo = SecurityUtil.getCurrentUserLoginName();
+	private String fldCreateUserNo;
 	private Date fldCreateDate;
 
 	// Constructors

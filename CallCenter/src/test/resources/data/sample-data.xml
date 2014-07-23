@@ -253,8 +253,8 @@
 		fldIcon="/static/ligerUI/icons/silkicons/application_link.png"
 		fldLink="/customer/exchange/exchange" fldType="2" fldPosition="1" />
 	<tblNode fldCode="01030202" fldParent="010302" fldName="交接明细"
-		fldDesc="" fldTarget="exchange"
-		fldIcon="/static/ligerUI/icons/miniicons/page_delete.gif"
+		fldDesc="" fldTarget="detail"
+		fldIcon="/static/ligerUI/icons/silkicons/application_view_detail.png"
 		fldLink="/customer/exchange/detail" fldType="2" fldPosition="2" />
 
 	<!-- 二级菜单 -->
