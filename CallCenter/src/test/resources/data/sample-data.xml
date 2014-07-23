@@ -2,14 +2,14 @@
 <dataset>
 
 	<!-- 一级菜单 -->
-	<tblNode fldCode="0198" fldParent="01" fldName="登录" fldDesc=""
+	<!-- <tblNode fldCode="0198" fldParent="01" fldName="登录" fldDesc=""
 		fldTarget="" fldIcon="/static/ligerUI/icons/32X32/sitemap.gif"
-		fldLink="/login" fldType="1" fldPosition="19" />
+		fldLink="/login" fldType="1" fldPosition="19" /> -->
 
 	<!-- 一级菜单 -->
-	<tblNode fldCode="0199" fldParent="01" fldName="注销" fldDesc=""
+	<!-- <tblNode fldCode="0199" fldParent="01" fldName="注销" fldDesc=""
 		fldTarget="" fldIcon="/static/ligerUI/icons/32X32/sitemap.gif"
-		fldLink="/logout" fldType="1" fldPosition="19" />
+		fldLink="/logout" fldType="1" fldPosition="19" /> -->
 
 	<tblNode fldCode="01" fldParent="" fldName="redcard" fldDesc="root"
 		fldTarget="#" fldIcon="" fldLink="" fldType="1" fldPosition="1" />
@@ -347,6 +347,14 @@
 		fldDesc="" fldTarget="view"
 		fldIcon="/static/ligerUI/icons/silkicons/application_view_detail.png"
 		fldLink="/message/operate/view" fldType="2" fldPosition="2" />
+
+	<tblNode fldCode="0105" fldParent="01" fldName="话务管理" fldDesc=""
+		fldTarget="#" fldIcon=""
+		fldLink="" fldType="1" fldPosition="5" />
+	
+	<tblNode fldCode="010501" fldParent="0105" fldName="话务导入"
+		fldDesc="" fldTarget="" fldIcon="/static/ligerUI/icons/32X32/sign_up.gif"
+		fldLink="/telephone/import/init" fldType="1" fldPosition="1" />
 
 	<tblRole fldId="1" fldRoleName="sysadmin" />
 
