@@ -6,7 +6,7 @@
     }
 </style>
 <body style="padding:10px;height:100%; text-align:center;">
-<ipnut type="hidden" id="MenuNo" value="${menuNo}"/>
+<input type="hidden" id="MenuNo" value="${menuNo}"/>
 <div id="mainsearch" style=" width:98%">
     <div class="searchtitle">
         <span>搜索</span><img src='<c:url value="/static/ligerUI/icons/32X32/searchtool.gif"/>'/>

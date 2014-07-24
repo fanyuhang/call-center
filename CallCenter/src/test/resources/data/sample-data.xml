@@ -355,6 +355,14 @@
 	<tblNode fldCode="010501" fldParent="0105" fldName="话务导入"
 		fldDesc="" fldTarget="" fldIcon="/static/ligerUI/icons/32X32/sign_up.gif"
 		fldLink="/telephone/import/init" fldType="1" fldPosition="1" />
+	<tblNode fldCode="01050101" fldParent="010501" fldName="下载导入模板"
+		fldDesc="" fldTarget="template"
+		fldIcon="/static/ligerUI/icons/silkicons/application_put.png" fldLink="/telephone/import/template"
+		fldType="2" fldPosition="1" />
+	<tblNode fldCode="01050102" fldParent="010501" fldName="导入"
+		fldDesc="" fldTarget="import"
+		fldIcon="/static/ligerUI/icons/silkicons/application_get.png" fldLink="/telephone/import/import"
+		fldType="2" fldPosition="2" />
 
 	<tblRole fldId="1" fldRoleName="sysadmin" />
 

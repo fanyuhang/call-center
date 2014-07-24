@@ -6,8 +6,8 @@
     }
 </style>
 <body style="padding:10px;height:100%; text-align:center;">
-<ipnut type="hidden" id="MenuNo" value="${menuNo}"/>
-<ipnut type="hidden" id="customerId" value="${customerId}"/>
+<input type="hidden" id="MenuNo" value="${menuNo}"/>
+<input type="hidden" id="customerId" value="${customerId}"/>
 <div id="maingrid"></div>
 <script type="text/javascript">
 	var statusData =<sys:dictList type = "6"/>;
