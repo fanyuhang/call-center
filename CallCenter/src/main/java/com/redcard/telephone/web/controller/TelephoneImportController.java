@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -112,11 +113,13 @@ public class TelephoneImportController {
                 String path = reportPath + fileName;
             	listToExcel.generate(path);
             	
+            	List<TelephoneImportEntity> dupList = new ArrayList<TelephoneImportEntity>();//重复话单
             	for(TelephoneImportEntity importEntity : objects) {
             		if(Constant.DUPLICATE_STATUS_Y == Integer.valueOf(fldDuplicateStatus)) {//去重:姓名+手机或姓名+固定电话
-            			//Long count = telephoneCustomerManager.countByPhoneOrMobile(importEntity.getCustName(),importEntity.getTelephone(),importEntity.getMobile());
-            		} else {
-            			
+            			Long count = telephoneCustomerManager.countByPhoneOrMobile(importEntity.getCustName(),importEntity.getTelephone(),importEntity.getMobile());
+            			if(count > 0) {
+            				dupList.add(importEntity);
+            			}
             		}
             	}
             }

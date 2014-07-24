@@ -69,7 +69,10 @@
     
     <table class="com.redcard.telephone.entity.TelephoneImportEntity" startRow="1">
     	<column cell="A1" propertyName="custName" nullAllowed="true"></column>
-    	<column cell="B1" propertyName="gender" nullAllowed="true"></column>
+    	<column cell="B1" propertyName="gender" nullAllowed="true">
+    		<mapping value="1" text="男"></mapping>
+    		<mapping value="0" text="女"></mapping>
+    	</column>
     	<column cell="C1" propertyName="telephone" nullAllowed="true"></column>
     	<column cell="D1" propertyName="mobile" nullAllowed="true"></column>
     	<column cell="E1" propertyName="address" nullAllowed="true"></column>

@@ -68,7 +68,10 @@
     
     <table class="com.redcard.telephone.entity.TelephoneImportEntity" startRow="1">
     	<column cell="A1" propertyName="custName" columnName="客户名称" nullAllowed="true"></column>
-    	<column cell="B1" propertyName="gender" columnName="性别(男/女)" nullAllowed="true"></column>
+    	<column cell="B1" propertyName="gender" columnName="性别(男/女)" nullAllowed="true">
+    		<mapping value="1" text="男"></mapping>
+    		<mapping value="0" text="女"></mapping>
+    	</column>
     	<column cell="C1" propertyName="telephone" columnName="手机号" nullAllowed="true"></column>
     	<column cell="D1" propertyName="mobile" columnName="联系电话" nullAllowed="true"></column>
     	<column cell="E1" propertyName="address" columnName="地址" nullAllowed="true"></column>
