@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,10 +27,18 @@ import com.common.Constant;
 import com.common.core.excel.ExcelExportUtil;
 import com.common.core.excel.ExcelImportUtil;
 import com.common.core.grid.AsyncResponse;
+import com.common.core.grid.DataResponse;
+import com.common.core.grid.GridPageRequest;
 import com.common.core.util.EntityUtil;
 import com.common.core.util.FileHelper;
+import com.common.security.util.SecurityUtil;
+import com.redcard.telephone.entity.TelephoneCustomer;
+import com.redcard.telephone.entity.TelephoneImport;
+import com.redcard.telephone.entity.TelephoneImportDetail;
 import com.redcard.telephone.entity.TelephoneImportEntity;
 import com.redcard.telephone.service.TelephoneCustomerManager;
+import com.redcard.telephone.service.TelephoneImportDetailManager;
+import com.redcard.telephone.service.TelephoneImportManager;
 
 @Controller
 @RequestMapping(value = "/telephone/import")
@@ -38,11 +47,22 @@ public class TelephoneImportController {
 	
 	@Autowired
 	private TelephoneCustomerManager telephoneCustomerManager;
+	@Autowired
+	private TelephoneImportManager telephoneImportManager;
+	@Autowired
+	private TelephoneImportDetailManager telephoneImportDetailManager;
 	
 	@RequestMapping(value = "init")
     public String init(String menuNo, Model model) {
         model.addAttribute("menuNo", menuNo);
         return "telephone/import/list";
+    }
+	
+	@RequestMapping(value = "list")
+    @ResponseBody
+    public DataResponse<TelephoneImport> list(GridPageRequest pageRequest, String where) {
+        pageRequest.setSort("fldOperateDate", "desc");
+        return (new DataResponse<TelephoneImport>(telephoneImportManager.findAllTelephoneImport(pageRequest, where)));
     }
 	
 	@RequestMapping(value = "template/{fileName}")
@@ -105,23 +125,95 @@ public class TelephoneImportController {
             	String uuid = EntityUtil.getId();
             	//存放原始话单
             	ExcelExportUtil<TelephoneImportEntity> listToExcel = new ExcelExportUtil<TelephoneImportEntity>(objects);
-            	String reportPath = request.getSession().getServletContext().getRealPath("/") + File.separator+Constant.TELEPHONE_IMPORTT_PATH+File.separator+uuid;
+            	String localPath = Constant.TELEPHONE_IMPORTT_PATH+File.separator+uuid+File.separator;
+            	String reportPath = request.getSession().getServletContext().getRealPath("/") + File.separator+localPath;
             	File pathFile = new File(reportPath);
                 if (!pathFile.exists())
                     pathFile.mkdirs();
                 fileName = StringUtils.substringAfterLast(fileName, File.separator);
-                String path = reportPath + fileName;
+                String origFileName = Constant.TELEPHONE_IMPORT_SAVE_TYPE_ORIG + "_" + fileName;
+                String path = reportPath + origFileName;
             	listToExcel.generate(path);
             	
             	List<TelephoneImportEntity> dupList = new ArrayList<TelephoneImportEntity>();//重复话单
+            	List<TelephoneImportEntity> list = new ArrayList<TelephoneImportEntity>();//非重复话单
             	for(TelephoneImportEntity importEntity : objects) {
             		if(Constant.DUPLICATE_STATUS_Y == Integer.valueOf(fldDuplicateStatus)) {//去重:姓名+手机或姓名+固定电话
             			Long count = telephoneCustomerManager.countByPhoneOrMobile(importEntity.getCustName(),importEntity.getTelephone(),importEntity.getMobile());
             			if(count > 0) {
             				dupList.add(importEntity);
+            			} else {
+            				if(!dupList.contains(importEntity)) {
+            					list.add(importEntity);
+            				} else {
+            					dupList.add(importEntity);
+            				}
             			}
             		}
             	}
+            	
+            	String dupFileName = Constant.TELEPHONE_IMPORT_SAVE_TYPE_DUP + "_" + fileName;
+            	if(null != dupList && dupList.size() > 0) {//存放重复话单
+            		ExcelExportUtil<TelephoneImportEntity> dupListToExcel = new ExcelExportUtil<TelephoneImportEntity>(dupList);
+            		dupListToExcel.generate(reportPath + dupFileName);
+            	}
+            	
+            	String noDupFileName = Constant.TELEPHONE_IMPORT_SAVE_TYPE_NO_DUP + "_" + fileName;
+            	if(null != list && list.size() > 0) {//存放非重复话单
+            		ExcelExportUtil<TelephoneImportEntity> dupListToExcel = new ExcelExportUtil<TelephoneImportEntity>(list);
+            		dupListToExcel.generate(reportPath + noDupFileName);
+            	}
+            	
+            	//记录话务导入表
+            	TelephoneImport telephoneImport = new TelephoneImport();
+            	telephoneImport.setFldId(EntityUtil.getId());
+            	telephoneImport.setFldDuplicateStatus(Integer.valueOf(fldDuplicateStatus));
+            	telephoneImport.setFldUploadFilePath(localPath+origFileName);//原始话单相对路径
+            	telephoneImport.setFldTotalNumber(objects.size());//原始话单记录总数
+            	telephoneImport.setFldDuplicateTotalNumber(dupList.size());//重复记录数
+            	telephoneImport.setFldDuplicateFilePath(localPath+dupFileName);//重复记录文件地址
+            	telephoneImport.setFldImportTotalNumber(list.size());
+            	telephoneImport.setFldImportFilePath(localPath+noDupFileName);
+            	telephoneImport.setFldAssignTotalNumber(0);
+            	telephoneImport.setFldOperateDate(new Date());
+            	telephoneImport.setFldCreateDate(new Date());
+            	telephoneImport.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
+            	telephoneImportManager.save(telephoneImport);
+            	
+            	//记录话务导入明细表
+            	List<TelephoneImportDetail> telephoneImportDetailList = new ArrayList<TelephoneImportDetail>();
+            	for(TelephoneImportEntity telephoneImportEntity : objects) {
+            		TelephoneImportDetail telephoneImportDetail = new TelephoneImportDetail();
+            		telephoneImportDetail.setFldId(EntityUtil.getId());
+            		telephoneImportDetail.setFldImportId(telephoneImport.getFldId());
+            		telephoneImportDetail.setFldCustomerName(telephoneImportEntity.getCustName());
+            		telephoneImportDetail.setFldGender(telephoneImportEntity.getGender());
+            		telephoneImportDetail.setFldMobile(telephoneImportEntity.getMobile());
+            		telephoneImportDetail.setFldPhone(telephoneImportEntity.getTelephone());
+            		telephoneImportDetail.setFldOperateDate(new Date());
+            		telephoneImportDetail.setFldCreateDate(new Date());
+            		telephoneImportDetail.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
+            		
+            		telephoneImportDetailList.add(telephoneImportDetail);
+            	}
+            	telephoneImportDetailManager.save(telephoneImportDetailList);
+            	
+            	//记录话单原始表
+            	List<TelephoneCustomer> telephoneCustomerList = new ArrayList<TelephoneCustomer>();
+            	for(TelephoneImportEntity telephoneImportEntity : list) {
+            		TelephoneCustomer telephoneCustomer = new TelephoneCustomer();
+            		telephoneCustomer.setFldId(EntityUtil.getId());
+            		telephoneCustomer.setFldCustomerName(telephoneImportEntity.getCustName());
+            		telephoneCustomer.setFldGender(telephoneImportEntity.getGender());
+            		telephoneCustomer.setFldMobile(telephoneImportEntity.getMobile());
+            		telephoneCustomer.setFldPhone(telephoneImportEntity.getTelephone());
+            		telephoneCustomer.setFldOperateDate(new Date());
+            		telephoneCustomer.setFldCreateDate(new Date());
+            		telephoneCustomer.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
+            		
+            		telephoneCustomerList.add(telephoneCustomer);
+            	}
+            	telephoneCustomerManager.save(telephoneCustomerList);
             }
             return result;
         } catch (Exception e) {

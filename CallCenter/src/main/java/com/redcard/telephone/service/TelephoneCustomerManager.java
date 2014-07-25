@@ -1,5 +1,7 @@
 package com.redcard.telephone.service;
 
+import java.util.List;
+
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,5 +24,9 @@ public class TelephoneCustomerManager extends GenericPageHQLQuery<TelephoneCusto
 		if(!StringUtils.isEmpty(mobile))
 			rtn += telephoneCustomerDao.countByMobile(name, mobile);
 		return rtn;
+	}
+	
+	public void save(List<TelephoneCustomer> telephoneCustomerList) {
+		telephoneCustomerDao.save(telephoneCustomerList);
 	}
 }

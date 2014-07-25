@@ -151,7 +151,10 @@
 				                complete: function () {
 				                },
 				                success: function () {
-				                	f_save();
+            						uploader.stop();
+            						detailWin.hide();
+            						LG.showSuccess("导入话单成功!");
+            						f_reload();
 				                },
 				                error: function (message) {
 						            LG.showError(message);
