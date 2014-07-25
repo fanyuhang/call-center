@@ -6,7 +6,7 @@
     }
 </style>
 <body style="padding:10px;height:100%; text-align:center;">
-<ipnut type="hidden" id="MenuNo" value="${menuNo}"/>
+<input type="hidden" id="MenuNo" value="${menuNo}"/>
 <div id="mainsearch" style=" width:98%">
     <div class="searchtitle">
         <span>搜索</span><img src='<c:url value="/static/ligerUI/icons/32X32/searchtool.gif"/>'/>
@@ -18,7 +18,6 @@
     </div>
 </div>
 <div id="maingrid"></div>
-<div id="detail" style="display:none;"><form:form id="mainform" method="post"></form:form></div>
 <script type="text/javascript">
 	//搜索表单应用ligerui样式
 	$("#formsearch").ligerForm({
@@ -101,34 +100,16 @@
 	//工具条事件
 	function toolbarBtnItemClick(item) {
 	    switch (item.id) {
-	        case "add":
-	            top.f_addTab(null, '新增客户信息', '<c:url value="/customer/customer/add"/>' + '?menuNo=${menuNo}');
+	        case "exchange":
+	            top.f_addTab(null, '交接客户', '<c:url value="/customer/exchange/exchange"/>' + '?menuNo=${menuNo}');
 	            break;
-	        case "view":
-	            if (grid.getSelectedRows().length > 1 || grid.getSelectedRows().length == 0) {
+	        case "detail":
+	        	if (grid.getSelectedRows().length > 1 || grid.getSelectedRows().length == 0) {
 	                LG.tip('请选择一行数据!');
 	                return;
 	            }
 	            var selected = grid.getSelected();
-	            top.f_addTab(null, '查看客户信息', '<c:url value="/customer/customer/view"/>' + '?menuNo=${menuNo}&fldId=' + selected.fldId);
-	            break;
-	        case "modify":
-	            if (grid.getSelectedRows().length > 1 || grid.getSelectedRows().length == 0) {
-	                LG.tip('请选择一行数据!');
-	                return;
-	            }
-	            var selected = grid.getSelected();
-	            top.f_addTab(null, '修改客户信息', '<c:url value="/customer/customer/edit"/>' + '?menuNo=${menuNo}&fldId=' + selected.fldId);
-	            break;
-	        case "delete":
-	            if (grid.getSelectedRows().length > 1 || grid.getSelectedRows().length == 0) {
-	                LG.tip('请选择一行数据!');
-	                return;
-	            }
-	            jQuery.ligerDialog.confirm('确定删除吗?', function (confirm) {
-	                if (confirm)
-	                    f_delete();
-	            });
+	            top.f_addTab(null, '查看客户交接信息', '<c:url value="/customer/exchange/detail"/>' + '?menuNo=${menuNo}&fldId=' + selected.fldOldUserNo);
 	            break;
 	    }
 	}

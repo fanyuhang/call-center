@@ -1,7 +1,15 @@
 package com.redcard.customer.web.controller;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,11 +17,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.common.Constant;
+import com.common.core.excel.ExcelExportUtil;
 import com.common.core.grid.AsyncResponse;
 import com.common.core.grid.DataResponse;
 import com.common.core.grid.GridPageRequest;
+import com.common.core.util.DateUtil;
 import com.common.security.util.SecurityUtil;
 import com.redcard.customer.entity.CustomerContract;
+import com.redcard.customer.entity.Performance;
 import com.redcard.customer.service.ContractManager;
 
 @Controller
@@ -103,4 +114,44 @@ public class ContractController {
         return result;
     }
 	
+	@RequestMapping(value = "initPerformance")
+	public String initPerformance(String menuNo, Model model) {
+		model.addAttribute("menuNo", menuNo);
+        return "customer/contract/performance";
+	}
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "export")
+    @ResponseBody
+    public AsyncResponse export(String where, HttpServletRequest request, HttpServletResponse response) {
+        AsyncResponse result = new AsyncResponse(false, "导出合同列表成功");
+        try {
+        	List<CustomerContract> listContract = contractManager.findAllContract(null, where).getContent();
+        	List<Performance> listPerformance = new ArrayList<Performance>();
+        	if(null != listContract) {
+        		for(CustomerContract customerContract : listContract) {
+        			Performance performance = new Performance();
+        			BeanUtils.copyProperties(performance, customerContract);
+        			performance.setFldSignDate(DateUtil.getFormatDate(customerContract.getFldSignDate()));
+        			performance.setFldFullName(customerContract.getCustomerProduct().getFldFullName());
+        			performance.setFldClearDays(customerContract.getCustomerProductDetail().getFldClearDays());
+        			listPerformance.add(performance);
+        		}
+        	}
+        	
+            ExcelExportUtil<Performance> listToExcel = new ExcelExportUtil<Performance>(listPerformance);
+            
+            String date = new SimpleDateFormat("yyyyMMddHHmmssS").format(new Date());
+            String reportPath = request.getSession().getServletContext().getRealPath("/") + "/export/";
+            String fileName = SecurityUtil.getCurrentUserId() + "_" + date + ".xls";
+            File pathFile = new File(reportPath);
+            if (!pathFile.exists())
+                pathFile.mkdirs();
+            result.getData().add(listToExcel.generate(reportPath + fileName));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new AsyncResponse(true, "系统内部错误");
+        }
+        return result;
+    }
 }

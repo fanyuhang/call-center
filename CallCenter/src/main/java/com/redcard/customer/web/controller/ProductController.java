@@ -49,7 +49,8 @@ public class ProductController {
     @ResponseBody
     public DataResponse<CustomerProductDetail> listDetail(GridPageRequest pageRequest, String where) {
         pageRequest.setSort("fldOperateDate", "desc");
-        where = "{\"op\":\"and\",\"rules\":[{\"op\":\"equal\",\"field\":\"fldStatus\",\"value\":\"0\",\"type\":\"int\"}]}";
+        if(StringUtils.isEmpty(where))
+        	where = "{\"op\":\"and\",\"rules\":[{\"op\":\"equal\",\"field\":\"fldStatus\",\"value\":\"0\",\"type\":\"int\"}]}";
         return (new DataResponse<CustomerProductDetail>(productDetailManager.findAllProductDetail(pageRequest, where)));
     }
 	

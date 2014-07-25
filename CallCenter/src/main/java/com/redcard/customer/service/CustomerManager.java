@@ -41,6 +41,14 @@ public class CustomerManager extends GenericPageHQLQuery<Customer> {
     public List<Customer> findCustomerByMobile(String mobile){
         return customerDao.findCustomerByMobile(mobile);
     }
+    
+    public Customer findByCustNameAndPhone(String customerName,String phone) {
+    	return customerDao.findByCustNameAndPhone(customerName, phone);
+    }
+    
+    public Customer findByCustNameAndMobile(String customerName,String mobile) {
+    	return customerDao.findByCustNameAndMobile(customerName, mobile);
+    }
 
     public List<Customer> findCustomerByPhone(String phone){
         return customerDao.findCustomerByPhone(phone);

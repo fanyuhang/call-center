@@ -54,4 +54,26 @@
     	<column cell="I1" propertyName="operateUserName" columnName="操作人" nullAllowed="true"></column>
     	<column cell="J1" propertyName="fldOperateDate" columnName="操作时间" nullAllowed="true"></column>
     </table>
+    
+    <table class="com.redcard.customer.entity.Performance" startRow="1">
+    	<column cell="A1" propertyName="fldFinancialUserNo" columnName="理财经理" nullAllowed="true"></column>
+    	<column cell="B1" propertyName="fldSignDate" columnName="合同签订日期" nullAllowed="true"></column>
+    	<column cell="C1" propertyName="fldId" columnName="合同编号" nullAllowed="true"></column>
+    	<column cell="D1" propertyName="fldFullName" columnName="产品全称" nullAllowed="true"></column>
+    	<column cell="E1" propertyName="fldClearDays" columnName="产品实际天数" nullAllowed="true"></column>
+    	<column cell="F1" propertyName="fldPurchaseMoney" columnName="购买金额" nullAllowed="true"></column>
+    	<column cell="G1" propertyName="fldPerformanceRadio" columnName="业绩系数" nullAllowed="true"></column>
+    	<column cell="H1" propertyName="fldPerformanceMoney" columnName="业绩额度" nullAllowed="true"></column>
+    </table>
+    
+    <table class="com.redcard.telephone.entity.TelephoneImportEntity" startRow="1">
+    	<column cell="A1" propertyName="custName" columnName="客户名称" nullAllowed="true"></column>
+    	<column cell="B1" propertyName="gender" columnName="性别(男/女)" nullAllowed="true">
+    		<mapping value="1" text="男"></mapping>
+    		<mapping value="0" text="女"></mapping>
+    	</column>
+    	<column cell="C1" propertyName="telephone" columnName="手机号" nullAllowed="true"></column>
+    	<column cell="D1" propertyName="mobile" columnName="联系电话" nullAllowed="true"></column>
+    	<column cell="E1" propertyName="address" columnName="地址" nullAllowed="true"></column>
+    </table>
 </tables>

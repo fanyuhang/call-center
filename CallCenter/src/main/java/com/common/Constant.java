@@ -1,5 +1,7 @@
 package com.common;
 
+import java.io.File;
+
 public class Constant {
 
 	public static final String NODE_ROOT_CODE = "01"; // 模块根节点编码
@@ -498,4 +500,13 @@ public class Constant {
 
 	public static final Integer MESSAGE_SEND_STATUS_SUCCESS = 0; // 短信发送状态，成功
 	public static final Integer MESSAGE_SEND_STATUS_FAIL = 9; // 短信发送状态，失败
+	
+	public static final Integer DUPLICATE_STATUS_Y = 0;//是否去重，去重
+	public static final Integer DUPLICATE_STATUS_N = 0;//是否去重，不去重
+	
+	public static final String TELEPHONE_IMPORTT_PATH = "telephone"+File.separator+"import";//话单存放本地路径
+	
+	public static final String TELEPHONE_IMPORT_SAVE_TYPE_ORIG = "01";  //话单导入，原始话单
+	public static final String TELEPHONE_IMPORT_SAVE_TYPE_DUP = "02";   //话单导入，重复话单
+	public static final String TELEPHONE_IMPORT_SAVE_TYPE_NO_DUP = "03";//话单导入，非重复话单
 }

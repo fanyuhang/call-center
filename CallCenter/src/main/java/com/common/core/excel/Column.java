@@ -139,7 +139,7 @@ public class Column {
         Class dataType = getPropertyType(bean);
         String dataString = getCellString(cell);
         Object value = null;
-        if (!(nullAllowed && dataString == null)) { // set only if null is not allowed!
+        if ((dataString != null && !dataString.equals("null")) || !nullAllowed) { // set only if null is not allowed!
             if (dataType.equals(java.util.Date.class)) {
                 value = df.parse(dataString);
             } else {

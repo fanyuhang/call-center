@@ -6,7 +6,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
+import com.common.core.util.JsonTimestampSerializer;
 import com.common.security.util.SecurityUtil;
 
 /**
@@ -31,6 +35,9 @@ public class CustomerExchange implements java.io.Serializable {
 	private Date fldOperateDate;
 	private String fldCreateUserNo;
 	private Date fldCreateDate;
+	
+	private Integer customerNum;
+	private Integer contractNum;
 
 	// Constructors
 
@@ -158,6 +165,7 @@ public class CustomerExchange implements java.io.Serializable {
 		this.fldOperateUserNo = fldOperateUserNo;
 	}
 
+	@JsonSerialize(using = JsonTimestampSerializer.class)
 	@Column(name = "FLDOPERATEDATE")
 	public Date getFldOperateDate() {
 		return this.fldOperateDate;
@@ -183,6 +191,24 @@ public class CustomerExchange implements java.io.Serializable {
 
 	public void setFldCreateDate(Date fldCreateDate) {
 		this.fldCreateDate = fldCreateDate;
+	}
+
+	@Transient
+	public Integer getCustomerNum() {
+		return customerNum;
+	}
+
+	public void setCustomerNum(Integer customerNum) {
+		this.customerNum = customerNum;
+	}
+
+	@Transient
+	public Integer getContractNum() {
+		return contractNum;
+	}
+
+	public void setContractNum(Integer contractNum) {
+		this.contractNum = contractNum;
 	}
 
 }

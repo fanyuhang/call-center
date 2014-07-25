@@ -9,6 +9,7 @@ import org.apache.commons.lang.time.DateUtils;
 
 public class DateUtil {
 	private static final DateFormat DATEFORMAT = new SimpleDateFormat("yyyy/MM/dd");
+	private static final DateFormat DATEFORMAT1 = new SimpleDateFormat("yyyy-MM-dd");
 	
 	public static Date getDateAfterDays(Date date,int days) {
 		return DateUtils.addDays(date, days);
@@ -24,5 +25,9 @@ public class DateUtil {
 		} catch (ParseException e) {
 			return null;
 		}
+	}
+	
+	public static String getFormatDate(Date date) {
+		return DATEFORMAT1.format(date);
 	}
 }

@@ -96,7 +96,7 @@
         var win = parent || window;
         win.LG.closeCurrentTab(null);
     }
-    
+    var where = '{"op":"and","rules":[{"op":"like","field":"fldProductId","value":"${customerProduct.fldId}","type":"string"},{"op":"equal","field":"fldStatus","value":"0","type":"int"}]}';
     var detailGrid = $("#contactgrid").ligerGrid({
     	checkbox:false,
     	columnWidth: 130,
@@ -131,7 +131,7 @@
     		{display:"佣金系数", name:"dtlCommissionRadio",render:function(item){
     			return item.fldCommissionRadio;
     		}}
-    	], dataAction: 'server', pageSize: 20,url: '/customer/product/listDetail', sortName: 'operateDate', sortOrder: 'desc',
+    	], dataAction: 'server', pageSize: 20,url: '/customer/product/listDetail?where='+where, sortName: 'operateDate', sortOrder: 'desc',
 	    width:'99%',height: '98%', toJSON: JSON2.stringify
     });
     
