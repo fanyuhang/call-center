@@ -49,7 +49,6 @@ public class MessageTemplateController {
 	@ResponseBody
 	public DataResponse<MessageTemplate> conditionalList(GridPageRequest pageRequest, String where) {
 		pageRequest.setSort("fldOperateDate", "desc");
-		where = "{\"op\":\"and\",\"rules\":[{\"op\":\"equal\",\"field\":\"fldStatus\",\"value\":\"0\",\"type\":\"int\"}]}";
 		return (new DataResponse<MessageTemplate>(messageTemplateManager.queryMessageTemplates(pageRequest, where)));
 	}
 
