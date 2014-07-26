@@ -36,7 +36,7 @@
 	        {display: "所属理财经理", name: "fldFinancialUserNo", newline: true, type: "select", 
 				comboboxName: "financialUserNo", options: {valueFieldID: "financialUserNo"}},
 	        {display: "银行卡号", name: "fldBankNo", newline: false, type: "text", cssClass: "field"},
-	        {display: "瑞得卡号", name: "fldCardNo", newline: false, type: "text", cssClass: "field"},
+	        {display: "瑞得卡号", name: "fldCardNo", newline: false, type: "text", cssClass: "field"}
 	    ],
 	    toJSON: JSON2.stringify
 	});
@@ -47,7 +47,7 @@
 	        columns:[
 	            {display:"用户名称", name:"userName"},
 	            {display:"登录名称", name:"loginName"},
-	            {display:"部门", name:"deptName"},
+	            {display:"部门", name:"deptName"}
 	        ], pageSize:20,heightDiff:-10,
 	        url:'<c:url value="/security/user/list"/>', sortName:'userName', checkbox:false
 	    },

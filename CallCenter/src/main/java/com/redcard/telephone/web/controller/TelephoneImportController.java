@@ -6,7 +6,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -33,7 +32,6 @@ import com.common.core.grid.GridPageRequest;
 import com.common.core.util.EntityUtil;
 import com.common.core.util.FileHelper;
 import com.common.security.util.SecurityUtil;
-import com.redcard.customer.entity.Customer;
 import com.redcard.telephone.entity.TelephoneCustomer;
 import com.redcard.telephone.entity.TelephoneImport;
 import com.redcard.telephone.entity.TelephoneImportDetail;
@@ -150,22 +148,26 @@ public class TelephoneImportController {
                 			}
         					continue;
             			}
+            			boolean flag = true;
             			for(TelephoneImportEntity telephoneImportEntity : list) {
             				if(telephoneImportEntity.getMobile().equals(importEntity.getMobile())) {
             					dupList.add(importEntity);
+            					flag = false;
             					break;
             				} else if(telephoneImportEntity.getCustName().equals(importEntity.getCustName()) 
         							&& telephoneImportEntity.getTelephone().equals(importEntity.getTelephone())) {
             					dupList.add(importEntity);
+            					flag = false;
             					break;
-            				} else {
-            					Long count = telephoneCustomerManager.countByPhoneOrMobile(importEntity.getCustName(),importEntity.getTelephone(),importEntity.getMobile());
-            					if(count > 0) {
-                    				dupList.add(importEntity);
-                    			} else {
-                					list.add(importEntity);
-                    			}
             				}
+            			}
+            			if(flag) {
+	            			Long count = telephoneCustomerManager.countByPhoneOrMobile(importEntity.getCustName(),importEntity.getTelephone(),importEntity.getMobile());
+	            			if(count > 0) {
+	            				dupList.add(importEntity);
+	            			} else {
+	            				list.add(importEntity);
+	            			}
             			}
             		} else {
             			Long count = telephoneCustomerManager.countByPhoneOrMobile(importEntity.getCustName(),importEntity.getTelephone(),importEntity.getMobile());
@@ -175,15 +177,21 @@ public class TelephoneImportController {
             				if(list.size() == 0) {
             					list.add(importEntity);
                 			} else {
+                				boolean flag = true;
                 				for(TelephoneImportEntity telephoneImportEntity : list) {
                     				if(telephoneImportEntity.getMobile().equals(importEntity.getMobile())) {
+                    					dupList.add(importEntity);
+                    					flag = false;
                     					break;
                     				} else if(telephoneImportEntity.getCustName().equals(importEntity.getCustName()) 
                 							&& telephoneImportEntity.getTelephone().equals(importEntity.getTelephone())) {
+                    					dupList.add(importEntity);
+                    					flag = false;
                     					break;
-                    				} else {
-                    					list.add(importEntity);
                     				}
+                				}
+                				if(flag) {
+                					list.add(importEntity);
                 				}
                 			}
             			}
@@ -254,6 +262,7 @@ public class TelephoneImportController {
                 		telephoneImportDetail.setFldOperateDate(new Date());
                 		telephoneImportDetail.setFldCreateDate(new Date());
                 		telephoneImportDetail.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
+                		telephoneImportDetail.setFldAssignStatus(Constant.TELEPHONE_ASSIGN_STATUS_UNASSIGN);//分配状态：未分配
                 		
                 		telephoneImportDetailList.add(telephoneImportDetail);
             		}
@@ -272,6 +281,7 @@ public class TelephoneImportController {
             		telephoneCustomer.setFldOperateDate(new Date());
             		telephoneCustomer.setFldCreateDate(new Date());
             		telephoneCustomer.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
+            		telephoneCustomer.setFldAssignStatus(Constant.TELEPHONE_ASSIGN_STATUS_UNASSIGN);//分配状态：未分配
             		
             		telephoneCustomerList.add(telephoneCustomer);
             	}

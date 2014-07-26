@@ -71,7 +71,7 @@
 	        columns:[
 	            {display:"用户名称", name:"userName"},
 	            {display:"登录名称", name:"loginName"},
-	            {display:"部门", name:"deptName"},
+	            {display:"部门", name:"deptName"}
 	        ], pageSize:20,heightDiff:-10,
 	        url:'<c:url value="/security/user/list"/>', sortName:'userName', checkbox:false
 	    },
@@ -185,6 +185,9 @@
 	        case "template":
 	            f_template(customerTemplate);
 	            break;
+	        case "initimporttemplate":
+	        	f_template(initCustomerTemplate);
+	            break;
 	        case "export":
 	        	f_export('<c:url value="/customer/customer/export"/>');
 	        	break;
@@ -202,7 +205,7 @@
 	    //chunk_size: '1mb',
 	    rename: true,
 	    multiple_queues: false,
-	    resize: {width: 600, height: 500, quality: 30},
+	    resize: {top:20, width: 600, height: 500, quality: 30},
 	    sortable: true,
 	    filters: [
 	        {title: "Excel files", extensions: "xls"}
@@ -267,7 +270,7 @@
 	        detailWin = $.ligerDialog.open({
 	            title: '客户导入',
 	            target: $("#upload"),
-	            width: 600, height: 420, top: 90,
+	            width: 600, height: 420, top: 10,
 	            buttons: [
 	                { text: '取消', onclick: function () {
 	                    detailWin.hide();
@@ -285,7 +288,7 @@
 	        initdetailWin = $.ligerDialog.open({
 	            title: '客户初始导入',
 	            target: $("#initupload"),
-	            width: 600, height: 420, top: 90,
+	            width: 600, height: 420, top: 10,
 	            buttons: [
 	                { text: '取消', onclick: function () {
 	                    initdetailWin.hide();
