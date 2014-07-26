@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.common.security.util.SecurityUtil;
+
 /**
  * TelephoneImportDetail entity. @author MyEclipse Persistence Tools
  */
@@ -30,7 +32,7 @@ public class TelephoneImportDetail implements java.io.Serializable {
 	private String fldCallUserNo;
 	private Integer fldAssignNumber;
 	private String fldComment;
-	private String fldOperateUserNo;
+	private String fldOperateUserNo = SecurityUtil.getCurrentUserLoginName();
 	private Date fldOperateDate;
 	private String fldCreateUserNo;
 	private Date fldCreateDate;

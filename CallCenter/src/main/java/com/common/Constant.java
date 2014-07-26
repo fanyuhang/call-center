@@ -507,6 +507,6 @@ public class Constant {
 	public static final String TELEPHONE_IMPORTT_PATH = "telephone"+File.separator+"import";//话单存放本地路径
 	
 	public static final String TELEPHONE_IMPORT_SAVE_TYPE_ORIG = "01";  //话单导入，原始话单
-	public static final String TELEPHONE_IMPORT_SAVE_TYPE_DUP = "01";   //话单导入，重复话单
-	public static final String TELEPHONE_IMPORT_SAVE_TYPE_NO_DUP = "01";//话单导入，非重复话单
+	public static final String TELEPHONE_IMPORT_SAVE_TYPE_DUP = "02";   //话单导入，重复话单
+	public static final String TELEPHONE_IMPORT_SAVE_TYPE_NO_DUP = "03";//话单导入，非重复话单
 }

@@ -148,6 +148,13 @@
 									newline : true,
 									type : "text",
 									cssClass : "field"
+								}, {
+									display : "短信模板状态",
+									name : "fldStatus",
+									type : "text",
+									cssClass : "field",
+									initValue : 0,
+									type : "hidden"
 								} ]
 							},
 							valueField : 'fldId',

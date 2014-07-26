@@ -180,7 +180,7 @@ public class FileHelper {
                     }
 
                     //保存文件绝对路径
-                    String fullPath = dirPath + "/" + savedFileNameCache.get(filename);
+                    String fullPath = dirPath + File.separator + savedFileNameCache.get(filename);
                     if (chunk == 0) {
                         File file = new File(fullPath);
                         if (file.exists()) {
@@ -194,7 +194,7 @@ public class FileHelper {
                         FileHelper.uploadFile(input, fullPath, true);
                     }
                     if (chunk + 1 == chunks || chunks == 0) {
-                        savedFileName = dirPath + "/" + savedFileNameCache.get(filename);
+                        savedFileName = dirPath + savedFileNameCache.get(filename);
                         savedFileNameCache.remove(filename);
                         break;
                     }

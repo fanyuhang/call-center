@@ -352,17 +352,24 @@
 		fldTarget="#" fldIcon=""
 		fldLink="" fldType="1" fldPosition="5" />
 	
-	<tblNode fldCode="010501" fldParent="0105" fldName="话务导入"
-		fldDesc="" fldTarget="" fldIcon="/static/ligerUI/icons/32X32/sign_up.gif"
+	<tblNode fldCode="010501" fldParent="0105" fldName="话务导入" fldDesc="" fldTarget="" 
+		fldIcon="/static/ligerUI/icons/32X32/sign_up.gif"
 		fldLink="/telephone/import/init" fldType="1" fldPosition="1" />
-	<tblNode fldCode="01050101" fldParent="010501" fldName="下载导入模板"
-		fldDesc="" fldTarget="template"
-		fldIcon="/static/ligerUI/icons/silkicons/application_put.png" fldLink="/telephone/import/template"
-		fldType="2" fldPosition="1" />
-	<tblNode fldCode="01050102" fldParent="010501" fldName="导入"
-		fldDesc="" fldTarget="import"
-		fldIcon="/static/ligerUI/icons/silkicons/application_get.png" fldLink="/telephone/import/import"
-		fldType="2" fldPosition="2" />
+	<tblNode fldCode="01050101" fldParent="010501" fldName="下载导入模板" fldDesc="" fldTarget="template"
+		fldIcon="/static/ligerUI/icons/silkicons/application_put.png" 
+		fldLink="/telephone/import/template" fldType="2" fldPosition="1" />
+	<tblNode fldCode="01050102" fldParent="010501" fldName="导入" fldDesc="" fldTarget="import"
+		fldIcon="/static/ligerUI/icons/silkicons/application_get.png" 
+		fldLink="/telephone/import/import" fldType="2" fldPosition="2" />
+	<tblNode fldCode="01050103" fldParent="010501" fldName="原始话单导出" fldDesc="" fldTarget="origexport"
+		fldIcon="/static/ligerUI/icons/miniicons/action_save.gif" 
+		fldLink="/telephone/import/origexport" fldType="2" fldPosition="3"/>
+	<tblNode fldCode="01050104" fldParent="010501" fldName="非重复话单导出" fldDesc="" fldTarget="nodupexport"
+		fldIcon="/static/ligerUI/icons/miniicons/action_save.gif" 
+		fldLink="/telephone/import/nodupexport" fldType="2" fldPosition="4"/>
+	<tblNode fldCode="01050105" fldParent="010501" fldName="重复话单导出" fldDesc="" fldTarget="dupexport"
+		fldIcon="/static/ligerUI/icons/miniicons/action_save.gif" 
+		fldLink="/telephone/import/dupexport" fldType="2" fldPosition="5"/>
 
 	<tblRole fldId="1" fldRoleName="sysadmin" />
 

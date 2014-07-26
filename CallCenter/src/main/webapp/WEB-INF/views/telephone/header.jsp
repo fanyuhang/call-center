@@ -14,7 +14,9 @@
             url:exportUrl,
             data:{where:JSON2.stringify(rule)},
             success:function (data, message) {
-                window.location.href = '<c:url value="/customer/common/download?filepath="/>' + encodeURIComponent(data[0]);
+            	if(data!=""){
+                	window.location.href = '<c:url value="/customer/common/download?filepath="/>' + encodeURIComponent(data[0]);
+                }
                 LG.tip(message);
             },
             error:function (message) {

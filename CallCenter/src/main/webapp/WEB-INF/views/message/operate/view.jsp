@@ -21,107 +21,116 @@
 					space : 30,
 					fields : [
 							{
-                            display : "发送状态",
-                            name : "fldSendStatus",
-                            newline : true,
-                            type : "select",
-                            options : {
-                                valueField : 'value',
-                                textField : 'text',
-                                isMultiSelect : false,
-                                data : messageSendStatusData,
-                                initValue : '${messageOperate.fldSendStatus}',
-                                valueFieldID : "fldSendStatus"
-                            },
-                            group : "<label style=white-space:nowrap;>状态信息</label>",
-                            groupicon : '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'
-                        }, {
-                            display : "发送数量",
-                            name : "fldMessageNum",
-                            newline : false,
-                            type : "text",
-                            attr : {
-                                value : "${messageOperate.fldMessageNum}",
-                                readonly : "readonly"
-                            }
-                        }, {
-                            display : "发送结果描述",
-                            name : "fldSendResult",
-                            newline : true,
-                            type : "text",
-                            attr : {
-                                value : "${messageOperate.fldSendResult}",
-                                readonly : "readonly"
-                            }
-                        }, {
-                            display : "发送任务编号",
-                            name : "fldTaskId",
-                            newline : false,
-                            type : "text",
-                            attr : {
-                                value : "${messageOperate.fldTaskId}",
-                                readonly : "readonly"
-                            }
-                        }, {
-                                display : "发送人",
-                                name : "createUserName",
-                                type : "text",
-                                newline : true,
-                                attr : {
-                                    value : "${messageOperate.createUserName}",
-                                    readonly : "readonly"
-                                }
-                            }, {
-                                display : "发送时间",
-                                name : "fldCreateDate",
-                                type : "text",
-                                newline : false,
-                                attr : {
-                                    value : "${messageOperate.fldCreateDate}",
-                                    readonly : "readonly"
-                                }
-                            },{
-                                display : "使用模板",
-                                name : "messageTemplateName",
-                                newline : true,
-                                type : "text",
-                                attr : {
-                                    value : "${messageOperate.messageTemplateName}",
-                                    readonly : "readonly"
-                                },
-                            group : "<label style=white-space:nowrap;>基本信息</label>",
-                            groupicon : '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'
-                            } , {
-                                display : "手机列表",
-                                name : "fldMobiles",
-                                newline : true,
-                                width:"630",
-                                type : "textarea",
-                                attr : {
-                                    readonly : "readonly"
-                                }
-                            }, {
-								display : "内容",
-								name : "fldContent",
-                                width:"630",
-                                newline : true,
+								display : "发送状态",
+								name : "fldSendStatus",
+								newline : true,
+								type : "select",
+								options : {
+									valueField : 'value',
+									textField : 'text',
+									isMultiSelect : false,
+									data : messageSendStatusData,
+									disabled : true,
+									initValue : '${messageOperate.fldSendStatus}',
+									valueFieldID : "fldSendStatus"
+								},
+								group : "<label style=white-space:nowrap;>状态信息</label>",
+								groupicon : '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'
+							},
+							{
+								display : "发送数量",
+								name : "fldMessageNum",
+								newline : false,
+								type : "text",
+								attr : {
+									value : "${messageOperate.fldMessageNum}",
+									readonly : "readonly"
+								}
+							},
+							{
+								display : "发送结果描述",
+								name : "fldSendResult",
+								newline : true,
+								type : "text",
+								attr : {
+									value : "${messageOperate.fldSendResult}",
+									readonly : "readonly"
+								}
+							},
+							{
+								display : "发送任务编号",
+								name : "fldTaskId",
+								newline : false,
+								type : "text",
+								attr : {
+									value : "${messageOperate.fldTaskId}",
+									readonly : "readonly"
+								}
+							},
+							{
+								display : "发送人",
+								name : "createUserName",
+								type : "text",
+								newline : true,
+								attr : {
+									value : "${messageOperate.createUserName}",
+									readonly : "readonly"
+								}
+							},
+							{
+								display : "发送时间",
+								name : "fldCreateDate",
+								type : "text",
+								newline : false,
+								attr : {
+									value : "${messageOperate.fldCreateDate}",
+									readonly : "readonly"
+								}
+							},
+							{
+								display : "使用模板",
+								name : "messageTemplateName",
+								newline : true,
+								type : "text",
+								attr : {
+									value : "${messageOperate.messageTemplateName}",
+									readonly : "readonly"
+								},
+								group : "<label style=white-space:nowrap;>基本信息</label>",
+								groupicon : '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'
+							},
+							{
+								display : "手机列表",
+								name : "fldMobiles",
+								newline : true,
+								width : "630",
 								type : "textarea",
 								attr : {
 									readonly : "readonly"
 								}
 							},
-							 {
+							{
+								display : "内容",
+								name : "fldContent",
+								width : "630",
+								newline : true,
+								type : "textarea",
+								attr : {
+									readonly : "readonly"
+								}
+							},
+							{
 								display : "备注",
 								name : "fldComment",
-                                width:"630",
-                                newline : true,
+								width : "630",
+								newline : true,
 								type : "textarea",
 								attr : {
 									readonly : "readonly"
 								},
-                            group : "<label style=white-space:nowrap;>备注</label>",
-                            groupicon : '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'
-							}]
+								group : "<label style=white-space:nowrap;>备注</label>",
+								groupicon : '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'
+							} ]
 				});
 
 		$("#fldContent").text('${messageOperate.fldContent}');

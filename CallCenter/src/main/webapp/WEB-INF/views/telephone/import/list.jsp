@@ -76,11 +76,36 @@
 	function toolbarBtnItemClick(item) {
 	    switch (item.id) {
 	        case "import":
+	        	$("#fileName").val("");
 	            f_upload();
 	            break;
 	        case "template":
 	        	f_template(telephoneTemplate);
 	        	break;
+	       	case "origexport":
+	       		if (grid.getSelectedRows().length > 1 || grid.getSelectedRows().length == 0) {
+	                LG.tip('请选择一行数据!');
+	                return;
+	            }
+	            var selected = grid.getSelected();
+	       		f_export('<c:url value="/telephone/import/origexport"/>'+'?id='+selected.fldId);
+	       		break;
+	       	case "nodupexport":
+	       		if (grid.getSelectedRows().length > 1 || grid.getSelectedRows().length == 0) {
+	                LG.tip('请选择一行数据!');
+	                return;
+	            }
+	            var selected = grid.getSelected();
+	       		f_export('<c:url value="/telephone/import/nodupexport"/>'+'?id='+selected.fldId);
+	       		break;
+	       	case "dupexport":
+	       		if (grid.getSelectedRows().length > 1 || grid.getSelectedRows().length == 0) {
+	                LG.tip('请选择一行数据!');
+	                return;
+	            }
+	            var selected = grid.getSelected();
+	       		f_export('<c:url value="/telephone/import/dupexport"/>'+'?id='+selected.fldId);
+	       		break;
 	    }
 	}
 
@@ -151,7 +176,10 @@
 				                complete: function () {
 				                },
 				                success: function () {
-				                	f_save();
+            						uploader.stop();
+            						detailWin.hide();
+            						LG.showSuccess("导入话单成功!");
+            						f_reload();
 				                },
 				                error: function (message) {
 						            LG.showError(message);
