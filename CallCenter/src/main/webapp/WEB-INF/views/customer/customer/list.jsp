@@ -43,8 +43,14 @@
 	        {display: "手机号", name: "fldMobile", newline: false, type: "text", cssClass: "field"},
 	        {display: "固定电话", name: "fldPhone", newline: true, type: "text", cssClass: "field"},
 	        {display: "所属理财经理", name: "fldFinancialUserNo", newline: false, type: "select", 
-	        	comboboxName: "financialUserNo", options: {valueFieldID: "financialUserNo"}},
-	        {display: "瑞得卡号", name: "fldCardNo", newline: false, type: "text", cssClass: "field"},
+	        	comboboxName: "financialUserNo", options: {
+	                valueFieldID: "fldCardLevel",
+	                valueField: "value",
+	                textField: "text",
+	                data: cardLevelData
+	            }, attr: {"op": "equal", "vt": "int"}},
+	        {display: "瑞得卡号", name: "fldCardNo", newline: false, type: "select", cssClass: "field",
+	        	comboboxName: "cardNo", options: {valueFieldID: "cardNo"}},
 	        {display: "瑞得卡等级", name: "fldCardLevel", newline: true, type: "select", cssClass: "field", 
 	        	options: {
 	                valueFieldID: "fldCardLevel",
@@ -65,7 +71,45 @@
 	    toJSON: JSON2.stringify
 	});
 	
-	$.ligerui.get("financialUserNo").openSelect({
+	$.ligerui.get("cardNo").openSelect({
+			valueField: 'CustomerID', textField: 'CustomerID',
+	    grid:{
+	    	columnWidth: 255,
+	        columns:[
+	            {display:"aa", name:"userName"},
+	            {display:"登录名称", name:"loginName"},
+	            {display:"部门", name:"deptName"},
+	        ], pageSize:20,heightDiff:-10,
+	        url:'<c:url value="/security/user/list"/>', sortName:'userName', checkbox:false
+	    },
+	    search:{
+	        fields:[
+	            {display:"用户名称", name:"userName", newline:true, type:"text", cssClass:"field"}
+	        ]
+	    },
+	    valueField:'loginName', textField:'userName', top:30
+	});
+	
+			$.ligerui.get("cardNo").openSelect({
+			valueField: 'CustomerID1', textField: 'CustomerID1',
+	    grid:{
+	    	columnWidth: 255,
+	        columns:[
+	            {display:"用户名称AAA", name:"userName"},
+	            {display:"登录名称", name:"loginName"},
+	            {display:"部门", name:"deptName"},
+	        ], pageSize:20,heightDiff:-10,
+	        url:'<c:url value="/security/user/list"/>', sortName:'userName', checkbox:false
+	    },
+	    search:{
+	        fields:[
+	            {display:"用户名称", name:"userName", newline:true, type:"text", cssClass:"field"}
+	        ]
+	    },
+	    valueField:'loginName', textField:'userName', top:30
+	});
+	
+	/*$.ligerui.get("cardNo").openSelect({
 	    grid:{
 	    	columnWidth: 255,
 	        columns:[
@@ -81,7 +125,7 @@
 	        ]
 	    },
 	    valueField:'loginName', textField:'userName', top:30
-	});
+	});*/
 
 	//列表结构
 	var grid = $("#maingrid").ligerGrid({

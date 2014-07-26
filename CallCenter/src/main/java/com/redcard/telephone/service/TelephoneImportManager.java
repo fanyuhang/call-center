@@ -23,4 +23,8 @@ public class TelephoneImportManager extends GenericPageHQLQuery<TelephoneImport>
 	public Page<TelephoneImport> findAllTelephoneImport(GridPageRequest page, String where) {
         return (Page<TelephoneImport>) super.findAll(where, page);
     }
+	
+	public TelephoneImport findById(String id) {
+		return telephoneImportDao.findOne(id);
+	}
 }

@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -32,6 +33,7 @@ import com.common.core.grid.GridPageRequest;
 import com.common.core.util.EntityUtil;
 import com.common.core.util.FileHelper;
 import com.common.security.util.SecurityUtil;
+import com.redcard.customer.entity.Customer;
 import com.redcard.telephone.entity.TelephoneCustomer;
 import com.redcard.telephone.entity.TelephoneImport;
 import com.redcard.telephone.entity.TelephoneImportDetail;
@@ -139,29 +141,69 @@ public class TelephoneImportController {
             	List<TelephoneImportEntity> list = new ArrayList<TelephoneImportEntity>();//非重复话单
             	for(TelephoneImportEntity importEntity : objects) {
             		if(Constant.DUPLICATE_STATUS_Y == Integer.valueOf(fldDuplicateStatus)) {//去重:姓名+手机或姓名+固定电话
+            			if(list.size() == 0) {
+            				Long count = telephoneCustomerManager.countByPhoneOrMobile(importEntity.getCustName(),importEntity.getTelephone(),importEntity.getMobile());
+        					if(count > 0) {
+                				dupList.add(importEntity);
+                			} else {
+            					list.add(importEntity);
+                			}
+        					continue;
+            			}
+            			for(TelephoneImportEntity telephoneImportEntity : list) {
+            				if(telephoneImportEntity.getMobile().equals(importEntity.getMobile())) {
+            					dupList.add(importEntity);
+            					break;
+            				} else if(telephoneImportEntity.getCustName().equals(importEntity.getCustName()) 
+        							&& telephoneImportEntity.getTelephone().equals(importEntity.getTelephone())) {
+            					dupList.add(importEntity);
+            					break;
+            				} else {
+            					Long count = telephoneCustomerManager.countByPhoneOrMobile(importEntity.getCustName(),importEntity.getTelephone(),importEntity.getMobile());
+            					if(count > 0) {
+                    				dupList.add(importEntity);
+                    			} else {
+                					list.add(importEntity);
+                    			}
+            				}
+            			}
+            		} else {
             			Long count = telephoneCustomerManager.countByPhoneOrMobile(importEntity.getCustName(),importEntity.getTelephone(),importEntity.getMobile());
             			if(count > 0) {
             				dupList.add(importEntity);
             			} else {
-            				if(!dupList.contains(importEntity)) {
+            				if(list.size() == 0) {
             					list.add(importEntity);
-            				} else {
-            					dupList.add(importEntity);
-            				}
+                			} else {
+                				for(TelephoneImportEntity telephoneImportEntity : list) {
+                    				if(telephoneImportEntity.getMobile().equals(importEntity.getMobile())) {
+                    					break;
+                    				} else if(telephoneImportEntity.getCustName().equals(importEntity.getCustName()) 
+                							&& telephoneImportEntity.getTelephone().equals(importEntity.getTelephone())) {
+                    					break;
+                    				} else {
+                    					list.add(importEntity);
+                    				}
+                				}
+                			}
             			}
             		}
             	}
             	
-            	String dupFileName = Constant.TELEPHONE_IMPORT_SAVE_TYPE_DUP + "_" + fileName;
-            	if(null != dupList && dupList.size() > 0) {//存放重复话单
-            		ExcelExportUtil<TelephoneImportEntity> dupListToExcel = new ExcelExportUtil<TelephoneImportEntity>(dupList);
-            		dupListToExcel.generate(reportPath + dupFileName);
+            	//存放重复话单
+            	String dupFileName = null;
+            	if(null != dupList && dupList.size() > 0 ) {
+            		dupFileName = Constant.TELEPHONE_IMPORT_SAVE_TYPE_DUP + "_" + fileName;
+	        		ExcelExportUtil<TelephoneImportEntity> dupListToExcel = new ExcelExportUtil<TelephoneImportEntity>(dupList);
+	        		dupListToExcel.generate(reportPath + dupFileName);
             	}
             	
-            	String noDupFileName = Constant.TELEPHONE_IMPORT_SAVE_TYPE_NO_DUP + "_" + fileName;
-            	if(null != list && list.size() > 0) {//存放非重复话单
-            		ExcelExportUtil<TelephoneImportEntity> dupListToExcel = new ExcelExportUtil<TelephoneImportEntity>(list);
-            		dupListToExcel.generate(reportPath + noDupFileName);
+            	//存放非重复话单
+            	String noDupFileName = null;
+            	if(null != list && list.size() > 0) {
+	            	noDupFileName = Constant.TELEPHONE_IMPORT_SAVE_TYPE_NO_DUP + "_" + fileName;
+	        		ExcelExportUtil<TelephoneImportEntity> noDupListToExcel = new ExcelExportUtil<TelephoneImportEntity>(list);
+	        		noDupListToExcel.generate(reportPath + noDupFileName);
             	}
             	
             	//记录话务导入表
@@ -171,9 +213,13 @@ public class TelephoneImportController {
             	telephoneImport.setFldUploadFilePath(localPath+origFileName);//原始话单相对路径
             	telephoneImport.setFldTotalNumber(objects.size());//原始话单记录总数
             	telephoneImport.setFldDuplicateTotalNumber(dupList.size());//重复记录数
-            	telephoneImport.setFldDuplicateFilePath(localPath+dupFileName);//重复记录文件地址
+            	if(!StringUtils.isEmpty(dupFileName)) {
+            		telephoneImport.setFldDuplicateFilePath(localPath+dupFileName);//重复记录文件地址
+            	}
             	telephoneImport.setFldImportTotalNumber(list.size());
-            	telephoneImport.setFldImportFilePath(localPath+noDupFileName);
+            	if(!StringUtils.isEmpty(noDupFileName)) {
+            		telephoneImport.setFldImportFilePath(localPath+noDupFileName);
+            	}
             	telephoneImport.setFldAssignTotalNumber(0);
             	telephoneImport.setFldOperateDate(new Date());
             	telephoneImport.setFldCreateDate(new Date());
@@ -182,7 +228,7 @@ public class TelephoneImportController {
             	
             	//记录话务导入明细表
             	List<TelephoneImportDetail> telephoneImportDetailList = new ArrayList<TelephoneImportDetail>();
-            	for(TelephoneImportEntity telephoneImportEntity : objects) {
+            	for(TelephoneImportEntity telephoneImportEntity : list) {
             		TelephoneImportDetail telephoneImportDetail = new TelephoneImportDetail();
             		telephoneImportDetail.setFldId(EntityUtil.getId());
             		telephoneImportDetail.setFldImportId(telephoneImport.getFldId());
@@ -195,6 +241,22 @@ public class TelephoneImportController {
             		telephoneImportDetail.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
             		
             		telephoneImportDetailList.add(telephoneImportDetail);
+            	}
+            	if(Constant.DUPLICATE_STATUS_N == Integer.valueOf(fldDuplicateStatus)) {
+            		for(TelephoneImportEntity telephoneImportEntity : dupList) {
+            			TelephoneImportDetail telephoneImportDetail = new TelephoneImportDetail();
+                		telephoneImportDetail.setFldId(EntityUtil.getId());
+                		telephoneImportDetail.setFldImportId(telephoneImport.getFldId());
+                		telephoneImportDetail.setFldCustomerName(telephoneImportEntity.getCustName());
+                		telephoneImportDetail.setFldGender(telephoneImportEntity.getGender());
+                		telephoneImportDetail.setFldMobile(telephoneImportEntity.getMobile());
+                		telephoneImportDetail.setFldPhone(telephoneImportEntity.getTelephone());
+                		telephoneImportDetail.setFldOperateDate(new Date());
+                		telephoneImportDetail.setFldCreateDate(new Date());
+                		telephoneImportDetail.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
+                		
+                		telephoneImportDetailList.add(telephoneImportDetail);
+            		}
             	}
             	telephoneImportDetailManager.save(telephoneImportDetailList);
             	
@@ -220,5 +282,62 @@ public class TelephoneImportController {
             log.error("导入文件失败, {}", e.getMessage());
             return new AsyncResponse(true, "导入话单失败！");
         }
+    }
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "origexport")
+    @ResponseBody
+    public AsyncResponse origexport(String id, HttpServletRequest request, HttpServletResponse response) {
+        AsyncResponse result = new AsyncResponse(false, "导出原始话单列表成功");
+        try {
+        	TelephoneImport telephoneImport = this.telephoneImportManager.findById(id);
+        	if(null !=  telephoneImport && !StringUtils.isEmpty(telephoneImport.getFldUploadFilePath())) {
+        		result.getData().add(request.getSession().getServletContext().getRealPath("/") + File.separator+telephoneImport.getFldUploadFilePath());
+        	} else {
+        		return new AsyncResponse(false, "未找到原始话单");
+        	}
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new AsyncResponse(true, "系统内部错误");
+        }
+        return result;
+    }
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "nodupexport")
+    @ResponseBody
+    public AsyncResponse nodupexport(String id, HttpServletRequest request, HttpServletResponse response) {
+        AsyncResponse result = new AsyncResponse(false, "导出非重复话单列表成功");
+        try {
+        	TelephoneImport telephoneImport = this.telephoneImportManager.findById(id);
+        	if(null !=  telephoneImport && !StringUtils.isEmpty(telephoneImport.getFldImportFilePath())) {
+        		result.getData().add(request.getSession().getServletContext().getRealPath("/") + File.separator+telephoneImport.getFldImportFilePath());
+        	} else {
+        		return new AsyncResponse(false, "未找到非重复话单");
+        	}
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new AsyncResponse(true, "系统内部错误");
+        }
+        return result;
+    }
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "dupexport")
+    @ResponseBody
+    public AsyncResponse dupexport(String id, HttpServletRequest request, HttpServletResponse response) {
+        AsyncResponse result = new AsyncResponse(false, "导出重复话单列表成功");
+        try {
+        	TelephoneImport telephoneImport = this.telephoneImportManager.findById(id);
+        	if(null !=  telephoneImport && !StringUtils.isEmpty(telephoneImport.getFldDuplicateFilePath())) {
+        		result.getData().add(request.getSession().getServletContext().getRealPath("/") + File.separator+telephoneImport.getFldDuplicateFilePath());
+        	} else {
+        		return new AsyncResponse(false, "未找到重复话单");
+        	}
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new AsyncResponse(true, "系统内部错误");
+        }
+        return result;
     }
 }
