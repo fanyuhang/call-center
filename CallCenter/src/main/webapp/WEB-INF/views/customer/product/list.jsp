@@ -59,7 +59,7 @@
 	        {display: "成立日期", name: "fldEstablishDate"},
 	        {display: "起息日期", name: "fldValueDate"},
 	        {display: "操作人", name: "operateUserName"}
-	    ], dataAction: 'server', pageSize: 20, toolbar: {}, url: '<c:url value="/customer/product/list"/>', sortName: 'operateDate', sortOrder: 'desc',
+	    ], dataAction: 'server', pageSize: 20, toolbar: {}, url: '<c:url value="/customer/product/list"/>',
 	    width: '98%', height: '98%', toJSON: JSON2.stringify, onReload: f_reload
 	});
 

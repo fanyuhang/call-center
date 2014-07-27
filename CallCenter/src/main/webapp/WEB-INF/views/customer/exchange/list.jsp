@@ -87,7 +87,7 @@
 	        {display: "原客服客户数量", name: "fldOldCustomerNum"},
 	        {display: "新客服客户数量", name: "fldNewCustomerNum"},
 	        {display: "交接客户数量", name: "fldCustomerNum"}
-	    ], dataAction: 'server', pageSize: 20, toolbar: {}, url: '<c:url value="/customer/exchange/list"/>', sortName: 'operateDate', sortOrder: 'desc',
+	    ], dataAction: 'server', pageSize: 20, toolbar: {}, url: '<c:url value="/customer/exchange/list"/>',
 	    width: '98%', height: '98%', toJSON: JSON2.stringify, onReload: f_reload
 	});
 

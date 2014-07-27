@@ -433,7 +433,7 @@
             {display:"年化收益率", name:"dtlAnnualizedRate"},
             {display:"年化7天存款率", name:"dtlDepositRate"},
             {display:"佣金系数", name:"dtlCommissionRadio"}
-    	], dataAction: 'server', pageSize: 20, toolbar:toolbarOptions, url: '', sortName: 'operateDate', sortOrder: 'desc',
+    	], dataAction: 'server', pageSize: 20, toolbar:toolbarOptions, url: '',
 	    width:'99%',height: '98%', toJSON: JSON2.stringify
     });
     

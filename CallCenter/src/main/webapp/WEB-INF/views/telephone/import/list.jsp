@@ -62,7 +62,7 @@
 	        {display: "重复记录数", name: "fldDuplicateTotalNumber"},
 	        {display: "导入记录数", name: "fldImportTotalNumber"},
 	        {display: "已分配记录数", name: "fldAssignTotalNumber"}
-	    ], dataAction: 'server', pageSize: 20, toolbar: {}, url: '<c:url value="/telephone/import/list"/>', sortName: 'operateDate', sortOrder: 'desc',
+	    ], dataAction: 'server', pageSize: 20, toolbar: {}, url: '<c:url value="/telephone/import/list"/>',
 	    width: '98%', height: '98%', toJSON: JSON2.stringify, onReload: f_reload
 	});
 

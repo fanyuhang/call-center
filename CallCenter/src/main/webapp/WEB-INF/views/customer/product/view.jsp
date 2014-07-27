@@ -131,7 +131,7 @@
     		{display:"佣金系数", name:"dtlCommissionRadio",render:function(item){
     			return item.fldCommissionRadio;
     		}}
-    	], dataAction: 'server', pageSize: 20,url: '/customer/product/listDetail?where='+where, sortName: 'operateDate', sortOrder: 'desc',
+    	], dataAction: 'server', pageSize: 20,url: '/customer/product/listDetail?where='+where,
 	    width:'99%',height: '98%', toJSON: JSON2.stringify
     });
     

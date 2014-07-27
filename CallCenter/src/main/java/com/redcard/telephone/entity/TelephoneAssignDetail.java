@@ -7,6 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
+import com.common.core.util.JsonDateSerializer;
 import com.common.security.util.SecurityUtil;
 
 /**
@@ -112,6 +115,7 @@ public class TelephoneAssignDetail implements java.io.Serializable {
 	}
 
 	@Column(name = "FLDASSIGNDATE")
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getFldAssignDate() {
 		return this.fldAssignDate;
 	}
@@ -121,6 +125,7 @@ public class TelephoneAssignDetail implements java.io.Serializable {
 	}
 
 	@Column(name = "FLDTASKDATE")
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getFldTaskDate() {
 		return this.fldTaskDate;
 	}

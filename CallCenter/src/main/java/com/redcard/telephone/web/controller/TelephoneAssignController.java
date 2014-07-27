@@ -1,7 +1,6 @@
 package com.redcard.telephone.web.controller;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +13,9 @@ import com.common.Constant;
 import com.common.core.grid.AsyncResponse;
 import com.common.core.grid.DataResponse;
 import com.common.core.grid.GridPageRequest;
-import com.common.core.util.EntityUtil;
-import com.common.security.util.SecurityUtil;
 import com.redcard.telephone.entity.TelephoneAssign;
+import com.redcard.telephone.entity.TelephoneAssignDetail;
+import com.redcard.telephone.service.TelephoneAssignDetailManager;
 import com.redcard.telephone.service.TelephoneAssignManager;
 import com.redcard.telephone.service.TelephoneImportDetailManager;
 import com.redcard.telephone.service.TelephoneTaskManager;
@@ -30,6 +29,8 @@ public class TelephoneAssignController {
 	private TelephoneImportDetailManager telephoneImportDetailManager;
 	@Autowired
 	private TelephoneTaskManager telephoneTaskManager;
+	@Autowired
+	private TelephoneAssignDetailManager telephoneAssignDetailManager;
 	
 	@RequestMapping(value = "init")
     public String init(String menuNo, Model model) {
@@ -78,5 +79,19 @@ public class TelephoneAssignController {
         AsyncResponse result = new AsyncResponse(false, "分配话务成功");
         telephoneAssignManager.saveAssign(telephoneAssign);
         return result;
+    }
+	
+	@RequestMapping(value = "assignDetail")
+    public String assignDetail(String id, String menuNo, Model model) {
+		model.addAttribute("menuNo", menuNo);
+		model.addAttribute("detailId", id);
+        return "telephone/assign/detail";
+    }
+	
+	@RequestMapping(value = "listDetail")
+    @ResponseBody
+    public DataResponse<TelephoneAssignDetail> listDetail(GridPageRequest pageRequest, String where) {
+        pageRequest.setSort("fldOperateDate", "desc");
+        return (new DataResponse<TelephoneAssignDetail>(telephoneAssignDetailManager.findDetail(pageRequest, where)));
     }
 }
