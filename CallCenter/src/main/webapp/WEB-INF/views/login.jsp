@@ -50,7 +50,7 @@
                     <div class="control-group">
                         <label class="control-label" ></label>
                         <div class="controls">
-                            <button type="submit" class="ui-btn01 submit" id="btnLogin">提交</button>
+                            <button type="submit" class="ui-btn01 submit" id="btnLogin">登录</button>
                            <!--  <button type="reset" class="ui-btn01">重置</button> -->
                         </div>
                     </div>
