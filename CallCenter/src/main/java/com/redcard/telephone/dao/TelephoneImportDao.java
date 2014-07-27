@@ -4,6 +4,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 import com.redcard.telephone.entity.TelephoneImport;
 
-public interface TelephoneImportDao extends PagingAndSortingRepository <TelephoneImport,String> {
+public interface TelephoneImportDao extends PagingAndSortingRepository<TelephoneImport,String> {
 
 }

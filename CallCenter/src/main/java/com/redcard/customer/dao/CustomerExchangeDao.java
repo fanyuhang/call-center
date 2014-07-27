@@ -5,7 +5,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 import com.redcard.customer.entity.CustomerExchange;
 
-public interface CustomerExchangeDao extends PagingAndSortingRepository <CustomerExchange,String> {
+public interface CustomerExchangeDao extends PagingAndSortingRepository<CustomerExchange,String> {
 	@Query("select count(m) from Customer m where m.fldServiceUserNo = ?1 ")
     public Long countCustomerByServiceUser(String serviceUserNo);
 	

@@ -1,8 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="../../include/formHeader.jsp" %>
 <body style="padding-bottom:31px;">
-<form:form id="mainform" name="mainform" method="post" modelAttribute="customer">
-</form:form>
+<form:form id="mainform" name="mainform" method="post"></form:form>
 <script type="text/javascript">
 	var telephoneSourceData =<sys:dictList type = "17"/>;
 	
@@ -20,21 +19,51 @@
             	comboboxName: "callUserNo", options: {valueFieldID: "callUserNo"}},
             {display: "话务来源", name: "fldSource", newline: false, type: "select", attr:{readonly: "readonly"},validate: {required: true}, cssClass: "field", 
 	        	options: {
-	                valueFieldID: "fldCardLfldSourceevel",
+	                valueFieldID: "fldSource",
 	                valueField: "value",
 	                textField: "text",
 	                data: telephoneSourceData
-	            }, attr: {"op": "equal", "vt": "int"}
+	            }, attr: {"op": "equal", "vt": "int"},comboboxName:"telephoneSource"
         	},
-            {display: "身份证号", name: "fldIdentityNo", newline: true, type: "text", validate: {maxlength: 32}},
-            {display: "固定电话", name: "fldPhone", newline: true, type: "text", validate: { maxlength: 32}, group: "<label style=white-space:nowrap;>联系信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'},
-            {display: "手机", name: "fldMobile", newline: false, type: "text", validate: { maxlength: 100}},
-            {display: "地址", name: "fldAddress", newline: true, type: "text", validate: { maxlength: 64}},
-            {display: "邮箱", name: "fldEmail", newline: false, type: "text", validate: { maxlength: 100}}
+            {display: "可分配话务数", name: "taskCount", newline: true, type: "text", attr:{readonly: "readonly"}},
+            {display: "话务数", name: "fldTaskNumber", newline: false, type: "text", validate: {required: true}},
+            {display: "话务员数", name: "fldCallUserNumber", newline: true, type: "text", attr:{readonly: "readonly"},group: "<label style=white-space:nowrap;>话务分配信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'},
+            {display: "平均话务数", name: "fldAverageNumber", newline: false, type: "text", attr:{readonly: "readonly"}},
+            {display: "话务开始时间", name: "fldBeginDate", newline: true, type: "date", attr:{readonly: "readonly"}, validate: {required: true}},
+            {display: "话务结束时间", name: "fldEndDate", newline: false, type: "date", attr:{readonly: "readonly"}, validate: {required: true}},
+            {display: "天数", name: "fldDayNumber", newline: true, type: "text", attr:{readonly: "readonly"}}
         ]
     });
 
-    mainform.attr("action", '<c:url value="/customer/customer/save"/>');
+    mainform.attr("action", '<c:url value="/telephone/assign/save"/>');
+    
+    $.ligerui.get("fldBeginDate").bind("changedate",function(){
+     	var fldBeginDate = $("#fldBeginDate").val();
+     	var fldEndDate = $("#fldEndDate").val();
+     	if(fldBeginDate == "" || fldEndDate == "") return;
+     	
+     	if(fldBeginDate>fldEndDate) {
+     		LG.showError("开始时间不能晚于结束时间!");
+     		return;
+     	}
+     	
+     	var days = (Date.parse(fldEndDate) - Date.parse(fldBeginDate))/(1000*60*60*24) + 1;
+     	$("#fldDayNumber").val(days);
+    });
+     
+    $.ligerui.get("fldEndDate").bind("changedate",function(){
+     	var fldBeginDate = $("#fldBeginDate").val();
+     	var fldEndDate = $("#fldEndDate").val();
+     	if(fldBeginDate == "" || fldEndDate == "") return;
+     	
+     	if(fldBeginDate>fldEndDate) {
+     		LG.showError("开始时间不能晚于结束时间!");
+     		return;
+     	}
+     	
+     	var days = (Date.parse(fldEndDate) - Date.parse(fldBeginDate))/(1000*60*60*24) + 1;
+     	$("#fldDayNumber").val(days);
+    });
     
     $.ligerui.get("callUserNo").openSelect({
 	    grid:{
@@ -53,44 +82,96 @@
 	            {display:"用户名称", name:"userName", newline:true, type:"text", cssClass:"field"}
 	        ]
 	    },
-	    valueField:'loginName', textField:'userName', top:30
+	    valueField:'loginName', textField:'userName', top:30,
+	    handleSelect:function(data){
+	    	$("#fldCallUserNumber").val(data.length);
+			
+			var fldTaskNumber = $("#fldTaskNumber").val();
+			if(fldTaskNumber== "" || fldTaskNumber == 0) return;
+		
+			var fldCallUserNumber = $("#fldCallUserNumber").val();
+			if(fldCallUserNumber == "" || fldCallUserNumber == 0) return;
+		
+			$("#fldAverageNumber").val(parseFloat(fldTaskNumber)/parseFloat(fldCallUserNumber));
+	    }
 	});
-
-    //表单底部按钮
-    LG.setFormDefaultBtn(f_cancel, f_check);
-    
-    function f_check() {
-    	var fldName = $("#fldName").val();
-        if (fldName != '') {
-        	var phone = $("#fldPhone").val();
-        	var mobile = $("#fldMobile").val();
-            if (!phone && !mobile) {
-        		LG.showError("请录入固定电话或手机");
-        		return;
-    		}
-        
-            LG.ajax({
-                url: '<c:url value="/customer/customer/isExist"/>',
-                data: {fldName:fldName,phone:phone,mobile:mobile},
+	
+	$("#telephoneSource").change(function(){
+		var source = $("#fldSource").val();
+		if(source == "") return;
+		if(source == 0) {
+			LG.ajax({
+                url: '<c:url value="/telephone/assign/countImport"/>',
+                data: {},
                 beforeSend: function () {
                 	
                 },
                 complete: function () {
                 },
-                success: function () {
-                	f_save();
+                success: function (message) {
+                	$("#taskCount").val(message);
                 },
                 error: function (message) {
-		            LG.showError(message);
                 }
             });
-        } else {
-        	f_save();
-        }
-    }
+		} else {
+			LG.ajax({
+                url: '<c:url value="/telephone/assign/countTask"/>',
+                data: {},
+                beforeSend: function () {
+                	
+                },
+                complete: function () {
+                },
+                success: function (message) {
+                	$("#taskCount").val(message);
+                },
+                error: function (message) {
+                }
+            });
+		}
+	});
+	
+	$("#fldTaskNumber").change(function(){
+		var fldTaskNumber = $("#fldTaskNumber").val();
+		if(fldTaskNumber == "" || fldTaskNumber == 0) return;
+		
+		var fldCallUserNumber = $("#fldCallUserNumber").val();
+		if(fldCallUserNumber == "" || fldCallUserNumber == 0) return;
+		
+		$("#fldAverageNumber").val(parseFloat(fldTaskNumber)/parseFloat(fldCallUserNumber));
+	});
+
+    //表单底部按钮
+    LG.setFormDefaultBtn(f_cancel, f_save);
     
     function f_save() {
     	LG.validate(mainform);
+    	
+    	if($("#fldCallUserNo").val()==""){
+    		LG.showError("请选择话务员!");
+			return;
+    	}
+    	
+    	if($("#fldSource").val()==""){
+    		LG.showError("请选择话务来源!");
+			return;
+    	}
+    	
+    	var taskCount = $("#taskCount").val();
+		var fldTaskNumber = $("#fldTaskNumber").val();
+		if(parseInt(taskCount) < parseInt(fldTaskNumber)) {
+			LG.showError("话务数不能大于可分配话务数!");
+			return;
+		}
+		
+		var fldBeginDate = $("#fldBeginDate").val();
+     	var fldEndDate = $("#fldEndDate").val();
+     	
+     	if(fldBeginDate != "" && fldEndDate != "" && fldBeginDate>fldEndDate) {
+     		LG.showError("开始时间不能晚于结束时间!");
+     		return;
+     	}
     	
     	LG.submitForm(mainform, function (data) {
 	        var win = parent || window;

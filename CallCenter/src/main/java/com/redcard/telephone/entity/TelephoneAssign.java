@@ -6,9 +6,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.codehaus.jackson.map.annotate.JsonSerialize;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import com.common.core.util.JsonDateSerializer;
 import com.common.core.util.JsonTimestampSerializer;
 import com.common.security.util.SecurityUtil;
 
@@ -27,7 +30,9 @@ public class TelephoneAssign implements java.io.Serializable {
 	private Integer fldCallUserNumber;
 	private Integer fldAverageNumber;
 	private Integer fldDayNumber;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date fldBeginDate;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date fldEndDate;
 	private Integer fldContentType;
 	private String fldComment;
@@ -35,6 +40,8 @@ public class TelephoneAssign implements java.io.Serializable {
 	private Date fldOperateDate;
 	private String fldCreateUserNo;
 	private Date fldCreateDate;
+	
+	private String fldCallUserNo;
 
 	// Constructors
 
@@ -128,6 +135,7 @@ public class TelephoneAssign implements java.io.Serializable {
 	}
 
 	@Column(name = "FLDBEGINDATE")
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getFldBeginDate() {
 		return this.fldBeginDate;
 	}
@@ -137,6 +145,7 @@ public class TelephoneAssign implements java.io.Serializable {
 	}
 
 	@Column(name = "FLDENDDATE")
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getFldEndDate() {
 		return this.fldEndDate;
 	}
@@ -201,4 +210,12 @@ public class TelephoneAssign implements java.io.Serializable {
 		this.fldCreateDate = fldCreateDate;
 	}
 
+	@Transient
+	public String getFldCallUserNo() {
+		return fldCallUserNo;
+	}
+
+	public void setFldCallUserNo(String fldCallUserNo) {
+		this.fldCallUserNo = fldCallUserNo;
+	}
 }

@@ -4,8 +4,12 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.common.security.util.SecurityUtil;
 
 /**
  * TelephoneTask entity. @author MyEclipse Persistence Tools
@@ -34,7 +38,7 @@ public class TelephoneTask implements java.io.Serializable {
 	private String fldAuditComment;
 	private Integer fldAuditFraction;
 	private String fldAuditUserNo;
-	private String fldOperateUserNo;
+	private String fldOperateUserNo = SecurityUtil.getCurrentUserLoginName();
 	private Date fldOperateDate;
 	private String fldCreateUserNo;
 	private Date fldCreateDate;
@@ -87,6 +91,7 @@ public class TelephoneTask implements java.io.Serializable {
 
 	// Property accessors
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "FLDID", unique = true, nullable = false)
 	public Long getFldId() {
 		return this.fldId;

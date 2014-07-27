@@ -247,6 +247,8 @@ public class TelephoneImportController {
             		telephoneImportDetail.setFldOperateDate(new Date());
             		telephoneImportDetail.setFldCreateDate(new Date());
             		telephoneImportDetail.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
+            		telephoneImportDetail.setFldAssignStatus(Constant.TELEPHONE_ASSIGN_STATUS_UNASSIGN);//分配状态：未分配
+            		telephoneImportDetail.setFldAssignNumber(0);//分配次数
             		
             		telephoneImportDetailList.add(telephoneImportDetail);
             	}
@@ -263,6 +265,7 @@ public class TelephoneImportController {
                 		telephoneImportDetail.setFldCreateDate(new Date());
                 		telephoneImportDetail.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
                 		telephoneImportDetail.setFldAssignStatus(Constant.TELEPHONE_ASSIGN_STATUS_UNASSIGN);//分配状态：未分配
+                		telephoneImportDetail.setFldAssignNumber(0);//分配次数
                 		
                 		telephoneImportDetailList.add(telephoneImportDetail);
             		}

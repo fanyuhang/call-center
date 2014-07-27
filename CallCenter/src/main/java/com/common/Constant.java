@@ -512,4 +512,14 @@ public class Constant {
 	
 	public static final Integer TELEPHONE_ASSIGN_STATUS_UNASSIGN = 0;//话单分配状态,未分配
 	public static final Integer TELEPHONE_ASSIGN_STATUS_ASSIGNED = 1;//话单分配状态,已分配
+	
+	public static final Integer TASK_FINISH_STATUS_UNFINISH = 0;//任务完成状态，未完成
+	public static final Integer TASK_FINISH_STATUS_DEAL = 1;//任务完成状态，待跟踪
+	public static final Integer TASK_FINISH_STATUS_FINISHED = 9;//任务完成状态，已完成
+	
+	public static final Integer TASK_TYPE_AUTO = 0;//任务类型,自动分配任务
+	public static final Integer TASK_TYPE_MANU = 1;//任务类型,手动分配任务
+	
+	public static final Integer TASK_CALL_STATUS_UN = 0;//拨打状态,未拨打
+	public static final Integer TASK_CALL_STATUS_ED = 1;//拨打状态,已拨打
 }

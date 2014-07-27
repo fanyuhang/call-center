@@ -4,6 +4,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 import com.redcard.telephone.entity.TelephoneAssign;
 
-public interface TelephoneAssignDao extends PagingAndSortingRepository <TelephoneAssign,String> {
+public interface TelephoneAssignDao extends PagingAndSortingRepository<TelephoneAssign,String> {
 
 }

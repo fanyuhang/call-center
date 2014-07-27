@@ -488,6 +488,9 @@
 		
 	<tblDictionary fldId="40" fldType="17" fldName="导入话务" fldValue="0" fldStatus="0" fldComment="话务来源，导入话务" />
 	<tblDictionary fldId="41" fldType="17" fldName="已有话务" fldValue="1" fldStatus="0" fldComment="话务来源，已有话务" />
+	
+	<tblDictionary fldId="42" fldType="18" fldName="未完成" fldValue="0" fldStatus="0" fldComment="任务完成状态，未完成" />
+	<tblDictionary fldId="43" fldType="18" fldName="已完成" fldValue="1" fldStatus="0" fldComment="任务完成状态，已完成" />
 
 	<tblSysParameter fldId="1" fldName="SYS_ADMIN"
 		fldValue="1" fldUnit="" fldStatus="0" fldDisplay="1" fldComment="" />
