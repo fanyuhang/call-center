@@ -7,7 +7,6 @@
 </style>
 <body style="padding:10px;height:100%; text-align:center;">
 <input type="hidden" id="MenuNo" value="${menuNo}"/>
-<input type="hidden" id="fileName"/>
 <div id="mainsearch" style=" width:98%">
     <div class="searchtitle">
         <span>搜索</span><img src='<c:url value="/static/ligerUI/icons/32X32/searchtool.gif"/>'/>
@@ -19,17 +18,6 @@
     </div>
 </div>
 <div id="maingrid"></div>
-<div id="upload" style="display:none;">
-    <div id="uploader">
-        <p>Your browser doesn't have Flash, Silverlight, Gears, BrowserPlus or HTML5 support.</p>
-    </div>
-    <br/>
-    <div>
-    	<span>是否去重:</span>
-    	<input name="fldDuplicateStatus" type="radio" value="0"/>去重
-    	<input name="fldDuplicateStatus" type="radio" value="1"/>不去重
-    </div>
-</div>
 <script type="text/javascript">
 	var telephoneTemplate = "话单导入模板";
 	
@@ -52,17 +40,17 @@
 	var grid = $("#maingrid").ligerGrid({
 	    checkbox: true,
 	    rownumbers: true,
-	    delayLoad: false,
+	    delayLoad: true,
 	    columnWidth: 180,
 	    columns: [
 	    	{display: "ID", name: "fldId", hide:1,width:1},
 	        {display: "操作人", name: "fldOperateUserNo"},
-	        {display: "导入时间", name: "fldCreateDate"},
-	        {display: "最近操作时间", name: "fldOperateDate"},
-	        {display: "重复记录数", name: "fldDuplicateTotalNumber"},
-	        {display: "导入记录数", name: "fldImportTotalNumber"},
-	        {display: "已分配记录数", name: "fldAssignTotalNumber"}
-	    ], dataAction: 'server', pageSize: 20, toolbar: {}, url: '<c:url value="/telephone/import/list"/>', sortName: 'operateDate', sortOrder: 'desc',
+	        {display: "操作时间", name: "fldOperateDate"},
+	        {display: "使用话务数", name: "fldAssignNumber"},
+	        {display: "话务员数", name: "fldCallUserNumber"},
+	        {display: "任务开始时间", name: "fldBeginDate"},
+	        {display: "任务结束时间", name: "fldEndDate"}
+	    ], dataAction: 'server', pageSize: 20, toolbar: {}, url: '<c:url value="/telephone/assign/list"/>', sortName: 'operateDate', sortOrder: 'desc',
 	    width: '98%', height: '98%', toJSON: JSON2.stringify, onReload: f_reload
 	});
 
@@ -75,9 +63,8 @@
 	//工具条事件
 	function toolbarBtnItemClick(item) {
 	    switch (item.id) {
-	        case "import":
-	        	$("#fileName").val("");
-	            f_upload();
+	        case "assign":
+	        	top.f_addTab(null, '分配话务', '<c:url value="/telephone/assign/assign"/>' + '?menuNo=${menuNo}');
 	            break;
 	        case "template":
 	        	f_template(telephoneTemplate);
@@ -151,7 +138,7 @@
 	        detailWin = $.ligerDialog.open({
 	            title: '话单导入',
 	            target: $("#upload"),
-	            width: 600, height: 420, top: 10,
+	            width: 600, height: 420, top: 90,
 	            buttons: [
 	            	{
 	            		text:"确定",onclick:function() {
@@ -203,6 +190,8 @@
 	function f_reload() {
 	    grid.loadData();
 	}
+	
+	resizeDataGrid(grid);
 </script>
 </body>
 </html>

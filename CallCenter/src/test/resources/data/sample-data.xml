@@ -241,8 +241,10 @@
 	<tblNode fldCode="01030110" fldParent="010301" fldName="导出"
 		fldDesc="" fldTarget="export" fldIcon="/static/ligerUI/icons/miniicons/action_save.gif"
 		fldLink="/customer/customer/export" fldType="2" fldPosition="10" />
-	<tblNode fldCode="01030111" fldParent="010301" fldName="初始导入" fldDesc="" fldTarget="initimport" 
-		fldIcon="/static/ligerUI/icons/silkicons/application_get.png" fldLink="/customer/customer/initimport" fldType="2" fldPosition="11" />
+	<tblNode fldCode="01030111" fldParent="010301" fldName="初始导入模板下载" fldDesc="" fldTarget="initimporttemplate" 
+		fldIcon="/static/ligerUI/icons/silkicons/application_put.png" fldLink="/customer/customer/initimporttemplate" fldType="2" fldPosition="11" />
+	<tblNode fldCode="01030112" fldParent="010301" fldName="初始导入" fldDesc="" fldTarget="initimport" 
+		fldIcon="/static/ligerUI/icons/silkicons/application_get.png" fldLink="/customer/customer/initimport" fldType="2" fldPosition="12" />
 
 	<!-- 二级菜单 -->
 	<tblNode fldCode="010302" fldParent="0103" fldName="客户交接"
@@ -349,8 +351,7 @@
 		fldLink="/message/operate/view" fldType="2" fldPosition="2" />
 
 	<tblNode fldCode="0105" fldParent="01" fldName="话务管理" fldDesc=""
-		fldTarget="#" fldIcon=""
-		fldLink="" fldType="1" fldPosition="5" />
+		fldTarget="#" fldIcon="" fldLink="" fldType="1" fldPosition="5" />
 	
 	<tblNode fldCode="010501" fldParent="0105" fldName="话务导入" fldDesc="" fldTarget="" 
 		fldIcon="/static/ligerUI/icons/32X32/sign_up.gif"
@@ -370,6 +371,13 @@
 	<tblNode fldCode="01050105" fldParent="010501" fldName="重复话单导出" fldDesc="" fldTarget="dupexport"
 		fldIcon="/static/ligerUI/icons/miniicons/action_save.gif" 
 		fldLink="/telephone/import/dupexport" fldType="2" fldPosition="5"/>
+		
+	<tblNode fldCode="010502" fldParent="0105" fldName="话务分配" fldDesc="" fldTarget="" 
+		fldIcon="/static/ligerUI/icons/32X32/full_time.gif"
+		fldLink="/telephone/assign/init" fldType="1" fldPosition="2" />
+	<tblNode fldCode="01050201" fldParent="010502" fldName="分配" fldDesc="" fldTarget="assign"
+		fldIcon="/static/ligerUI/icons/silkicons/group_link.png" 
+		fldLink="/telephone/assign/assign" fldType="2" fldPosition="1" />
 
 	<tblRole fldId="1" fldRoleName="sysadmin" />
 
@@ -477,6 +485,9 @@
 		fldValue="0" fldStatus="0" fldComment="短信发送状态，成功" />
 	<tblDictionary fldId="39" fldType="16" fldName="失败"
 		fldValue="9" fldStatus="0" fldComment="短信发送状态，失败" />
+		
+	<tblDictionary fldId="40" fldType="17" fldName="导入话务" fldValue="0" fldStatus="0" fldComment="话务来源，导入话务" />
+	<tblDictionary fldId="41" fldType="17" fldName="已有话务" fldValue="1" fldStatus="0" fldComment="话务来源，已有话务" />
 
 	<tblSysParameter fldId="1" fldName="SYS_ADMIN"
 		fldValue="1" fldUnit="" fldStatus="0" fldDisplay="1" fldComment="" />

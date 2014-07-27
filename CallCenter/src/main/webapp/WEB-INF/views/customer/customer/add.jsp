@@ -68,7 +68,7 @@
 	        columns:[
 	            {display:"用户名称", name:"userName"},
 	            {display:"登录名称", name:"loginName"},
-	            {display:"部门", name:"deptName"},
+	            {display:"部门", name:"deptName"}
 	        ], pageSize:20,heightDiff:-10,
 	        url:'<c:url value="/security/user/list"/>', sortName:'userName', checkbox:false
 	    },
@@ -86,7 +86,7 @@
 	        columns:[
 	            {display:"用户名称", name:"userName"},
 	            {display:"登录名称", name:"loginName"},
-	            {display:"部门", name:"deptName"},
+	            {display:"部门", name:"deptName"}
 	        ], pageSize:20,heightDiff:-10,
 	        url:'<c:url value="/security/user/list"/>', sortName:'userName', checkbox:false
 	    },
@@ -104,7 +104,7 @@
 	        columns:[
 	            {display:"用户名称", name:"userName"},
 	            {display:"登录名称", name:"loginName"},
-	            {display:"部门", name:"deptName"},
+	            {display:"部门", name:"deptName"}
 	        ], pageSize:20,heightDiff:-10,
 	        url:'<c:url value="/security/user/list"/>', sortName:'userName', checkbox:false
 	    },

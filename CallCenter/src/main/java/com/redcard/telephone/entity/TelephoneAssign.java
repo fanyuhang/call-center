@@ -7,6 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
+import com.common.core.util.JsonTimestampSerializer;
+import com.common.security.util.SecurityUtil;
+
 /**
  * TelephoneAssign entity. @author MyEclipse Persistence Tools
  */
@@ -26,7 +31,7 @@ public class TelephoneAssign implements java.io.Serializable {
 	private Date fldEndDate;
 	private Integer fldContentType;
 	private String fldComment;
-	private String fldOperateUserNo;
+	private String fldOperateUserNo = SecurityUtil.getCurrentUserLoginName();
 	private Date fldOperateDate;
 	private String fldCreateUserNo;
 	private Date fldCreateDate;
@@ -168,6 +173,7 @@ public class TelephoneAssign implements java.io.Serializable {
 	}
 
 	@Column(name = "FLDOPERATEDATE")
+	@JsonSerialize(using = JsonTimestampSerializer.class)
 	public Date getFldOperateDate() {
 		return this.fldOperateDate;
 	}
@@ -186,6 +192,7 @@ public class TelephoneAssign implements java.io.Serializable {
 	}
 
 	@Column(name = "FLDCREATEDATE")
+	@JsonSerialize(using = JsonTimestampSerializer.class)
 	public Date getFldCreateDate() {
 		return this.fldCreateDate;
 	}

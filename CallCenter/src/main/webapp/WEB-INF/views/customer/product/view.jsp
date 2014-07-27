@@ -51,7 +51,7 @@
 	}
 
 	var layout = $("#layout").ligerLayout({
-   	 	bottomHeight:$(window).height() * 3 / 5,
+   	 	bottomHeight:$(window).height() * 0.57,
     	heightDiff:0,
     	onEndResize:updateGridHeight,
     	onHeightChanged:updateGridHeight
