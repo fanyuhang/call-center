@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      Microsoft SQL Server 2008                    */
-/* Created on:     2014-06-22 23:56:00                          */
+/* Created on:     2014-07-27 19:17:52                          */
 /*==============================================================*/
 
 
@@ -320,6 +320,9 @@ create table tblUser (
    fldOperateDate       datetime             null,
    fldGenerateDate      datetime             null,
    fldSystem            nvarchar(4)          null,
+   fldPhoneExtension    nvarchar(32)         null,
+   fldType              nvarchar(4)          null,
+   fldPhoneType         nvarchar(4)          null,
    constraint PK_TBLUSER primary key (fldId)
 )
 go

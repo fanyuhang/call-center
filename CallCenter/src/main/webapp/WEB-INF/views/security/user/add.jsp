@@ -5,6 +5,8 @@
 <body style="padding-bottom:31px;">
 <form id="mainform" method="post"></form>
 <script type="text/javascript">
+    var typeData = <sys:dictList type="19"/>;
+    var phoneTypeData = <sys:dictList type="20"/>;
     //覆盖本页面grid的loading效果
     LG.overrideGridLoading();
 
@@ -39,6 +41,21 @@
                 isMultiSelect:true,
                 split:','
             }},
+            {display:"分机号", name:"phoneExtension", newline:true, labelWidth:100, width:220, space:30, type:"text", validate:{maxlength:32}, group:"话务信息", groupicon:"<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>"},
+            {display:"职位类型", name:"type", newline:true, labelWidth:100, width:220, space:30, type:"select", comboboxName:"typeName", options:{
+                valueFieldID:"type",
+                valueField:"value",
+                textField:"text",
+                initValue:'00',
+                data:typeData
+            }, groupicon:"<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>"},
+            {display:"话务类型", name:"phoneType", newline:false, labelWidth:100, width:220, space:30, type:"select", comboboxName:"phoneTypeName", options:{
+                valueFieldID:"phoneType",
+                valueField:"value",
+                textField:"text",
+                initValue:'0',
+                data:phoneTypeData
+            }, groupicon:"<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>"},
             {display:"邮箱", name:"email", newline:true, labelWidth:100, width:220, space:30, type:"text", validate:{maxlength:60, email:true}, group:"联系信息", groupicon:"<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>"},
             {display:"地址", name:"address", newline:false, labelWidth:100, width:220, space:30, type:"text", groupicon:"<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>"},
             {display:"电话", name:"phone", newline:true, labelWidth:100, width:220, space:30, type:"text", validate:{maxlength:24, telephone:true}, groupicon:"<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>"},

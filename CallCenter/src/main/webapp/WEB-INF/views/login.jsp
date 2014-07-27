@@ -24,12 +24,12 @@
 <body>
     <div class="userlogin wrapper">
         <div class="userlogin-hd wrapper">
-            <div class="img-logo fl"><img src="/static/ligerUI/images/login/img-logo.png" /></div>
-            <div class="img-title fl"><img src="/static/ligerUI/images/login/img-callsystem-title.png" /></div>
+            <div class="img-logo fl"><img src="<c:url value='/static/ligerUI/images/login/img-logo.png' />" /></div>
+            <div class="img-title fl"><img src="<c:url value='/static/ligerUI/images/login/img-callsystem-title.png' />" /></div>
         </div>
         <div class="userlogin-bd">
-            <div class="img-figure fl"><img src="/static/ligerUI/images/login/img-figure.png" /></div>
-            <div class="img-devide-line fl"><img src="/static/ligerUI/images/login/img-devide-line.png" /></div>
+            <div class="img-figure fl"><img src="<c:url value='/static/ligerUI/images/login/img-figure.png' />" /></div>
+            <div class="img-devide-line fl"><img src="<c:url value='/static/ligerUI/images/login/img-devide-line.png' />" /></div>
             <div class="login-box fl" id="login-box">
                 <!-- <form  name="form1" method="post" id="J_login" class="form-horizontal" > -->
                     <div class="control-group">
