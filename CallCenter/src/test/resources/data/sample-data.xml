@@ -378,6 +378,9 @@
 	<tblNode fldCode="01050201" fldParent="010502" fldName="分配" fldDesc="" fldTarget="assign"
 		fldIcon="/static/ligerUI/icons/silkicons/group_link.png" 
 		fldLink="/telephone/assign/assign" fldType="2" fldPosition="1" />
+	<tblNode fldCode="01050202" fldParent="010502" fldName="分配明细" fldDesc="" fldTarget="detail"
+		fldIcon="/static/ligerUI/icons/silkicons/application_view_detail.png" 
+		fldLink="/telephone/assign/assignDetail" fldType="2" fldPosition="2" />
 
 	<tblRole fldId="1" fldRoleName="sysadmin" />
 
@@ -492,7 +495,16 @@
 	<tblDictionary fldId="42" fldType="18" fldName="未完成" fldValue="0" fldStatus="0" fldComment="任务完成状态，未完成" />
 	<tblDictionary fldId="43" fldType="18" fldName="已完成" fldValue="1" fldStatus="0" fldComment="任务完成状态，已完成" />
 
-	<tblSysParameter fldId="1" fldName="SYS_ADMIN"
+    <tblDictionary fldId="44" fldType="19" fldName="无" fldValue="00" fldStatus="0" fldComment="用户类型，无" />
+    <tblDictionary fldId="45" fldType="19" fldName="理财经理" fldValue="10" fldStatus="0" fldComment="用户类型，理财经理" />
+    <tblDictionary fldId="46" fldType="19" fldName="客服经理" fldValue="20" fldStatus="0" fldComment="用户类型，客服经理" />
+    <tblDictionary fldId="47" fldType="19" fldName="客户经理" fldValue="30" fldStatus="0" fldComment="用户类型，客户经理" />
+
+    <tblDictionary fldId="48" fldType="20" fldName="无" fldValue="0" fldStatus="0" fldComment="话务类型，无" />
+    <tblDictionary fldId="49" fldType="20" fldName="普通" fldValue="1" fldStatus="0" fldComment="话务类型，普通" />
+    <tblDictionary fldId="50" fldType="20" fldName="班长" fldValue="2" fldStatus="0" fldComment="话务类型，班长" />
+
+    <tblSysParameter fldId="1" fldName="SYS_ADMIN"
 		fldValue="1" fldUnit="" fldStatus="0" fldDisplay="1" fldComment="" />
 	<tblSysParameter fldId="2" fldName="MAX_ERROR_LOGIN"
 		fldValue="5" fldUnit="" fldStatus="0" fldDisplay="0" fldComment="最大登陆失败次数" />
