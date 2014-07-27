@@ -89,6 +89,15 @@ public class User implements Auditable, Serializable {
     @Column(name = "fldsystem")
     private String system;
 
+    @Column(name = "fldphoneextension")
+    private String phoneExtension;
+
+    @Column(name = "fldtype")
+    private String type;
+
+    @Column(name = "fldphonetype")
+    private String phoneType;
+
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fldloginname", referencedColumnName = "fldloginname", insertable = false, updatable = false)
@@ -326,6 +335,30 @@ public class User implements Auditable, Serializable {
 
     public void setSystem(String system) {
         this.system = system;
+    }
+
+    public String getPhoneExtension() {
+        return phoneExtension;
+    }
+
+    public void setPhoneExtension(String phoneExtension) {
+        this.phoneExtension = phoneExtension;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getPhoneType() {
+        return phoneType;
+    }
+
+    public void setPhoneType(String phoneType) {
+        this.phoneType = phoneType;
     }
 
     @Override

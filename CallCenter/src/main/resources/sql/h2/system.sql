@@ -101,6 +101,9 @@ CREATE TABLE tblUser (
   fldLastLoginTime  DATETIME     NULL,
   fldGenerateDate   DATETIME     NULL,
   fldSystem         NVARCHAR(4)  NULL,
+  fldPhoneExtension    nvarchar(32)         null,
+  fldType              nvarchar(4)          null,
+  fldPhoneType         nvarchar(4)          null,
   CONSTRAINT PK_TBLUSER PRIMARY KEY (fldId)
 );
 
