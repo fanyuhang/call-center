@@ -795,6 +795,6 @@ html, body {
 	background: url('../images/login/icon-account.png') no-repeat 5px 2px;
 	padding-left: 40px;
 }
-#login-password{
+#login-password, #txtPassword{
 	background-position: 5px -31px;
 }
