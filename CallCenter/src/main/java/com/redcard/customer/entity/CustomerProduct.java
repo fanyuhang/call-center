@@ -16,6 +16,7 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.common.core.util.JsonDateSerializer;
+import com.common.core.util.JsonTimestampSerializer;
 import com.common.security.entity.User;
 import com.common.security.util.SecurityUtil;
 
@@ -163,6 +164,7 @@ public class CustomerProduct implements java.io.Serializable {
 	}
 
 	@Column(name = "FLDOPERATEDATE")
+	@JsonSerialize(using = JsonTimestampSerializer.class)
 	public Date getFldOperateDate() {
 		return this.fldOperateDate;
 	}

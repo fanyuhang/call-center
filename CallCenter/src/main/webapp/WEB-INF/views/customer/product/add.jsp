@@ -51,7 +51,7 @@
 	}
 
 	var layout = $("#layout").ligerLayout({
-   	 	bottomHeight:$(window).height() * 0.57,
+   	 	bottomHeight:$(window).height() * 0.65,
     	heightDiff:0,
     	onEndResize:updateGridHeight,
     	onHeightChanged:updateGridHeight
@@ -69,20 +69,21 @@
         labelWidth: 100,
         space: 30,
         fields: [
-            {display: "产品编号",name: "fldId", newline: true, type: "text", validate: {required: true}, group: "<label style=white-space:nowrap;>基本信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'},
-            {display: "产品全称", name: "fldFullName", newline: false, type: "text", validate: {required: true}},
-            {display: "产品简称", name: "fldShortName", newline: true, type: "text"},
-            {display: "产品描述", name: "fldDescription", newline: false, type: "text", validate: { maxlength: 64}},
-            {display: "成立日期", name: "fldEstablishDate", newline: true, type: "date", validate: {required: true}, attr:{readonly: "readonly"}},
-            {display: "起息日期", name: "fldValueDate", newline: false, type: "date", validate: {required: true}, attr:{readonly: "readonly"}},
-            {display: "产品类型", name: "fldType", newline: true, type: "select",validate: {required: true},
+            {display: "产品编号",name: "fldId", newline: true, type: "hidden"},
+            {display: "产品全称", name: "fldFullName", newline: true, type: "text", validate: {required: true},group: "<label style=white-space:nowrap;>产品基本信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'},
+            {display: "产品简称", name: "fldShortName", newline: false, type: "text"},
+            {display: "产品描述", name: "fldDescription", newline: true, type: "text", validate: { maxlength: 64}},
+            {display: "产品类型", name: "fldType", newline: false, type: "select",validate: {required: true},
             	options:{
                     valueField: 'value',
                     textField: 'text',
                     isMultiSelect:false,
                     data:productTypeData,
-                    valueFieldID:"fldType"
-            }}
+                    valueFieldID:"fldType",
+                    initValue:0
+            }},
+            {display: "成立日期", name: "fldEstablishDate", newline: true, type: "date", validate: {required: true}, attr:{readonly: "readonly"}},
+            {display: "起息日期", name: "fldValueDate", newline: false, type: "date", validate: {required: true}, attr:{readonly: "readonly"}}
         ]
     });
 
@@ -92,11 +93,11 @@
     LG.setFormDefaultBtn(f_cancel, f_check);
     
     function f_check() {
-    	var fldId = $("#fldId").val();
-        if (fldId != '') {
+    	var fldFullName = $("#fldFullName").val();
+        if (fldFullName != '') {
             LG.ajax({
                 url: '<c:url value="/customer/product/isExist"/>',
-                data: {fldId:fldId},
+                data: {fldFullName:fldFullName},
                 beforeSend: function () {
                 	
                 },
@@ -189,12 +190,11 @@
     	} else {
 	        detailMainform = $("#detailMainform");
 	        detailMainform.ligerForm({
-	            labelWidth:100,
+	            labelWidth:130,
 	            inputWidth:180,
 	            fields:[
-	                {display:"产品明细编号", name:"dtlId", newline:true, type:"text", validate:{required:true,maxlength:40}},
-	                {display:"业绩系数", name:"dtlPerformanceRadio", newline:false, type:"text", validate:{required:true}},
-	                {display:"天数单位", name:"dtlDayUnit", newline:true, type:"select", comboboxName:"dayUnit", validate:{required:true},
+	                {display:"产品明细编号", name:"dtlId", newline:true, type:"hidden"},
+	                {display:"天数单位", name:"dtlDayUnit", newline:true, type:"select", comboboxName:"dayUnit", validate:{required:true},group: "<label style=white-space:nowrap;>基本信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>',
 	                	options:{
                     	valueField: 'value',
                     	textField: 'text',
@@ -204,10 +204,11 @@
                 	}},
 	                {display:"实际天数", name:"dtlClearDays", newline:false, type:"text", validate:{required:true}},
 	                {display:"到期日期", name:"dtlDueDate", newline:true, type: "text", attr:{readonly: "readonly"}},
-	                {display:"最低认购金额", name:"dtlMinPurchaseMoney", newline:false, type:"text", validate:{required:true}},
-	                {display:"最高认购金额", name:"dtlMaxPurchaseMoney", newline:true, type:"text", validate:{required:true}},
-	                {display:"年化收益率", name:"dtlAnnualizedRate", newline:false, type:"text", validate:{required:true}},
-	                {display:"年化7天存款率", name:"dtlDepositRate", newline:true, type:"text", validate:{required:true}},
+	                {display:"最低认购金额(万元)", name:"dtlMinPurchaseMoney", newline:false, type:"text", validate:{required:true}},
+	                {display:"最高认购金额(万元)", name:"dtlMaxPurchaseMoney", newline:true, type:"text", validate:{required:true}},
+	                {display:"年化收益率(%)", name:"dtlAnnualizedRate", newline:true, type:"text", validate:{required:true}, group: "<label style=white-space:nowrap;>收益信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'},
+	                {display:"年化7天存款率(%)", name:"dtlDepositRate", newline:false, type:"text", validate:{required:true}},
+	                {display:"业绩系数", name:"dtlPerformanceRadio", newline:true, type:"text", validate:{required:true}},
 	                {display:"佣金系数", name:"dtlCommissionRadio", newline:false, type:"text", validate:{required:true}}
 	            ]
 	        });
@@ -238,11 +239,19 @@
 	        
 	        $.ligerui.get("dtlClearDays").bind("blur",function(){
 	        	//到期日期=成立日期+实际天数
-	        	var dayUnit = $("#dtlDayUnit").val();
+	        	var dayUnit = $("#dayUnit").val();
 	        	if(dayUnit == "") {
 	        		$("#dtlClearDays").val("");
 	        		LG.showError("请先选择天数单位");
 	        		return;
+	        	} else {
+	        		if(dayUnit == "天") {
+	        		 $("#dtlDayUnit").val(0);
+	        		 dayUnit = 0;
+	        		} else {
+	        		 $("#dtlDayUnit").val(1);
+	        		 dayUnit = 1;
+	        		}
 	        	}
 	        	
 	        	if($("#dtlClearDays").val()=="") {
@@ -265,7 +274,7 @@
 	        detailWin = $.ligerDialog.open({
 	        	title:"产品明细",
 	            target:$("#detail"),
-	            width:700, height:400, top:30,
+	            width:750, height:400, top:30,
 	            buttons:[
 	                { text:'确定', onclick:function () {
 	                	LG.validate(detailMainform);
@@ -290,6 +299,7 @@
         	$("#dtlId").val(editData.dtlId);
         	$("#dtlPerformanceRadio").val(editData.dtlPerformanceRadio);
         	$("#dtlDayUnit").val(editData.dtlDayUnit);
+        	$("#dayUnit").val(renderLabel(dayUnitData,editData.dtlDayUnit));
         	$("#dtlClearDays").val(editData.dtlClearDays);
         	$("#dtlMinPurchaseMoney").val(editData.dtlMinPurchaseMoney);
         	$("#dtlMaxPurchaseMoney").val(editData.dtlMaxPurchaseMoney);
@@ -300,9 +310,10 @@
         	
         	$("#dtlId", detailMainform).attr("readonly", "readonly");
         } else {
-        	$("#dtlId").val("");
+        	$("#dtlId").val((new Date()).getTime());
         	$("#dtlPerformanceRadio").val("");
-        	$("#dtlDayUnit").val("");
+        	$("#dtlDayUnit").val(0);
+        	$("#dayUnit").val('天');
         	$("#dtlClearDays").val("");
         	$("#dtlMinPurchaseMoney").val("");
         	$("#dtlMaxPurchaseMoney").val("");
@@ -316,14 +327,18 @@
 	function saveProductDetail(type) {
 	    var data = detailGrid.getData();
 	    var dtlId = $("#dtlId").val();
-		if($("#dtlId", detailMainform).attr("readonly") != "readonly") {
+		//if($("#dtlId", detailMainform).attr("readonly") != "readonly") {
+			//实际天数+天数单位+年化收益率唯一确定一个产品明细
+			var dtlDayUnit = $("#dtlDayUnit").val();
+			var dtlClearDays = $("#dtlClearDays").val();
+			var dtlAnnualizedRate = $("#dtlAnnualizedRate").val();
 	        for (var i = 0; i < data.length; i++) {
-	            if (dtlId == data[i].dtlId) {
-	                LG.showError("产品明细编号已存在");
+	            if (dtlId != data[i].dtlId && dtlDayUnit == data[i].dtlDayUnit && dtlClearDays == data[i].dtlClearDays && dtlAnnualizedRate == data[i].dtlAnnualizedRate) {
+	                LG.showError("产品明细已存在");
 	                return;
 	            }
 	        }
-        }
+        //}
         showLoading();
         
         var detailData = {};
@@ -422,16 +437,16 @@
     	checkbox:true,
     	columnWidth: 130,
     	columns:[
-    		{display: "产品明细编号", name: "dtlId"},
-    		{display:"业绩系数", name:"dtlPerformanceRadio"},
+    		{display: "产品明细编号", name: "dtlId",hide:1,width:1},
     		{display:"天数单位", name:"dtlDayUnitText"},
     		{display:"天数单位VALUE", name: "dtlDayUnit",hide:1,width:1},
             {display:"实际天数", name:"dtlClearDays"},
             {display:"到期日期", name:"dtlDueDate"},
-            {display:"最低认购金额", name:"dtlMinPurchaseMoney"},
-            {display:"最高认购金额", name:"dtlMaxPurchaseMoney"},
-            {display:"年化收益率", name:"dtlAnnualizedRate"},
-            {display:"年化7天存款率", name:"dtlDepositRate"},
+            {display:"最低认购金额(万元)", name:"dtlMinPurchaseMoney"},
+            {display:"最高认购金额(万元)", name:"dtlMaxPurchaseMoney"},
+            {display:"年化收益率(%)", name:"dtlAnnualizedRate"},
+            {display:"年化7天存款率(%)", name:"dtlDepositRate"},
+    		{display:"业绩系数", name:"dtlPerformanceRadio"},
             {display:"佣金系数", name:"dtlCommissionRadio"}
     	], dataAction: 'server', pageSize: 20, toolbar:toolbarOptions, url: '',
 	    width:'99%',height: '98%', toJSON: JSON2.stringify

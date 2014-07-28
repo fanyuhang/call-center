@@ -27,7 +27,7 @@
                     valueField: 'value',
                     textField: 'text',
                     isMultiSelect:false,
-                    data:genderData,
+                    data:sourceData,
                     initValue: '${customer.fldSource}',
                     valueFieldID:"fldSource"
                 }},

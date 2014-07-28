@@ -38,12 +38,11 @@
 	    inputWidth: 150,
 	    space: 30,
 	    fields: [
-	        {display: "商户姓名", name: "fldName", newline: true, type: "text", cssClass: "field"},
+	        {display: "客户姓名", name: "fldName", newline: true, type: "text", cssClass: "field"},
 	        {display: "身份证号", name: "fldIdentityNo", newline: false, type: "text", cssClass: "field"},
 	        {display: "手机号", name: "fldMobile", newline: false, type: "text", cssClass: "field"},
 	        {display: "固定电话", name: "fldPhone", newline: true, type: "text", cssClass: "field"},
-	        {display: "所属理财经理", name: "fldFinancialUserNo", newline: false, type: "select", 
-	        	comboboxName: "financialUserNo", options: {valueFieldID: "financialUserNo"}},
+	        {display: "所属理财经理", name: "financialUser.userName", newline: false, type: "text", cssClass: "field"},
 	        {display: "瑞得卡号", name: "fldCardNo", newline: false, type: "text", cssClass: "field"},
 	        {display: "瑞得卡等级", name: "fldCardLevel", newline: true, type: "select", cssClass: "field", 
 	        	options: {
@@ -65,24 +64,6 @@
 	    toJSON: JSON2.stringify
 	});
 	
-	$.ligerui.get("financialUserNo").openSelect({
-	    grid:{
-	    	columnWidth: 255,
-	        columns:[
-	            {display:"用户名称", name:"userName"},
-	            {display:"登录名称", name:"loginName"},
-	            {display:"部门", name:"deptName"}
-	        ], pageSize:20,heightDiff:-10,
-	        url:'<c:url value="/security/user/list"/>', sortName:'userName', checkbox:false
-	    },
-	    search:{
-	        fields:[
-	            {display:"用户名称", name:"userName", newline:true, type:"text", cssClass:"field"}
-	        ]
-	    },
-	    valueField:'loginName', textField:'userName', top:30
-	});
-
 	//列表结构
 	var grid = $("#maingrid").ligerGrid({
 	    checkbox: true,
@@ -91,7 +72,7 @@
 	    columnWidth: 180,
 	    columns: [
 	    	{display: "ID", name: "fldId", hide:1,width:1},
-	        {display: "商户姓名", name: "fldName"},
+	        {display: "客户姓名", name: "fldName"},
 	        {display: "身份证号", name: "fldIdentityNo"},
 	        {display: "手机号", name: "fldMobile"},
 	        {display: "固定电话", name: "fldPhone"},
@@ -198,7 +179,7 @@
 	}
 
 	$("#uploader").plupload({
-	    runtimes: 'flash',
+	    runtimes: 'flash,html5',
 	    url: '<c:url value="/customer/common/upload/0"/>',
 	    //max_file_size: '5mb',
 	    max_file_count: 1,
@@ -214,7 +195,7 @@
 	});
 	
 	$("#inituploader").plupload({
-	    runtimes: 'flash',
+	    runtimes: 'flash,html5',
 	    url: '<c:url value="/customer/common/upload/1"/>',
 	    //max_file_size: '5mb',
 	    max_file_count: 1,

@@ -23,7 +23,7 @@
 	    columnWidth: 180,
 	    columns: [
 	    	{display: "ID", name: "fldId", hide:1,width:1},
-	        {display: "商户姓名", name: "fldName"},
+	        {display: "客户姓名", name: "fldName"},
 	        {display: "身份证号", name: "fldIdentityNo"},
 	        {display: "手机号", name: "fldMobile"},
 	        {display: "固定电话", name: "fldPhone"},

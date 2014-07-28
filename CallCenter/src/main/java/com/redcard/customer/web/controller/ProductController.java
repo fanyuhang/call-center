@@ -15,6 +15,7 @@ import com.common.Constant;
 import com.common.core.grid.AsyncResponse;
 import com.common.core.grid.DataResponse;
 import com.common.core.grid.GridPageRequest;
+import com.common.core.util.EntityUtil;
 import com.common.security.util.SecurityUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -62,9 +63,9 @@ public class ProductController {
 	
 	@RequestMapping(value = "isExist")
     @ResponseBody
-    public AsyncResponse isExist(String fldId) {
+    public AsyncResponse isExist(String fldFullName) {
         AsyncResponse result = new AsyncResponse(true, "产品已存在");
-        Long num = productManager.countById(fldId);
+        Long num = productManager.countByFullName(fldFullName);
         if ((num == null) || (num == 0)) {
             return new AsyncResponse(false, "产品不存在");
         }
@@ -73,9 +74,9 @@ public class ProductController {
 	
 	@RequestMapping(value = "isDetailExist")
     @ResponseBody
-    public AsyncResponse isDetailExist(String fldId) {
+    public AsyncResponse isDetailExist(Integer dayUnit,Integer clearDays,Double annualizedRate) {
         AsyncResponse result = new AsyncResponse(true, "产品明细已存在");
-        Long num = productDetailManager.countById(fldId);
+        Long num = productDetailManager.countByCondition(dayUnit,clearDays,annualizedRate);
         if ((num == null) || (num == 0)) {
             return new AsyncResponse(false, "产品明细不存在");
         }
@@ -91,6 +92,7 @@ public class ProductController {
         CustomerProductDetail customerProductDetail = new CustomerProductDetail();
         customerProductDetail = gson.fromJson(productDetail, CustomerProductDetail.class);
         
+        customerProductDetail.setFldId(EntityUtil.getId());
         customerProductDetail.setFldOperateDate(new Date());
         customerProductDetail.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
         customerProductDetail.setFldCreateDate(new Date());

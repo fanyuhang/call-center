@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.common.Constant;
 import com.common.core.grid.GridPageRequest;
 import com.common.core.util.DateUtil;
+import com.common.core.util.EntityUtil;
 import com.common.core.util.GenericPageHQLQuery;
 import com.common.security.util.SecurityUtil;
 import com.redcard.customer.dao.CustomerProductDao;
@@ -31,8 +32,8 @@ public class ProductManager extends GenericPageHQLQuery<CustomerProduct> {
         return (Page<CustomerProduct>) super.findAll(where, page);
     }
 	
-	public Long countById(String id) {
-		return customerProductDao.countById(id);
+	public Long countByFullName(String fullName) {
+		return customerProductDao.countByFullName(fullName);
 	}
 	
 	@Transactional(readOnly = false)
@@ -42,6 +43,7 @@ public class ProductManager extends GenericPageHQLQuery<CustomerProduct> {
 	
 	@Transactional(readOnly = false)
     public void save(CustomerProduct product,List<CustomerProductDetail> productDetailList) {
+		product.setFldId(EntityUtil.getId());
 		product.setFldStatus(Constant.PRODUCT_STATUS_NORMAL);
 		customerProductDao.save(product);
 		
@@ -49,6 +51,7 @@ public class ProductManager extends GenericPageHQLQuery<CustomerProduct> {
 			List<CustomerProductDetail> list = new ArrayList<CustomerProductDetail>();
 			for(int i=0;i<productDetailList.size();i++) {
 				CustomerProductDetail productDetail = productDetailList.get(i);
+				productDetail.setFldId(EntityUtil.getId());
 				productDetail.setFldProductId(product.getFldId());
 				productDetail.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
 				productDetail.setFldCreateDate(new Date());

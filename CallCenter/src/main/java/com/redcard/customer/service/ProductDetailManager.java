@@ -31,8 +31,8 @@ public class ProductDetailManager extends GenericPageHQLQuery<CustomerProductDet
 		return customerProductDetailDao.findByProductIdAndDayUnit(productId, clearDays);
 	}
 	
-	public Long countById(String id) {
-		return customerProductDetailDao.countById(id);
+	public Long countByCondition(Integer dayUnit,Integer clearDays,Double annualizedRate) {
+		return customerProductDetailDao.countByCondition(dayUnit,clearDays,annualizedRate);
 	}
 	
 	@Transactional(readOnly = false)

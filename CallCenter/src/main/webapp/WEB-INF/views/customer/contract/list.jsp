@@ -27,7 +27,7 @@
 	    inputWidth: 150,
 	    space: 30,
 	    fields: [
-	        {display: "商户姓名", name: "customer.fldName", newline: true, type: "text", cssClass: "field"},
+	        {display: "客户姓名", name: "customer.fldName", newline: true, type: "text", cssClass: "field"},
 	        {display: "身份证号", name: "customer.fldIdentityNo", newline: false, type: "text", cssClass: "field"},
 	        {display: "合同编号", name: "fldId", newline: false, type: "text", cssClass: "field"},
 	        {display: "产品编号", name: "fldProductId", newline: true, type: "text", cssClass: "field"},
@@ -66,7 +66,7 @@
 	    delayLoad: true,
 	    columnWidth: 180,
 	    columns: [
-	        {display: "商户姓名", name: "customerName"},
+	        {display: "客户姓名", name: "customerName"},
 	        {display: "身份证号", name: "identityNo"},
 	        {display: "合同编号", name: "fldId"},
 	        {display: "产品编号", name: "fldProductDetailId"},

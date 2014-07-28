@@ -49,7 +49,7 @@
 	    delayLoad: false,
 	    columnWidth: 180,
 	    columns: [
-	        {display: "商户姓名", name: "customerName"},
+	        {display: "客户姓名", name: "customerName"},
 	        {display: "身份证号", name: "identityNo"},
 	        {display: "合同编号", name: "fldId"},
 	        {display: "产品编号", name: "fldProductDetailId"},

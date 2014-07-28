@@ -9,8 +9,8 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import com.redcard.customer.entity.CustomerProductDetail;
 
 public interface CustomerProductDetailDao extends PagingAndSortingRepository<CustomerProductDetail,String> {
-	@Query("select count(m) from CustomerProductDetail m where m.fldId = ?1 ")
-    public Long countById(String id);
+	@Query("select count(m) from CustomerProductDetail m where m.fldDayUnit = ?1 and m.fldClearDays = ?2 and m.fldAnnualizedRate = ?3 and m.fldStatus = 0")
+    public Long countByCondition(Integer dayUnit,Integer clearDays,Double annualizedRate);
 	
 	@Query(" from CustomerProductDetail m where m.fldProductId = ?1")
     public List<CustomerProductDetail> findByProductId(String productId);

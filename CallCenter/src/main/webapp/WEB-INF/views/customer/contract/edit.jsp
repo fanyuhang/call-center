@@ -233,7 +233,7 @@
 	    	columnWidth: 110,
 	        columns:[
 	        	{display: "ID", name: "fldId", hide:1,width:1},
-	        	{display: "商户姓名", name: "fldName", newline: true, type: "text", cssClass: "field"},
+	        	{display: "客户姓名", name: "fldName", newline: true, type: "text", cssClass: "field"},
 		        {display: "身份证号", name: "fldIdentityNo", newline: false, type: "text", cssClass: "field"},
 		        {display: "手机号", name: "fldMobile", newline: false, type: "text", cssClass: "field"},
 		        {display: "固定电话", name: "fldPhone", newline: true, type: "text", cssClass: "field"},
@@ -245,7 +245,7 @@
 	    },
 	    search:{
 	        fields:[
-	            {display:"商户姓名", name:"fldName", newline:true, type:"text", cssClass:"field"}
+	            {display:"客户姓名", name:"fldName", newline:true, type:"text", cssClass:"field"}
 	        ]
 	    },
 	    valueField:'fldId', textField:'fldName', top:30

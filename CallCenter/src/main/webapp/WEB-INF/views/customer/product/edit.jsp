@@ -51,7 +51,7 @@
 	}
 
 	var layout = $("#layout").ligerLayout({
-   	 	bottomHeight:$(window).height() * 0.57,
+   	 	bottomHeight:$(window).height() * 0.65,
     	heightDiff:0,
     	onEndResize:updateGridHeight,
     	onHeightChanged:updateGridHeight
@@ -69,13 +69,11 @@
         labelWidth: 100,
         space: 30,
         fields: [
-            {display: "产品编号",name: "fldId", newline: true, type: "text", attr:{value:"${customerProduct.fldId}",readonly: "readonly"},validate: {required: true}, group: "<label style=white-space:nowrap;>基本信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'},
-            {display: "产品全称", name: "fldFullName", newline: false, type: "text", attr:{value:"${customerProduct.fldFullName}"},validate: {required: true}},
-            {display: "产品简称", name: "fldShortName", newline: true, type: "text",attr:{value:"${customerProduct.fldShortName}"}},
-            {display: "产品描述", name: "fldDescription", newline: false, type: "text", attr:{value:"${customerProduct.fldDescription}"},validate: { maxlength: 64}},
-            {display: "成立日期", name: "fldEstablishDate", newline: true, type: "date", validate: {required: true}, attr:{value:"<fmt:formatDate value='${customerProduct.fldEstablishDate}' pattern='yyyy-MM-dd'/>",readonly: "readonly"},format:'yyyy-MM-dd',editor:{ type:'date' }},
-            {display: "起息日期", name: "fldValueDate", newline: false, type: "date", validate: {required: true}, attr:{value:"<fmt:formatDate value='${customerProduct.fldValueDate}' pattern='yyyy-MM-dd'/>",readonly: "readonly"},format:'yyyy-MM-dd',editor:{ type:'date' }},
-            {display: "产品类型", name: "fldType", newline: true, type: "select",validate: {required: true},
+            {display: "产品编号",name: "fldId", newline: true, type: "hidden", attr:{value:"${customerProduct.fldId}",readonly: "readonly"},validate: {required: true}},
+            {display: "产品全称", name: "fldFullName", newline: true, type: "text", attr:{value:"${customerProduct.fldFullName}"},validate: {required: true},group: "<label style=white-space:nowrap;>产品基本信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'},
+            {display: "产品简称", name: "fldShortName", newline: false, type: "text",attr:{value:"${customerProduct.fldShortName}"}},
+            {display: "产品描述", name: "fldDescription", newline: true, type: "text", attr:{value:"${customerProduct.fldDescription}"},validate: { maxlength: 64}},
+            {display: "产品类型", name: "fldType", newline: false, type: "select",validate: {required: true},
             	options:{
                     valueField: 'value',
                     textField: 'text',
@@ -83,7 +81,9 @@
                     data:productTypeData,
                     initValue: '${customerProduct.fldType}',
                     valueFieldID:"fldType"
-            }}
+            }},
+            {display: "成立日期", name: "fldEstablishDate", newline: true, type: "date", validate: {required: true}, attr:{value:"<fmt:formatDate value='${customerProduct.fldEstablishDate}' pattern='yyyy-MM-dd'/>",readonly: "readonly"},format:'yyyy-MM-dd',editor:{ type:'date' }},
+            {display: "起息日期", name: "fldValueDate", newline: false, type: "date", validate: {required: true}, attr:{value:"<fmt:formatDate value='${customerProduct.fldValueDate}' pattern='yyyy-MM-dd'/>",readonly: "readonly"},format:'yyyy-MM-dd',editor:{ type:'date' }}
         ]
     });
 
@@ -140,14 +140,17 @@
     		editData = null;
     	}
     	
+    	if(detailWin) {
+    		detailWin.show();
+    	} else {
+    	
         var detailMainform = $("#detailMainform");
         detailMainform.ligerForm({
-            labelWidth:100,
+            labelWidth:130,
             inputWidth:180,
             fields:[
-                {display:"产品明细编号", name:"dtlId", newline:true, type:"text", validate:{required:true,maxlength:40}},
-                {display:"业绩系数", name:"dtlPerformanceRadio", newline:false, type:"text", validate:{required:true}},
-                {display:"天数单位", name:"dtlDayUnit", newline:true, type:"select", comboboxName:"dayUnit", validate:{required:true},
+                {display:"产品明细编号", name:"dtlId", newline:true, type:"hidden"},
+                {display:"天数单位", name:"dtlDayUnit", newline:true, type:"select", comboboxName:"dayUnit", validate:{required:true},group: "<label style=white-space:nowrap;>基本信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>',
 	                	options:{
                     	valueField: 'value',
                     	textField: 'text',
@@ -158,10 +161,11 @@
                 	}},
                 {display:"实际天数", name:"dtlClearDays", newline:false, type:"text", validate:{required:true}},
                 {display:"到期日期", name:"dtlDueDate", newline:true, type: "text", attr:{readonly: "readonly"},format:'yyyy-MM-dd'},
-                {display:"最低认购金额", name:"dtlMinPurchaseMoney", newline:false, type:"text", validate:{required:true}},
-                {display:"最高认购金额", name:"dtlMaxPurchaseMoney", newline:true, type:"text", validate:{required:true}},
-                {display:"年化收益率", name:"dtlAnnualizedRate", newline:false, type:"text", validate:{required:true}},
-                {display:"年化7天存款率", name:"dtlDepositRate", newline:true, type:"text", validate:{required:true}},
+                {display:"最低认购金额(万元)", name:"dtlMinPurchaseMoney", newline:false, type:"text", validate:{required:true}},
+                {display:"最高认购金额(万元)", name:"dtlMaxPurchaseMoney", newline:true, type:"text", validate:{required:true}},
+                {display:"年化收益率(%)", name:"dtlAnnualizedRate", newline:true, type:"text", validate:{required:true}, group: "<label style=white-space:nowrap;>收益信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'},
+                {display:"年化7天存款率(%)", name:"dtlDepositRate", newline:false, type:"text", validate:{required:true}},
+                {display:"业绩系数", name:"dtlPerformanceRadio", newline:true, type:"text", validate:{required:true}},
                 {display:"佣金系数", name:"dtlCommissionRadio", newline:false, type:"text", validate:{required:true}}
             ]
         });
@@ -192,12 +196,20 @@
         
         $.ligerui.get("dtlClearDays").bind("blur",function(){
         	//到期日期=成立日期+实际天数
-        	var dayUnit = $("#dtlDayUnit").val();
+        	var dayUnit = $("#dayUnit").val();
         	if(dayUnit == "") {
 	        	$("#dtlClearDays").val("");
 	        	LG.showError("请先选择天数单位");
 	        	return;
-	        }
+	        } else {
+	        		if(dayUnit == "天") {
+	        		 $("#dtlDayUnit").val(0);
+	        		 dayUnit = 0;
+	        		} else {
+	        		 $("#dtlDayUnit").val(1);
+	        		 dayUnit = 1;
+	        		}
+	        	}
         	if($("#dtlClearDays").val()=="") {
         		$("#dtlDueDate").val("");
         		return;
@@ -214,6 +226,30 @@
         		$("#dtlDueDate").val(dueDate.getFullYear()+"-"+parseInt(parseInt(dueDate.getMonth())+1)+"-"+dueDate.getDate());
         	}
         });
+        
+      	//创建表单结构
+        detailWin = $.ligerDialog.open({
+        	title:"产品明细",
+            target:$("#detail"),
+            width:750, height:400, top:30,
+            buttons:[
+                { text:'确定', onclick:function () {
+                	LG.validate(detailMainform);
+                	if(!detailMainform.valid()) {
+    					LG.showInvalid();
+    					return;
+    				}
+                    
+                    saveProductDetail(type);
+                  } 
+                },
+                { text:'取消', onclick:function () {
+                    detailWin.hide();
+                  } 
+                }
+            ]
+        });
+    	}
         
         if(type == 'edit') {
         	$("#dtlId").val(editData.fldId);
@@ -238,47 +274,46 @@
         	}
         	
         	$("#dtlId", detailMainform).attr("readonly", "readonly");
+        } else {
+        	$("#dtlId").val("");
+        	$("#dtlPerformanceRadio").val("");
+        	$("#dtlDayUnit").val(0);
+        	$("#dayUnit").val('天');
+        	$("#dtlClearDays").val("");
+        	$("#dtlMinPurchaseMoney").val("");
+        	$("#dtlMaxPurchaseMoney").val("");
+        	$("#dtlAnnualizedRate").val("");
+        	$("#dtlDepositRate").val("");
+        	$("#dtlCommissionRadio").val("");
+        	$("#dtlDueDate").val("");
         }
         
-	    //创建表单结构
-        detailWin = $.ligerDialog.open({
-        	title:"产品明细",
-            target:$("#detail"),
-            width:700, height:400, top:30,
-            buttons:[
-                { text:'确定', onclick:function () {
-                	LG.validate(detailMainform);
-                	if(!detailMainform.valid()) {
-    					LG.showInvalid();
-    					return;
-    				}
-                    
-                    saveProductDetail(type);
-                  } 
-                },
-                { text:'取消', onclick:function () {
-                    detailWin.hide();
-                  } 
-                }
-            ]
-        });
 	}
 	
 	function saveProductDetail(type) {
+		showLoading();
 	    var data = detailGrid.getData();
 	    var dtlId = $("#dtlId").val();
-		if(type == 'add') {
+	    if(dtlId != "") {
+	    	type = "edit";
+	    } else {
+	    	typed = "add";
+	    }
+	    
+	    //实际天数+天数单位+年化收益率唯一确定一个产品明细
+	    var dtlDayUnit = $("#dtlDayUnit").val();
+		var dtlClearDays = $("#dtlClearDays").val();
+		var dtlAnnualizedRate = $("#dtlAnnualizedRate").val();
+		//if(type == 'add') {
 	        LG.ajax({
                 url: '<c:url value="/customer/product/isDetailExist"/>',
-                data: {fldId:dtlId},
+                data: {dayUnit:dtlDayUnit,clearDays:dtlClearDays,annualizedRate:dtlAnnualizedRate},
                 beforeSend: function () {
                 	
                 },
                 complete: function () {
                 },
                 success: function () {
-			        showLoading();
-			        
 			        var detailData = {};
 			        detailData.fldProductId = $("#fldId").val();
 			        detailData.fldId = dtlId;
@@ -329,7 +364,8 @@
 		            return;
                 }
             });
-        }
+        //}
+		hideLoading();
 	}
 	
 	function showLoading(){
@@ -412,15 +448,13 @@
     	]
 	};
     
+    var where = '{"op":"and","rules":[{"op":"equal","field":"fldStatus","value":"0","type":"int"},{"op":"equal","field":"fldProductId","value":"${customerProduct.fldId}","type":"string"}]}';
     var detailGrid = $("#contactgrid").ligerGrid({
     	checkbox:true,
     	columnWidth: 130,
     	columns:[
-    		{display: "产品明细编号", name: "fldId",render:function(item){
+    		{display: "产品明细编号", name: "fldId",hide:1,width:1,render:function(item){
     			return item.fldId;
-    		}},
-    		{display:"业绩系数", name:"dtlPerformanceRadio",render:function(item){
-    			return item.fldPerformanceRadio;
     		}},
     		{display:"天数单位", name:"dtlDayUnit",render:function(item){
     			return renderLabel(dayUnitData,item.fldDayUnit);
@@ -431,22 +465,25 @@
             {display:"到期日期", name:"dtlDueDate",render:function(item){
     			return item.fldDueDate;
     		}},
-            {display:"最低认购金额", name:"dtlMinPurchaseMoney",render:function(item){
+            {display:"最低认购金额(万元)", name:"dtlMinPurchaseMoney",render:function(item){
     			return item.fldMinPurchaseMoney;
     		}},
-            {display:"最高认购金额", name:"dtlMaxPurchaseMoney",render:function(item){
+            {display:"最高认购金额(万元)", name:"dtlMaxPurchaseMoney",render:function(item){
     			return item.fldMaxPurchaseMoney;
     		}},
-            {display:"年化收益率", name:"dtlAnnualizedRate",render:function(item){
+            {display:"年化收益率(%)", name:"dtlAnnualizedRate",render:function(item){
     			return item.fldAnnualizedRate;
     		}},
-            {display:"年化7天存款率", name:"dtlDepositRate",render:function(item){
+            {display:"年化7天存款率(%)", name:"dtlDepositRate",render:function(item){
     			return item.fldDepositRate;
+    		}},
+    		{display:"业绩系数", name:"dtlPerformanceRadio",render:function(item){
+    			return item.fldPerformanceRadio;
     		}},
     		{display:"佣金系数", name:"dtlCommissionRadio",render:function(item){
     			return item.fldCommissionRadio;
     		}}
-    	], dataAction: 'server', pageSize: 20, toolbar:toolbarOptions, url: '/customer/product/listDetail',
+    	], dataAction: 'server', pageSize: 20, toolbar:toolbarOptions, url: '/customer/product/listDetail?where='+where,
 	    width:'99%',height: '98%', toJSON: JSON2.stringify
     });
     

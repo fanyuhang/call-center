@@ -63,7 +63,7 @@ public class CustomerManager extends GenericPageHQLQuery<Customer> {
 		if(!StringUtils.isEmpty(phone))
 			rtn += customerDao.countByPhone(name,phone);
 		if(!StringUtils.isEmpty(mobile))
-			rtn += customerDao.countByMobile(name, mobile);
+			rtn += customerDao.countByMobile(mobile);
 		return rtn;
 	}
 	

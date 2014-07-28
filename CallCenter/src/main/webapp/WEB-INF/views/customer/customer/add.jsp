@@ -25,7 +25,8 @@
                     textField: 'text',
                     isMultiSelect:false,
                     data:sourceData,
-                    valueFieldID:"fldSource"
+                    valueFieldID:"fldSource",
+                    initValue:0
                 }},
             {display:"性别",name:"fldGender",newline:true,type:"select",
                 options:{
@@ -33,7 +34,8 @@
                     textField: 'text',
                     isMultiSelect:false,
                     data:genderData,
-                    valueFieldID:"fldGender"
+                    valueFieldID:"fldGender",
+                    initValue:1
                 }},
             {display: "出生日期", name: "fldBirthday", newline: false, type: "date", attr:{readonly: "readonly"}},
             {display: "身份证号", name: "fldIdentityNo", newline: true, type: "text", validate: {maxlength: 32}},

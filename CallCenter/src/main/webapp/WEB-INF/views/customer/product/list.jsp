@@ -20,6 +20,7 @@
 <div id="maingrid"></div>
 <script type="text/javascript">
 	var statusData =<sys:dictList type = "9"/>;
+	var typeData= <sys:dictList type = "7"/>;
 
 	//搜索表单应用ligerui样式
 	$("#formsearch").ligerForm({
@@ -29,7 +30,15 @@
 	    fields: [
 	        {display: "产品全称", name: "fldFullName", newline: true, type: "text", cssClass: "field"},
 	        {display: "产品简称", name: "fldShortName", newline: false, type: "text", cssClass: "field"},
-	        {display: "产品状态", name: "fldStatus", newline: false, type: "select", cssClass: "field",
+	        {display: "产品类型", name: "fldType", newline: false, type: "select", cssClass: "field",
+	        	options: {
+	                valueFieldID: "fldType",
+	                valueField: "value",
+	                textField: "text",
+	                data: typeData
+	            }, attr: {"op": "equal", "vt": "int"}
+        	},
+	        {display: "产品状态", name: "fldStatus", newline: true, type: "select", cssClass: "field",
 	        	options: {
 	                valueFieldID: "fldStatus",
 	                valueField: "value",
@@ -51,6 +60,11 @@
 	    	{display: "ID", name: "fldId", hide:1,width:1},
 	        {display: "产品全称", name: "fldFullName"},
 	        {display: "产品简称", name: "fldShortName"},
+	        {display: "产品类型", name: "fldType",
+	        	render:function(item) {
+	        		return renderLabel(typeData,item.fldType);
+	        	}
+	        },
 	        {display: "产品状态", name: "fldStatus",
 	        	render:function(item) {
 	        		return renderLabel(statusData,item.fldStatus);
@@ -58,7 +72,8 @@
 	        },
 	        {display: "成立日期", name: "fldEstablishDate"},
 	        {display: "起息日期", name: "fldValueDate"},
-	        {display: "操作人", name: "operateUserName"}
+	        {display: "操作人", name: "operateUserName"},
+	        {display: "操作时间", name: "fldOperateDate"},
 	    ], dataAction: 'server', pageSize: 20, toolbar: {}, url: '<c:url value="/customer/product/list"/>',
 	    width: '98%', height: '98%', toJSON: JSON2.stringify, onReload: f_reload
 	});
