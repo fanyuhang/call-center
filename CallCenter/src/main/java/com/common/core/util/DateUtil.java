@@ -21,7 +21,7 @@ public class DateUtil {
 	
 	public static Date getDateByStr(String dateStr) {
 		try {
-			return DATEFORMAT.parse(dateStr);
+			return DATEFORMAT1.parse(dateStr);
 		} catch (ParseException e) {
 			return null;
 		}

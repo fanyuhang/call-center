@@ -35,6 +35,10 @@ public class ProductDetailManager extends GenericPageHQLQuery<CustomerProductDet
 		return customerProductDetailDao.countByCondition(dayUnit,clearDays,annualizedRate,fldProductId);
 	}
 	
+	public CustomerProductDetail findByCondition(Integer dayUnit,Integer clearDays,Double annualizedRate,String fldProductId) {
+		return customerProductDetailDao.findByCondition(dayUnit,clearDays,annualizedRate,fldProductId);
+	}
+	
 	public Long countByConditionById(Integer dayUnit,Integer clearDays,Double annualizedRate,String fldProductId,String fldId) {
 		return customerProductDetailDao.countByConditionById(dayUnit,clearDays,annualizedRate,fldProductId,fldId);
 	}

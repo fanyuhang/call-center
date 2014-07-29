@@ -141,6 +141,9 @@ public class CustomerController {
         model.addAttribute("menuNo", menuNo);
         model.addAttribute("custId",fldId);
         model.addAttribute("custName",custName);
+        
+        Customer customer = customerManager.find(fldId);
+        model.addAttribute("customer", customer);
         return "customer/customer/addContract";
     }
 	

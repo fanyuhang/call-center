@@ -44,13 +44,13 @@
             	comboboxName: "financialUserNo", options: {valueFieldID: "financialUserNo"}},
             {display: "瑞得卡金额", name: "fldCardMoney", newline: false, type: "text"},
             {display: "瑞得卡卡号", name: "fldCardNo", newline: true, type: "text", validate: { maxlength: 32}},
-            {display: "瑞得卡等级", name: "fldCardLevel", newline: false, type: "select",
+            {display: "瑞得卡等级", name: "fldCardLevel", newline: false, type: "select",comboboxName:"cardLevel",
             	options:{
                     valueField: 'value',
                     textField: 'text',
                     isMultiSelect:false,
                     data:cardLevelData,
-                    valueFieldID:"fldCardLevel"
+                    valueFieldID:"cardLevel"
             }}
         ]
     });
@@ -186,7 +186,7 @@
     				$("#fldCollectMoney").val(0);
     				$("#fldCollectDays").val(0);
     			}
-    			$("#fldCommissionRadio").val(productDetail.fldCommissionRadio);
+    			$("#fldCommissionRadio").val(null != productDetail.fldCommissionRadio ? productDetail.fldCommissionRadio : 0);
     			//佣金金额=购买金额*佣金系数
     			if(fldPurchaseMoney != "") {
     				var fldCommissionMoney = parseFloat(fldPurchaseMoney)*parseFloat(productDetail.fldCommissionRadio);
@@ -232,6 +232,23 @@
 	        fields:[
 	            {display:"客户姓名", name:"fldName", newline:true, type:"text", cssClass:"field"}
 	        ]
+	    },
+	    handleSelect:function(data){
+	    	if(null != data && data.length > 0) {
+	    		if(null != data[0].fldCardNo)
+	    			$("#fldCardNo").val(data[0].fldCardNo);
+	    		if(null != data[0].fldCardTotalMoney)
+	    			$("#fldCardMoney").val(data[0].fldCardTotalMoney);
+	    		if(null != data[0].fldCardLevel) {
+	    			$("#fldCardLevel").val(data[0].fldCardLevel);
+	    			$("#cardLevel").val(renderLabel(cardLevelData,data[0].fldCardLevel));
+	    		}
+	    	} else {
+	    		$("#fldCardNo").val("");
+	    		$("#fldCardMoney").val("");
+	    		$("#fldCardLevel").val("");
+	    		$("#cardLevel").val("");
+	    	}
 	    },
 	    valueField:'fldId', textField:'fldName', top:30
 	});

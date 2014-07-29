@@ -70,7 +70,7 @@
 	        {display: "签订日期", name: "fldSignDate"},
 	        {display: "是否已到期", name: "fldFinishStatus"},
 	        {display: "打款日期", name: "fldMoneyDate"},
-	        {display: "购买金额", name: "fldPurchaseMoney"},
+	        {display: "购买金额(万元)", name: "fldPurchaseMoney"},
 	        {display: "预期收益", name: "fldAnnualizedMoney"},
 	        {display: "业绩系数", name: "fldPerformanceRadio"},
 	        {display: "业绩额度", name: "fldPerformanceMoney"},
