@@ -7,6 +7,7 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import com.common.core.grid.AsyncResponse;
 import com.common.core.grid.DataResponse;
 import com.common.core.grid.GridPageRequest;
 import com.common.core.util.EntityUtil;
+import com.common.core.util.FilterGroupUtil;
 import com.common.security.util.SecurityUtil;
 import com.redcard.customer.entity.Customer;
 import com.redcard.customer.entity.CustomerContract;
@@ -47,6 +49,18 @@ public class CustomerController {
     @ResponseBody
     public DataResponse<Customer> list(GridPageRequest pageRequest, String where) {
         pageRequest.setSort("fldOperateDate", "desc");
+        return (new DataResponse<Customer>(customerManager.findAllCustomer(pageRequest, where)));
+    }
+	
+	@RequestMapping(value = "listByStatus")
+    @ResponseBody
+    public DataResponse<Customer> listByStatus(GridPageRequest pageRequest, String where) {
+        pageRequest.setSort("fldOperateDate", "desc");
+        if(StringUtils.isEmpty(where)) {
+        	where = "{\"op\":\"and\",\"rules\":[{\"op\":\"equal\",\"field\":\"fldStatus\",\"value\":\"0\",\"type\":\"int\"}]}";
+        } else {
+        	where = FilterGroupUtil.addRule(where, "fldStatus", "0", "int", "equal");
+        }
         return (new DataResponse<Customer>(customerManager.findAllCustomer(pageRequest, where)));
     }
 	

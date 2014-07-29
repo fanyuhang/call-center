@@ -3,6 +3,7 @@ package com.redcard.customer.web.controller;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +13,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.common.Constant;
+import com.common.core.filter.FilterGroup;
+import com.common.core.filter.FilterRule;
 import com.common.core.grid.AsyncResponse;
 import com.common.core.grid.DataResponse;
 import com.common.core.grid.GridPageRequest;
 import com.common.core.util.EntityUtil;
+import com.common.core.util.FilterGroupUtil;
+import com.common.core.util.JsonHelper;
 import com.common.security.util.SecurityUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -52,6 +57,9 @@ public class ProductController {
         pageRequest.setSort("fldOperateDate", "desc");
         if(StringUtils.isEmpty(where))
         	where = "{\"op\":\"and\",\"rules\":[{\"op\":\"equal\",\"field\":\"fldStatus\",\"value\":\"0\",\"type\":\"int\"}]}";
+        else {
+        	where = FilterGroupUtil.addRule(where, "fldStatus", "0", "int", "equal");
+        }
         return (new DataResponse<CustomerProductDetail>(productDetailManager.findAllProductDetail(pageRequest, where)));
     }
 	
@@ -74,9 +82,20 @@ public class ProductController {
 	
 	@RequestMapping(value = "isDetailExist")
     @ResponseBody
-    public AsyncResponse isDetailExist(Integer dayUnit,Integer clearDays,Double annualizedRate) {
+    public AsyncResponse isDetailExist(Integer dayUnit,Integer clearDays,Double annualizedRate,String fldProductId) {
         AsyncResponse result = new AsyncResponse(true, "产品明细已存在");
-        Long num = productDetailManager.countByCondition(dayUnit,clearDays,annualizedRate);
+        Long num = productDetailManager.countByCondition(dayUnit,clearDays,annualizedRate,fldProductId);
+        if ((num == null) || (num == 0)) {
+            return new AsyncResponse(false, "产品明细不存在");
+        }
+        return result;
+    }
+	
+	@RequestMapping(value = "isDetailExistById")
+    @ResponseBody
+    public AsyncResponse isDetailExistById(String id,Integer dayUnit,Integer clearDays,Double annualizedRate,String fldProductId) {
+        AsyncResponse result = new AsyncResponse(true, "产品明细已存在");
+        Long num = productDetailManager.countByConditionById(dayUnit,clearDays,annualizedRate,fldProductId,id);
         if ((num == null) || (num == 0)) {
             return new AsyncResponse(false, "产品明细不存在");
         }

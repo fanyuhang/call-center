@@ -132,6 +132,8 @@
     var currentEditRowDom = null;
     var detailWin = null;
     function showDetail(type) {
+    	var win = parent || window;
+    	
     	var editData = null;
     	try
     	{
@@ -199,7 +201,7 @@
         	var dayUnit = $("#dayUnit").val();
         	if(dayUnit == "") {
 	        	$("#dtlClearDays").val("");
-	        	LG.showError("请先选择天数单位");
+	        	win.LG.showError("请先选择天数单位");
 	        	return;
 	        } else {
 	        		if(dayUnit == "天") {
@@ -251,10 +253,11 @@
         });
     	}
         
-        if(type == 'edit') {
+        if(type == 'edit') {console.log(editData);
         	$("#dtlId").val(editData.fldId);
         	$("#dtlPerformanceRadio").val(editData.fldPerformanceRadio);
-        	//$("#dayUnit").val(editData.fldDayUnit);
+        	$("#dtlDayUnit").val(editData.fldDayUnit);
+        	$("#dayUnit").val(renderLabel(dayUnitData,editData.fldDayUnit));
         	$("#dtlClearDays").val(editData.fldClearDays);
         	$("#dtlMinPurchaseMoney").val(editData.fldMinPurchaseMoney);
         	$("#dtlMaxPurchaseMoney").val(editData.fldMaxPurchaseMoney);
@@ -304,10 +307,10 @@
 	    var dtlDayUnit = $("#dtlDayUnit").val();
 		var dtlClearDays = $("#dtlClearDays").val();
 		var dtlAnnualizedRate = $("#dtlAnnualizedRate").val();
-		//if(type == 'add') {
+		if(type == 'add') {
 	        LG.ajax({
                 url: '<c:url value="/customer/product/isDetailExist"/>',
-                data: {dayUnit:dtlDayUnit,clearDays:dtlClearDays,annualizedRate:dtlAnnualizedRate},
+                data: {dayUnit:dtlDayUnit,clearDays:dtlClearDays,annualizedRate:dtlAnnualizedRate,fldProductId:'${customerProduct.fldId}'},
                 beforeSend: function () {
                 	
                 },
@@ -327,33 +330,18 @@
 			        detailData.fldDepositRate = $("#dtlDepositRate").val();
 			        detailData.fldCommissionRadio = $("#dtlCommissionRadio").val();
 			        
-			        if(type == 'add') {
-			        	LG.ajax({
-				            url:'<c:url value="/customer/product/saveProductDetail"/>',
-				            data:{productDetail:JSON.stringify(detailData)},
-				            dataType:'json', type:'post',
-				            success:function (data) {
-				               LG.showSuccess('保存成功');
-				               detailGrid.loadData();
-				            },
-				            error:function (message) {
-				                LG.showError(message);
-				            }
-				        });
-			        } else {
-			        	LG.ajax({
-				            url:'<c:url value="/customer/product/updateProductDetail"/>',
-				            data:{productDetail:JSON.stringify(detailData)},
-				            dataType:'json', type:'post',
-				            success:function (data) {
-				               LG.showSuccess('保存成功');
-				               detailGrid.loadData();
-				            },
-				            error:function (message) {
-				                LG.showError(message);
-				            }
-				        });
-			        }
+		        	LG.ajax({
+			            url:'<c:url value="/customer/product/saveProductDetail"/>',
+			            data:{productDetail:JSON.stringify(detailData)},
+			            dataType:'json', type:'post',
+			            success:function (data) {
+			               LG.showSuccess('保存成功');
+			               detailGrid.loadData();
+			            },
+			            error:function (message) {
+			                LG.showError(message);
+			            }
+			        });
 			        
 			        detailWin.hide();
 			        
@@ -364,7 +352,52 @@
 		            return;
                 }
             });
-        //}
+        } else {
+        	LG.ajax({
+                url: '<c:url value="/customer/product/isDetailExistById"/>',
+                data: {dayUnit:dtlDayUnit,clearDays:dtlClearDays,annualizedRate:dtlAnnualizedRate,fldProductId:'${customerProduct.fldId}',id:dtlId},
+                beforeSend: function () {
+                	
+                },
+                complete: function () {
+                },
+                success: function () {
+			        var detailData = {};
+			        detailData.fldProductId = $("#fldId").val();
+			        detailData.fldId = dtlId;
+			        detailData.fldPerformanceRadio = $("#dtlPerformanceRadio").val();
+			        detailData.fldDayUnit = $("#dtlDayUnit").val();
+			        detailData.fldClearDays = $("#dtlClearDays").val();
+			        detailData.fldDueDate = $("#dtlDueDate").val();
+			        detailData.fldMinPurchaseMoney = $("#dtlMinPurchaseMoney").val();
+			        detailData.fldMaxPurchaseMoney = $("#dtlMaxPurchaseMoney").val();
+			        detailData.fldAnnualizedRate = $("#dtlAnnualizedRate").val();
+			        detailData.fldDepositRate = $("#dtlDepositRate").val();
+			        detailData.fldCommissionRadio = $("#dtlCommissionRadio").val();
+			        
+		        	LG.ajax({
+			            url:'<c:url value="/customer/product/updateProductDetail"/>',
+			            data:{productDetail:JSON.stringify(detailData)},
+			            dataType:'json', type:'post',
+			            success:function (data) {
+			               LG.showSuccess('保存成功');
+			               detailGrid.loadData();
+			            },
+			            error:function (message) {
+			                LG.showError(message);
+			            }
+			        });
+			        
+			        detailWin.hide();
+			        
+			        hideLoading();
+                },
+                error: function (message) {
+		            LG.showError(message);
+		            return;
+                }
+            });
+        }
 		hideLoading();
 	}
 	
@@ -483,7 +516,7 @@
     		{display:"佣金系数", name:"dtlCommissionRadio",render:function(item){
     			return item.fldCommissionRadio;
     		}}
-    	], dataAction: 'server', pageSize: 20, toolbar:toolbarOptions, url: '/customer/product/listDetail?where='+where,
+    	], dataAction: 'server', pageSize: 50, toolbar:toolbarOptions, url: '/customer/product/listDetail?where='+where,
 	    width:'99%',height: '98%', toJSON: JSON2.stringify
     });
     

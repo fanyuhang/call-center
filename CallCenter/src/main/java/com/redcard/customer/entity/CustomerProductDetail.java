@@ -237,6 +237,11 @@ public class CustomerProductDetail implements java.io.Serializable {
 	}
 	
 	@Transient
+	public Integer getFldType() {
+		return customerProduct.getFldType();
+	}
+	
+	@Transient
 	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getFldEstablishDate() {
 		return customerProduct.getFldEstablishDate();
