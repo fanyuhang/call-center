@@ -25,10 +25,8 @@
 	    inputWidth: 150,
 	    space: 30,
 	    fields: [
-	        {display: "原客服", name: "fldOldUserNo", newline: true, type: "select",
-	        	comboboxName: "oldUserNo", options: {valueFieldID: "oldUserNo"}},
-	        {display: "新客服", name: "fldNewUserNo", newline: false, type: "select",
-	        	comboboxName: "newUserNo", options: {valueFieldID: "newUserNo"}},
+	        {display: "原客服", name: "oldUser.userName", newline: true, type: "text", cssClass: "field"},
+	        {display: "新客服", name: "newUser.userName", newline: false, type: "text", cssClass: "field"},
 	        {display: "交接开始时间", name: "startDate", newline: true, type: "date", cssClass: "field",
 	        	attr:{op:'greaterorequal', vt:'date', field:"fldOperateDate"}},
 	        {display: "交接结束时间", name: "endDate", newline: false, type: "date", cssClass: "field",
@@ -37,42 +35,6 @@
 	    toJSON: JSON2.stringify
 	});
 	
-	$.ligerui.get("oldUserNo").openSelect({
-	    grid:{
-	    	columnWidth: 255,
-	        columns:[
-	            {display:"用户名称", name:"userName"},
-	            {display:"登录名称", name:"loginName"},
-	            {display:"部门", name:"deptName"}
-	        ], pageSize:20,heightDiff:-10,
-	        url:'<c:url value="/security/user/list"/>', sortName:'userName', checkbox:false
-	    },
-	    search:{
-	        fields:[
-	            {display:"用户名称", name:"userName", newline:true, type:"text", cssClass:"field"}
-	        ]
-	    },
-	    valueField:'loginName', textField:'userName', top:30
-	});
-	
-	$.ligerui.get("newUserNo").openSelect({
-	    grid:{
-	    	columnWidth: 255,
-	        columns:[
-	            {display:"用户名称", name:"userName"},
-	            {display:"登录名称", name:"loginName"},
-	            {display:"部门", name:"deptName"}
-	        ], pageSize:20,heightDiff:-10,
-	        url:'<c:url value="/security/user/list"/>', sortName:'userName', checkbox:false
-	    },
-	    search:{
-	        fields:[
-	            {display:"用户名称", name:"userName", newline:true, type:"text", cssClass:"field"}
-	        ]
-	    },
-	    valueField:'loginName', textField:'userName', top:30
-	});
-
 	//列表结构
 	var grid = $("#maingrid").ligerGrid({
 	    checkbox: true,
@@ -81,8 +43,8 @@
 	    columnWidth: 180,
 	    columns: [
 	    	{display: "ID", name: "fldId", hide:1,width:1},
-	        {display: "原客服", name: "fldOldUserNo"},
-	        {display: "新客服", name: "fldNewUserNo"},
+	        {display: "原客服", name: "oldUserName"},
+	        {display: "新客服", name: "newUserName"},
 	        {display: "交接时间", name: "fldOperateDate"},
 	        {display: "原客服客户数量", name: "fldOldCustomerNum"},
 	        {display: "新客服客户数量", name: "fldNewCustomerNum"},
@@ -109,7 +71,7 @@
 	                return;
 	            }
 	            var selected = grid.getSelected();
-	            top.f_addTab(null, '查看客户交接信息', '<c:url value="/customer/exchange/detail"/>' + '?menuNo=${menuNo}&fldId=' + selected.fldOldUserNo);
+	            top.f_addTab(null, '查看客户交接信息', '<c:url value="/customer/exchange/detail"/>' + '?menuNo=${menuNo}&fldId=' + selected.fldId);
 	            break;
 	    }
 	}

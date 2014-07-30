@@ -13,7 +13,7 @@
 	var statusData =<sys:dictList type = "6"/>;
 	var cardLevelData =<sys:dictList type = "13"/>;
 	
-	var where = '{"op":"and","rules":[{"op":"like","field":"fldServiceUserNo","value":"${customerId}","type":"string"}]}';
+	var exchangeId = '${exchangeId}';
 	
 	//列表结构
 	var grid = $("#maingrid").ligerGrid({
@@ -41,7 +41,7 @@
 	        },
 	        {display: "操作人", name: "operateUserName"},
 	        {display: "操作时间", name: "fldOperateDate"}
-	    ], dataAction: 'server', pageSize: 20, toolbar: {}, url: '<c:url value="/customer/exchange/listCustomer?where='+where+'"/>', 
+	    ], dataAction: 'server', pageSize: 20, toolbar: {}, url: '<c:url value="/customer/exchange/listCustomer?exchangeId='+exchangeId+'"/>', 
 	    width: '98%', height: '98%', toJSON: JSON2.stringify, onReload: f_reload
 	});
 	

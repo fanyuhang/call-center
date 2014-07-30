@@ -91,21 +91,27 @@ public class CustomerManager extends GenericPageHQLQuery<Customer> {
 	
 	@Transactional(readOnly = false)
     public void updateFinancialUser(Customer customer) {
-		//1.更新客户信息
-		customer.setFldServiceUserNo(customer.getNewServiceUserNo());
-		customerDao.save(customer);
+		String oldServiceUser = customer.getFldServiceUserNo();
+		
+		Customer oldCustomer = customerDao.findOne(customer.getFldId());
 		
 		//2.更新合同
-		contractDao.updateFinancialUser(customer.getNewServiceUserNo(), customer.getFldServiceUserNo());
+		//contractDao.updateFinancialUser(customer.getNewServiceUserNo(), oldServiceUser);
 		
 		//3.记录交接历史
 		CustomerExchange customerExchange = new CustomerExchange();
 		customerExchange.setFldId(EntityUtil.getId());
-		customerExchange.setFldOldUserNo(customer.getFldServiceUserNo());//原客服
+		customerExchange.setFldOldUserNo(oldServiceUser);//原客服
 		customerExchange.setFldNewUserNo(customer.getNewServiceUserNo());//新客服
 		customerExchange.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
 		customerExchange.setFldCreateDate(new Date());
 		customerExchange.setFldOperateDate(new Date());
+		customerExchange.setFldCustomerNum(1);
+		customerExchange.setFldContractNum(0);
+		customerExchange.setFldOldCustomerNum(customerDao.countByServiceUserNo(oldServiceUser).intValue());//原客服客户数
+		customerExchange.setFldNewCustomerNum(customerDao.countByServiceUserNo(customer.getNewServiceUserNo()).intValue());//新客服原客户数
+		customerExchange.setFldOldContractNum(contractDao.countByServiceUserNo(oldServiceUser).intValue());//原客服合同数
+		customerExchange.setFldNewContractNum(contractDao.countByServiceUserNo(customer.getNewServiceUserNo()).intValue());//新客服原合同数
 		customerExchangeDao.save(customerExchange);
 		
 		CustomerExchangeCustomer customerExchangeCustomer = new CustomerExchangeCustomer();
@@ -115,5 +121,11 @@ public class CustomerManager extends GenericPageHQLQuery<Customer> {
 		customerExchangeCustomer.setFldCreateDate(new Date());
 		customerExchangeCustomer.setFldOperateDate(new Date());
 		customerExchangeCustomerDao.save(customerExchangeCustomer);
+		
+		//1.更新客户信息
+		customer.setFldServiceUserNo(customer.getNewServiceUserNo());
+		customer.setFldCardTotalMoney(oldCustomer.getFldCardTotalMoney());
+		customer.setFldCardStatus(oldCustomer.getFldCardStatus());
+		customerDao.save(customer);
     }
 }

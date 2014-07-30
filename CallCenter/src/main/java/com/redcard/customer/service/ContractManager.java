@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.common.Constant;
 import com.common.core.grid.GridPageRequest;
 import com.common.core.util.GenericPageHQLQuery;
+import com.common.security.util.SecurityUtil;
 import com.redcard.customer.dao.ContractDao;
 import com.redcard.customer.dao.CustomerDao;
 import com.redcard.customer.dao.CustomerProductDetailDao;
@@ -39,6 +40,7 @@ public class ContractManager extends GenericPageHQLQuery<CustomerContract> {
     public void save(CustomerContract customerContract) {
 		String fldProductId = customerProductDetailDao.findOne(customerContract.getFldProductDetailId()).getFldProductId();
 		customerContract.setFldProductId(fldProductId);
+		customerContract.setFldServiceUserNo(SecurityUtil.getCurrentUserLoginName());
 		contractDao.save(customerContract);
 		
 		//更新客户的卡相关信息
