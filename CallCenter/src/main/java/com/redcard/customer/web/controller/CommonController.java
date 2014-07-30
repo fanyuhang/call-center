@@ -142,6 +142,7 @@ public class CommonController {
                         		customer.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
                                 customer.setFldCreateDate(new Date());
                                 customer.setFldOperateDate(new Date());
+                                customer.setFldCardTotalMoney((double) 0);
                         	}
                         	customerManager.save(objects);
                         }
@@ -169,8 +170,9 @@ public class CommonController {
                     				product = list.get(0);
                     			}
                     			
-                    			productDetail = productDetailManager.findByProductIdAndClearDays(product.getFldId(), Integer.valueOf(importEntity.getClearDays()));
-                    			if(null == productDetail) {
+                    			//productDetail = productDetailManager.findByProductIdAndClearDays(product.getFldId(), Integer.valueOf(importEntity.getClearDays()));
+                    			Long countProductDetail = productDetailManager.countByCondition(Constant.DAY_UNIT_DAY, Integer.valueOf(importEntity.getClearDays()), Double.valueOf(importEntity.getAnnualizedRate()*100), product.getFldId());
+                    			if(countProductDetail <= 0) {
                     				productDetail = new CustomerProductDetail();
                     				productDetail.setFldId(EntityUtil.getId());
                     				productDetail.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
@@ -181,21 +183,22 @@ public class CommonController {
                     				productDetail.setFldDueDate(DateUtil.getDateByStr(importEntity.getDueDate()));
                     				productDetail.setFldClearDays(Integer.valueOf(importEntity.getClearDays()));
                     				productDetail.setFldPerformanceRadio(Double.valueOf(importEntity.getPerformanceRadio()));
-                    				productDetail.setFldAnnualizedRate(Double.valueOf(importEntity.getAnnualizedRate()));
-                    				productDetail.setFldDepositRate(Double.valueOf(importEntity.getDepositRate()));
+                    				productDetail.setFldAnnualizedRate(Double.valueOf(importEntity.getAnnualizedRate())*100);
+                    				productDetail.setFldDepositRate(Double.valueOf(importEntity.getDepositRate())*100);
                     				productDetail.setFldDayUnit(Constant.DAY_UNIT_DAY);
+                    				productDetail.setFldMinPurchaseMoney(Double.valueOf(importEntity.getMinPurchaseMoney()));
+                    				productDetail.setFldMaxPurchaseMoney(Double.valueOf(importEntity.getMaxPurchaseMoney()));
                     				productDetailManager.save(productDetail);
+                    			} else {
+                    				productDetail = productDetailManager.findByCondition(Constant.DAY_UNIT_DAY, Integer.valueOf(importEntity.getClearDays()), Double.valueOf(importEntity.getAnnualizedRate()*100), product.getFldId());
                     			}
                     			
                     			//客户信息
                     			Customer customer = new Customer();
                     			customer.setFldName(importEntity.getCustName());
-                    			if(!StringUtils.isEmpty(importEntity.getPhone())) {
-                    				if(importEntity.getPhone().length() == 11) {
-                    					customer.setFldMobile(importEntity.getPhone());
-                    				} else {
-                    					customer.setFldPhone(importEntity.getPhone());
-                    				}
+                    			//if(!StringUtils.isEmpty(importEntity.getPhone())) {
+                					customer.setFldMobile(importEntity.getMobile());
+                					customer.setFldPhone(importEntity.getPhone());
                     				Long count = customerManager.countByPhoneOrMobile(customer.getFldName(),customer.getFldPhone(),customer.getFldMobile());
                     				if(count <= 0) {
                     					customer.setFldId(EntityUtil.getId());
@@ -205,7 +208,7 @@ public class CommonController {
                     			        customer.setFldStatus(Constant.CUSTOMER_STATUS_NORMAL);
                     			        customer.setFldCardTotalMoney((double) 0);
                     			        customer.setFldSource(importEntity.getSource());
-                    			        //customer.setFldBirthday(DateUtil.getDateByStr(importEntity.getBirthday()));
+                    			        customer.setFldBirthday(DateUtil.getDateByStr(importEntity.getBirthday()));
                     			        customer.setFldIdentityNo(importEntity.getIdentityNo());
                     			        if(!StringUtils.isEmpty(importEntity.getFinancialUserNo())) {
                     			        	List<User> listUser = userManager.findByUserName(importEntity.getFinancialUserNo());
@@ -226,7 +229,7 @@ public class CommonController {
                     						customer = customerManager.findByCustNameAndPhone(customer.getFldName(), customer.getFldPhone());
                     					}
                     				}
-                    			}
+                    			//}
                     			
                     			//合同信息
                     			CustomerContract contract = new CustomerContract();
@@ -254,7 +257,11 @@ public class CommonController {
             			        	if(listUser != null && listUser.size() > 0)
             			        		contract.setFldFinancialUserNo(listUser.get(0).getLoginName());
             			        }
-                    			contractManager.save(contract);
+                    			contract.setFldDepositRate(Double.valueOf(importEntity.getDepositRate())*100);
+                    			contract.setFldAnnualizedRate(Double.valueOf(importEntity.getAnnualizedRate())*100);
+                    			contract.setFldPerformanceRadio(Double.valueOf(importEntity.getPerformanceRadio())*100);
+                    			contract.setFldCardNo(importEntity.getCardNo());
+                    			contractManager.saveOnly(contract);
                     		}                    		
                     	}
                     	break;

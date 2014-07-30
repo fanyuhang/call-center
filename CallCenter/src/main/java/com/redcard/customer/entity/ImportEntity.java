@@ -7,7 +7,8 @@ public class ImportEntity implements Serializable {
 	private String custName;//客户姓名
 	private Integer source;//客户来源
 	private String birthday;//出生日期
-	private String phone;//联系方式
+	private String phone;//电话
+	private String mobile;//手机
 	private String identityNo;//身份证号码
 	private String financialUserNo;//理财经理
 	private String comment;//备注
@@ -24,7 +25,10 @@ public class ImportEntity implements Serializable {
 	private float performanceRadio;//业绩系数
 	private float annualizedRate;//年化收益率
 	private float depositRate;//年化7天存款率
+	private float minPurchaseMoney;//最低认购金额
+	private float maxPurchaseMoney;//最高认购金额
 	
+	//合同相关
 	private String contractNo;//合同编号
 	private String signDate;//合同签订日期
 	private float purchaseMoney;//购买金额
@@ -205,5 +209,23 @@ public class ImportEntity implements Serializable {
 	}
 	public void setCollectMoney(float collectMoney) {
 		this.collectMoney = collectMoney;
+	}
+	public float getMinPurchaseMoney() {
+		return minPurchaseMoney;
+	}
+	public void setMinPurchaseMoney(float minPurchaseMoney) {
+		this.minPurchaseMoney = minPurchaseMoney;
+	}
+	public float getMaxPurchaseMoney() {
+		return maxPurchaseMoney;
+	}
+	public void setMaxPurchaseMoney(float maxPurchaseMoney) {
+		this.maxPurchaseMoney = maxPurchaseMoney;
+	}
+	public String getMobile() {
+		return mobile;
+	}
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
 	}
 }

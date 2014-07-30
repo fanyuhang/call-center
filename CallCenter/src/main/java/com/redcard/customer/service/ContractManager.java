@@ -45,8 +45,13 @@ public class ContractManager extends GenericPageHQLQuery<CustomerContract> {
 		Customer customer = customerDao.findOne(customerContract.getFldCustomerId());
 		customer.setFldCardLevel(customerContract.getFldCardLevel());
 		if(null != customerContract.getFldCardMoney())
-			customer.setFldCardTotalMoney(customer.getFldCardTotalMoney()+customerContract.getFldCardMoney());
+			customer.setFldCardTotalMoney(customerContract.getFldCardMoney());
 		customerDao.save(customer);
+    }
+    
+    @Transactional(readOnly = false)
+    public void saveOnly(CustomerContract customerContract) {
+		contractDao.save(customerContract);
     }
 
     public CustomerContract find(String fldId) {

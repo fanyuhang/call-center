@@ -183,6 +183,8 @@
     var detailWin = null;
     var detailMainform = null;
     function showDetail(type) {
+    	var win = parent || window;
+    	
     	if(detailWin) {
     		detailWin.show();
     		
@@ -242,7 +244,7 @@
 	        	var dayUnit = $("#dayUnit").val();
 	        	if(dayUnit == "") {
 	        		$("#dtlClearDays").val("");
-	        		LG.showError("请先选择天数单位");
+	        		win.LG.showError("请先选择天数单位");
 	        		return;
 	        	} else {
 	        		if(dayUnit == "天") {
@@ -448,7 +450,7 @@
             {display:"年化7天存款率(%)", name:"dtlDepositRate"},
     		{display:"业绩系数", name:"dtlPerformanceRadio"},
             {display:"佣金系数", name:"dtlCommissionRadio"}
-    	], dataAction: 'server', pageSize: 20, toolbar:toolbarOptions, url: '',
+    	], dataAction: 'server', pageSize: 50, toolbar:toolbarOptions, url: '',
 	    width:'99%',height: '98%', toJSON: JSON2.stringify
     });
     
