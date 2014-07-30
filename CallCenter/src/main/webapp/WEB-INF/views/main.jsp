@@ -25,7 +25,7 @@
     <script src="<c:url value="/static/ligerUI/js/changepassword.js"/>" type="text/javascript"></script>
     <script src="<c:url value="/static/ligerUI/ligerUI/js/plugins/ligerForm.js"/>" type="text/javascript"></script>
     <script src="<c:url value="/static/ligerUI/js/validator.js"/>" type="text/javascript"></script>
-    <script src="<c:url value="/static/ligerUI/js/base.js"/>" type="text/javascript"></script>
+    <script src="<c:url value="/static/ligerUI/js/telephone.js"/>" type="text/javascript"></script>
 </head>
 <body style="text-align:center; background:#F0F0F0; overflow:hidden;">
 <div id="pageloading" style="display:block;"></div>
@@ -33,26 +33,29 @@
     <div class="logo fl"><a href="#" class="icon-logo"></a></div>
     <div class="userinfo-top ui-bar-gray">
         <ul class="wrapper">
-            <li><a href="#" class="avatar fl"><div><img src="<c:url value='/static/ligerUI/images/global/icon-avatar.png' />" /></div></a> <span id="userName" class="fl name"></span></li>
+            <li><a href="#" class="avatar fl"><div><img src="<c:url value='/static/ligerUI/images/global/icon-avatar.png' />" /></div></a>
+                <span id="userName" class="fl name"></span></li>
             <li><div class="i-line"></div></li>
-            <li><span class="title">分机号：</span> <b class="hl" id="phoneExtension">212</b></li>
+            <li><span class="title">分机号：</span> <b class="hl" id="phoneExtension">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></li>
             <li><div class="i-line"></div></li>
-            <li><div class="callnum"><span class="title">号码：</span> <b>&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;</b></div></li>
+            <li><div class="callnum"><span class="title">号码：</span> <b id="telephone">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></div></li>
             <li><div class="i-line"></div></li>
             <li>
-                <div class="status"><span class="title fl">你的状态：</span> <i class="i-ready fl"></i> <b class="green">就绪</b> </div>
+                <div class="status"><span class="title fl" title="显示电话的实时状态">你的状态：</span>
+                    <i class="i-offline fl" id="userStatus"></i> <b>不在线</b>
+                </div>
             </li>
             <li class="status-box">
                 <div class="status status-r">
-                    <i class="i-processing fl"></i> <b >示忙</b> <em class="ui-triangle down"></em>
+                    <i class="i-unbusy fl" id="telephoneStatus"></i> <b class="green">示闲</b> <em class="ui-triangle down"></em>
                     <div class="select-status">
                         <ul>
-                            <li><i class="i-test"></i> <b>小休</b></li>
-                            <li><i class="i-meals"></i> <b>就餐</b></li>
-                            <li><i class="i-training"></i> <b>培训</b></li>
-                            <li><i class="i-meeting"></i> <b>会议中</b></li>
-                            <li><i class="i-processing"></i> <b>后处理</b></li>
-                            <li><i class="i-unbusy"></i> <b class="green">示闲</b></li>
+                            <li class="off" data-type="1" title="坐席休息" ><i class="i-test"></i> <b>小休</b></li>
+                            <li class="off" data-type="2" title="坐席就餐"><i class="i-meals"></i> <b>就餐</b></li>
+                            <li class="off" data-type="3" title="坐席培训"><i class="i-training"></i> <b>培训</b></li>
+                            <li class="off" data-type="4" title="坐席会议中..."><i class="i-meeting"></i> <b>会议中</b></li>
+                            <li class="off" data-type="5" title="坐席正在处理其它事情"><i class="i-processing"></i> <b>后处理</b></li>
+                            <li class="off" data-type="6" title="坐席准备就绪"><i class="i-unbusy"></i> <b class="green">示闲</b></li>
                         </ul>
                     </div>
                 </div>
@@ -62,26 +65,26 @@
     </div>
     <div class="nav-tools " id="main-nav-tools">
         <ul class="wrapper">
-            <li><a href="javascript:;" class="disabled" id="connected" data-name="connected"><i class="i-connected"></i><b>保持通话</b></a></li>
+            <li><a href="javascript:f_connected();" class="disabled" id="connected" data-name="connected" title="保持当前电话，通话双方临时中断" ><i class="i-connected"></i><b>保持通话</b></a></li>
             <li><div class="i-line"></div></li>
-            <li><a href="javascript:;" id="dial" data-name="dial"><i class="i-dial"></i><b>拨号</b></a></li>
+            <li><a href="javascript:f_dial();" id="dial" class="disabled"  data-name="dial" title="通过系统页面进行软外拨"><i class="i-dial"></i><b>拨号</b></a></li>
             <li><div class="i-line"></div></li>
-            <li><a href="javascript:;" class="disabled" id="transfer" data-name="transfer"><i class="i-transfer"></i><b>转接</b></a></li>
+            <li><a href="javascript:f_transfer();" class="disabled" id="transfer" data-name="transfer" title="转接当前电话"><i class="i-transfer"></i><b>转接</b></a></li>
             <li><div class="i-line"></div></li>
-            <li><a href="javascript:;" class="disabled" id="hangup" data-name="hangup"><i class="i-hangup"></i><b>释放</b></a></li>
+            <li><a href="javascript:f_hangup();" class="disabled" id="hangup" data-name="hangup" title="强行中断当前电话"><i class="i-hangup"></i><b>释放</b></a></li>
             <li><div class="i-line"></div></li>
-            <li><a href="javascript:;" class="disabled" id="mute" data-name="mute"><i class="i-mute"></i><b>静音</b></a></li>
+            <li><a href="javascript:f_mute();" class="disabled" id="mute" data-name="mute" title="通话双方不能听到对方声音，但电话未中断"><i class="i-mute"></i><b>静音</b></a></li>
             <li><div class="i-line"></div></li>
-            <li><a href="javascript:;" id="msm" data-name="msm"><i class="i-msm"></i><b>短消息</b></a></li>
+            <li><a href="javascript:f_msm();" id="msm" data-name="msm" title="可以发送短消息"><i class="i-msm"></i><b>短消息</b></a></li>
             <li><div class="i-line"></div></li>
-            <li><a href="javascript:;" id="control" data-name="control"><i class="i-control"></i><b>监控</b></a></li>
+            <li><a href="javascript:f_control();" id="control" class="disabled"  data-name="control" title="打开监控页面"><i class="i-control"></i><b>监控</b></a></li>
         </ul>
     </div>
     <div class="nav-tools"  id="right-nav-tools">
         <ul>
             <li><a href="javascript:f_changepassword()"><i class="i-editpasswd"></i><b>修改密码</b></a></li>
             <li><div class="i-line"></div></li>
-            <li><a href="<c:url value="/logout"/>"><i class="i-exit"></i><b>退出</b></a></li>
+            <li><a href="javascript:f_logout()"><i class="i-exit"></i><b>退出</b></a></li>
         </ul>
     </div>
 </div>
@@ -96,6 +99,120 @@
 <object  classid="clsid:A2B80A6E-42FA-4730-AEB2-B1FB38D2C8D1" id="snocx" codebase="SnellCTI.cab#version=1.0.0.1" style="VISIBILITY:visible; height: 0px; width: 0px;">
 </object>
 <script type="text/javascript">
+    var intervalId;
+
+    var connected_type = 0;
+    var mute_type = 0;
+    function f_connected(){
+        if(LG.telephoneStatus!=0){
+            return;
+        }
+
+        LG.connected(connected_type);
+    }
+
+    function f_transfer(){
+        if(LG.telephoneStatus!=0){
+            return;
+        }
+        LG.transfer();
+    }
+
+    function f_hangup(){
+        if(LG.telephoneStatus!=0){
+            return;
+        }
+        LG.hangup();
+    }
+
+    function f_mute(){
+
+        if(LG.telephoneStatus!=0){
+            return;
+        }
+        LG.mute(mute_type);
+        if(mute_type==0){
+            $("#mute").find('b').text("取消静音");
+            $("#mute").find("i").addClass("i-sound");
+            mute_type = 1;
+        }else{
+            $("#mute").find('b').text("静音");
+            $("#mute").find('i').removeClass("i-sound");
+            mute_type = 0;
+        }
+    }
+
+    function f_msm(){
+        LG.msm();
+    }
+
+    function f_control(){
+        if(LG.telephoneStatus!=0){
+            return;
+        }
+        LG.control();
+    }
+
+    function f_connect(name,pwd,phoneNo){
+        var snell = document.getElementById("snocx");
+        if(snell && $.browser.msie){
+            snell.snlSetServer("192.168.0.207",60000);
+            snell.snlAgentLogin(name,pwd,phoneNo);
+
+            intervalId = setInterval(function () {
+                var snell = document.getElementById("snocx");
+                snell.snlSendAliveToServer();
+            }, 2000);
+        }else{
+            f_login_status(1);
+        }
+    }
+
+    function f_login_status(success){
+        if(success == 0){
+            $("#userStatus").removeClass("i-offline");
+            $("#userStatus").addClass("i-ready");
+            $("#userStatus").next('b').addClass("green").text("就绪");
+            $("#dial").removeClass("disabled");
+            $("#control").removeClass("disabled");
+            $(".select-status li").each(function(){
+                $(this).removeClass("off");
+            });
+        }else{
+            $("#userStatus").removeClass("i-ready");
+            $("#userStatus").addClass("i-offline");
+            $("#userStatus").next('b').removeClass("green").text("不在线");
+            $("#dial").addClass("disabled");
+            $("#control").addClass("disabled");
+            $(".select-status li").each(function(){
+                $(this).addClass("off");
+            });
+        }
+    }
+
+    function f_dial(){
+        if(LG.telephoneStatus!=0){
+            return;
+        }
+        LG.dial();
+    }
+
+    function f_logout(){
+
+        $.ligerDialog.confirm('请确认是否退出？', function (yes) {
+            if (yes) {
+                if(LG.telephoneStatus==0){
+                    var snell = document.getElementById("snocx");
+                    snell.snlAgentLogout();
+                    if(intervalId){
+                        clearInterval(intervalId);
+                    }
+                }
+                var url = '<c:url value="/logout"/>';
+                window.location.href=url;
+            }
+        });
+    }
     //几个布局的对象
     var layout, tab, accordion;
     //tabid计数器，保证tabid不会重复
@@ -206,13 +323,17 @@
                 var phoneExtension = user[0].phoneExtension;
                 var phoneType = user[0].phoneType;
 
-                if(phoneExtension.length>0){
+                $("#pageloading").hide();
+                if(phoneExtension&&phoneExtension.length>0){
                     $("#dial").removeClass("disabled");
+
+                    f_connect('admin','admin','200');
+
                 }else{
                     $("#dial").addClass("disabled");
                 }
 
-                if(phoneType == '2'){
+                if(phoneType&&phoneType == '2'){
                     $("#control").removeClass("disabled");
                 }else{
                     $("#control").addClass("disabled");
@@ -220,10 +341,10 @@
 
             },
             error: function () {
+                $("#pageloading").hide();
                 LG.tip('用户信息加载失败');
             }
         });
-        $("#pageloading").hide();
     });
 
 $(function(){
@@ -237,23 +358,190 @@ $(function(){
             $(this).find('.select-status').stop(true, true).hide();
         })
         .on('click', '.select-status li', function(){
-            var self = $(this),
-                className = self.find('i')[0].className,
-                text =self.find('b').text();
-            self.closest('.status')
-                .children('i').attr('class', className)
-                .next('b').text(text);
+            var self = $(this);
             self.closest('.select-status').hide();
-            $.ligerDialog.success("修改成功!");
-        })
-        .on('click', '#main-nav-tools li a', function(){
-            var self =$(this),
-                text = self.find('b').text();
-
-            $.ligerDialog.success(text + "成功!");
-            //alert(self.data('name'))
+                var type = $(this).attr("data-type");
+                var snell = document.getElementById("snocx");
+                switch (type) {
+                case '1':
+                    //小休
+                    snell.snlAgentRest(3);
+                    break;
+                case '2':
+                    //就餐
+                    snell.snlAgentDining(3);
+                    break;
+                case '3':
+                    //培训
+                    snell.snlAgentTraining(3);
+                    break;
+                case '4':
+                    //会议
+                    snell.snlAgentMeeting(3);
+                    break;
+                case '5':
+                    //后处理
+                    snell.snlAgentNote(3);
+                    break;
+                case '6':
+                    //示闲
+                    snell.snlAgentFree();
+                    break;
+            }
         })
 });
+</script>
+<script language="javascript" for="snocx" event="snlAgentLoginEvent(nFlag)" type="text/javascript">
+    snlAgentLoginEvent(nFlag);
+</script>
+<script language="javascript" for="snocx" event="snlAgentFreeEvent()" type="text/javascript">
+    snlAgentFreeEvent();
+</script>
+
+<script language="javascript" for="snocx" event="snlAgentBusyEvent(nFlag)" type="text/javascript">
+    snlAgentBusyEvent(nFlag);
+</script>
+
+
+<script language="javascript" for="snocx" event="snlEstablishCallEvent()" type="text/javascript">
+    snlEstablishCallEvent();
+</script>
+<script language="javascript" for="snocx" event="snlClearCallEvent()" type="text/javascript">
+    snlClearCallEvent();
+</script>
+<script language="javascript" for="snocx" event="snlReceiveDeliverCallEvent(szPhoneNumber,szPhoneParam,nCallID)" type="text/javascript">
+    snlReceiveDeliverCallEvent(szPhoneNumber,szPhoneParam,nCallID);
+</script>
+<script language="javascript" for="snocx" event="snlHeldCallEvent()" type="text/javascript">
+    snlHeldCallEvent();
+</script>
+<script language="javascript" for="snocx" event="snlMakeTransferCallFailEvent(nType,szPhoneNumber,nReason)" type="text/javascript">
+    snlMakeTransferCallFailEvent(nType,szPhoneNumber,nReason);
+</script>
+
+<script type="text/javascript">
+    function snlAgentLoginEvent(nFlag)
+    {
+        LG.telephoneStatus = 1;
+        switch(nFlag){
+            case 0:
+                f_login_status(0);
+                LG.telephoneStatus = 0;
+                alert("坐席登陆成功");
+                break;
+            case 1:
+                alert("无此用户");
+                break;
+            case 2:
+                alert("密码错误");
+                break;
+            case 3:
+                alert("用户已登录");
+                break;
+            case 4:
+                alert("未与计算机绑定");
+                break;
+            case 5:
+                alert("其它错误");
+                break;
+            case 6:
+                alert("错误的分机号");
+                break;
+            default:
+                alert("坐席登陆失败");
+                break;
+        }
+    }
+
+    function snlAgentFreeEvent(){
+        $("#telephoneStatus").removeClass();
+        $("#telephoneStatus").addClass("i-unbusy");
+        $("#telephoneStatus").next("b").removeClass();
+        $("#telephoneStatus").next("b").addClass("green");
+        $("#telephoneStatus").next("b").text("示闲");
+//        alert("坐席示闲成功");
+    }
+
+    function snlAgentBusyEvent(nFlag){
+        var className = '';
+        var text = '';
+        $("#telephoneStatus").removeClass();
+        $("#telephoneStatus").next("b").removeClass();
+        switch(nFlag){
+            case 0:
+                className = 'i-test';
+                text = '小休';
+//                alert("坐席小休成功");
+                break;
+            case 1:
+                className = 'i-meals';
+                text = '就餐';
+//                alert("坐席就餐成功");
+                break;
+            case 2:
+                className = 'i-training';
+                text = '培训';
+//                alert("坐席培训成功");
+                break;
+            case 3:
+                className = 'i-meeting';
+                text = '会议中';
+//                alert("坐席会议成功");
+                break;
+            case 4:
+                className = 'i-processing';
+                text = '后处理';
+//                alert("坐席后处理成功");
+                break;
+            default:
+                alert("操作成功");
+                break;
+        }
+        $("#telephoneStatus").addClass(className);
+        $("#telephoneStatus").next("b").text(text);
+
+    }
+
+    function snlEstablishCallEvent(){
+        $("#dial").addClass("disabled");
+        $("#connected").removeClass("disabled");
+        $("#transfer").removeClass("disabled");
+        $("#hangup").removeClass("disabled");
+        $("#mute").removeClass("disabled");
+        $("#userStatus").addClass("i-calling");
+        $("#userStatus").next("b").removeClass("green");
+        $("#userStatus").next("b").text("通话中");
+//        alert("通话建立");
+    }
+    function snlClearCallEvent(){
+        $("#dial").removeClass("disabled");
+        $("#connected").addClass("disabled");
+        $("#transfer").addClass("disabled");
+        $("#hangup").addClass("disabled");
+        $("#mute").addClass("disabled");
+        $("#telephone").html("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+        $("#userStatus").removeClass("i-calling");
+        $("#userStatus").removeClass("i-dialing");
+        $("#userStatus").addClass("i-ready");
+        $("#userStatus").next("b").addClass("green");
+        $("#userStatus").next("b").text("就绪");
+//        alert("本机或对方挂机");
+    }
+    function snlReceiveDeliverCallEvent(szPhoneNumber, szPhoneParam, nCallID) {
+        alert("话机振铃或回铃时"+szPhoneNumber+","+szPhoneParam+","+nCallID);
+    }
+    function snlHeldCallEvent() {
+        if(connected_type==0){
+            $("#connected").find('b').text("继续通话");
+            connected_type = 1;
+        }else{
+            $("#connected").find('b').text("保持通话");
+            connected_type = 0;
+        }
+    }
+    function snlMakeTransferCallFailEvent(nType, szPhoneNumber, nReason) {
+        alert("外拨或转接失败"+nType+","+szPhoneNumber+","+nReason);
+    }
 </script>
 </body>
 </html>
