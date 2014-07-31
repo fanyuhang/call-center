@@ -124,7 +124,7 @@ public class ContractController {
 	@RequestMapping(value = "export")
     @ResponseBody
     public AsyncResponse export(String where, HttpServletRequest request, HttpServletResponse response) {
-        AsyncResponse result = new AsyncResponse(false, "导出合同列表成功");
+        AsyncResponse result = new AsyncResponse(false, "导出绩效列表成功");
         try {
         	List<CustomerContract> listContract = contractManager.findAllContract(null, where).getContent();
         	List<Performance> listPerformance = new ArrayList<Performance>();

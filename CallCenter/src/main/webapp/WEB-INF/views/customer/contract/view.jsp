@@ -15,7 +15,7 @@
     var mainform = $("#mainform");
     mainform.ligerForm({
         inputWidth: 250,
-        labelWidth: 100,
+        labelWidth: 110,
         space: 30,
         fields: [
             {display: "客户姓名",name: "fldCustomerId", newline: true, type: "select", validate: {required: true}, group: "<label style=white-space:nowrap;>基本信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>',
@@ -29,9 +29,9 @@
             {display: "成立日期", name: "fldEstablishDate", newline: true, type: "text", attr:{value:"<fmt:formatDate value='${customerContract.establishDate}' pattern='yyyy-MM-dd'/>",readonly: "readonly"},format:'yyyy-MM-dd',editor:{ type:'date' },group: "<label style=white-space:nowrap;>产品信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'},
             {display: "天数单位", name: "fldDayUnit", newline: false, type: "text", attr:{readonly: "readonly"}},
             {display: "实际天数", name: "fldClearDays", newline: false, type: "text", attr:{value:"${customerContract.clearDays}",readonly: "readonly"}},
-            {display: "年化收益率", name: "fldAnnualizedRate", newline: true, type: "text", attr:{value:"${customerContract.fldAnnualizedRate}",readonly: "readonly"},group: "<label style=white-space:nowrap;>收益信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'},
+            {display: "年化收益率(%)", name: "fldAnnualizedRate", newline: true, type: "text", attr:{value:"${customerContract.fldAnnualizedRate}",readonly: "readonly"},group: "<label style=white-space:nowrap;>收益信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'},
             {display: "预期收益", name: "fldAnnualizedMoney", newline: false, type: "text", attr:{value:"${customerContract.fldAnnualizedMoney}",readonly: "readonly"}},
-            {display: "年化7天存款率", name: "fldDepositRate", newline: true, type: "text", attr:{value:"${customerContract.fldDepositRate}",readonly: "readonly"}},
+            {display: "年化7天存款率(%)", name: "fldDepositRate", newline: true, type: "text", attr:{value:"${customerContract.fldDepositRate}",readonly: "readonly"}},
             {display: "募集期天数", name: "fldCollectDays", newline: false, type: "text", attr:{value:"${customerContract.fldCollectDays}",readonly: "readonly"}},
             {display: "募集期贴息", name: "fldCollectMoney", newline: false, type: "text", attr:{value:"${customerContract.fldCollectMoney}",readonly: "readonly"}},
             {display: "业绩系数", name: "fldPerformanceRadio", newline: true, type: "text", attr:{value:"${customerContract.fldPerformanceRadio}",readonly: "readonly"}},

@@ -41,7 +41,7 @@
 	        },
 	        {display: "操作人", name: "operateUserName"},
 	        {display: "操作时间", name: "fldOperateDate"}
-	    ], dataAction: 'server', pageSize: 20, toolbar: {}, url: '<c:url value="/customer/exchange/listCustomer?exchangeId='+exchangeId+'"/>', 
+	    ], dataAction: 'server', pageSize:100, toolbar: {}, url: '<c:url value="/customer/exchange/listCustomer?exchangeId='+exchangeId+'"/>', 
 	    width: '98%', height: '98%', toJSON: JSON2.stringify, onReload: f_reload
 	});
 	

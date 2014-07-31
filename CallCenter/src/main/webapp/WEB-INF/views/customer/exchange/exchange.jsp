@@ -30,7 +30,7 @@
     });
     
     $("#serviceUserNo").change(function(){
-    	var serviceUserNo = $("#serviceUserNo").val();
+    	var serviceUserNo = $("#fldOldUserNo").val();
     	if(serviceUserNo == "") {
     		$("#fldOldContractNum").val(0);
     		$("#fldOldCustomerNum").val(0);
@@ -57,7 +57,7 @@
     });
     
     $("#newServiceUser").change(function(){
-    	var newServiceUser = $("#newServiceUser").val();
+    	var newServiceUser = $("#fldNewUserNo").val();
     	if(newServiceUser == "") {
     		$("#fldNewContractNum").val('0');
     		$("#fldNewCustomerNum").val('0');

@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -171,7 +172,9 @@ public class CommonController {
                     			}
                     			
                     			//productDetail = productDetailManager.findByProductIdAndClearDays(product.getFldId(), Integer.valueOf(importEntity.getClearDays()));
-                    			Long countProductDetail = productDetailManager.countByCondition(Constant.DAY_UNIT_DAY, Integer.valueOf(importEntity.getClearDays()), Double.valueOf(importEntity.getAnnualizedRate()*100), product.getFldId());
+                    			BigDecimal bg = new BigDecimal(importEntity.getAnnualizedRate()*100);
+                    			Double annualizedRate = bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+                    			Long countProductDetail = productDetailManager.countByCondition(Constant.DAY_UNIT_DAY, Integer.valueOf(importEntity.getClearDays()), annualizedRate, product.getFldId());
                     			if(countProductDetail <= 0) {
                     				productDetail = new CustomerProductDetail();
                     				productDetail.setFldId(EntityUtil.getId());
@@ -190,7 +193,7 @@ public class CommonController {
                     				productDetail.setFldMaxPurchaseMoney(Double.valueOf(importEntity.getMaxPurchaseMoney()));
                     				productDetailManager.save(productDetail);
                     			} else {
-                    				productDetail = productDetailManager.findByCondition(Constant.DAY_UNIT_DAY, Integer.valueOf(importEntity.getClearDays()), Double.valueOf(importEntity.getAnnualizedRate()*100), product.getFldId());
+                    				productDetail = productDetailManager.findByCondition(Constant.DAY_UNIT_DAY, Integer.valueOf(importEntity.getClearDays()), annualizedRate, product.getFldId());
                     			}
                     			
                     			//客户信息
@@ -259,7 +262,7 @@ public class CommonController {
             			        }
                     			contract.setFldDepositRate(Double.valueOf(importEntity.getDepositRate())*100);
                     			contract.setFldAnnualizedRate(Double.valueOf(importEntity.getAnnualizedRate())*100);
-                    			contract.setFldPerformanceRadio(Double.valueOf(importEntity.getPerformanceRadio())*100);
+                    			contract.setFldPerformanceRadio(Double.valueOf(importEntity.getPerformanceRadio()));
                     			contract.setFldCardNo(importEntity.getCardNo());
                     			contractManager.saveOnly(contract);
                     		}                    		

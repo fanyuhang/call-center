@@ -48,7 +48,8 @@
 	        {display: "交接时间", name: "fldOperateDate"},
 	        {display: "原客服客户数量", name: "fldOldCustomerNum"},
 	        {display: "新客服客户数量", name: "fldNewCustomerNum"},
-	        {display: "交接客户数量", name: "fldCustomerNum"}
+	        {display: "交接客户数量", name: "fldCustomerNum"},
+	        {display: "交接合同数量", name: "fldContractNum"}
 	    ], dataAction: 'server', pageSize: 20, toolbar: {}, url: '<c:url value="/customer/exchange/list"/>',
 	    width: '98%', height: '98%', toJSON: JSON2.stringify, onReload: f_reload
 	});

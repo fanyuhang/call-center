@@ -68,7 +68,7 @@ public class ExchangeController {
         customerExchange.setFldCreateDate(new Date());
         customerExchange.setFldOperateDate(new Date());
         customerExchange.setFldCustomerNum(customerExchange.getFldOldCustomerNum());
-        customerExchange.setFldContractNum(customerExchange.getFldContractNum());
+        customerExchange.setFldContractNum(customerExchange.getFldOldContractNum());
         exchangeManager.save(customerExchange);
         return result;
     }

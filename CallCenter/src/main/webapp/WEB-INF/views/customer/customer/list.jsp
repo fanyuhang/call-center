@@ -179,11 +179,11 @@
 	}
 
 	$("#uploader").plupload({
-	    runtimes: 'flash,html5',
+	    runtimes: 'flash',
 	    url: '<c:url value="/customer/common/upload/0"/>',
-	    //max_file_size: '5mb',
+	    max_file_size: '10mb',
 	    max_file_count: 1,
-	    //chunk_size: '1mb',
+	    chunk_size: '1mb',
 	    rename: true,
 	    multiple_queues: false,
 	    resize: {top:20, width: 600, height: 500, quality: 30},
@@ -195,11 +195,11 @@
 	});
 	
 	$("#inituploader").plupload({
-	    runtimes: 'flash,html5',
+	    runtimes: 'flash',
 	    url: '<c:url value="/customer/common/upload/1"/>',
-	    //max_file_size: '5mb',
+	    max_file_size: '10mb',
 	    max_file_count: 1,
-	    //chunk_size: '1mb',
+	    chunk_size: '1mb',
 	    rename: true,
 	    multiple_queues: false,
 	    resize: {width: 600, height: 500, quality: 30},

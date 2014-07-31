@@ -25,8 +25,7 @@
 	    inputWidth: 150,
 	    space: 30,
 	    fields: [
-	        {display: "理财经理", name: "fldFinancialUserNo", newline: true, type: "select", 
-				comboboxName: "financialUserNo", options: {valueFieldID: "financialUserNo"}},
+	        {display: "理财经理", name: "financialUser.userName", newline: true, type: "text", cssClass: "field"},
 	        {display: "产品名称", name: "customerProduct.fldFullName", newline: false, type: "text", cssClass: "field"},
 	        {display: "开始时间", name: "startDate", newline: true, type: "date", cssClass: "field",
 	        	attr:{op:'greaterorequal', vt:'date', field:"fldSignDate"}},
@@ -36,24 +35,6 @@
 	    toJSON: JSON2.stringify
 	});
 	
-	$.ligerui.get("financialUserNo").openSelect({
-	    grid:{
-	    	columnWidth: 255,
-	        columns:[
-	            {display:"用户名称", name:"userName"},
-	            {display:"登录名称", name:"loginName"},
-	            {display:"部门", name:"deptName"}
-	        ], pageSize:20,heightDiff:-10,
-	        url:'<c:url value="/security/user/list"/>', sortName:'userName', checkbox:false
-	    },
-	    search:{
-	        fields:[
-	            {display:"用户名称", name:"userName", newline:true, type:"text", cssClass:"field"}
-	        ]
-	    },
-	    valueField:'loginName', textField:'userName', top:30
-	});
-
 	//列表结构
 	var grid = $("#maingrid").ligerGrid({
 	    checkbox: true,
@@ -66,7 +47,7 @@
 	        {display: "合同编号", name: "fldId"},
 	        {display: "产品全称", name: "productFullName"},
 	        {display: "产品实际天数", name: "productClearDays"},
-	        {display: "购买金额", name: "fldPurchaseMoney"},
+	        {display: "购买金额(万元)", name: "fldPurchaseMoney"},
 	        {display: "业绩系数", name: "fldPerformanceRadio"},
 	        {display: "业绩额度", name: "fldPerformanceMoney"}
 	    ], dataAction: 'server', pageSize: 20, toolbar: {}, url: '<c:url value="/customer/contract/list"/>', sortName: 'fldOperateDate', sortOrder: 'desc',
