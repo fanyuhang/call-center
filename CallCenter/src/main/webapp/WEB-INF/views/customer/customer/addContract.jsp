@@ -191,7 +191,7 @@
     			}
     			$("#fldCommissionRadio").val(null != productDetail.fldCommissionRadio ? productDetail.fldCommissionRadio : 0);
     			//佣金金额=购买金额*佣金系数
-    			if(fldPurchaseMoney != "") {
+    			if(fldPurchaseMoney != "" && null != productDetail.fldCommissionRadio) {
     				var fldCommissionMoney = parseFloat(fldPurchaseMoney)*parseFloat(productDetail.fldCommissionRadio);
     				$("#fldCommissionMoney").val(fldCommissionMoney);
     			} else {
