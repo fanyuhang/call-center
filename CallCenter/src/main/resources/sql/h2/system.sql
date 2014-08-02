@@ -104,6 +104,7 @@ CREATE TABLE tblUser (
   fldPhoneExtension    nvarchar(32)         null,
   fldType              nvarchar(4)          null,
   fldPhoneType         nvarchar(4)          null,
+  fldPhonePassword     nvarchar(64)         null,
   CONSTRAINT PK_TBLUSER PRIMARY KEY (fldId)
 );
 

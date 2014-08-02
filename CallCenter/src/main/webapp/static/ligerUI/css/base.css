@@ -142,14 +142,62 @@
 .status-r{
 	margin-left: 15px;
 }
-i.i-busy{ background-position: 0 0px; }
-i.i-test{ background-position: 0 -25px; }
-i.i-meals{ background-position: 0 -50px; }
-i.i-training{ background-position: 0 -75px; }
-i.i-meeting{ background-position: 0 -100px;}
-i.i-processing{ background-position: 0 -125px; }
-i.i-unbusy{ background-position: 0 -152px; }
-i.i-ready{ background-position: 0 -152px; }
+
+
+.l-topmenu-redcard{
+    height: 48px;
+    background-color: #a6b7c9;
+}
+.l-topmenu-logo{
+    background: url("/static/ligerUI/images/index/img-logo-redcard.png") no-repeat 10px 10px;
+    color: #070a0c;
+    font-size: 16px;
+    padding-left: 140px;
+    padding-top: 15px;
+    height: 48px;
+    color: #d9e8f8;
+    text-shadow:1px 2px 3px #333;
+}
+.l-topmenu-welcome{
+    padding-top: 14px;
+}
+.userinfo-top .select-status li {
+    line-height: 24px;
+}
+.userinfo-top .status i{
+    width: 20px;
+    margin-top: 4px;
+}
+.userinfo-top .status .select-status i{
+    height: 20px;
+    margin-top: 2px;
+}
+i.i-ready{ background-position: 0 4px; }   
+i.i-offline{ background-position: 0 -22px; }
+i.i-calling{ background-position: 0 -53px; }
+i.i-dialing{ background-position: 0 -79px; }
+.userinfo-top .status-r i.i-hangup{ background-position: 0 -105px; }
+i.i-ringback{ background-position: 0 -131px; }
+i.i-signnumber{ background-position: 0 -159px; }
+i.i-test{ background-position: 0 -187px; }
+i.i-meals{ background-position: 0 -214px; }
+i.i-training{ background-position: 0 -242px; }
+i.i-meeting{ background-position: 0 -270px;}
+i.i-processing{ background-position: 0 -298px; }
+
+
+/*online off*/
+.off i.i-test{ background-position: 0 -323px; }
+.off i.i-meals{ background-position: 0 -351px; }
+.off i.i-training{ background-position: 0 -379px; }
+.off i.i-meeting{ background-position: 0 -407px;}
+.off i.i-processing{ background-position: 0 -435px; }
+.userinfo-top .status-r li b{ color: #f00; font-weight: 400 }
+.userinfo-top .status-r li.off b{ color: #000; }
+i.i-unbusy{ background-position: 0 -462px; }
+i.i-busy{ background-position: 0 -485px; }
+
+
 .userinfo-top .status b{
 	float: left;
 }
@@ -240,6 +288,7 @@ i.i-msm{ background-position: 0 -275px; }
 i.i-control{ background-position: 0 -330px;}
 i.i-editpasswd{ background-position: 0 -385px;}
 i.i-exit{ background-position: 0 -440px;}
+i.i-sound{ background-position: 0 -487px; }
 
 a.disabled i.i-connected{ background-position: -42px -0px; }
 a.disabled i.i-dial{ background-position:  -42px -55px; }
@@ -250,4 +299,5 @@ a.disabled i.i-msm{ background-position:  -42px -275px; }
 a.disabled i.i-control{ background-position:  -42px -330px;}
 a.disabled i.i-editpasswd{ background-position:  -42px -385px;}
 a.disabled i.i-exit{ background-position:  -42px -440px;}
+a.disabled i.i-sound{ background-position:  -42px -487px; }
 a.disabled{ cursor: default;}

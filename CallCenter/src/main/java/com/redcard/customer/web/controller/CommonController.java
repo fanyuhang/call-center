@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,9 +47,9 @@ import com.redcard.customer.service.ProductManager;
 @RequestMapping(value = "/customer/common")
 public class CommonController {
     private static Logger logger = LoggerFactory.getLogger(CommonController.class);
-    
+
     @Autowired
-	private CustomerManager customerManager;
+    private CustomerManager customerManager;
     @Autowired
     private UserManager userManager;
     @Autowired
@@ -55,7 +58,7 @@ public class CommonController {
     private ProductDetailManager productDetailManager;
     @Autowired
     private ContractManager contractManager;
-    
+
     @RequestMapping(value = "template/{fileName}")
     public void template(@PathVariable String fileName, HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setCharacterEncoding("utf-8");
@@ -84,7 +87,7 @@ public class CommonController {
             }
         }
     }
-    
+
     @RequestMapping(value = "download")
     public void download(String filepath, HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setCharacterEncoding("utf-8");
@@ -112,13 +115,13 @@ public class CommonController {
                 inputStream.close();
             }
             if (os != null) {
-            	os.close();
+                os.close();
             }
         }
     }
-    
+
     @SuppressWarnings("unused")
-	@RequestMapping(value = "upload/{type}")
+    @RequestMapping(value = "upload/{type}")
     @ResponseBody
     public AsyncResponse upload(@PathVariable Integer type, HttpServletRequest request, HttpServletResponse response) {
         AsyncResponse result = null;
@@ -130,141 +133,157 @@ public class CommonController {
                 switch (type) {
                     case 0: {
                         List<Customer> objects = ExcelImportUtil.excelImport(Customer.class, savedFileName);
-                        if(null != objects && objects.size()>0) {
-                        	for(Customer customer : objects) {
-                        		//校验：姓名+固定电话或者姓名+手机号是否重复
-                        		Long count = customerManager.countByPhoneOrMobile(customer.getFldName(),customer.getFldPhone(),customer.getFldMobile());
-                        		if(count > 0)
-                        			continue;
-                        		
-                        		customer.setFldId(EntityUtil.getId());
-                        		customer.setFldStatus(Constant.CUSTOMER_STATUS_NORMAL);
-                        		customer.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
+                        if (null != objects && objects.size() > 0) {
+                            for (Customer customer : objects) {
+                                //校验：姓名+固定电话或者姓名+手机号是否重复
+                                Long count = customerManager.countByPhoneOrMobile(customer.getFldName(), customer.getFldPhone(), customer.getFldMobile());
+                                if (count > 0)
+                                    continue;
+
+                                customer.setFldId(EntityUtil.getId());
+                                customer.setFldStatus(Constant.CUSTOMER_STATUS_NORMAL);
+                                customer.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
                                 customer.setFldCreateDate(new Date());
                                 customer.setFldOperateDate(new Date());
                                 customer.setFldCardTotalMoney((double) 0);
-                        	}
-                        	customerManager.save(objects);
+                            }
+                            customerManager.save(objects);
                         }
                         break;
                     }
-                    case 1:{
-                    	List<ImportEntity> objects = ExcelImportUtil.excelImport(ImportEntity.class, savedFileName);
-                    	if(null != objects && objects.size()>0) {
-                    		for(ImportEntity importEntity : objects) {
-                    			//产品信息
-                    			List<CustomerProduct> list = productManager.findByName(importEntity.getProductName());
-                    			CustomerProduct product = new CustomerProduct();
-                    			CustomerProductDetail productDetail = new CustomerProductDetail();
-                    			if(!(null != list && list.size()>0)) {
-                    				product.setFldId(EntityUtil.getId());
-                    				product.setFldFullName(importEntity.getProductName());
-                    				product.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
-                    				product.setFldCreateDate(new Date());
-                    				product.setFldOperateDate(new Date());
-                    				product.setFldStatus(Constant.PRODUCT_STATUS_NORMAL);
-                    				product.setFldEstablishDate(DateUtil.getDateByStr(importEntity.getEstablishDate()));
-                    				product.setFldValueDate(DateUtil.getDateByStr(importEntity.getValueDate()));
-                    				productManager.saveProductInfo(product);
-                    			} else {
-                    				product = list.get(0);
-                    			}
-                    			
-                    			//productDetail = productDetailManager.findByProductIdAndClearDays(product.getFldId(), Integer.valueOf(importEntity.getClearDays()));
-                    			Long countProductDetail = productDetailManager.countByCondition(Constant.DAY_UNIT_DAY, Integer.valueOf(importEntity.getClearDays()), Double.valueOf(importEntity.getAnnualizedRate()*100), product.getFldId());
-                    			if(countProductDetail <= 0) {
-                    				productDetail = new CustomerProductDetail();
-                    				productDetail.setFldId(EntityUtil.getId());
-                    				productDetail.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
-                    				productDetail.setFldCreateDate(new Date());
-                    				productDetail.setFldOperateDate(new Date());
-                    				productDetail.setFldStatus(Constant.PRODUCT_DETAIL_STATUS_NORMAL);
-                    				productDetail.setFldProductId(product.getFldId());
-                    				productDetail.setFldDueDate(DateUtil.getDateByStr(importEntity.getDueDate()));
-                    				productDetail.setFldClearDays(Integer.valueOf(importEntity.getClearDays()));
-                    				productDetail.setFldPerformanceRadio(Double.valueOf(importEntity.getPerformanceRadio()));
-                    				productDetail.setFldAnnualizedRate(Double.valueOf(importEntity.getAnnualizedRate())*100);
-                    				productDetail.setFldDepositRate(Double.valueOf(importEntity.getDepositRate())*100);
-                    				productDetail.setFldDayUnit(Constant.DAY_UNIT_DAY);
-                    				productDetail.setFldMinPurchaseMoney(Double.valueOf(importEntity.getMinPurchaseMoney()));
-                    				productDetail.setFldMaxPurchaseMoney(Double.valueOf(importEntity.getMaxPurchaseMoney()));
-                    				productDetailManager.save(productDetail);
-                    			} else {
-                    				productDetail = productDetailManager.findByCondition(Constant.DAY_UNIT_DAY, Integer.valueOf(importEntity.getClearDays()), Double.valueOf(importEntity.getAnnualizedRate()*100), product.getFldId());
-                    			}
-                    			
-                    			//客户信息
-                    			Customer customer = new Customer();
-                    			customer.setFldName(importEntity.getCustName());
-                    			//if(!StringUtils.isEmpty(importEntity.getPhone())) {
-                					customer.setFldMobile(importEntity.getMobile());
-                					customer.setFldPhone(importEntity.getPhone());
-                    				Long count = customerManager.countByPhoneOrMobile(customer.getFldName(),customer.getFldPhone(),customer.getFldMobile());
-                    				if(count <= 0) {
-                    					customer.setFldId(EntityUtil.getId());
-                    					customer.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
-                    			        customer.setFldCreateDate(new Date());
-                    			        customer.setFldOperateDate(new Date());
-                    			        customer.setFldStatus(Constant.CUSTOMER_STATUS_NORMAL);
-                    			        customer.setFldCardTotalMoney((double) 0);
-                    			        customer.setFldSource(importEntity.getSource());
-                    			        customer.setFldBirthday(DateUtil.getDateByStr(importEntity.getBirthday()));
-                    			        customer.setFldIdentityNo(importEntity.getIdentityNo());
-                    			        if(!StringUtils.isEmpty(importEntity.getFinancialUserNo())) {
-                    			        	List<User> listUser = userManager.findByUserName(importEntity.getFinancialUserNo());
-                    			        	if(listUser != null && listUser.size() > 0)
-                    			        		customer.setFldFinancialUserNo(listUser.get(0).getLoginName());
-                    			        }
-                    			        if(!StringUtils.isEmpty(importEntity.getCardMoney())) {
-                    			        	customer.setFldCardTotalMoney(Double.valueOf(importEntity.getCardMoney()));
-                    			        }
-                    			        customer.setFldCardLevel(importEntity.getCardLevel());
-                    			        customer.setFldCardNo(importEntity.getCardNo());
-                    			        customer.setFldComment(importEntity.getComment());
-                    					customerManager.save(customer);
-                    				} else {
-                    					if(!StringUtils.isEmpty(customer.getFldMobile())) {
-                    						customer = customerManager.findByCustNameAndMobile(customer.getFldName(), customer.getFldMobile());
-                    					} else {
-                    						customer = customerManager.findByCustNameAndPhone(customer.getFldName(), customer.getFldPhone());
-                    					}
-                    				}
-                    			//}
-                    			
-                    			//合同信息
-                    			CustomerContract contract = new CustomerContract();
-                    			contract.setFldId(importEntity.getContractNo());
-                    			contract.setFldCustomerId(customer.getFldId());
-                    			contract.setFldProductId(product.getFldId());
-                    			contract.setFldProductDetailId(productDetail.getFldId());
-                    			contract.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
-                    			contract.setFldCreateDate(new Date());
-                    			contract.setFldOperateDate(new Date());
-                    			contract.setFldStatus(Constant.CONTRACT_STATUS_NORMAL);
-                    			contract.setFldSignDate(DateUtil.getDateByStr(importEntity.getSignDate()));
-                    			contract.setFldPurchaseMoney(Double.valueOf(importEntity.getPurchaseMoney()));
-                    			contract.setFldPerformanceMoney(Double.valueOf(importEntity.getPerformanceMoney()));
-                    			contract.setFldAnnualizedMoney(Double.valueOf(importEntity.getAnnualizedMoney()));
-                    			contract.setFldMoneyDate(DateUtil.getDateByStr(importEntity.getMoneyDate()));
-                    			contract.setFldCollectDays(Integer.valueOf(importEntity.getCollectDays()));
-                    			contract.setFldCollectMoney(Double.valueOf(importEntity.getCollectMoney()));
-                    			contract.setFldBankNo(importEntity.getBankNo());
-                    			contract.setFldBankName(importEntity.getBankName());
-                    			contract.setFldCardMoney(Double.valueOf(importEntity.getCardMoney()));
-                    			contract.setFldCardLevel(importEntity.getCardLevel());
-                    			if(!StringUtils.isEmpty(importEntity.getFinancialUserNo())) {
-            			        	List<User> listUser = userManager.findByUserName(importEntity.getFinancialUserNo());
-            			        	if(listUser != null && listUser.size() > 0)
-            			        		contract.setFldFinancialUserNo(listUser.get(0).getLoginName());
-            			        }
-                    			contract.setFldDepositRate(Double.valueOf(importEntity.getDepositRate())*100);
-                    			contract.setFldAnnualizedRate(Double.valueOf(importEntity.getAnnualizedRate())*100);
-                    			contract.setFldPerformanceRadio(Double.valueOf(importEntity.getPerformanceRadio())*100);
-                    			contract.setFldCardNo(importEntity.getCardNo());
-                    			contractManager.saveOnly(contract);
-                    		}                    		
-                    	}
-                    	break;
+                    case 1: {
+                        List<ImportEntity> objects = ExcelImportUtil.excelImport(ImportEntity.class, savedFileName);
+                        if (null != objects && objects.size() > 0) {
+                            for (ImportEntity importEntity : objects) {
+                                //产品信息
+                                List<CustomerProduct> list = productManager.findByName(importEntity.getProductName());
+                                CustomerProduct product = new CustomerProduct();
+                                CustomerProductDetail productDetail = new CustomerProductDetail();
+                                if (!(null != list && list.size() > 0)) {
+                                    product.setFldId(EntityUtil.getId());
+                                    product.setFldFullName(importEntity.getProductName());
+                                    product.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
+                                    product.setFldCreateDate(new Date());
+                                    product.setFldOperateDate(new Date());
+                                    product.setFldStatus(Constant.PRODUCT_STATUS_NORMAL);
+                                    product.setFldEstablishDate(DateUtil.getDateByStr(importEntity.getEstablishDate()));
+                                    product.setFldValueDate(DateUtil.getDateByStr(importEntity.getValueDate()));
+                                    productManager.saveProductInfo(product);
+                                } else {
+                                    product = list.get(0);
+                                }
+
+                                //productDetail = productDetailManager.findByProductIdAndClearDays(product.getFldId(), Integer.valueOf(importEntity.getClearDays()));
+                                BigDecimal bg = new BigDecimal(importEntity.getAnnualizedRate() * 100);
+                                Double annualizedRate = bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+                                Long countProductDetail = productDetailManager.countByCondition(Constant.DAY_UNIT_DAY, Integer.valueOf(importEntity.getClearDays()), annualizedRate, product.getFldId());
+                                if (countProductDetail <= 0) {
+                                    productDetail = new CustomerProductDetail();
+                                    productDetail.setFldId(EntityUtil.getId());
+                                    productDetail.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
+                                    productDetail.setFldCreateDate(new Date());
+                                    productDetail.setFldOperateDate(new Date());
+                                    productDetail.setFldStatus(Constant.PRODUCT_DETAIL_STATUS_NORMAL);
+                                    productDetail.setFldProductId(product.getFldId());
+                                    productDetail.setFldDueDate(DateUtil.getDateByStr(importEntity.getDueDate()));
+                                    productDetail.setFldClearDays(Integer.valueOf(importEntity.getClearDays()));
+                                    productDetail.setFldPerformanceRadio(Double.valueOf(importEntity.getPerformanceRadio()));
+                                    productDetail.setFldAnnualizedRate(Double.valueOf(importEntity.getAnnualizedRate()) * 100);
+                                    productDetail.setFldDepositRate(Double.valueOf(importEntity.getDepositRate()) * 100);
+                                    productDetail.setFldDayUnit(Constant.DAY_UNIT_DAY);
+                                    productDetail.setFldMinPurchaseMoney(Double.valueOf(importEntity.getMinPurchaseMoney()));
+                                    productDetail.setFldMaxPurchaseMoney(Double.valueOf(importEntity.getMaxPurchaseMoney()));
+                                    productDetailManager.save(productDetail);
+                                } else {
+                                    productDetail = productDetailManager.findByCondition(Constant.DAY_UNIT_DAY, Integer.valueOf(importEntity.getClearDays()), annualizedRate, product.getFldId());
+                                }
+
+                                //客户信息
+                                Customer customer = new Customer();
+                                customer.setFldName(importEntity.getCustName());
+                                //if(!StringUtils.isEmpty(importEntity.getPhone())) {
+                                customer.setFldMobile(importEntity.getMobile());
+                                customer.setFldPhone(importEntity.getPhone());
+                                Long count = customerManager.countByPhoneOrMobile(customer.getFldName(), customer.getFldPhone(), customer.getFldMobile());
+                                if (count <= 0) {
+                                    customer.setFldId(EntityUtil.getId());
+                                    customer.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
+                                    customer.setFldCreateDate(new Date());
+                                    customer.setFldOperateDate(new Date());
+                                    customer.setFldStatus(Constant.CUSTOMER_STATUS_NORMAL);
+                                    customer.setFldCardTotalMoney((double) 0);
+                                    customer.setFldSource(importEntity.getSource());
+                                    customer.setFldBirthday(DateUtil.getDateByStr(importEntity.getBirthday()));
+                                    customer.setFldIdentityNo(importEntity.getIdentityNo());
+                                    if (!StringUtils.isEmpty(importEntity.getFinancialUserNo())) {
+                                        List<User> listUser = userManager.findByUserName(importEntity.getFinancialUserNo());
+                                        if (listUser != null && listUser.size() > 0)
+                                            customer.setFldFinancialUserNo(listUser.get(0).getLoginName());
+                                    }
+                                    customer.setFldCardLevel(importEntity.getCardLevel());
+                                    customer.setFldCardNo(importEntity.getCardNo());
+                                    customer.setFldComment(importEntity.getComment());
+                                } else {
+                                    if (!StringUtils.isEmpty(customer.getFldMobile())) {
+                                        customer = customerManager.findByCustNameAndMobile(customer.getFldName(), customer.getFldMobile());
+                                    } else {
+                                        customer = customerManager.findByCustNameAndPhone(customer.getFldName(), customer.getFldPhone());
+                                    }
+                                }
+
+                                //客户的瑞得卡金额是一个累加的金额
+                                if (!StringUtils.isEmpty(importEntity.getCardMoney())) {
+                                    if(customer.getFldCardTotalMoney()!=null){
+                                        customer.setFldCardTotalMoney(Double.valueOf(importEntity.getCardMoney())+customer.getFldCardTotalMoney());
+                                    }else{
+                                        customer.setFldCardTotalMoney(Double.valueOf(importEntity.getCardMoney()));
+                                    }
+                                }
+
+                                customerManager.save(customer);
+                                //}
+
+                                //合同信息
+                                CustomerContract contract = new CustomerContract();
+                                contract.setFldId(importEntity.getContractNo());
+                                contract.setFldCustomerId(customer.getFldId());
+                                contract.setFldProductId(product.getFldId());
+                                contract.setFldProductDetailId(productDetail.getFldId());
+                                contract.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
+                                contract.setFldCreateDate(new Date());
+                                contract.setFldOperateDate(new Date());
+                                contract.setFldStatus(Constant.CONTRACT_STATUS_NORMAL);
+                                contract.setFldSignDate(DateUtil.getDateByStr(importEntity.getSignDate()));
+                                contract.setFldPurchaseMoney(Double.valueOf(importEntity.getPurchaseMoney()));
+                                contract.setFldPerformanceMoney(Double.valueOf(importEntity.getPerformanceMoney()));
+                                contract.setFldAnnualizedMoney(Double.valueOf(importEntity.getAnnualizedMoney()));
+                                contract.setFldMoneyDate(DateUtil.getDateByStr(importEntity.getMoneyDate()));
+                                contract.setFldCollectDays(Integer.valueOf(importEntity.getCollectDays()));
+                                contract.setFldCollectMoney(Double.valueOf(importEntity.getCollectMoney()));
+                                contract.setFldBankNo(importEntity.getBankNo());
+                                contract.setFldBankName(importEntity.getBankName());
+                                contract.setFldCardMoney(Double.valueOf(importEntity.getCardMoney()));
+                                contract.setFldCardLevel(importEntity.getCardLevel());
+
+                                if(DateUtils.truncatedCompareTo(productDetail.getFldDueDate(), new Date(), Calendar.DATE)>0){
+                                    contract.setFldFinishStatus(Constant.CONTRACT_FINISH_STATUS_NO);
+                                }else{
+                                    contract.setFldFinishStatus(Constant.CONTRACT_FINISH_STATUS_YES);
+                                }
+
+                                if (!StringUtils.isEmpty(importEntity.getFinancialUserNo())) {
+                                    List<User> listUser = userManager.findByUserName(importEntity.getFinancialUserNo());
+                                    if (listUser != null && listUser.size() > 0)
+                                        contract.setFldFinancialUserNo(listUser.get(0).getLoginName());
+                                }
+                                contract.setFldDepositRate(Double.valueOf(importEntity.getDepositRate()) * 100);
+                                contract.setFldAnnualizedRate(Double.valueOf(importEntity.getAnnualizedRate()) * 100);
+                                contract.setFldPerformanceRadio(Double.valueOf(importEntity.getPerformanceRadio()));
+                                contract.setFldCardNo(importEntity.getCardNo());
+                                contractManager.saveOnly(contract);
+                            }
+                        }
+                        break;
                     }
                     default:
                         break;

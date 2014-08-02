@@ -4,13 +4,18 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 import com.common.core.util.JsonTimestampSerializer;
+import com.common.security.entity.User;
 import com.common.security.util.SecurityUtil;
 
 /**
@@ -211,4 +216,39 @@ public class CustomerExchange implements java.io.Serializable {
 		this.contractNum = contractNum;
 	}
 
+	protected User oldUser;
+
+	@JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "FLDOLDUSERNO", referencedColumnName="FLDLOGINNAME", insertable = false, updatable = false)
+	public User getOldUser() {
+		return oldUser;
+	}
+
+	public void setOldUser(User oldUser) {
+		this.oldUser = oldUser;
+	}
+	
+	@Transient
+	public String getOldUserName() {
+		return null != oldUser ? oldUser.getUserName() : "";
+	}
+	
+	protected User newUser;
+
+	@JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "FLDNEWUSERNO", referencedColumnName="FLDLOGINNAME", insertable = false, updatable = false)
+	public User getNewUser() {
+		return newUser;
+	}
+
+	public void setNewUser(User newUser) {
+		this.newUser = newUser;
+	}
+	
+	@Transient
+	public String getNewUserName() {
+		return null != newUser ? newUser.getUserName() : "";
+	}
 }

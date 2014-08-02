@@ -37,6 +37,10 @@ public class ExchangeManager extends GenericPageHQLQuery<CustomerExchange> {
 	@Autowired
 	private ContractDao contractDao;
 	
+	public List<CustomerExchangeCustomer> listCustomerByExchangeId(String exchangeId) {
+		return customerExchangeCustomerDao.listCustomerByExchangeId(exchangeId);
+	}
+	
 	public Page<CustomerExchange> findAllCustomerExchange(GridPageRequest page, String where) {
         return (Page<CustomerExchange>) super.findAll(where, page);
     }

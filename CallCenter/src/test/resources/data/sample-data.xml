@@ -247,15 +247,13 @@
 		fldIcon="/static/ligerUI/icons/silkicons/application_get.png" fldLink="/customer/customer/initimport" fldType="2" fldPosition="12" />
 
 	<!-- 二级菜单 -->
-	<tblNode fldCode="010302" fldParent="0103" fldName="客户交接"
-		fldDesc="" fldTarget="" fldIcon="/static/ligerUI/icons/32X32/communication.gif"
+	<tblNode fldCode="010302" fldParent="0103" fldName="客户交接" fldDesc="" fldTarget="" 
+		fldIcon="/static/ligerUI/icons/32X32/communication.gif"
 		fldLink="/customer/exchange/init" fldType="1" fldPosition="1" />
-	<tblNode fldCode="01030201" fldParent="010302" fldName="交接"
-		fldDesc="" fldTarget="exchange"
+	<tblNode fldCode="01030201" fldParent="010302" fldName="交接" fldDesc="" fldTarget="exchange"
 		fldIcon="/static/ligerUI/icons/silkicons/application_link.png"
 		fldLink="/customer/exchange/exchange" fldType="2" fldPosition="1" />
-	<tblNode fldCode="01030202" fldParent="010302" fldName="交接明细"
-		fldDesc="" fldTarget="detail"
+	<tblNode fldCode="01030202" fldParent="010302" fldName="交接明细" fldDesc="" fldTarget="detail"
 		fldIcon="/static/ligerUI/icons/silkicons/application_view_detail.png"
 		fldLink="/customer/exchange/detail" fldType="2" fldPosition="2" />
 
@@ -503,6 +501,9 @@
     <tblDictionary fldId="48" fldType="20" fldName="无" fldValue="0" fldStatus="0" fldComment="话务类型，无" />
     <tblDictionary fldId="49" fldType="20" fldName="普通" fldValue="1" fldStatus="0" fldComment="话务类型，普通" />
     <tblDictionary fldId="50" fldType="20" fldName="班长" fldValue="2" fldStatus="0" fldComment="话务类型，班长" />
+
+    <tblDictionary fldId="51" fldType="21" fldName="否" fldValue="0" fldStatus="0" fldComment="合同是否到期，否" />
+    <tblDictionary fldId="52" fldType="21" fldName="是" fldValue="1" fldStatus="0" fldComment="合同是否到期，是" />
 
     <tblSysParameter fldId="1" fldName="SYS_ADMIN"
 		fldValue="1" fldUnit="" fldStatus="0" fldDisplay="1" fldComment="" />

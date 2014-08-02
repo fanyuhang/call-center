@@ -60,9 +60,10 @@
     	<column cell="C1" propertyName="fldId" columnName="合同编号" nullAllowed="true"></column>
     	<column cell="D1" propertyName="fldFullName" columnName="产品全称" nullAllowed="true"></column>
     	<column cell="E1" propertyName="fldClearDays" columnName="产品实际天数" nullAllowed="true"></column>
-    	<column cell="F1" propertyName="fldPurchaseMoney" columnName="购买金额" nullAllowed="true"></column>
-    	<column cell="G1" propertyName="fldPerformanceRadio" columnName="业绩系数" nullAllowed="true"></column>
-    	<column cell="H1" propertyName="fldPerformanceMoney" columnName="业绩额度" nullAllowed="true"></column>
+        <column cell="F1" propertyName="fldAnnualizedRate" columnName="年化收益率" nullAllowed="true"></column>
+        <column cell="G1" propertyName="fldPurchaseMoney" columnName="购买金额(万元)" nullAllowed="true"></column>
+    	<column cell="H1" propertyName="fldPerformanceRadio" columnName="业绩系数" nullAllowed="true"></column>
+    	<column cell="I1" propertyName="fldPerformanceMoney" columnName="业绩额度(万元)" nullAllowed="true"></column>
     </table>
     
     <table class="com.redcard.telephone.entity.TelephoneImportEntity" startRow="1">

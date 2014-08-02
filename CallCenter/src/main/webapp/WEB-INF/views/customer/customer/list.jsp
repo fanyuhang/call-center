@@ -29,8 +29,8 @@
     </div>
 </div>
 <script type="text/javascript">
-	var statusData =<sys:dictList type = "6"/>;
-	var cardLevelData =<sys:dictList type = "13"/>;
+	var statusData =<sys:dictList type = "6" nullable="true"/>;
+	var cardLevelData =<sys:dictList type = "13" nullable="true"/>;
 	
 	//搜索表单应用ligerui样式
 	$("#formsearch").ligerForm({
@@ -39,12 +39,13 @@
 	    space: 30,
 	    fields: [
 	        {display: "客户姓名", name: "fldName", newline: true, type: "text", cssClass: "field"},
-	        {display: "身份证号", name: "fldIdentityNo", newline: false, type: "text", cssClass: "field"},
 	        {display: "手机号", name: "fldMobile", newline: false, type: "text", cssClass: "field"},
-	        {display: "固定电话", name: "fldPhone", newline: true, type: "text", cssClass: "field"},
-	        {display: "所属理财经理", name: "financialUser.userName", newline: false, type: "text", cssClass: "field"},
-	        {display: "瑞得卡号", name: "fldCardNo", newline: false, type: "text", cssClass: "field"},
-	        {display: "瑞得卡等级", name: "fldCardLevel", newline: true, type: "select", cssClass: "field", 
+	        {display: "固定电话", name: "fldPhone", newline: false, type: "text", cssClass: "field"},
+	        {display: "理财经理", name: "financialUser.userName", newline: true, type: "text", cssClass: "field"},
+            {display: "客服经理", name: "serviceUser.userName", newline: false, type: "text", cssClass: "field"},
+            {display: "客户经理", name: "customerUser.userName", newline: false, type: "text", cssClass: "field"},
+            {display: "瑞得卡号", name: "fldCardNo", newline: true, type: "text", cssClass: "field"},
+	        {display: "瑞得卡等级", name: "fldCardLevel", newline: false, type: "select", cssClass: "field",
 	        	options: {
 	                valueFieldID: "fldCardLevel",
 	                valueField: "value",
@@ -56,6 +57,7 @@
 	            options: {
 	                valueFieldID: "fldStatus",
 	                valueField: "value",
+                    initValue:'0',
 	                textField: "text",
 	                data: statusData
 	            }, attr: {"op": "equal", "vt": "int"}
@@ -81,14 +83,20 @@
 	        		return renderLabel(statusData,item.fldStatus);
 	        	}
 	        },
-	        {display: "所属理财经理", name: "financialUserName"},
-	        {display: "瑞得卡号", name: "fldCardNo"},
-	        {display: "瑞得卡等级", name: "fldCardLevel",
-	        	render:function(item) {
-	        		return renderLabel(cardLevelData,item.fldCardLevel);
-	        	}
-	        },
-	        {display: "操作人", name: "operateUserName"},
+	        {display: "理财经理", name: "financialUserName"},
+            {display: "客服经理", name: "serviceUserName"},
+            {display: "客户经理", name: "customerUserName"},
+            {display: "瑞得卡等级", name: "fldCardLevel",
+                render:function(item) {
+                    return renderLabel(cardLevelData,item.fldCardLevel);
+                }
+            },
+            {display: "瑞得卡号", name: "fldCardNo"},
+            {display: "瑞得卡金额", name: "fldCardTotalMoney",
+                render:function(item) {
+                    return formatCurrency(item.fldCardTotalMoney);
+                }},
+            {display: "操作人", name: "operateUserName"},
 	        {display: "操作时间", name: "fldOperateDate"}
 	    ], dataAction: 'server', pageSize: 20, toolbar: {}, url: '<c:url value="/customer/customer/list"/>',
 	    width: '98%', height: '98%', toJSON: JSON2.stringify, onReload: f_reload
@@ -179,11 +187,11 @@
 	}
 
 	$("#uploader").plupload({
-	    runtimes: 'flash,html5',
+	    runtimes: 'flash',
 	    url: '<c:url value="/customer/common/upload/0"/>',
-	    //max_file_size: '5mb',
+	    max_file_size: '10mb',
 	    max_file_count: 1,
-	    //chunk_size: '1mb',
+	    chunk_size: '1mb',
 	    rename: true,
 	    multiple_queues: false,
 	    resize: {top:20, width: 600, height: 500, quality: 30},
@@ -195,11 +203,11 @@
 	});
 	
 	$("#inituploader").plupload({
-	    runtimes: 'flash,html5',
+	    runtimes: 'flash',
 	    url: '<c:url value="/customer/common/upload/1"/>',
-	    //max_file_size: '5mb',
+	    max_file_size: '10mb',
 	    max_file_count: 1,
-	    //chunk_size: '1mb',
+	    chunk_size: '1mb',
 	    rename: true,
 	    multiple_queues: false,
 	    resize: {width: 600, height: 500, quality: 30},

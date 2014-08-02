@@ -23,12 +23,14 @@ var loginStatusData = <sys:dictList type="3"/>;
 var userStatusData = <sys:dictList type="2" nullable="true"/>;
 var genderStatusData = <sys:dictList type="1"/>;
 var statusSystemData = <sys:dictList type="81" nullable="true" nullValue=""/>;
+var typeData = <sys:dictList type="19" nullable="true"/>;
+var phoneTypeData = <sys:dictList type="20" nullable="true"/>;
 //列表结构
 var grid = $("#maingrid").ligerGrid({
     columns:[
         { display:"登陆名称", name:"loginName", width:180 },
         { display:"用户名称", name:"userName", width:180 },
-        { display:"存款账号", name:"accountNo", type:'text', width:180 },
+        { display:"分机号", name:"phoneExtension", width:180 },
         { display:"登陆状态", name:"loginStatus", width:100,
             render:function (item) {
                 for (var i = 0; i < loginStatusData.length; i++) {
@@ -39,6 +41,14 @@ var grid = $("#maingrid").ligerGrid({
         { display:"用户状态", name:"userStatus", width:100,
             render:function (item) {
                 return renderLabel(userStatusData, item.userStatus);
+            }},
+        { display:"职位类型", name:"type", width:100,
+            render:function (item) {
+                return renderLabel(typeData, item.type);
+            }},
+        { display:"话务类型", name:"phoneType", width:100,
+            render:function (item) {
+                return renderLabel(phoneTypeData, item.phoneType);
             }},
         { display:"部门", name:"deptName", type:'text', width:180 },
         { display:"用户组", name:"roleNames", type:'text', width:180 },
@@ -72,6 +82,16 @@ $("#formsearch").ligerForm({
             comboboxName:"userStatusName", options:{
             valueFieldID:"userStatus", valueField:"value", textField:"text",
             data:userStatusData
+        }},
+        {display:"职位类型", name:"type", cssClass:"field", newline:false,   type:"select",
+            comboboxName:"typeName", options:{
+            valueFieldID:"type", valueField:"value", textField:"text",
+            data:typeData
+        }},
+        {display:"话务类型", name:"phoneType", cssClass:"field", newline:false,attr:{"op":'equal', "vt":"int"},   type:"select",
+            comboboxName:"phoneTypeName", options:{
+            valueFieldID:"phoneType", valueField:"value", textField:"text",
+            data:phoneTypeData
         }}
     ],
     toJSON:JSON2.stringify

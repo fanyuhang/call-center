@@ -98,6 +98,9 @@ public class User implements Auditable, Serializable {
     @Column(name = "fldphonetype")
     private String phoneType;
 
+    @Column(name = "fldphonepassword")
+    private String phonePassword;
+
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fldloginname", referencedColumnName = "fldloginname", insertable = false, updatable = false)
@@ -359,6 +362,14 @@ public class User implements Auditable, Serializable {
 
     public void setPhoneType(String phoneType) {
         this.phoneType = phoneType;
+    }
+
+    public String getPhonePassword() {
+        return phonePassword;
+    }
+
+    public void setPhonePassword(String phonePassword) {
+        this.phonePassword = phonePassword;
     }
 
     @Override

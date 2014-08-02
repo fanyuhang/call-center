@@ -3,6 +3,7 @@ package com.redcard.customer.web.controller;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -67,6 +69,7 @@ public class ContractController {
     @ResponseBody
     public AsyncResponse save(CustomerContract customerContract) {
         AsyncResponse result = new AsyncResponse(false, "保存合同成功");
+        customerContract.setFldCustomerUserNo(SecurityUtil.getCurrentUserLoginName());
         customerContract.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
         customerContract.setFldCreateDate(new Date());
         customerContract.setFldOperateDate(new Date());
@@ -93,7 +96,6 @@ public class ContractController {
         customerContract.setFldStatus(oldCustomerContract.getFldStatus());
         customerContract.setFldCreateUserNo(oldCustomerContract.getFldCreateUserNo());
         customerContract.setFldCreateDate(oldCustomerContract.getFldCreateDate());
-        
         contractManager.save(customerContract);
         return result;
     }
@@ -124,7 +126,7 @@ public class ContractController {
 	@RequestMapping(value = "export")
     @ResponseBody
     public AsyncResponse export(String where, HttpServletRequest request, HttpServletResponse response) {
-        AsyncResponse result = new AsyncResponse(false, "导出合同列表成功");
+        AsyncResponse result = new AsyncResponse(false, "导出绩效列表成功");
         try {
         	List<CustomerContract> listContract = contractManager.findAllContract(null, where).getContent();
         	List<Performance> listPerformance = new ArrayList<Performance>();
@@ -135,6 +137,7 @@ public class ContractController {
         			performance.setFldSignDate(DateUtil.getFormatDate(customerContract.getFldSignDate()));
         			performance.setFldFullName(customerContract.getCustomerProduct().getFldFullName());
         			performance.setFldClearDays(customerContract.getCustomerProductDetail().getFldClearDays());
+                    performance.setFldAnnualizedRate(customerContract.getFldAnnualizedRate()+"%");
         			listPerformance.add(performance);
         		}
         	}
