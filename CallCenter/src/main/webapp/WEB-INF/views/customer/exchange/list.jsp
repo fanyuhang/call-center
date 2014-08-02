@@ -25,11 +25,11 @@
 	    inputWidth: 150,
 	    space: 30,
 	    fields: [
-	        {display: "原客服", name: "oldUser.userName", newline: true, type: "text", cssClass: "field"},
-	        {display: "新客服", name: "newUser.userName", newline: false, type: "text", cssClass: "field"},
-	        {display: "交接开始时间", name: "startDate", newline: true, type: "date", cssClass: "field",
+	        {display: "原客服经理", name: "oldUser.userName", newline: true, type: "text", cssClass: "field"},
+	        {display: "新客服经理", name: "newUser.userName", newline: false, type: "text", cssClass: "field"},
+	        {display: "交接时间", name: "startDate", newline: true, type: "date", cssClass: "field",
 	        	attr:{op:'greaterorequal', vt:'date', field:"fldOperateDate"}},
-	        {display: "交接结束时间", name: "endDate", newline: false, type: "date", cssClass: "field",
+	        {display: "至", name: "endDate", newline: false, type: "date", cssClass: "field",
 	        	attr:{op:'lessorequal', vt:'date', field:"fldOperateDate"}}
 	    ],
 	    toJSON: JSON2.stringify
@@ -43,9 +43,9 @@
 	    columnWidth: 180,
 	    columns: [
 	    	{display: "ID", name: "fldId", hide:1,width:1},
-	        {display: "原客服", name: "oldUserName"},
-	        {display: "新客服", name: "newUserName"},
-	        {display: "交接时间", name: "fldOperateDate"},
+            {display: "交接时间", name: "fldOperateDate"},
+            {display: "原客服经理", name: "oldUserName"},
+	        {display: "新客服经理", name: "newUserName"},
 	        {display: "原客服客户数量", name: "fldOldCustomerNum"},
 	        {display: "新客服客户数量", name: "fldNewCustomerNum"},
 	        {display: "交接客户数量", name: "fldCustomerNum"},

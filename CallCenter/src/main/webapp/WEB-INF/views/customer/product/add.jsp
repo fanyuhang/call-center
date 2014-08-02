@@ -37,9 +37,9 @@
 	<div position="bottom" title="产品明细">
 		<div id="contactgrid"></div>
 	</div>
-	<div id="detail" style="display:none;">
-        <form:form id="detailMainform" name="detailMainform" method="post" modelAttribute="productDetail"></form:form>
-    </div>
+</div>
+<div id="detail" style="display:none;">
+    <form:form id="detailMainform" name="detailMainform" method="post" modelAttribute="productDetail" ></form:form>
 </div>
 <script type="text/javascript">
 	var dayUnitData =<sys:dictList type = "14"/>;
@@ -51,8 +51,8 @@
 	}
 
 	var layout = $("#layout").ligerLayout({
-   	 	bottomHeight:$(window).height() * 0.65,
-    	heightDiff:0,
+   	 	bottomHeight:$(window).height() * 0.60,
+    	heightDiff:-10,
     	onEndResize:updateGridHeight,
     	onHeightChanged:updateGridHeight
 	});
@@ -196,7 +196,8 @@
 	            inputWidth:180,
 	            fields:[
 	                {display:"产品明细编号", name:"dtlId", newline:true, type:"hidden"},
-	                {display:"天数单位", name:"dtlDayUnit", newline:true, type:"select", comboboxName:"dayUnit", validate:{required:true},group: "<label style=white-space:nowrap;>基本信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>',
+                    {display:"实际天/月数", name:"dtlClearDays", newline:true, type:"text", validate:{required:true}},
+                    {display:"天/月数单位", name:"dtlDayUnit", newline:false, type:"select", comboboxName:"dayUnit", validate:{required:true},
 	                	options:{
                     	valueField: 'value',
                     	textField: 'text',
@@ -204,13 +205,12 @@
                     	data:dayUnitData,
                     	valueFieldID:"dtlDayUnit"
                 	}},
-	                {display:"实际天数", name:"dtlClearDays", newline:false, type:"text", validate:{required:true}},
 	                {display:"到期日期", name:"dtlDueDate", newline:true, type: "text", attr:{readonly: "readonly"}},
-	                {display:"最低认购金额(万元)", name:"dtlMinPurchaseMoney", newline:false, type:"text", validate:{required:true}},
-	                {display:"最高认购金额(万元)", name:"dtlMaxPurchaseMoney", newline:true, type:"text", validate:{required:true}},
+	                {display:"最低认购金额(万元)", name:"dtlMinPurchaseMoney", newline:true, type:"text", validate:{required:true}},
+	                {display:"最高认购金额(万元)", name:"dtlMaxPurchaseMoney", newline:false, type:"text", validate:{required:true}},
 	                {display:"年化收益率(%)", name:"dtlAnnualizedRate", newline:true, type:"text", validate:{required:true}, group: "<label style=white-space:nowrap;>收益信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'},
-	                {display:"年化7天存款率(%)", name:"dtlDepositRate", newline:false, type:"text", validate:{required:true}},
-	                {display:"业绩系数", name:"dtlPerformanceRadio", newline:true, type:"text", validate:{required:true}},
+	                {display:"年化7天存款率(%)", name:"dtlDepositRate", newline:false, type:"text", validate:{required:true}, group: "<label style=white-space:nowrap;>募集期信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'},
+	                {display:"业绩系数", name:"dtlPerformanceRadio", newline:true, type:"text", validate:{required:true}, group: "<label style=white-space:nowrap;>其他信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'},
 	                {display:"佣金系数", name:"dtlCommissionRadio", newline:false, type:"text", validate:{required:true}}
 	            ]
 	        });
@@ -276,7 +276,7 @@
 	        detailWin = $.ligerDialog.open({
 	        	title:"产品明细",
 	            target:$("#detail"),
-	            width:750, height:400, top:30,
+	            width:750, height:420, top:30,
 	            buttons:[
 	                { text:'确定', onclick:function () {
 	                	LG.validate(detailMainform);
@@ -440,9 +440,9 @@
     	columnWidth: 130,
     	columns:[
     		{display: "产品明细编号", name: "dtlId",hide:1,width:1},
-    		{display:"天数单位", name:"dtlDayUnitText"},
-    		{display:"天数单位VALUE", name: "dtlDayUnit",hide:1,width:1},
             {display:"实际天数", name:"dtlClearDays"},
+            {display:"天数单位", name:"dtlDayUnitText"},
+    		{display:"天数单位VALUE", name: "dtlDayUnit",hide:1,width:1},
             {display:"到期日期", name:"dtlDueDate"},
             {display:"最低认购金额(万元)", name:"dtlMinPurchaseMoney"},
             {display:"最高认购金额(万元)", name:"dtlMaxPurchaseMoney"},

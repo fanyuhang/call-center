@@ -159,13 +159,6 @@ public class CustomerController {
     @ResponseBody
     public AsyncResponse updateFinancialUser(Customer customer) {
         AsyncResponse result = new AsyncResponse(false, "客户交接成功");
-        customer.setFldOperateDate(new Date());
-        
-        Customer oldCustomer = customerManager.find(customer.getFldId());
-        customer.setFldStatus(oldCustomer.getFldStatus());
-        customer.setFldCreateUserNo(oldCustomer.getFldCreateUserNo());
-        customer.setFldCreateDate(oldCustomer.getFldCreateDate());
-        
         customerManager.updateFinancialUser(customer);
         return result;
     }

@@ -21,4 +21,7 @@ public interface ContractDao extends PagingAndSortingRepository<CustomerContract
     
     @Query("select count(m) from CustomerContract m where m.fldServiceUserNo = ?1")
     public Long countByServiceUserNo(String serviceUserNo);
+
+    @Query("select count(m) from CustomerContract m where m.fldCustomerId = ?1 and (m.fldStatus = 0 or m.fldStatus is null)")
+    public Long countByCustomerId(String customerId);
 }

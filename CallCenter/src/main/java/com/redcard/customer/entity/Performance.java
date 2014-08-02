@@ -12,6 +12,7 @@ public class Performance implements Serializable {
 	private Double fldPurchaseMoney;
 	private Double fldPerformanceRadio;
 	private Double fldPerformanceMoney;
+    private String fldAnnualizedRate;
 	
 	public String getFldId() {
 		return fldId;
@@ -61,4 +62,12 @@ public class Performance implements Serializable {
 	public void setFldPerformanceMoney(Double fldPerformanceMoney) {
 		this.fldPerformanceMoney = fldPerformanceMoney;
 	}
+
+    public String getFldAnnualizedRate() {
+        return fldAnnualizedRate;
+    }
+
+    public void setFldAnnualizedRate(String fldAnnualizedRate) {
+        this.fldAnnualizedRate = fldAnnualizedRate;
+    }
 }

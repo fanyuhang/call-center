@@ -32,13 +32,19 @@
 	        		return renderLabel(statusData,item.fldStatus);
 	        	}
 	        },
-	        {display: "所属理财经理", name: "financialUserName"},
+	        {display: "理财经理", name: "financialUserName"},
+            {display: "客服经理", name: "serviceUserName"},
+            {display: "客户经理", name: "customerUserName"},
 	        {display: "瑞得卡号", name: "fldCardNo"},
 	        {display: "瑞得卡等级", name: "fldCardLevel",
 	        	render:function(item) {
 	        		return renderLabel(cardLevelData,item.fldCardLevel);
 	        	}
 	        },
+            {display: "瑞得卡金额", name: "fldCardTotalMoney",
+                render:function(item) {
+                    return formatCurrency(item.fldCardTotalMoney);
+                }},
 	        {display: "操作人", name: "operateUserName"},
 	        {display: "操作时间", name: "fldOperateDate"}
 	    ], dataAction: 'server', pageSize:100, toolbar: {}, url: '<c:url value="/customer/exchange/listCustomer?exchangeId='+exchangeId+'"/>', 

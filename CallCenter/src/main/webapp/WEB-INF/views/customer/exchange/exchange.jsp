@@ -16,14 +16,14 @@
         labelWidth: 100,
         space: 30,
         fields: [
-            {display: "原客服", name: "fldOldUserNo", newline: true, type: "select", group: "<label style=white-space:nowrap;>客服信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>',
+            {display: "原客服经理", name: "fldOldUserNo", newline: true, type: "select", group: "<label style=white-space:nowrap;>交接信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>',
             	comboboxName: "serviceUserNo", options: {valueFieldID: "serviceUserNo"},validate: {required: true}},
-            {display: "新客服", name: "fldNewUserNo", newline: false, type: "select", validate: {required: true},
+            {display: "新客服经理", name: "fldNewUserNo", newline: false, type: "select", validate: {required: true},
             	comboboxName: "newServiceUser", options: {valueFieldID: "newServiceUser"}},
-            {display:"客户数量",name:"fldOldCustomerNum",newline:true,type:"text",group: "<label style=white-space:nowrap;>原客服信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>',
+            {display:"客户数量",name:"fldOldCustomerNum",newline:true,type:"text",group: "<label style=white-space:nowrap;>原客服经理信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>',
             	attr:{readonly: "readonly"}},
             {display:"合同数量",name:"fldOldContractNum",newline:false,type:"text",attr:{readonly: "readonly"}},
-            {display:"客户数量",name:"fldNewCustomerNum",newline:true,type:"text",group: "<label style=white-space:nowrap;>新客服信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>',
+            {display:"客户数量",name:"fldNewCustomerNum",newline:true,type:"text",group: "<label style=white-space:nowrap;>新客服经理信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>',
             	attr:{readonly: "readonly"}},
             {display:"合同数量",name:"fldNewContractNum",newline:false,type:"text",attr:{readonly: "readonly"}}
         ]

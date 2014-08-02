@@ -19,10 +19,11 @@
 </div>
 <div id="maingrid"></div>
 <script type="text/javascript">
-	var statusData =<sys:dictList type = "8"/>;
+	var statusData =<sys:dictList type = "8" nullable="true"/>;
 	var cardLevelData =<sys:dictList type = "13"/>;
 	var dayUnitData =<sys:dictList type = "14"/>;
 	var typeData= <sys:dictList type = "7"/>;
+    var finishStatus = <sys:dictList type = "21" nullable="true"/>;
 	
 	//搜索表单应用ligerui样式
 	$("#formsearch").ligerForm({
@@ -31,14 +32,32 @@
 	    space: 30,
 	    fields: [
 	        {display: "客户姓名", name: "customer.fldName", newline: true, type: "text", cssClass: "field"},
-	        {display: "身份证号", name: "customer.fldIdentityNo", newline: false, type: "text", cssClass: "field"},
 	        {display: "合同编号", name: "fldId", newline: false, type: "text", cssClass: "field"},
-	        {display: "产品全称", name: "productDetail.customerProduct.fldFullName", newline: true, type: "text", cssClass: "field"},
+            {display: "理财经理", name: "financialUser.userName", newline: false, type: "text", cssClass: "field"},
+            {display: "合同状态", name: "fldStatus", newline: false, type: "select", cssClass: "field",
+                options: {
+                    valueFieldID: "fldStatus",
+                    valueField: "value",
+                    initValue:'0',
+                    textField: "text",
+                    data: statusData
+                }, attr: {"op": "equal", "vt": "int"}
+            },
+            {display: "产品全称", name: "productDetail.customerProduct.fldFullName", newline: true, type: "text", cssClass: "field"},
 	        {display: "产品实际天数", name: "productDetail.fldClearDays", newline: false, type: "text", attr: {"op": "equal", "vt": "int"}, cssClass: "field"},
-	        {display: "所属理财经理", name: "financialUser.userName", newline: false, type: "text", cssClass: "field"},
-	        {display: "银行卡号", name: "fldBankNo", newline: true, type: "text", cssClass: "field"},
-	        {display: "瑞得卡号", name: "fldCardNo", newline: false, type: "text", cssClass: "field"}
-	    ],
+            {display: "客服经理", name: "serviceUser.userName", newline: false, type: "text", cssClass: "field"},
+            {display: "是否到期", name: "fldFinishStatus", newline: false, type: "select", cssClass: "field",
+                options: {
+                    valueFieldID: "fldFinishStatus",
+                    valueField: "value",
+                    textField: "text",
+                    data: finishStatus
+                }, attr: {"op": "equal", "vt": "int"}
+            },
+            { display:"签订时间", newline:true, name:"fldSignDateStart", type:'date', cssClass:"field", attr:{op:'greaterorequal', vt:'date', field:"fldSignDate"}},
+            { display:"至", newline:false, name:"fldSignDateEnd", type:'date', cssClass:"field", attr:{op:'lessorequal', vt:'date', field:"fldSignDate"}},
+            {display: "客户经理", name: "customerUser.userName", newline: false, type: "text", cssClass: "field"}
+        ],
 	    toJSON: JSON2.stringify
 	});
 	
@@ -49,31 +68,42 @@
 	    delayLoad: true,
 	    columnWidth: 180,
 	    columns: [
-	        {display: "客户姓名", name: "customerName"},
-	        {display: "身份证号", name: "identityNo"},
-	        {display: "合同编号", name: "fldId"},
+            {display: "合同编号", name: "fldId"},
+            {display: "签订日期", name: "fldSignDate"},
+            {display: "客户姓名", name: "customerName"},
 	        {display: "产品全称", name: "productFullName"},
-	        {display: "产品实际天数", name: "productClearDays"},
-	        {display: "所属理财经理", name: "financialUserName"},
-	        {display: "银行卡号", name: "fldBankNo"},
+            {display: "产品实际天数", name: "productClearDays"},
+            {display: "成立日期", name: "establishDate"},
+            {display: "到期日期", name: "dueDate"},
+            {display: "打款日期", name: "fldMoneyDate"},
+            {display: "年化收益率", name: "fldAnnualizedRate",
+                render:function(item) {
+                    return item.fldAnnualizedRate+"%";
+                }},
+            {display: "购买金额(万元)", name: "fldPurchaseMoney"},
+            {display: "预期收益(元)", name: "fldAnnualizedMoney",
+                render:function(item) {
+                    return formatCurrency(item.fldAnnualizedMoney);
+                }},
+            {display: "合同状态", name: "fldStatus",
+                render:function(item) {
+                    return renderLabel(statusData,item.fldStatus);
+                }
+            },
+            {display: "是否已到期", name: "fldFinishStatus",
+                render:function(item) {
+                    return renderLabel(finishStatus,item.fldFinishStatus);
+                }},
+            {display: "理财经理", name: "financialUserName"},
+            {display: "客服经理", name: "serviceUserName"},
+            {display: "客户经理", name: "customerUserName"},
+            {display: "银行卡号", name: "fldBankNo"},
 	        {display: "瑞得卡号", name: "fldCardNo"},
 	        {display: "瑞得卡等级", name: "fldCardLevel",
 	        	render:function(item) {
 	        		return renderLabel(cardLevelData,item.fldCardLevel);
 	        	}
 	        },
-	        {display: "合同状态", name: "fldStatus",
-	        	render:function(item) {
-	        		return renderLabel(statusData,item.fldStatus);
-	        	}
-	        },
-	        {display: "签订日期", name: "fldSignDate"},
-	        {display: "是否已到期", name: "fldFinishStatus"},
-	        {display: "打款日期", name: "fldMoneyDate"},
-	        {display: "购买金额(万元)", name: "fldPurchaseMoney"},
-	        {display: "预期收益", name: "fldAnnualizedMoney"},
-	        {display: "业绩系数", name: "fldPerformanceRadio"},
-	        {display: "业绩额度", name: "fldPerformanceMoney"},
 	        {display: "操作人", name: "operateUserName"},
 	        {display: "操作时间", name: "fldOperateDate"}
 	    ], dataAction: 'server', pageSize: 20, toolbar: {}, url: '<c:url value="/customer/contract/list"/>', sortName: 'fldOperateDate', sortOrder: 'desc',

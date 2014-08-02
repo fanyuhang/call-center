@@ -46,14 +46,14 @@
             {display: "手机", name: "fldMobile", newline: false, type: "text", attr: {value: "${customer.fldMobile}"}, validate: { maxlength: 100}},
             {display: "地址", name: "fldAddress", newline: true, type: "text", attr: {value: "${customer.fldAddress}"}, validate: { maxlength: 64}},
             {display: "邮箱", name: "fldEmail", newline: false, type: "text", attr: {value: "${customer.fldEmail}"}, validate: { maxlength: 100}},
-            {display: "所属理财经理", name: "fldFinancialUserNo", newline: true, type: "select", group: "<label style=white-space:nowrap;>其他信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>',
+            {display: "理财经理", name: "fldFinancialUserNo", newline: true, type: "select", group: "<label style=white-space:nowrap;>归属信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>',
             	comboboxName: "financialUserNo", options: {valueFieldID: "financialUserNo"}},
-            {display: "所属客户经理", name: "fldCustomerUserNo", newline: false, type: "select", 
+            {display: "客户经理", name: "fldCustomerUserNo", newline: false, type: "select",
 				comboboxName: "customerUserNo", options: {valueFieldID: "customerUserNo"}},
-            {display: "所属客服", name: "fldServiceUserNo", newline: true, type: "select", 
+            {display: "客服经理", name: "fldServiceUserNo", newline: true, type: "select",
             	comboboxName: "serviceUserNo", options: {valueFieldID: "serviceUserNo"}},
-            {display: "瑞得卡", name: "fldCardNo", newline: false, type: "text", attr: {value: "${customer.fldCardNo}"}, validate: { maxlength: 32}},
-            {display: "瑞得卡等级", name: "fldCardLevel", newline: true, type: "select", 
+            {display: "瑞得卡", name: "fldCardNo", newline: true, type: "text", attr: {value: "${customer.fldCardNo}"}, validate: { maxlength: 32}, group: "<label style=white-space:nowrap;>瑞得卡</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'},
+            {display: "瑞得卡等级", name: "fldCardLevel", newline: false, type: "select",
             	options:{
                     valueField: 'value',
                     textField: 'text',
@@ -62,7 +62,7 @@
                     initValue: '${customer.fldCardLevel}',
                     valueFieldID:"fldCardLevel"
                 }},
-            {display: "备注", name: "fldComment", newline: false, type: "text", attr: {value: "${customer.fldComment}"}, validate: { maxlength: 64}}
+            {display: "备注", name: "fldComment", newline: false, type: "text",width:630,  attr: {value: "${customer.fldComment}"}, validate: { maxlength: 64}, group: "<label style=white-space:nowrap;>备注</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'}
         ]
     });
     

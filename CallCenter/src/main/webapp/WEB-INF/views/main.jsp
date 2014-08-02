@@ -109,6 +109,11 @@
         }
 
         LG.connected(connected_type);
+
+        if(connected_type!=0){
+            $("#connected").find('b').text("保持通话");
+            connected_type = 0;
+        }
     }
 
     function f_transfer(){
@@ -419,6 +424,10 @@ $(function(){
     snlMakeTransferCallFailEvent(nType,szPhoneNumber,nReason);
 </script>
 
+<script language="javascript" for="snocx" event="snlExtensionInfoEvent(nPos, nStatus, szExtension, szRxDTMF, szPhoneNumber, szAgentID, szAgentName, nStatusTime)" type="text/javascript">
+    snlExtensionInfoEvent(nPos, nStatus, szExtension, szRxDTMF, szPhoneNumber, szAgentID, szAgentName, nStatusTime);
+</script>
+
 <script type="text/javascript">
     function snlAgentLoginEvent(nFlag)
     {
@@ -531,16 +540,18 @@ $(function(){
         alert("话机振铃或回铃时"+szPhoneNumber+","+szPhoneParam+","+nCallID);
     }
     function snlHeldCallEvent() {
-        if(connected_type==0){
-            $("#connected").find('b').text("继续通话");
-            connected_type = 1;
-        }else{
-            $("#connected").find('b').text("保持通话");
-            connected_type = 0;
-        }
+        $("#connected").find('b').text("继续通话");
+
+        connected_type = 1;
     }
     function snlMakeTransferCallFailEvent(nType, szPhoneNumber, nReason) {
         alert("外拨或转接失败"+nType+","+szPhoneNumber+","+nReason);
+    }
+    function snlExtensionInfoEvent(nPos, nStatus, szExtension, szRxDTMF, szPhoneNumber, szAgentID, szAgentName, nStatusTime){
+        if(nStatus == 0){
+            return;
+        }
+        alert(nPos+","+nStatus+","+ szExtension+","+ szRxDTMF+","+ szPhoneNumber+","+ szAgentID+","+ szAgentName+","+ nStatusTime);
     }
 </script>
 </body>
