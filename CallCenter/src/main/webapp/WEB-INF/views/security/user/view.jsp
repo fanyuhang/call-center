@@ -47,6 +47,7 @@
                 disabled:true
             }},
             {display:"分机号", name:"phoneExtension", newline:true, labelWidth:100, width:220, space:30, type:"text",attr:{value:"${user.phoneExtension}"}, validate:{maxlength:32}, group:"话务信息", groupicon:"<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>"},
+            {display:"话务系统密码", name:"phonePassword", newline:true, labelWidth:100, width:220, space:30,attr:{value:"${user.phonePassword}"}, type:"hidden", validate:{maxlength:32}},
             {display:"职位类型", name:"type", newline:true, labelWidth:100, width:220, space:30, type:"select", comboboxName:"typeName", options:{
                 valueFieldID:"type",
                 valueField:"value",
