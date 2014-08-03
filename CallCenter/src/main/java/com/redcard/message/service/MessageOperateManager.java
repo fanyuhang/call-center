@@ -29,7 +29,7 @@ public class MessageOperateManager extends GenericPageHQLQuery<MessageOperate> {
 	private String sendMessagePassword;
 
 	@Value("#{settingsMap['messageMethodName']}")
-	public String sendMessageMethod;
+	private String sendMessageMethod;
 
 	private static Logger logger = LoggerFactory.getLogger(MessageOperateManager.class);
 
