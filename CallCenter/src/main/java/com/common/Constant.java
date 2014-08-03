@@ -525,4 +525,5 @@ public class Constant {
 	
 	public static final Integer TASK_CALL_STATUS_UN = 0;//拨打状态,未拨打
 	public static final Integer TASK_CALL_STATUS_ED = 1;//拨打状态,已拨打
+
 }
