@@ -26,6 +26,7 @@
     <script src="<c:url value="/static/ligerUI/ligerUI/js/plugins/ligerForm.js"/>" type="text/javascript"></script>
     <script src="<c:url value="/static/ligerUI/js/validator.js"/>" type="text/javascript"></script>
     <script src="<c:url value="/static/ligerUI/js/telephone.js"/>" type="text/javascript"></script>
+    <script src="<c:url value="/static/ligerUI/js/msm.js"/>" type="text/javascript"></script>
 </head>
 <body style="text-align:center; background:#F0F0F0; overflow:hidden;">
 <div id="pageloading" style="display:block;"></div>
