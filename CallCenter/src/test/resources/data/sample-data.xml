@@ -505,6 +505,50 @@
     <tblDictionary fldId="51" fldType="21" fldName="否" fldValue="0" fldStatus="0" fldComment="合同是否到期，否" />
     <tblDictionary fldId="52" fldType="21" fldName="是" fldValue="1" fldStatus="0" fldComment="合同是否到期，是" />
 
+    <tblDictionary fldId="53" fldType="22" fldName="空闲" fldValue="0" fldStatus="0" fldComment="坐席状态，空闲" />
+    <tblDictionary fldId="54" fldType="22" fldName="摘机" fldValue="1" fldStatus="0" fldComment="坐席状态，摘机" />
+    <tblDictionary fldId="55" fldType="22" fldName="收号" fldValue="2" fldStatus="0" fldComment="坐席状态，收号" />
+    <tblDictionary fldId="56" fldType="22" fldName="外拨中" fldValue="3" fldStatus="0" fldComment="坐席状态，外拨中" />
+    <tblDictionary fldId="57" fldType="22" fldName="催挂" fldValue="4" fldStatus="0" fldComment="坐席状态，催挂" />
+    <tblDictionary fldId="58" fldType="22" fldName="流程" fldValue="5" fldStatus="0" fldComment="坐席状态，流程" />
+    <tblDictionary fldId="59" fldType="22" fldName="外线振铃" fldValue="6" fldStatus="0" fldComment="坐席状态，外线振铃" />
+    <tblDictionary fldId="60" fldType="22" fldName="通话" fldValue="7" fldStatus="0" fldComment="坐席状态，通话" />
+    <tblDictionary fldId="61" fldType="22" fldName="回铃" fldValue="8" fldStatus="0" fldComment="坐席状态，回铃" />
+    <tblDictionary fldId="62" fldType="22" fldName="外拨摘机后的延迟" fldValue="9" fldStatus="0" fldComment="坐席状态，外拨摘机后的延迟" />
+    <tblDictionary fldId="63" fldType="22" fldName="内线振铃" fldValue="10" fldStatus="0" fldComment="坐席状态，内线振铃" />
+    <tblDictionary fldId="64" fldType="22" fldName="坐席小休" fldValue="11" fldStatus="0" fldComment="坐席状态，坐席小休" />
+    <tblDictionary fldId="65" fldType="22" fldName="外拨" fldValue="12" fldStatus="0" fldComment="坐席状态，外拨" />
+    <tblDictionary fldId="66" fldType="22" fldName="分析" fldValue="13" fldStatus="0" fldComment="坐席状态，分析" />
+    <tblDictionary fldId="67" fldType="22" fldName="通话->转接" fldValue="14" fldStatus="0" fldComment="坐席状态，通话->转接" />
+    <tblDictionary fldId="68" fldType="22" fldName="听取留言" fldValue="15" fldStatus="0" fldComment="坐席状态，听取留言" />
+    <tblDictionary fldId="69" fldType="22" fldName="监听通道" fldValue="16" fldStatus="0" fldComment="坐席状态，监听通道" />
+    <tblDictionary fldId="70" fldType="22" fldName="软外拨:外线" fldValue="17" fldStatus="0" fldComment="坐席状态，软外拨:外线" />
+    <tblDictionary fldId="71" fldType="22" fldName="软外拨:坐席" fldValue="18" fldStatus="0" fldComment="坐席状态，软外拨:坐席" />
+    <tblDictionary fldId="72" fldType="22" fldName="会议" fldValue="19" fldStatus="0" fldComment="坐席状态，会议" />
+    <tblDictionary fldId="73" fldType="22" fldName="断线" fldValue="20" fldStatus="0" fldComment="坐席状态，断线" />
+    <tblDictionary fldId="74" fldType="22" fldName="传真外拨" fldValue="21" fldStatus="0" fldComment="坐席状态，传真外拨" />
+    <tblDictionary fldId="75" fldType="22" fldName="检查传真时信号音" fldValue="22" fldStatus="0" fldComment="坐席状态，检查传真时信号音" />
+    <tblDictionary fldId="76" fldType="22" fldName="传真选定" fldValue="23" fldStatus="0" fldComment="坐席状态，传真选定" />
+    <tblDictionary fldId="77" fldType="22" fldName="检查传真外拨" fldValue="24" fldStatus="0" fldComment="坐席状态，检查传真外拨" />
+    <tblDictionary fldId="78" fldType="22" fldName="传真启动" fldValue="25" fldStatus="0" fldComment="坐席状态，传真启动" />
+    <tblDictionary fldId="79" fldType="22" fldName="传真检查" fldValue="26" fldStatus="0" fldComment="坐席状态，传真检查" />
+    <tblDictionary fldId="80" fldType="22" fldName="会议邀请" fldValue="27" fldStatus="0" fldComment="坐席状态，会议邀请" />
+    <tblDictionary fldId="81" fldType="22" fldName="外拨分析" fldValue="28" fldStatus="0" fldComment="坐席状态，外拨分析" />
+    <tblDictionary fldId="82" fldType="22" fldName="外拨失败" fldValue="29" fldStatus="0" fldComment="坐席状态，外拨失败" />
+    <tblDictionary fldId="83" fldType="22" fldName="转接失败" fldValue="30" fldStatus="0" fldComment="坐席状态，转接失败" />
+    <tblDictionary fldId="84" fldType="22" fldName="未知" fldValue="31" fldStatus="0" fldComment="坐席状态，未知" />
+    <tblDictionary fldId="85" fldType="22" fldName="通话录音中" fldValue="32" fldStatus="0" fldComment="坐席状态，通话录音中" />
+    <tblDictionary fldId="86" fldType="22" fldName="未知" fldValue="33" fldStatus="0" fldComment="坐席状态，未知" />
+    <tblDictionary fldId="87" fldType="22" fldName="坐席后处理" fldValue="34" fldStatus="0" fldComment="坐席状态，坐席后处理" />
+    <tblDictionary fldId="88" fldType="22" fldName="坐席就餐" fldValue="35" fldStatus="0" fldComment="坐席状态，坐席就餐" />
+    <tblDictionary fldId="89" fldType="22" fldName="坐席培训" fldValue="36" fldStatus="0" fldComment="坐席状态，坐席培训" />
+    <tblDictionary fldId="90" fldType="22" fldName="坐席会议" fldValue="37" fldStatus="0" fldComment="坐席状态，坐席会议" />
+    <tblDictionary fldId="91" fldType="22" fldName="坐席静音" fldValue="38" fldStatus="0" fldComment="坐席状态，坐席静音" />
+    <tblDictionary fldId="92" fldType="22" fldName="自动外拨通话后检测传真音" fldValue="39" fldStatus="0" fldComment="坐席状态，自动外拨通话后检测传真音" />
+    <tblDictionary fldId="93" fldType="22" fldName="座席听取录音或留言" fldValue="40" fldStatus="0" fldComment="坐席状态，座席听取录音或留言" />
+    <tblDictionary fldId="94" fldType="22" fldName="座席等待ivr验证结果返回" fldValue="41" fldStatus="0" fldComment="坐席状态，座席等待ivr验证结果返回" />
+    <tblDictionary fldId="95" fldType="22" fldName="座席登出" fldValue="39" fldStatus="60" fldComment="坐席状态，座席登出" />
+
     <tblSysParameter fldId="1" fldName="SYS_ADMIN"
 		fldValue="1" fldUnit="" fldStatus="0" fldDisplay="1" fldComment="" />
 	<tblSysParameter fldId="2" fldName="MAX_ERROR_LOGIN"

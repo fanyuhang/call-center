@@ -1,4 +1,5 @@
 LG.telephoneStatus = 1;
+LG.isOutCall = 1;
 
 LG.dial = function () {
     $(document).bind('keydown.dial', function (e) {
@@ -69,6 +70,7 @@ LG.dial = function () {
 
 LG.call = function (phone) {
     var snell = document.getElementById("snocx");
+    LG.isOutCall = 0;
     snell.snlMakeCall("9" + phone, "0");
     $("#telephone").html(phone);
     $("#userStatus").removeClass("i-ready");
@@ -169,9 +171,9 @@ LG.mute = function (type) {
     var snell = document.getElementById("snocx");
     //静音模式 0-开, 1-关
     if (type == 0) {
-        snell.snlSlientCall(0);
+        snell.snlSilentCall(0);
     } else {
-        snell.snlSlientCall(1);
+        snell.snlSilentCall(1);
     }
 };
 

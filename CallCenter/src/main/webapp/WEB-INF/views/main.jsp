@@ -78,7 +78,7 @@
             <li><div class="i-line"></div></li>
             <li><a href="javascript:f_msm();" id="msm" data-name="msm" title="可以发送短消息"><i class="i-msm"></i><b>短消息</b></a></li>
             <li><div class="i-line"></div></li>
-            <li><a href="javascript:f_control();" id="control" class="disabled"  data-name="control" title="打开监控页面"><i class="i-control"></i><b>监控</b></a></li>
+            <li id="liControl"><a href="javascript:f_control();" id="control" class="disabled"  data-name="control" title="打开监控页面"><i class="i-control"></i><b>监控</b></a></li>
         </ul>
     </div>
     <div class="nav-tools"  id="right-nav-tools">
@@ -153,10 +153,11 @@
     }
 
     function f_control(){
-        if(LG.telephoneStatus!=0){
-            return;
-        }
-        LG.control();
+//        if(LG.telephoneStatus!=0){
+//            return;
+//        }
+        var tabid="monitor";
+        f_addTab(tabid, '坐席监控', '<c:url value="/monitor/phone/init" ></c:url>');
     }
 
     function f_connect(name,pwd,phoneNo){
@@ -333,7 +334,7 @@
                 if(phoneExtension&&phoneExtension.length>0){
                     $("#dial").removeClass("disabled");
 
-                    f_connect('admin','admin','200');
+                    f_connect(user[0].loginName,user[0].phonePassword,user[0].phoneExtension);
 
                 }else{
                     $("#dial").addClass("disabled");
@@ -342,7 +343,7 @@
                 if(phoneType&&phoneType == '2'){
                     $("#control").removeClass("disabled");
                 }else{
-                    $("#control").addClass("disabled");
+                    $("#liControl").remove();
                 }
 
             },
@@ -535,10 +536,16 @@ $(function(){
         $("#userStatus").addClass("i-ready");
         $("#userStatus").next("b").addClass("green");
         $("#userStatus").next("b").text("就绪");
+        LG.isOutCall = 1;
 //        alert("本机或对方挂机");
     }
     function snlReceiveDeliverCallEvent(szPhoneNumber, szPhoneParam, nCallID) {
-        alert("话机振铃或回铃时"+szPhoneNumber+","+szPhoneParam+","+nCallID);
+        if(LG.isOutCall==1 && (szPhoneNumber.length>5||szPhoneNumber.length==0)){
+            $("#telephone").html(szPhoneNumber);
+            var tabid;
+            f_addTab(tabid, '来电弹屏：'+szPhoneNumber, '');
+            alert("来电"+szPhoneNumber+","+szPhoneParam+","+nCallID);
+        }
     }
     function snlHeldCallEvent() {
         $("#connected").find('b').text("继续通话");
