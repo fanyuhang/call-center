@@ -37,229 +37,182 @@
     </div>
 </div>
 <script type="text/javascript">
-var statusData = <sys:dictList type = "22"/>;
+    var statusData = <sys:dictList type = "22"/>;
 
-var snocx = parent.document.getElementById("snocx");
+    var snocx = parent.document.getElementById("snocx");
 
-var extGridData = {"Rows": []};
+    var extGridData = {"Rows": []};
 
-var trunkGridData = {"Rows": []};
-//
-//将秒数转换为时分秒
-//
-function formatSeconds(seconds) {
-    var hh;
-    var mm;
-    var ss;
-    //传入的时间为空或小于0
-    if (seconds == null || seconds < 0) {
-        return;
+    var trunkGridData = {"Rows": []};
+    //
+    //更新分机时间
+    //
+    function updateExttime() {
+        for (var i = 0; i < extGridData.Rows.length; i++) {
+            var time = parseInt(extGridData.Rows[i].sStatusTime);
+            time++;
+            extGridData.Rows[i].sStatusTime = time;
+            extGridData.Rows[i].nStatusTime = formatSeconds(time);
+        }
+        if (extGridData.Rows.length > 0) {
+            extGrid.reload();
+        }
     }
-    //得到小时
-    hh = seconds / 3600 | 0;
-    seconds = parseInt(seconds) - hh * 3600;
-    if (parseInt(hh) < 10) {
-        hh = "0" + hh;
-    }
-    //得到分
-    mm = seconds / 60 | 0;
-    //得到秒
-    ss = parseInt(seconds) - mm * 60;
-    if (parseInt(mm) < 10) {
-        mm = "0" + mm;
-    }
-    if (ss < 10) {
-        ss = "0" + ss;
-    }
-    return hh + ":" + mm + ":" + ss;
-}
 
-//将时间字符串转换为秒
-function formattime(time) {
-    var seconds = 0;
-    var s = new Array();
-    s = time.split(":");
-    if (parseInt(s[0]) > 0) {
-        seconds += parseInt(s[0]) * 3600;
+    //
+    //更新外线时间
+    //
+    function updateTrutime() {
+        for (var i = 0; i < trunkGridData.Rows.length; i++) {
+            var time = parseInt(trunkGridData.Rows[i].sStatusTime);
+            time++;
+            trunkGridData.Rows[i].sStatusTime = time;
+            trunkGridData.Rows[i].nStatusTime = formatSeconds(time);
+        }
+        if (trunkGridData.Rows.length > 0) {
+            trunkGrid.reload();
+        }
     }
-    if (parseInt(s[1]) > 0) {
-        seconds += parseInt(s[1]) * 60;
-    }
-    if (parseInt(s[2]) > 0) {
-        seconds += parseInt(s[2]);
-    }
-    return seconds;
-}
 
-//
-//更新分机时间
-//
-function updateExttime() {
-    for (var i = 0; i < extGridData.Rows.length; i++) {
-        var time = parseInt(extGridData.Rows[i].sStatusTime);
-        time++;
-        extGridData.Rows[i].sStatusTime = time;
-        extGridData.Rows[i].nStatusTime = formatSeconds(time);
+    if (!snocx) {
+        snocx.attachEvent("snlExtensionInfoEvent", function (nPos, nStatus, szExtension, szRxDTMF, szPhoneNumber, szAgentID, szAgentName, nStatusTime) {
+            extGridData.Rows[nPos] = {
+                nPos: nPos,
+                nStatus: nStatus,
+                szExtension: szExtension,
+                szRxDTMF: szRxDTMF,
+                szPhoneNumber: szPhoneNumber,
+                szAgentID: szAgentID,
+                szAgentName: szAgentName,
+                nStatusTime: formatSeconds(nStatusTime),
+                sStatusTime: nStatusTime.toString()
+            };
+            extGrid.reload();
+        });
+        snocx.attachEvent("snlTrunkInfoEvent", function (nCh, nStatus, szIVR, szRxDTMF, szPhoneNumber, szAgentID, szAgentName, nStatusTime) {
+            trunkGridData.Rows[nCh] = {
+                nCh: nCh,
+                nStatus: nStatus,
+                szIVR: szIVR,
+                szRxDTMF: szRxDTMF,
+                szPhoneNumber: szPhoneNumber,
+                szAgentID: szAgentID,
+                szAgentName: szAgentName,
+                nStatusTime: formatSeconds(nStatusTime),
+                sStatusTime: nStatusTime.toString()
+            };
+            trunkGrid.reload();
+        });
     }
-    if (extGridData.Rows.length > 0) {
-        extGrid.reload();
-    }
-}
 
-//
-//更新外线时间
-//
-function updateTrutime() {
-    for (var i = 0; i < trunkGridData.Rows.length; i++) {
-        var time = parseInt(trunkGridData.Rows[i].sStatusTime);
-        time++;
-        trunkGridData.Rows[i].sStatusTime = time;
-        trunkGridData.Rows[i].nStatusTime = formatSeconds(time);
-    }
-    if (trunkGridData.Rows.length > 0) {
-        trunkGrid.reload();
-    }
-}
-
-if (!snocx) {
-    snocx.attachEvent("snlExtensionInfoEvent", function (nPos, nStatus, szExtension, szRxDTMF, szPhoneNumber, szAgentID, szAgentName, nStatusTime) {
-        extGridData.Rows[nPos] = {
-            nPos: nPos,
-            nStatus: nStatus,
-            szExtension: szExtension,
-            szRxDTMF: szRxDTMF,
-            szPhoneNumber: szPhoneNumber,
-            szAgentID: szAgentID,
-            szAgentName: szAgentName,
-            nStatusTime: formatSeconds(nStatusTime),
-            sStatusTime: nStatusTime.toString()
-        };
-        extGrid.reload();
+    //搜索表单应用ligerui样式
+    var formsearch = $("#formsearch");
+    formsearch.ligerForm({
+        labelWidth: 100, inputWidth: 180, space: 30,
+        fields: [
+            {display: "分机号", name: "extPhone", newline: true, type: "text", cssClass: "field",
+                validate: {
+                    required: true,
+                    maxlength: 5
+                }}
+        ],
+        toJSON: JSON2.stringify
     });
-    snocx.attachEvent("snlTrunkInfoEvent", function (nCh, nStatus, szIVR, szRxDTMF, szPhoneNumber, szAgentID, szAgentName, nStatusTime) {
-        trunkGridData.Rows[nCh] = {
-            nCh: nCh,
-            nStatus: nStatus,
-            szIVR: szIVR,
-            szRxDTMF: szRxDTMF,
-            szPhoneNumber: szPhoneNumber,
-            szAgentID: szAgentID,
-            szAgentName: szAgentName,
-            nStatusTime: formatSeconds(nStatusTime),
-            sStatusTime: nStatusTime.toString()
-        };
-        trunkGrid.reload();
+
+    LG.validate(formsearch);
+
+    var container1 = $('<li style="margin-right:8px"></li>').appendTo($("#formsearch").find("ul:last"));
+    LG.createButton({appendTo: container1,
+        text: '监听',
+        click: function () {
+            if (formsearch.valid()) {
+                try {
+                    var sextNum = $("#extPhone").val();
+                    snocx.snlListenCall(sextNum);
+                }
+                catch (ex) {
+                    alert(ex.description);
+                }
+            }
+        }});
+    var container2 = $('<li style="margin-right:8px"></li>').appendTo($("#formsearch").find("ul:last"));
+    LG.createButton({appendTo: container2,
+        text: '强拆',
+        click: function () {
+            if (formsearch.valid()) {
+                try {
+                    var sextNum = $("#extPhone").val();
+                    snocx.snlReplaceCall(sextNum);
+                }
+                catch (ex) {
+                    alert(ex.description);
+                }
+            }
+        }});
+    var container3 = $('<li style="margin-right:8px"></li>').appendTo($("#formsearch").find("ul:last"));
+    LG.createButton({appendTo: container3,
+        text: '强插',
+        click: function () {
+            if (formsearch.valid()) {
+                try {
+                    var sextNum = $("#extPhone").val();
+                    snocx.snlIntrudeCall(sextNum);
+                }
+                catch (ex) {
+                    alert(ex.description);
+                }
+            }
+        }});
+
+    var extGrid = $("#extGrid").ligerGrid({
+        columnWidth: 180,
+        columns: [
+            { display: "坐席状态", name: "nStatus", type: "text", align: "center",
+                render: function (item) {
+                    return renderLabel(
+                            statusData,
+                            item.nStatus);
+                }},
+            { display: "分机号", name: "szExtension", type: "text", align: "center" },
+            { display: '收号', name: 'szRxDTMF', align: 'left', type: 'text'},
+            { display: '主叫号码', name: 'szPhoneNumber', align: 'left' },
+            { display: "登录用户", name: "szAgentName", type: "text", width: 130, align: "center" },
+            { display: '工号', name: 'szAgentID', width: 130, align: 'center' },
+            { display: '时长', name: 'nStatusTime', align: 'center' }
+        ], width: '98%', data: extGridData, height: '70%', pageSize: 20, rowHeight: 20, checkbox: false,
+        rownumbers: true, usePager: false, onSelectRow: function (rowdata, rowid, rowobj) {
+            $("#extPhone").val(rowdata.szExtension);
+        }
     });
-}
 
-//搜索表单应用ligerui样式
-var formsearch = $("#formsearch");
-formsearch.ligerForm({
-    labelWidth: 100, inputWidth: 180, space: 30,
-    fields: [
-        {display: "分机号", name: "extPhone", newline: true, type: "text", cssClass: "field",
-            validate: {
-                required: true,
-                maxlength: 5
-            }}
-    ],
-    toJSON: JSON2.stringify
-});
+    var trunkGrid = $("#trunkGrid").ligerGrid({
+        columnWidth: 180,
+        columns: [
+            { display: "通道状态", name: "nStatus", type: "text", align: "center",
+                render: function (item) {
+                    return renderLabel(
+                            statusData,
+                            item.nStatus);
+                }},
+            { display: "按键信息", name: "szRxDTMF", type: "text", align: "left" },
+            { display: '流程节点', name: 'szIVR', align: 'left', type: 'text'},
+            { display: "来电号码", name: "szPhoneNumber", type: "text", align: "left" },
+            { display: '登录用户', name: 'szAgentName', width: 130, align: 'center' },
+            { display: '工号', name: 'szAgentID', width: 130, align: 'center' },
+            { display: '时长', name: 'nStatusTime', align: 'center' }
+        ], width: '98%', data: trunkGridData, height: '25%', pageSize: 20, rowHeight: 20, checkbox: false,
+        rownumbers: true, usePager: false
+    });
 
-LG.validate(formsearch);
+    resizeDataGrid(extGrid);
+    resizeDataGrid(trunkGrid);
 
-var container1 = $('<li style="margin-right:8px"></li>').appendTo($("#formsearch").find("ul:last"));
-LG.createButton({appendTo: container1,
-    text: '监听',
-    click: function () {
-        if (formsearch.valid()) {
-            try {
-                var sextNum = $("#extPhone").val();
-                snocx.snlListenCall(sextNum);
-            }
-            catch (ex) {
-                alert(ex.description);
-            }
-        }
-    }});
-var container2 = $('<li style="margin-right:8px"></li>').appendTo($("#formsearch").find("ul:last"));
-LG.createButton({appendTo: container2,
-    text: '强拆',
-    click: function () {
-        if (formsearch.valid()) {
-            try {
-                var sextNum = $("#extPhone").val();
-                snocx.snlReplaceCall(sextNum);
-            }
-            catch (ex) {
-                alert(ex.description);
-            }
-        }
-    }});
-var container3 = $('<li style="margin-right:8px"></li>').appendTo($("#formsearch").find("ul:last"));
-LG.createButton({appendTo: container3,
-    text: '强插',
-    click: function () {
-        if (formsearch.valid()) {
-            try {
-                var sextNum = $("#extPhone").val();
-                snocx.snlIntrudeCall(sextNum);
-            }
-            catch (ex) {
-                alert(ex.description);
-            }
-        }
-    }});
-
-var extGrid = $("#extGrid").ligerGrid({
-    columnWidth: 180,
-    columns: [
-        { display: "坐席状态", name: "nStatus", type: "text", align: "center",
-            render: function (item) {
-                return renderLabel(
-                        statusData,
-                        item.nStatus);
-            }},
-        { display: "分机号", name: "szExtension", type: "text", align: "center" },
-        { display: '收号', name: 'szRxDTMF', align: 'left', type: 'text'},
-        { display: '主叫号码', name: 'szPhoneNumber', align: 'left' },
-        { display: "登录用户", name: "szAgentName", type: "text", width: 130, align: "center" },
-        { display: '工号', name: 'szAgentID', width: 130, align: 'center' },
-        { display: '时长', name: 'nStatusTime', align: 'center' }
-    ], width: '98%', data: extGridData, height: '70%', pageSize: 20, rowHeight: 20, checkbox: false,
-    rownumbers: true, usePager: false, onSelectRow: function (rowdata, rowid, rowobj) {
-        $("#extPhone").val(rowdata.szExtension);
+    function startUpdateTime() {
+        updateExttime();
+        updateTrutime();
     }
-});
 
-var trunkGrid = $("#trunkGrid").ligerGrid({
-    columnWidth: 180,
-    columns: [
-        { display: "通道状态", name: "nStatus", type: "text", align: "center",
-            render: function (item) {
-                return renderLabel(
-                        statusData,
-                        item.nStatus);
-            }},
-        { display: "按键信息", name: "szRxDTMF", type: "text", align: "left" },
-        { display: '流程节点', name: 'szIVR', align: 'left', type: 'text'},
-        { display: "来电号码", name: "szPhoneNumber", type: "text", align: "left" },
-        { display: '登录用户', name: 'szAgentName', width: 130, align: 'center' },
-        { display: '工号', name: 'szAgentID', width: 130, align: 'center' },
-        { display: '时长', name: 'nStatusTime', align: 'center' }
-    ], width: '98%', data: trunkGridData, height: '25%', pageSize: 20, rowHeight: 20, checkbox: false,
-    rownumbers: true, usePager: false
-});
-
-resizeDataGrid(extGrid);
-resizeDataGrid(trunkGrid);
-
-function startUpdateTime() {
-    updateExttime();
-    updateTrutime();
-}
-
-setInterval("startUpdateTime()", 1000);
+    setInterval("startUpdateTime()", 1000);
 </script>
 </body>
 </html>
