@@ -379,6 +379,16 @@
 	<tblNode fldCode="01050202" fldParent="010502" fldName="分配明细" fldDesc="" fldTarget="detail"
 		fldIcon="/static/ligerUI/icons/silkicons/application_view_detail.png"
 		fldLink="/telephone/assign/assignDetail" fldType="2" fldPosition="2" />
+	<tblNode fldCode="01050203" fldParent="010502" fldName="回收" fldDesc="" fldTarget="recover"
+		fldIcon="/static/ligerUI/icons/silkicons/arrow_divide.png" 
+		fldLink="/telephone/assign/recover" fldType="2" fldPosition="3" />
+		
+	<tblNode fldCode="010503" fldParent="0105" fldName="话务管理" fldDesc="" fldTarget="" 
+		fldIcon="/static/ligerUI/icons/32X32/suppliers.gif"
+		fldLink="/telephone/manage/init" fldType="1" fldPosition="3" />
+	<tblNode fldCode="01050301" fldParent="010503" fldName="任务交接" fldDesc="" fldTarget="exchange"
+		fldIcon="/static/ligerUI/icons/silkicons/application_link.png" 
+		fldLink="/telephone/manage/exchange" fldType="2" fldPosition="1" />
 
     <tblNode fldCode="0106" fldParent="01" fldName="话务监控" fldDesc=""
              fldTarget="#" fldIcon="" fldLink="" fldType="1" fldPosition="6" />

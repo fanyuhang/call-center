@@ -4,15 +4,20 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.common.core.util.JsonDateSerializer;
 import com.common.core.util.JsonTimestampSerializer;
+import com.common.security.entity.User;
 import com.common.security.util.SecurityUtil;
 
 /**
@@ -42,6 +47,7 @@ public class TelephoneAssign implements java.io.Serializable {
 	private Date fldCreateDate;
 	
 	private String fldCallUserNo;
+	private String importId;
 
 	// Constructors
 
@@ -217,5 +223,32 @@ public class TelephoneAssign implements java.io.Serializable {
 
 	public void setFldCallUserNo(String fldCallUserNo) {
 		this.fldCallUserNo = fldCallUserNo;
+	}
+
+	@Transient
+	public String getImportId() {
+		return importId;
+	}
+
+	public void setImportId(String importId) {
+		this.importId = importId;
+	}
+	
+	protected User operateUser;
+	
+	@JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "FLDOPERATEUSERNO", referencedColumnName="FLDLOGINNAME", insertable = false, updatable = false)
+	public User getOperateUser() {
+		return operateUser;
+	}
+
+	public void setOperateUser(User operateUser) {
+		this.operateUser = operateUser;
+	}
+	
+	@Transient
+	public String getOperateUserName() {
+		return operateUser!=null ? operateUser.getUserName() : "";
 	}
 }

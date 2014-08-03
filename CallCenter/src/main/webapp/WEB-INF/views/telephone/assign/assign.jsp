@@ -18,17 +18,26 @@
             {display: "话务员",name: "fldCallUserNo", newline: true, type: "select", validate: {required: true}, group: "<label style=white-space:nowrap;>基本信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>',
             	comboboxName: "callUserNo", options: {valueFieldID: "callUserNo"}},
             {display: "话务来源", name: "fldSource", newline: false, type: "select", attr:{readonly: "readonly"},validate: {required: true}, cssClass: "field", 
-	        	options: {
-	                valueFieldID: "fldSource",
-	                valueField: "value",
-	                textField: "text",
-	                data: telephoneSourceData
-	            }, attr: {"op": "equal", "vt": "int"},comboboxName:"telephoneSource"
-        	},
-            {display: "可分配话务数", name: "taskCount", newline: true, type: "text", attr:{readonly: "readonly"}},
-            {display: "话务数", name: "fldTaskNumber", newline: false, type: "text", validate: {required: true}},
+		        	options: {
+		                valueFieldID: "fldSource",
+		                valueField: "value",
+		                textField: "text",
+		                data: telephoneSourceData,
+		                initValue:0
+		            }, attr: {"op": "equal", "vt": "int"},comboboxName:"telephoneSource"
+	        	},
+	        	{display: "话单名称",name: "importId", newline: true, type: "select", attr:{readonly: "readonly"},cssClass: "field", 
+		        	options: {
+		                valueFieldID: "importId",
+		                valueField: "fldId",
+		                textField: "fldName",
+		                url:'<c:url value="/telephone/import/listAllUnAssignTelephone"/>'
+		            }, attr: {"op": "equal", "vt": "int"},comboboxName:"importName"
+	        	},
+            {display: "可分配话务数", name: "taskCount", newline: false, type: "text", attr:{readonly: "readonly"}},
+            {display: "话务数", name: "fldAssignNumber", newline: true, type: "text", attr:{readonly: "readonly"}, validate: {required: true}},
             {display: "话务员数", name: "fldCallUserNumber", newline: true, type: "text", attr:{readonly: "readonly"},group: "<label style=white-space:nowrap;>话务分配信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'},
-            {display: "平均话务数", name: "fldAverageNumber", newline: false, type: "text", attr:{readonly: "readonly"}},
+            {display: "平均话务数", name: "fldAverageNumber", newline: false, type: "text", validate: {required: true}},
             {display: "话务开始时间", name: "fldBeginDate", newline: true, type: "date", attr:{readonly: "readonly"}, validate: {required: true}},
             {display: "话务结束时间", name: "fldEndDate", newline: false, type: "date", attr:{readonly: "readonly"}, validate: {required: true}},
             {display: "天数", name: "fldDayNumber", newline: true, type: "text", attr:{readonly: "readonly"}}
@@ -49,8 +58,16 @@
      	
      	var days = (Date.parse(fldEndDate) - Date.parse(fldBeginDate))/(1000*60*60*24) + 1;
      	$("#fldDayNumber").val(days);
-    });
-     
+     	
+     	var dayNumber = $("#fldDayNumber").val();
+			var averageNumber = $("#fldAverageNumber").val();
+			var callUserNumber = $("#fldCallUserNumber").val();
+			
+			if(averageNumber != "" && callUserNumber != "") {
+				$("#fldAssignNumber").val(dayNumber * averageNumber * callUserNumber);
+			}
+	  });
+    
     $.ligerui.get("fldEndDate").bind("changedate",function(){
      	var fldBeginDate = $("#fldBeginDate").val();
      	var fldEndDate = $("#fldEndDate").val();
@@ -63,6 +80,14 @@
      	
      	var days = (Date.parse(fldEndDate) - Date.parse(fldBeginDate))/(1000*60*60*24) + 1;
      	$("#fldDayNumber").val(days);
+     	
+     	var dayNumber = $("#fldDayNumber").val();
+			var averageNumber = $("#fldAverageNumber").val();
+			var callUserNumber = $("#fldCallUserNumber").val();
+			
+			if(averageNumber != "" && callUserNumber != "") {
+				$("#fldAssignNumber").val(dayNumber * averageNumber * callUserNumber);
+			}
     });
     
     $.ligerui.get("callUserNo").openSelect({
@@ -86,60 +111,101 @@
 	    handleSelect:function(data){
 	    	$("#fldCallUserNumber").val(data.length);
 			
-			var fldTaskNumber = $("#fldTaskNumber").val();
-			if(fldTaskNumber== "" || fldTaskNumber == 0) return;
+			var fldAssignNumber = $("#fldAssignNumber").val();
+			if(fldAssignNumber== "" || fldAssignNumber == 0) return;
 		
 			var fldCallUserNumber = $("#fldCallUserNumber").val();
 			if(fldCallUserNumber == "" || fldCallUserNumber == 0) return;
 		
-			$("#fldAverageNumber").val(parseFloat(fldTaskNumber)/parseFloat(fldCallUserNumber));
+			$("#fldAverageNumber").val(parseFloat(fldAssignNumber)/parseFloat(fldCallUserNumber));
 	    }
 	});
+    
+  $("#fldAverageNumber").change(function(){
+	  var averageNumber = $("#fldAverageNumber").val();
+	  if(averageNumber == "") return;
+	  
+	  var dayNumber = $("#fldDayNumber").val();
+		var averageNumber = $("#fldAverageNumber").val();
+		var callUserNumber = $("#fldCallUserNumber").val();
+		
+		if(callUserNumber != "") {
+			$("#fldAssignNumber").val(dayNumber * averageNumber * callUserNumber);
+		}
+  });
+    
+  $("#importName").change(function(){
+	  if($("#importId").val() == "") {
+		  $("#taskCount").val("0");
+	  } else {
+		  LG.ajax({
+	          url: '<c:url value="/telephone/assign/countImportCustomerById"/>'+'?id='+$("#importId").val(),
+	          data: {},
+	          beforeSend: function () {
+	          	
+	          },
+	          complete: function () {
+	          },
+	          success: function (message) {
+						  $("#taskCount").val(message);
+	          },
+	          error: function (message) {
+	          }
+	      });
+	  }
+  });
 	
 	$("#telephoneSource").change(function(){
 		var source = $("#fldSource").val();
 		if(source == "") return;
 		if(source == 0) {
-			LG.ajax({
-                url: '<c:url value="/telephone/assign/countImport"/>',
-                data: {},
-                beforeSend: function () {
-                	
-                },
-                complete: function () {
-                },
-                success: function (message) {
-                	$("#taskCount").val(message);
-                },
-                error: function (message) {
-                }
-            });
+			$.ligerui.get("importName").setEnabled();
+			
+			if($("#importId").val() == "") {
+				  $("#taskCount").val("0");
+			  } else {
+				  LG.ajax({
+			          url: '<c:url value="/telephone/assign/countImportCustomerById"/>'+'?id='+$("#importId").val(),
+			          data: {},
+			          beforeSend: function () {
+			          	
+			          },
+			          complete: function () {
+			          },
+			          success: function (message) {
+								  $("#taskCount").val(message);
+			          },
+			          error: function (message) {
+			          }
+			      });
+			  }
 		} else {
+			$.ligerui.get("importName").setDisabled();
 			LG.ajax({
-                url: '<c:url value="/telephone/assign/countTask"/>',
-                data: {},
-                beforeSend: function () {
-                	
-                },
-                complete: function () {
-                },
-                success: function (message) {
-                	$("#taskCount").val(message);
-                },
-                error: function (message) {
-                }
-            });
-		}
+          url: '<c:url value="/telephone/assign/countImportCustomer"/>',
+          data: {},
+          beforeSend: function () {
+          	
+          },
+          complete: function () {
+          },
+          success: function (message) {
+          	$("#taskCount").val(message);
+          },
+          error: function (message) {
+          }
+      });
+	  }
 	});
 	
-	$("#fldTaskNumber").change(function(){
-		var fldTaskNumber = $("#fldTaskNumber").val();
-		if(fldTaskNumber == "" || fldTaskNumber == 0) return;
+	$("#fldAssignNumber").change(function(){
+		var fldAssignNumber = $("#fldAssignNumber").val();
+		if(fldAssignNumber == "" || fldAssignNumber == 0) return;
 		
 		var fldCallUserNumber = $("#fldCallUserNumber").val();
 		if(fldCallUserNumber == "" || fldCallUserNumber == 0) return;
 		
-		$("#fldAverageNumber").val(parseFloat(fldTaskNumber)/parseFloat(fldCallUserNumber));
+		$("#fldAverageNumber").val(parseFloat(fldAssignNumber)/parseFloat(fldCallUserNumber));
 	});
 
     //表单底部按钮
@@ -155,12 +221,15 @@
     	
     	if($("#fldSource").val()==""){
     		LG.showError("请选择话务来源!");
-			return;
+				return;
+    	} else if($("#fldSource").val()=='0' && $("#importId").val()=="") {
+    		LG.showError("请选择话单!");
+				return;
     	}
     	
     	var taskCount = $("#taskCount").val();
-		var fldTaskNumber = $("#fldTaskNumber").val();
-		if(parseInt(taskCount) < parseInt(fldTaskNumber)) {
+		var fldAssignNumber = $("#fldAssignNumber").val();
+		if(parseInt(taskCount) < parseInt(fldAssignNumber)) {
 			LG.showError("话务数不能大于可分配话务数!");
 			return;
 		}

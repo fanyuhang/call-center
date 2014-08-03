@@ -25,7 +25,7 @@
 	    inputWidth: 150,
 	    space: 30,
 	    fields: [
-	        {display: "操作人", name: "fldOperateUserNo", newline: true, type: "text", cssClass: "field"},
+	        {display: "操作人", name: "operateUser.userName", newline: true, type: "text", cssClass: "field"},
 	        {display: "开始时间", name: "startDate", newline: true, type: "date", cssClass: "field",
 	        	attr:{op:'greaterorequal', vt:'date', field:"fldOperateDate"}},
 	        {display: "结束时间", name: "endDate", newline: false, type: "date", cssClass: "field",
@@ -42,7 +42,7 @@
 	    columnWidth: 180,
 	    columns: [
 	    	{display: "ID", name: "fldId", hide:1,width:1},
-	        {display: "操作人", name: "fldOperateUserNo"},
+	        {display: "操作人", name: "operateUserName"},
 	        {display: "操作时间", name: "fldOperateDate"},
 	        {display: "使用话务数", name: "fldAssignNumber"},
 	        {display: "话务员数", name: "fldCallUserNumber"},
@@ -72,11 +72,33 @@
 	            var selected = grid.getSelected();
 	            top.f_addTab(null, '话务明细', '<c:url value="/telephone/assign/assignDetail"/>' + '?menuNo=${menuNo}&id='+selected.fldId);
 	       		break;
+	       	case "recover":
+	       		if (grid.getSelectedRows().length > 1 || grid.getSelectedRows().length == 0) {
+	                LG.tip('请选择一行数据!');
+	                return;
+	            }
+	          var selected = grid.getSelected();
+	          recover(selected.fldId);
+	       		break;
 	    }
 	}
 
 	function f_reload() {
 	    grid.loadData();
+	}
+	
+	function recover(id) {
+		LG.ajax({
+        loading:'正在回收中...',
+        url:'<c:url value="/telephone/assign/recover"/>',
+        data:{fldId:id},
+        success:function (data, message) {
+            LG.tip(message);
+        },
+        error:function (message) {
+            LG.tip(message);
+        }
+    });
 	}
 	
 	resizeDataGrid(grid);
