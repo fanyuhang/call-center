@@ -20,7 +20,6 @@
     <import resource="quartz.xml"></import>
 
     <import resource="webservice.xml"></import>
-
     <!-- 使用annotation 自动注册bean, 并保证@Required、@Autowired的属性被注入 -->
     <context:component-scan base-package="com.common">
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
@@ -55,16 +54,16 @@
     </bean>
 
     <bean id="hibernateJpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
+    <!-- Jpa 事务配置 -->
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+
     <!-- Spring Data Jpa配置 -->
     <jpa:repositories base-package="com.common.security" transaction-manager-ref="transactionManager"
                       entity-manager-factory-ref="entityManagerFactory"/>
     <jpa:repositories base-package="com.redcard" transaction-manager-ref="transactionManager"
                       entity-manager-factory-ref="entityManagerFactory"/>
-
-    <!-- Jpa 事务配置 -->
-    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-        <property name="entityManagerFactory" ref="entityManagerFactory"/>
-    </bean>
 
     <bean id="quartzTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>
