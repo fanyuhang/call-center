@@ -512,4 +512,10 @@
 	<tblSysParameter fldId="3" fldName="NODE_ROOT_NAME"
 		fldValue="主菜单" fldUnit="" fldStatus="0" fldDisplay="1" fldComment="模块管理中根节点名称" />
 
+    <tblSysJob fldid="1" fldJobName="合同是否到期检查" fldJobGroup="CustomerContractFinishCheckTask" fldTriggerName="CustomerContractFinishCheckTask"
+               fldTriggerGroup="CustomerContractFinishCheckTask" fldCronExpression="0 0 1 * * ?"
+               fldIntervalInSeconds="0" fldRepeatCount="0" fldTriggerType="1"
+               fldJobClass="com.redcard.task.CustomerContractFinishCheckTask"
+               fldStatus="0" fldExecuteCount="0"/>
+
 </dataset>
