@@ -4,12 +4,18 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 import com.common.core.util.JsonTimestampSerializer;
+import com.common.security.entity.User;
 import com.common.security.util.SecurityUtil;
 
 /**
@@ -36,6 +42,8 @@ public class TelephoneImport implements java.io.Serializable {
 	private Date fldOperateDate;
 	private String fldCreateUserNo;
 	private Date fldCreateDate;
+	
+	private Integer unAssignTotalNumber;
 
 	// Constructors
 
@@ -213,4 +221,30 @@ public class TelephoneImport implements java.io.Serializable {
 		this.fldCreateDate = fldCreateDate;
 	}
 
+	protected User operateUser;
+	
+	@JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "FLDOPERATEUSERNO", referencedColumnName="FLDLOGINNAME", insertable = false, updatable = false)
+	public User getOperateUser() {
+		return operateUser;
+	}
+
+	public void setOperateUser(User operateUser) {
+		this.operateUser = operateUser;
+	}
+	
+	@Transient
+	public String getOperateUserName() {
+		return operateUser!=null ? operateUser.getUserName() : "";
+	}
+
+	@Transient
+	public Integer getUnAssignTotalNumber() {
+		return unAssignTotalNumber;
+	}
+
+	public void setUnAssignTotalNumber(Integer unAssignTotalNumber) {
+		this.unAssignTotalNumber = unAssignTotalNumber;
+	}
 }

@@ -3,6 +3,8 @@ package com.redcard.telephone.web.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,12 +19,16 @@ import com.redcard.telephone.entity.TelephoneAssign;
 import com.redcard.telephone.entity.TelephoneAssignDetail;
 import com.redcard.telephone.service.TelephoneAssignDetailManager;
 import com.redcard.telephone.service.TelephoneAssignManager;
+import com.redcard.telephone.service.TelephoneCustomerManager;
 import com.redcard.telephone.service.TelephoneImportDetailManager;
+import com.redcard.telephone.service.TelephoneImportManager;
 import com.redcard.telephone.service.TelephoneTaskManager;
 
 @Controller
 @RequestMapping(value = "/telephone/assign")
 public class TelephoneAssignController {
+	private static Logger log = LoggerFactory.getLogger(TelephoneAssignController.class);
+	
 	@Autowired
 	private TelephoneAssignManager telephoneAssignManager;
 	@Autowired
@@ -31,6 +37,10 @@ public class TelephoneAssignController {
 	private TelephoneTaskManager telephoneTaskManager;
 	@Autowired
 	private TelephoneAssignDetailManager telephoneAssignDetailManager;
+	@Autowired
+	private TelephoneCustomerManager telephoneCustomerManager;
+	@Autowired
+	private TelephoneImportManager telephoneImportManager;
 	
 	@RequestMapping(value = "init")
     public String init(String menuNo, Model model) {
@@ -73,6 +83,28 @@ public class TelephoneAssignController {
         return result;
     }
 	
+	@RequestMapping(value = "countImportCustomer")
+    @ResponseBody
+	public AsyncResponse countImportCustomer() {
+		AsyncResponse result = new AsyncResponse();
+		Integer count = telephoneCustomerManager.countCustomer();
+		List<Integer> data = new ArrayList<Integer>();
+        data.add(count);
+        result.setData(data);
+        return result;
+	}
+	
+	@RequestMapping(value = "countImportCustomerById")
+    @ResponseBody
+	public AsyncResponse countImportCustomerById(String id) {
+		AsyncResponse result = new AsyncResponse();
+		Integer count = telephoneImportManager.countById(id);
+		List<Integer> data = new ArrayList<Integer>();
+        data.add(count);
+        result.setData(data);
+        return result;
+	}
+	
 	@RequestMapping(value = "save")
     @ResponseBody
     public AsyncResponse save(TelephoneAssign telephoneAssign) {
@@ -91,7 +123,21 @@ public class TelephoneAssignController {
 	@RequestMapping(value = "listDetail")
     @ResponseBody
     public DataResponse<TelephoneAssignDetail> listDetail(GridPageRequest pageRequest, String where) {
-        pageRequest.setSort("fldOperateDate", "desc");
+        pageRequest.setSort("fldCallUserNo", "desc");
         return (new DataResponse<TelephoneAssignDetail>(telephoneAssignDetailManager.findDetail(pageRequest, where)));
+    }
+	
+	@RequestMapping(value = "recover")
+    @ResponseBody
+    public AsyncResponse recover(TelephoneAssign telephoneAssign) {
+        AsyncResponse result = new AsyncResponse(false, "话务回收成功");
+        try {
+			telephoneAssignManager.recover(telephoneAssign);
+		} catch (Exception e) {
+			result.setIsError(true);
+			result.setMessage("话务回收失败");
+			log.error(e.toString());
+		}
+        return result;
     }
 }
