@@ -25,6 +25,8 @@
     </div>
     <br/>
     <div>
+    	&nbsp;<span>话单名称:</span>
+    	<input type="text" name="importName"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     	<span>是否去重:</span>
     	<input name="fldDuplicateStatus" type="radio" value="0"/>去重
     	<input name="fldDuplicateStatus" type="radio" value="1"/>不去重
@@ -39,7 +41,7 @@
 	    inputWidth: 150,
 	    space: 30,
 	    fields: [
-	        {display: "操作人", name: "fldOperateUserNo", newline: true, type: "text", cssClass: "field"},
+	        {display: "操作人", name: "operateUser.userName", newline: true, type: "text", cssClass: "field"},
 	        {display: "开始时间", name: "startDate", newline: true, type: "date", cssClass: "field",
 	        	attr:{op:'greaterorequal', vt:'date', field:"fldOperateDate"}},
 	        {display: "结束时间", name: "endDate", newline: false, type: "date", cssClass: "field",
@@ -56,7 +58,7 @@
 	    columnWidth: 180,
 	    columns: [
 	    	{display: "ID", name: "fldId", hide:1,width:1},
-	        {display: "操作人", name: "fldOperateUserNo"},
+	        {display: "操作人", name: "operateUserName"},
 	        {display: "导入时间", name: "fldCreateDate"},
 	        {display: "最近操作时间", name: "fldOperateDate"},
 	        {display: "重复记录数", name: "fldDuplicateTotalNumber"},
@@ -112,9 +114,9 @@
 	$("#uploader").plupload({
     	runtimes: 'flash',
     	url: '<c:url value="/telephone/import/upload"/>',
-    	//max_file_size: '5mb',
+    	max_file_size: '10mb',
     	max_file_count: 1,
-    	//chunk_size: '1mb',
+    	chunk_size: '1mb',
     	rename: true,
     	multiple_queues: false,
    	 	resize: {width: 600, height: 500, quality: 30},
@@ -145,31 +147,39 @@
 	
 	var detailWin = null;
 	function f_upload() {
+		var win = parent || window;
+		
 	    if (detailWin) {
 	        detailWin.show();
 	    } else {
 	        detailWin = $.ligerDialog.open({
 	            title: '话单导入',
 	            target: $("#upload"),
-	            width: 600, height: 420, top: 10,
+	            width: 600, height: 450, top: 10,
 	            buttons: [
 	            	{
 	            		text:"确定",onclick:function() {
 	            			var fileName = $("#fileName").val();
 	            			if(fileName == "") {
-	            				LG.showError("请上传文件!");
+	            				win.LG.showError("请上传文件!");
+	            				return;
+	            			}
+	            			
+	            			var importName = $("input[name='importName']").val();
+	            			if(importName.trim() == ""){
+	            				win.LG.showError("请填写话单名称!");
 	            				return;
 	            			}
 	            			
 	            			var fldDuplicateStatus = $("input[name='fldDuplicateStatus']:checked").val();	
 	            			if(!fldDuplicateStatus) {
-	            				LG.showError("请选择是否去重!");
+	            				win.LG.showError("请选择是否去重!");
 	            				return;
 	            			}
 	            			
 	            			LG.ajax({
 			                	url: '<c:url value="/telephone/import/save"/>',
-				                data: {fileName:fileName,fldDuplicateStatus:fldDuplicateStatus},
+				                data: {importName:importName,fileName:fileName,fldDuplicateStatus:fldDuplicateStatus},
 				                beforeSend: function () {
 				                	
 				                },
@@ -177,7 +187,14 @@
 				                },
 				                success: function () {
             						uploader.stop();
+            						try{
+	        								var files = uploader.files;
+	        								for(var i=0;i<files.length;i++) {
+	        									uploader.removeFile(files[i]);
+	        								}
+	        							}catch(e){}
             						detailWin.hide();
+            						$("input[name='importName']").val("");
             						LG.showSuccess("导入话单成功!");
             						f_reload();
 				                },

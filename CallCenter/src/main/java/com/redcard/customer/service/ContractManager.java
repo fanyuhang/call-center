@@ -1,8 +1,11 @@
 package com.redcard.customer.service;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import com.redcard.customer.entity.CustomerProductDetail;
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
@@ -38,22 +41,43 @@ public class ContractManager extends GenericPageHQLQuery<CustomerContract> {
 
     @Transactional(readOnly = false)
     public void save(CustomerContract customerContract) {
-		String fldProductId = customerProductDetailDao.findOne(customerContract.getFldProductDetailId()).getFldProductId();
-		customerContract.setFldProductId(fldProductId);
-		customerContract.setFldServiceUserNo(SecurityUtil.getCurrentUserLoginName());
-		contractDao.save(customerContract);
-		
-		//更新客户的卡相关信息
-		Customer customer = customerDao.findOne(customerContract.getFldCustomerId());
-		customer.setFldCardLevel(customerContract.getFldCardLevel());
-		if(null != customerContract.getFldCardMoney())
-			customer.setFldCardTotalMoney(customerContract.getFldCardMoney());
-		customerDao.save(customer);
+        CustomerProductDetail customerProductDetail = customerProductDetailDao.findOne(customerContract.getFldProductDetailId());
+        String fldProductId = customerProductDetail.getFldProductId();
+        customerContract.setFldProductId(fldProductId);
+        //更新是否到期
+        if (DateUtils.truncatedCompareTo(customerProductDetail.getFldDueDate(), new Date(), Calendar.DATE) > 0) {
+            customerContract.setFldFinishStatus(Constant.CONTRACT_FINISH_STATUS_NO);
+        } else {
+            customerContract.setFldFinishStatus(Constant.CONTRACT_FINISH_STATUS_YES);
+        }
+        contractDao.save(customerContract);
+
+        //更新客户的卡相关信息
+        Customer customer = customerDao.findOne(customerContract.getFldCustomerId());
+        customer.setFldCardLevel(customerContract.getFldCardLevel());
+        customer.setFldCardNo(customerContract.getFldCardNo());
+        if (null != customerContract.getFldCardMoney()) {
+            if (customer.getFldCardTotalMoney() == null) {
+                customer.setFldCardTotalMoney(customerContract.getFldCardMoney());
+            } else {
+                customer.setFldCardTotalMoney(customer.getFldCardTotalMoney() + customerContract.getFldCardMoney());
+            }
+        }
+        customerDao.save(customer);
     }
-    
+
     @Transactional(readOnly = false)
     public void saveOnly(CustomerContract customerContract) {
-		contractDao.save(customerContract);
+        contractDao.save(customerContract);
+    }
+
+    @Transactional(readOnly = false)
+    public void updateFinishStatus() {
+        List<CustomerContract> customerContractList = contractDao.queryByDueDate(DateUtils.truncate(new Date(), Calendar.DATE));
+        for(CustomerContract customerContract:customerContractList){
+            customerContract.setFldFinishStatus(1);
+        }
+        contractDao.save(customerContractList);
     }
 
     public CustomerContract find(String fldId) {

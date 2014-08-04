@@ -15,6 +15,11 @@ import com.common.security.entity.UserRole;
 import com.common.security.service.UserManager;
 import com.common.security.util.Md5PasswordEncoder;
 import com.common.security.util.SecurityUtil;
+import com.phone.constants.PhoneTypeEnum;
+import com.phone.entity.Operator;
+import com.phone.entity.Uidrole;
+import com.phone.service.OperatorManager;
+import com.phone.service.UidroleManager;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,6 +46,12 @@ public class UserController {
 
     @Autowired
     private AppContext appContext;
+
+    @Autowired
+    private OperatorManager operatorManager;
+
+    @Autowired
+    private UidroleManager uidroleManager;
 
     @RequestMapping(value = "init")
     public String init(String menuNo, Model model) {
@@ -101,6 +112,7 @@ public class UserController {
         if (userManager.existUser(user.getLoginName())) {
             return new AsyncResponse(true, "该用户已存在");
         }
+
         user.setPassword(Md5PasswordEncoder.encodePassword(user.getPassword(), user.getLoginName()));
         user.setLoginStatus(Constant.LOGIN_STATUS_LOGOUT);
         user.setUserStatus(Constant.USER_STATUS_NORMAL);
@@ -110,6 +122,14 @@ public class UserController {
         userManager.saveUser(user, deptCode, roleIds);
         user = userManager.findUserByLoginName(user.getLoginName());
         SecurityUtil.getCurrentUserContext().setUser(user);
+
+        try {
+            operatorManager.save(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error(e.getMessage());
+            return new AsyncResponse(true, "话务系统用户创建失败，请联系管理员");
+        }
         return result;
     }
 
@@ -125,6 +145,13 @@ public class UserController {
         userManager.saveUser(user, deptCode, roleIds);
         user = userManager.findUserByLoginName(user.getLoginName());
         SecurityUtil.getCurrentUserContext().setUser(user);
+        try {
+            operatorManager.save(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error(e.getMessage());
+            return new AsyncResponse(true, "话务系统用户创建失败，请联系管理员");
+        }
         return result;
     }
 
@@ -133,7 +160,17 @@ public class UserController {
     public AsyncResponse delete(Integer id) {
         AsyncResponse result = new AsyncResponse(false, "删除用户成功");
 //        userManager.deleteUser(id);
-        userManager.updateUserStatus(Constant.USER_STATUS_NOT_VALID,id);
+        User user = userManager.findUser(id);
+        userManager.updateUserStatus(Constant.USER_STATUS_NOT_VALID, id);
+        try {
+            if (user != null) {
+                operatorManager.delete(user.getLoginName());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error(e.getMessage());
+            return new AsyncResponse(true, "话务系统用户创建失败，请联系管理员");
+        }
         return result;
     }
 
@@ -141,7 +178,18 @@ public class UserController {
     @ResponseBody
     public AsyncResponse cancel(Integer id) {
         AsyncResponse result = new AsyncResponse(false, "注销用户成功");
-        userManager.updateUserStatus(Constant.USER_STATUS_NOT_VALID,id);
+        userManager.updateUserStatus(Constant.USER_STATUS_NOT_VALID, id);
+        User user = userManager.findUser(id);
+        userManager.updateUserStatus(Constant.USER_STATUS_NOT_VALID, id);
+        try {
+            if (user != null) {
+                operatorManager.delete(user.getLoginName());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error(e.getMessage());
+            return new AsyncResponse(true, "话务系统用户创建失败，请联系管理员");
+        }
         return result;
     }
 

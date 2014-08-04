@@ -48,7 +48,7 @@
 								width : "630",
 								validate : {
 									required : true,
-									maxlength : 200
+									maxlength : 500
 								},
 								group : "<label style=white-space:nowrap;>内容</label>",
 								groupicon : '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'
@@ -134,7 +134,7 @@
 										}, {
 											display : "短信模板备注",
 											name : "fldComment"
-										}, ],
+										} ],
 								pageSize : 20,
 								heightDiff : -10,
 								url : '<c:url value="/message/template/conditionalList"/>',

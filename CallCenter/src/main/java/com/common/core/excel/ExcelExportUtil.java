@@ -105,7 +105,6 @@ public class ExcelExportUtil<T> {
     }
 
     public String generate(String fileName) throws Exception {
-
         table = tables.getTableMap().get(this.data.get(0).getClass());
         if (table == null) {
             throw new Exception("请检查导出excel配置文件");

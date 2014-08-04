@@ -37,9 +37,9 @@
 	<div position="bottom" title="产品明细">
 		<div id="contactgrid"></div>
 	</div>
-	<div id="detail" style="display:none;">
-        <form:form id="detailMainform" name="detailMainform" method="post" modelAttribute="productDetail"></form:form>
-    </div>
+</div>
+<div id="detail" style="display:none;">
+    <form:form id="detailMainform" name="detailMainform" method="post" modelAttribute="productDetail"></form:form>
 </div>
 <script type="text/javascript">
 	var dayUnitData =<sys:dictList type = "14"/>;
@@ -51,8 +51,8 @@
 	}
 
 	var layout = $("#layout").ligerLayout({
-   	 	bottomHeight:$(window).height() * 0.65,
-    	heightDiff:0,
+   	 	bottomHeight:$(window).height() * 0.60,
+    	heightDiff:-10,
     	onEndResize:updateGridHeight,
     	onHeightChanged:updateGridHeight
 	});
@@ -101,11 +101,11 @@
     	checkbox:false,
     	columnWidth: 130,
     	columns:[
+            {display:"实际天数", name:"dtlClearDays",render:function(item){
+                return item.fldClearDays;
+            }},
     		{display:"天数单位", name:"dtlDayUnit",render:function(item){
     			return renderLabel(dayUnitData,item.fldDayUnit);
-    		}},
-            {display:"实际天数", name:"dtlClearDays",render:function(item){
-    			return item.fldClearDays;
     		}},
             {display:"到期日期", name:"dtlDueDate",render:function(item){
     			return item.fldDueDate;

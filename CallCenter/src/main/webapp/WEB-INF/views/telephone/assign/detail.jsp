@@ -13,7 +13,7 @@
 	    columnWidth: 180,
 	    columns: [
 	    	{display: "ID", name: "fldId", hide:1,width:1},
-	        {display: "话务员", name: "fldCallUserNo"},
+	        {display: "话务员", name: "callUserName"},
 	        {display: "任务日期", name: "fldTaskDate"},
 	        {display: "话务数", name: "fldTaskNumber"},
 	        {display: "已拨打数", name: "fldFinishNumber"}

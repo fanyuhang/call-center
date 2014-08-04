@@ -1,4 +1,9 @@
+//坐席登录状态
 LG.telephoneStatus = 1;
+//是否是来电
+LG.isOutCall = 1;
+//是否正在通话
+LG.isTongHua = 1;
 
 LG.dial = function () {
     $(document).bind('keydown.dial', function (e) {
@@ -10,8 +15,8 @@ LG.dial = function () {
     if (!window.dialWin) {
         var dialPanle = $("<form></form>");
         dialPanle.ligerForm({
-            fields:[
-                { display:'电话号码', name:'phone', type:'text', validate:{ maxlength:16, required:true, messages:{ required:'请输入电话号码'}} }
+            fields: [
+                { display: '电话号码', name: 'phone', type: 'text', validate: { maxlength: 16, required: true, messages: { required: '请输入电话号码'}} }
             ]
         });
 
@@ -19,17 +24,18 @@ LG.dial = function () {
         LG.validate(dialPanle);
 
         window.dialWin = $.ligerDialog.open({
-            width:400,
-            height:120, top:200,
-            isResize:true,
-            title:'拨打电话',
-            target:dialPanle,
-            buttons:[
-                { text:'拨打', onclick:function () {
+            width: 400,
+            height: 120, top: 200,
+            isResize: true,
+            modal:false,
+            title: '拨打电话',
+            target: dialPanle,
+            buttons: [
+                { text: '拨打', onclick: function () {
                     doDial();
                 }
                 },
-                { text:'取消', onclick:function () {
+                { text: '取消', onclick: function () {
                     window.dialWin.hide();
                     $(document).unbind('keydown.dial');
                 }
@@ -67,9 +73,10 @@ LG.dial = function () {
     }
 };
 
-LG.call=function(phone){
+LG.call = function (phone) {
     var snell = document.getElementById("snocx");
-    snell.snlMakeCall("9"+phone,"0");
+    LG.isOutCall = 0;
+    snell.snlMakeCall("9" + phone, "0");
     $("#telephone").html(phone);
     $("#userStatus").removeClass("i-ready");
     $("#userStatus").addClass("i-dialing");
@@ -79,10 +86,10 @@ LG.call=function(phone){
 
 LG.connected = function (type) {
     var snell = document.getElementById("snocx");
-    if(type == 0){
+    if (type == 0) {
         //在通话过程中, 话机转为保持状态
         snell.snlHeldCall();
-    }else{
+    } else {
         //在通话过程中, 取回被当前话机保持的那一通电话
         snell.snlRetriveCall();
     }
@@ -98,8 +105,8 @@ LG.transfer = function () {
     if (!window.transferWin) {
         var dialPanle = $("<form></form>");
         dialPanle.ligerForm({
-            fields:[
-                { display:'分机号码', name:'extension', type:'text', validate:{ maxlength:16, required:true, messages:{ required:'请输入分机号码'}} }
+            fields: [
+                { display: '分机号码', name: 'extension', type: 'text', validate: { maxlength: 16, required: true, messages: { required: '请输入分机号码'}} }
             ]
         });
 
@@ -107,17 +114,18 @@ LG.transfer = function () {
         LG.validate(dialPanle);
 
         window.transferWin = $.ligerDialog.open({
-            width:400,
-            height:120, top:200,
-            isResize:true,
-            title:'拨打电话',
-            target:dialPanle,
-            buttons:[
-                { text:'拨打', onclick:function () {
+            width: 400,
+            height: 120, top: 200,
+            isResize: true,
+            modal:false,
+            title: '转接分机',
+            target: dialPanle,
+            buttons: [
+                { text: '拨打', onclick: function () {
                     doTransfer();
                 }
                 },
-                { text:'取消', onclick:function () {
+                { text: '取消', onclick: function () {
                     window.transferWin.hide();
                     $(document).unbind('keydown.transfer');
                 }
@@ -168,15 +176,11 @@ LG.hangup = function () {
 LG.mute = function (type) {
     var snell = document.getElementById("snocx");
     //静音模式 0-开, 1-关
-    if(type==0){
-        snell.snlSlientCall(0);
-    }else{
-        snell.snlSlientCall(1);
+    if (type == 0) {
+        snell.snlSilentCall(0);
+    } else {
+        snell.snlSilentCall(1);
     }
-};
-
-LG.msm = function () {
-
 };
 
 LG.control = function () {

@@ -489,6 +489,9 @@ public class Constant {
 	public static final Integer PRODUCT_STATUS_NORMAL = 0; // 产品状态，有效
 	public static final Integer PRODUCT_STATUS_DIABLED = 9; // 产品状态，无效
 
+    public static final Integer CONTRACT_FINISH_STATUS_NO = 0;//合同是否状态,否
+    public static final Integer CONTRACT_FINISH_STATUS_YES = 1;//合同是否状态,是
+
 	public static final Integer PRODUCT_DETAIL_STATUS_NORMAL = 0; // 产品明细状态，有效
 	public static final Integer PRODUCT_DETAIL_STATUS_DIABLED = 9; // 产品明细状态，无效
 
@@ -522,4 +525,10 @@ public class Constant {
 	
 	public static final Integer TASK_CALL_STATUS_UN = 0;//拨打状态,未拨打
 	public static final Integer TASK_CALL_STATUS_ED = 1;//拨打状态,已拨打
+
+	public static final Integer TELEPHONE_SOURCE_IMPORT = 0;//话务来源，导入话务
+	public static final Integer TELEPHONE_SOURCE_CUSTOMER = 1;//话务来源，已有话务
+	
+	public static final Integer TELEPHONE_TASK_AUDIT_STATUS_UN = 0;//审查状态,待审查
+	public static final Integer TELEPHONE_TASK_AUDIT_STATUS_ED = 1;//审查状态,已审查
 }

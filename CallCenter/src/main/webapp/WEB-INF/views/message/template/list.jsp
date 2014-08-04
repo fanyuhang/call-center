@@ -23,12 +23,6 @@
 			inputWidth : 150,
 			space : 30,
 			fields : [ {
-				display : "模板编号",
-				name : "fldId",
-				newline : true,
-				type : "text",
-				cssClass : "field"
-			}, {
 				display : "模板名称",
 				name : "fldName",
 				newline : false,
@@ -50,16 +44,10 @@
 					"op" : "equal",
 					"vt" : "int"
 				}
-			}, {
-				display : "操作人",
-				name : "operateUser.userName",
-				newline : true,
-				type : "text",
-				cssClass : "field"
-			}, {
+			},  {
 				display : "操作开始时间",
 				name : "operateStartDate",
-				newline : false,
+				newline : true,
 				type : "date",
 				cssClass : "field",
 				attr : {
@@ -78,34 +66,6 @@
 					vt : 'date',
 					field : "fldOperateDate"
 				}
-			}, {
-				display : "创建人",
-				name : "createUser.userName",
-				newline : true,
-				type : "text",
-				cssClass : "field"
-			}, {
-				display : "创建开始时间",
-				name : "createStartDate",
-				newline : false,
-				type : "date",
-				cssClass : "field",
-				attr : {
-					op : 'greaterorequal',
-					vt : 'date',
-					field : "fldCreateDate"
-				}
-			}, {
-				display : "创建结束时间",
-				name : "createEndDate",
-				newline : false,
-				type : "date",
-				cssClass : "field",
-				attr : {
-					op : 'lessorequal',
-					vt : 'date',
-					field : "fldCreateDate"
-				}
 			} ],
 			toJSON : JSON2.stringify
 		});
@@ -118,16 +78,6 @@
 					delayLoad : true,
 					columnWidth : 180,
 					columns : [
-							{
-								display : "ID",
-								name : "fldId",
-								hide : 1,
-								width : 1
-							},
-							{
-								display : "模板编号",
-								name : "fldId"
-							},
 							{
 								display : "模板名称",
 								name : "fldName"

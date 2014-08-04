@@ -42,6 +42,7 @@
                 split:','
             }},
             {display:"分机号", name:"phoneExtension", newline:true, labelWidth:100, width:220, space:30, type:"text", validate:{maxlength:32}, group:"话务信息", groupicon:"<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>"},
+            {display:"话务系统密码", name:"phonePassword", newline:true, labelWidth:100, width:220, space:30, type:"hidden", validate:{maxlength:32}},
             {display:"职位类型", name:"type", newline:true, labelWidth:100, width:220, space:30, type:"select", comboboxName:"typeName", options:{
                 valueFieldID:"type",
                 valueField:"value",
@@ -92,6 +93,7 @@
         return;
     }
     function f_save() {
+        $("#phonePassword").val($("#password").val());
         LG.submitForm(mainform, function (data) {
             var win = parent || window;
             if (data.IsError) {

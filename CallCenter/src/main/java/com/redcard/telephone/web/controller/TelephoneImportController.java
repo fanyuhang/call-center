@@ -84,9 +84,9 @@ public class TelephoneImportController {
             }
             os.flush();
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            log.error(e.toString());
         } catch (IOException e) {
-            e.printStackTrace();
+        	log.error(e.toString());
         } finally {
             if (inputStream != null) {
                 inputStream.close();
@@ -117,7 +117,7 @@ public class TelephoneImportController {
 	
 	@RequestMapping(value = "save")
     @ResponseBody
-    public AsyncResponse upload(String fileName,String fldDuplicateStatus,HttpServletRequest request,HttpServletResponse response) {
+    public AsyncResponse upload(String importName,String fileName,String fldDuplicateStatus,HttpServletRequest request,HttpServletResponse response) {
 		AsyncResponse result = new AsyncResponse(false,"导入话单成功!");
         try {
         	List<TelephoneImportEntity> objects = ExcelImportUtil.excelImport(TelephoneImportEntity.class, fileName);
@@ -216,6 +216,7 @@ public class TelephoneImportController {
             	
             	//记录话务导入表
             	TelephoneImport telephoneImport = new TelephoneImport();
+            	telephoneImport.setFldName(importName);
             	telephoneImport.setFldId(EntityUtil.getId());
             	telephoneImport.setFldDuplicateStatus(Integer.valueOf(fldDuplicateStatus));
             	telephoneImport.setFldUploadFilePath(localPath+origFileName);//原始话单相对路径
@@ -224,7 +225,11 @@ public class TelephoneImportController {
             	if(!StringUtils.isEmpty(dupFileName)) {
             		telephoneImport.setFldDuplicateFilePath(localPath+dupFileName);//重复记录文件地址
             	}
-            	telephoneImport.setFldImportTotalNumber(list.size());
+            	if(Constant.DUPLICATE_STATUS_N == Integer.valueOf(fldDuplicateStatus)) {
+            		telephoneImport.setFldImportTotalNumber(objects.size());
+            	} else {            		
+            		telephoneImport.setFldImportTotalNumber(list.size());
+            	}
             	if(!StringUtils.isEmpty(noDupFileName)) {
             		telephoneImport.setFldImportFilePath(localPath+noDupFileName);
             	}
@@ -310,7 +315,7 @@ public class TelephoneImportController {
         		return new AsyncResponse(false, "未找到原始话单");
         	}
         } catch (Exception e) {
-            e.printStackTrace();
+        	log.error(e.toString());
             return new AsyncResponse(true, "系统内部错误");
         }
         return result;
@@ -329,7 +334,7 @@ public class TelephoneImportController {
         		return new AsyncResponse(false, "未找到非重复话单");
         	}
         } catch (Exception e) {
-            e.printStackTrace();
+        	log.error(e.toString());
             return new AsyncResponse(true, "系统内部错误");
         }
         return result;
@@ -348,9 +353,15 @@ public class TelephoneImportController {
         		return new AsyncResponse(false, "未找到重复话单");
         	}
         } catch (Exception e) {
-            e.printStackTrace();
+        	log.error(e.toString());
             return new AsyncResponse(true, "系统内部错误");
         }
         return result;
     }
+	
+	@RequestMapping(value = "listAllUnAssignTelephone")
+    @ResponseBody
+	public List<TelephoneImport> listAllUnAssignTelephone() {
+		return telephoneImportManager.listAllUnAssignTelephone();
+	}
 }
