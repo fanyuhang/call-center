@@ -4,11 +4,20 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
+import com.common.core.util.JsonDateSerializer;
+import com.common.security.entity.User;
 import com.common.security.util.SecurityUtil;
 
 /**
@@ -147,6 +156,7 @@ public class TelephoneTask implements java.io.Serializable {
 	}
 
 	@Column(name = "FLDTASKDATE")
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getFldTaskDate() {
 		return this.fldTaskDate;
 	}
@@ -290,4 +300,21 @@ public class TelephoneTask implements java.io.Serializable {
 		this.fldCreateDate = fldCreateDate;
 	}
 
+	protected User callUser;
+
+	@JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "FLDCALLUSERNO", referencedColumnName="FLDLOGINNAME", insertable = false, updatable = false)
+	public User getCallUser() {
+		return callUser;
+	}
+
+	public void setCallUser(User callUser) {
+		this.callUser = callUser;
+	}
+	
+	@Transient
+	public String getCallUserName() {
+		return null != callUser ? callUser.getUserName() : "";
+	}	
 }

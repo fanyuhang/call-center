@@ -14,11 +14,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.common.core.grid.AsyncResponse;
 import com.common.core.grid.DataResponse;
 import com.common.core.grid.GridPageRequest;
+import com.common.core.util.FilterGroupUtil;
 import com.redcard.telephone.entity.TelephoneAssignDetail;
 import com.redcard.telephone.entity.TelephoneExchange;
+import com.redcard.telephone.entity.TelephoneTask;
 import com.redcard.telephone.service.TelephoneAssignDetailManager;
 import com.redcard.telephone.service.TelephoneAssignManager;
 import com.redcard.telephone.service.TelephoneExchangeManager;
+import com.redcard.telephone.service.TelephoneTaskManager;
 
 @Controller
 @RequestMapping(value = "/telephone/manage")
@@ -31,6 +34,8 @@ public class TelephoneManageController {
 	private TelephoneAssignManager telephoneAssignManager;
 	@Autowired
 	private TelephoneExchangeManager telephoneExchangeManager;
+	@Autowired
+	private TelephoneTaskManager telephoneTaskManager;
 	
 	@RequestMapping(value = "init")
     public String init(String menuNo, Model model) {
@@ -43,6 +48,21 @@ public class TelephoneManageController {
     public DataResponse<TelephoneAssignDetail> list(GridPageRequest pageRequest, String where) {
         pageRequest.setSort("fldOperateDate", "desc");
         return (new DataResponse<TelephoneAssignDetail>(telephoneAssignDetailManager.findDetail(pageRequest, where)));
+    }
+	
+	@RequestMapping(value = "listTask")
+    public String listTask(String menuNo, String id,Model model) {
+        model.addAttribute("menuNo", menuNo);
+        model.addAttribute("assignDetailId", id);
+        return "telephone/manage/taskDetail";
+    }
+	
+	@RequestMapping(value = "listTaskDetail")
+    @ResponseBody
+    public DataResponse<TelephoneTask> listTaskDetail(GridPageRequest pageRequest, String fldAssignDetailId) {
+        String where = "{}";
+        where = FilterGroupUtil.addRule(where, "fldAssignDetailId", fldAssignDetailId, "string", "equal");
+        return (new DataResponse<TelephoneTask>(telephoneTaskManager.findAll(where, pageRequest)));
     }
 	
 	@RequestMapping(value = "exchange")

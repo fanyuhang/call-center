@@ -76,8 +76,8 @@
     		<mapping value="1" text="男"></mapping>
     		<mapping value="0" text="女"></mapping>
     	</column>
-    	<column cell="C1" propertyName="telephone" nullAllowed="true"></column>
-    	<column cell="D1" propertyName="mobile" nullAllowed="true"></column>
+    	<column cell="C1" propertyName="mobile" nullAllowed="true"></column>
+    	<column cell="D1" propertyName="telephone" nullAllowed="true"></column>
     	<column cell="E1" propertyName="address" nullAllowed="true"></column>
     </table>
 </tables>

@@ -386,9 +386,12 @@
 	<tblNode fldCode="010503" fldParent="0105" fldName="话务管理" fldDesc="" fldTarget="" 
 		fldIcon="/static/ligerUI/icons/32X32/suppliers.gif"
 		fldLink="/telephone/manage/init" fldType="1" fldPosition="3" />
-	<tblNode fldCode="01050301" fldParent="010503" fldName="任务交接" fldDesc="" fldTarget="exchange"
-		fldIcon="/static/ligerUI/icons/silkicons/application_link.png" 
+	<tblNode fldCode="01050301" fldParent="010503" fldName="任务明细" fldDesc="" fldTarget="detail"
+		fldIcon="/static/ligerUI/icons/silkicons/application_view_detail.png" 
 		fldLink="/telephone/manage/exchange" fldType="2" fldPosition="1" />
+	<tblNode fldCode="01050302" fldParent="010503" fldName="任务交接" fldDesc="" fldTarget="exchange"
+		fldIcon="/static/ligerUI/icons/silkicons/application_link.png" 
+		fldLink="/telephone/manage/exchange" fldType="2" fldPosition="2" />
 
     <tblNode fldCode="0106" fldParent="01" fldName="话务监控" fldDesc=""
              fldTarget="#" fldIcon="" fldLink="" fldType="1" fldPosition="6" />
@@ -569,6 +572,9 @@
     <tblDictionary fldId="93" fldType="22" fldName="座席听取录音或留言" fldValue="40" fldStatus="0" fldComment="坐席状态，座席听取录音或留言" />
     <tblDictionary fldId="94" fldType="22" fldName="座席等待ivr验证结果返回" fldValue="41" fldStatus="0" fldComment="坐席状态，座席等待ivr验证结果返回" />
     <tblDictionary fldId="95" fldType="22" fldName="座席登出" fldValue="39" fldStatus="60" fldComment="坐席状态，座席登出" />
+    
+    <tblDictionary fldId="96" fldType="23" fldName="未拨打" fldValue="0" fldStatus="0" fldComment="拨打状态,未拨打" />
+    <tblDictionary fldId="97" fldType="23" fldName="已拨打" fldValue="1" fldStatus="0" fldComment="拨打状态,已拨打" />
 
     <tblSysParameter fldId="1" fldName="SYS_ADMIN"
 		fldValue="1" fldUnit="" fldStatus="0" fldDisplay="1" fldComment="" />

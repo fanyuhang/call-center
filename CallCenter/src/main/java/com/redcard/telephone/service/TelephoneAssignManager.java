@@ -79,7 +79,7 @@ public class TelephoneAssignManager extends GenericPageHQLQuery<TelephoneAssign>
 				telephoneAssignDetail.setFldTaskNumber(telephoneAssign.getFldAverageNumber());
 				
 				//3.话务任务表
-				if(telephoneAssign.getFldSource() == Constant.TELEPHONE_SOURCE_IMPORT) {//来源：导入话务
+				if(telephoneAssign.getFldSource().equals(Constant.TELEPHONE_SOURCE_IMPORT)) {//来源：导入话务
 					//从话务明细中获取指定数量的话单
 					GridPageRequest page = new GridPageRequest();
 					page.setPagesize(telephoneAssign.getFldAverageNumber());
@@ -95,11 +95,10 @@ public class TelephoneAssignManager extends GenericPageHQLQuery<TelephoneAssign>
 						telephoneTask.setFldCallUserNo(callUserNo);
 						telephoneTask.setFldCustomerName(telephoneImportDetail.getFldCustomerName());
 						telephoneTask.setFldAssignDate(new Date());
-						telephoneTask.setFldAssignDate(telephoneAssignDetail.getFldTaskDate());
 						telephoneTask.setFldTaskType(Constant.TASK_TYPE_AUTO);
 						telephoneTask.setFldCallStatus(Constant.TASK_CALL_STATUS_UN);
 						telephoneTask.setFldTaskStatus(Constant.TASK_FINISH_STATUS_UNFINISH);
-						telephoneTask.setFldTaskDate(new Date());
+						telephoneTask.setFldTaskDate(telephoneAssignDetail.getFldTaskDate());
 						telephoneTask.setFldAuditStatus(Constant.TELEPHONE_TASK_AUDIT_STATUS_UN);
 						telephoneTask.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
 						telephoneTask.setFldOperateDate(new Date());
@@ -126,11 +125,10 @@ public class TelephoneAssignManager extends GenericPageHQLQuery<TelephoneAssign>
 						telephoneTask.setFldCallUserNo(callUserNo);
 						telephoneTask.setFldCustomerName(telephoneCustomer.getFldCustomerName());
 						telephoneTask.setFldAssignDate(new Date());
-						telephoneTask.setFldAssignDate(telephoneAssignDetail.getFldTaskDate());
 						telephoneTask.setFldTaskType(Constant.TASK_TYPE_AUTO);
 						telephoneTask.setFldCallStatus(Constant.TASK_CALL_STATUS_UN);
 						telephoneTask.setFldTaskStatus(Constant.TASK_FINISH_STATUS_UNFINISH);
-						telephoneTask.setFldTaskDate(new Date());
+						telephoneTask.setFldTaskDate(telephoneAssignDetail.getFldTaskDate());
 						telephoneTask.setFldAuditStatus(Constant.TELEPHONE_TASK_AUDIT_STATUS_UN);
 						telephoneTask.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
 						telephoneTask.setFldOperateDate(new Date());

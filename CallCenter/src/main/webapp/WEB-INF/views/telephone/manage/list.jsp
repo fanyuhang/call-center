@@ -81,39 +81,16 @@
 	        case "exchange":
 	        	top.f_addTab(null, '任务交接', '<c:url value="/telephone/manage/exchange"/>' + '?menuNo=${menuNo}');
 	          break;
-	        case "template":
-	        	f_template(telephoneTemplate);
-	        	break;
-	       	case "origexport":
-	       		if (grid.getSelectedRows().length > 1 || grid.getSelectedRows().length == 0) {
+	        case "detail":
+	        	if (grid.getSelectedRows().length > 1 || grid.getSelectedRows().length == 0) {
 	                LG.tip('请选择一行数据!');
 	                return;
 	            }
 	            var selected = grid.getSelected();
-	       		f_export('<c:url value="/telephone/import/origexport"/>'+'?id='+selected.fldId);
-	       		break;
-	       	case "nodupexport":
-	       		if (grid.getSelectedRows().length > 1 || grid.getSelectedRows().length == 0) {
-	                LG.tip('请选择一行数据!');
-	                return;
-	            }
-	            var selected = grid.getSelected();
-	       		f_export('<c:url value="/telephone/import/nodupexport"/>'+'?id='+selected.fldId);
-	       		break;
-	       	case "dupexport":
-	       		if (grid.getSelectedRows().length > 1 || grid.getSelectedRows().length == 0) {
-	                LG.tip('请选择一行数据!');
-	                return;
-	            }
-	            var selected = grid.getSelected();
-	       		f_export('<c:url value="/telephone/import/dupexport"/>'+'?id='+selected.fldId);
+	            top.f_addTab(null, '任务明细', '<c:url value="/telephone/manage/listTask"/>' + '?menuNo=${menuNo}&id='+selected.fldId);
 	       		break;
 	    }
 	}
-
-  function f_template(filename) {
-      window.location.href = '<c:url value="/telephone/import/template"/>' + '/' +filename;
-  }
 
 	function f_reload() {
 	    grid.loadData();
