@@ -1,5 +1,9 @@
+//坐席登录状态
 LG.telephoneStatus = 1;
+//是否是来电
 LG.isOutCall = 1;
+//是否正在通话
+LG.isTongHua = 1;
 
 LG.dial = function () {
     $(document).bind('keydown.dial', function (e) {
@@ -23,6 +27,7 @@ LG.dial = function () {
             width: 400,
             height: 120, top: 200,
             isResize: true,
+            modal:false,
             title: '拨打电话',
             target: dialPanle,
             buttons: [
@@ -112,7 +117,8 @@ LG.transfer = function () {
             width: 400,
             height: 120, top: 200,
             isResize: true,
-            title: '拨打电话',
+            modal:false,
+            title: '转接分机',
             target: dialPanle,
             buttons: [
                 { text: '拨打', onclick: function () {
