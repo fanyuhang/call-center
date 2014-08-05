@@ -88,6 +88,7 @@ public class TelephoneAssignManager extends GenericPageHQLQuery<TelephoneAssign>
 					List<TelephoneImportDetail> newDetailList = new ArrayList<TelephoneImportDetail>();
 					
 					List<TelephoneTask> taskList = new ArrayList<TelephoneTask>();
+					List<TelephoneCustomer> newList = new ArrayList<TelephoneCustomer>();
 					for(TelephoneImportDetail telephoneImportDetail : detailList) {
 						TelephoneTask telephoneTask = new TelephoneTask();	
 						telephoneTask.setFldCustomerId(telephoneImportDetail.getFldId());
@@ -106,9 +107,18 @@ public class TelephoneAssignManager extends GenericPageHQLQuery<TelephoneAssign>
 						
 						telephoneImportDetail.setFldAssignStatus(Constant.TELEPHONE_ASSIGN_STATUS_ASSIGNED);
 						newDetailList.add(telephoneImportDetail);
+						
+						TelephoneCustomer telephoneCustomer = telephoneCustomerManager.findByPhoneOrMobile(telephoneImportDetail.getFldCustomerName(), telephoneImportDetail.getFldPhone(), telephoneImportDetail.getFldMobile());
+						if(null != telephoneCustomer) {
+							telephoneCustomer.setFldAssignDate(new Date());
+							telephoneCustomer.setFldAssignStatus(Constant.TELEPHONE_ASSIGN_STATUS_ASSIGNED);
+							newList.add(telephoneCustomer);
+						}
 					}
 					//修改话单的分配状态
 					telephoneImportDetailDao.save(newDetailList);
+					
+					telephoneCustomerManager.save(newList);
 					
 					telephoneTaskDao.save(taskList);
 				} else {//来源：已有话务
@@ -178,8 +188,10 @@ public class TelephoneAssignManager extends GenericPageHQLQuery<TelephoneAssign>
 	public TelephoneAssignDetail getCount(String fldCallUserNo) {
 		TelephoneAssignDetail telephoneAssignDetail = new TelephoneAssignDetail();
 		
-		telephoneAssignDetail.setFldTaskNumber(telephoneAssignDetailDao.countTaskNumber(fldCallUserNo).intValue());
-		telephoneAssignDetail.setFldFinishNumber(telephoneAssignDetailDao.countFinishNumber(fldCallUserNo).intValue());
+		Long taskNumber = telephoneAssignDetailDao.countTaskNumber(fldCallUserNo);
+		telephoneAssignDetail.setFldTaskNumber(null != taskNumber ? taskNumber.intValue() : 0);
+		Long finishNumber = telephoneAssignDetailDao.countFinishNumber(fldCallUserNo);
+		telephoneAssignDetail.setFldFinishNumber(null != finishNumber ? finishNumber.intValue() : 0);
 		
 		return telephoneAssignDetail;
 	}

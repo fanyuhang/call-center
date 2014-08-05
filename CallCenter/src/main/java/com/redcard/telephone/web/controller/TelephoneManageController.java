@@ -89,4 +89,18 @@ public class TelephoneManageController {
         telephoneExchangeManager.saveExchange(telephoneExchange);
         return result;
     }
+	
+	@RequestMapping(value = "recover")
+    public String recover(String menuNo, Model model) {
+        model.addAttribute("menuNo", menuNo);
+        return "telephone/manage/recover";
+    }
+	
+	@RequestMapping(value = "saveRecover")
+    @ResponseBody
+    public AsyncResponse saveRecover(TelephoneExchange telephoneExchange) {
+        AsyncResponse result = new AsyncResponse(false, "话务回收成功");
+        telephoneExchangeManager.saveRecover(telephoneExchange);
+        return result;
+    }
 }

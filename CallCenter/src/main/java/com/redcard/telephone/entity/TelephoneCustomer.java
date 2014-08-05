@@ -7,6 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
+import com.common.core.util.JsonTimestampSerializer;
 import com.common.security.util.SecurityUtil;
 
 /**
@@ -141,6 +144,7 @@ public class TelephoneCustomer implements java.io.Serializable {
 	}
 
 	@Column(name = "FLDLATESTCALLDATE")
+	@JsonSerialize(using = JsonTimestampSerializer.class)
 	public Date getFldLatestCallDate() {
 		return this.fldLatestCallDate;
 	}
@@ -168,6 +172,7 @@ public class TelephoneCustomer implements java.io.Serializable {
 	}
 
 	@Column(name = "FLDASSIGNDATE")
+	@JsonSerialize(using = JsonTimestampSerializer.class)
 	public Date getFldAssignDate() {
 		return this.fldAssignDate;
 	}

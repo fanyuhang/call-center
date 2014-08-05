@@ -290,6 +290,7 @@ public class TelephoneImportController {
             		telephoneCustomer.setFldCreateDate(new Date());
             		telephoneCustomer.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
             		telephoneCustomer.setFldAssignStatus(Constant.TELEPHONE_ASSIGN_STATUS_UNASSIGN);//分配状态：未分配
+            		telephoneCustomer.setFldSource(Constant.TELEPHONE_CUSTOMER_SOURCE_IMPORT);//客户来源,话务导入
             		
             		telephoneCustomerList.add(telephoneCustomer);
             	}
