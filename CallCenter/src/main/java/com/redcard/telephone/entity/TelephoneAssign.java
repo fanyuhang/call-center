@@ -251,4 +251,23 @@ public class TelephoneAssign implements java.io.Serializable {
 	public String getOperateUserName() {
 		return operateUser!=null ? operateUser.getUserName() : "";
 	}
+
+    private User createUser;
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "FLDCREATEUSERNO", referencedColumnName="FLDLOGINNAME", insertable = false, updatable = false)
+    public User getCreateUser() {
+        return createUser;
+    }
+
+    public void setCreateUser(User createUser) {
+        this.createUser = createUser;
+    }
+
+    @Transient
+    public String getCreateUserName() {
+        return createUser!=null ? createUser.getUserName() : "";
+    }
+
 }

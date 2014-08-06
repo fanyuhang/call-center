@@ -357,7 +357,7 @@
 	<tblNode fldCode="01050101" fldParent="010501" fldName="下载导入模板" fldDesc="" fldTarget="template"
 		fldIcon="/static/ligerUI/icons/silkicons/application_put.png"
 		fldLink="/telephone/import/template" fldType="2" fldPosition="1" />
-	<tblNode fldCode="01050102" fldParent="010501" fldName="导入" fldDesc="" fldTarget="import"
+	<tblNode fldCode="01050102" fldParent="010501" fldName="话单导入" fldDesc="" fldTarget="import"
 		fldIcon="/static/ligerUI/icons/silkicons/application_get.png"
 		fldLink="/telephone/import/import" fldType="2" fldPosition="2" />
 	<tblNode fldCode="01050103" fldParent="010501" fldName="原始话单导出" fldDesc="" fldTarget="origexport"
@@ -373,13 +373,13 @@
 	<tblNode fldCode="010502" fldParent="0105" fldName="话务分配" fldDesc="" fldTarget=""
 		fldIcon="/static/ligerUI/icons/32X32/full_time.gif"
 		fldLink="/telephone/assign/init" fldType="1" fldPosition="2" />
-	<tblNode fldCode="01050201" fldParent="010502" fldName="分配" fldDesc="" fldTarget="assign"
+	<tblNode fldCode="01050201" fldParent="010502" fldName="话务分配" fldDesc="" fldTarget="assign"
 		fldIcon="/static/ligerUI/icons/silkicons/group_link.png"
 		fldLink="/telephone/assign/assign" fldType="2" fldPosition="1" />
 	<tblNode fldCode="01050202" fldParent="010502" fldName="分配明细" fldDesc="" fldTarget="detail"
 		fldIcon="/static/ligerUI/icons/silkicons/application_view_detail.png"
 		fldLink="/telephone/assign/assignDetail" fldType="2" fldPosition="2" />
-	<tblNode fldCode="01050203" fldParent="010502" fldName="回收" fldDesc="" fldTarget="recover"
+	<tblNode fldCode="01050203" fldParent="010502" fldName="话务回收" fldDesc="" fldTarget="recover"
 		fldIcon="/static/ligerUI/icons/silkicons/arrow_divide.png" 
 		fldLink="/telephone/assign/recover" fldType="2" fldPosition="3" />
 		
@@ -608,6 +608,9 @@
     
     <tblDictionary fldId="100" fldType="25" fldName="话务导入" fldValue="0" fldStatus="0" fldComment="客户来源，话务导入" />
 	<tblDictionary fldId="101" fldType="25" fldName="客户录入" fldValue="1" fldStatus="0" fldComment="客户来源，客户录入" />
+
+    <tblDictionary fldId="102" fldType="26" fldName="去重" fldValue="0" fldStatus="0" fldComment="话务导入是否去重，去重" />
+    <tblDictionary fldId="103" fldType="26" fldName="不去重" fldValue="1" fldStatus="0" fldComment="话务导入是否去重，不去重" />
 
     <tblSysParameter fldId="1" fldName="SYS_ADMIN"
 		fldValue="1" fldUnit="" fldStatus="0" fldDisplay="1" fldComment="" />
