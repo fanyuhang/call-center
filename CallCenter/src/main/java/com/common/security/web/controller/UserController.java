@@ -121,7 +121,7 @@ public class UserController {
         user.setModifyPwdCount(0);
         userManager.saveUser(user, deptCode, roleIds);
         user = userManager.findUserByLoginName(user.getLoginName());
-        SecurityUtil.getCurrentUserContext().setUser(user);
+//        SecurityUtil.getCurrentUserContext().setUser(user);
 
         try {
             operatorManager.save(user);
@@ -144,7 +144,7 @@ public class UserController {
         }
         userManager.saveUser(user, deptCode, roleIds);
         user = userManager.findUserByLoginName(user.getLoginName());
-        SecurityUtil.getCurrentUserContext().setUser(user);
+//        SecurityUtil.getCurrentUserContext().setUser(user);
         try {
             operatorManager.save(user);
         } catch (Exception e) {
