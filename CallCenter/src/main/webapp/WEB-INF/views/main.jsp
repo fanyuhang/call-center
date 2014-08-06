@@ -194,6 +194,7 @@
             $("#userStatus").addClass("i-ready");
             $("#userStatus").next('b').addClass("green").text("就绪");
             $("#dial").removeClass("disabled");
+            $("#hangup").removeClass("disabled");
             $("#control").removeClass("disabled");
             $(".select-status li").each(function(){
                 $(this).removeClass("off");
@@ -202,6 +203,7 @@
             $("#userStatus").removeClass("i-ready");
             $("#userStatus").addClass("i-offline");
             $("#userStatus").next('b').removeClass("green").text("不在线");
+            $("#hangup").addClass("disabled");
             $("#dial").addClass("disabled");
             $("#control").addClass("disabled");
             $(".select-status li").each(function(){
@@ -347,11 +349,10 @@
                 if(phoneExtension&&phoneExtension.length>0){
                     $("#dial").removeClass("disabled");
                     $("#hangup").removeClass("disabled");
-//                    f_connect(user[0].loginName,user[0].phonePassword,user[0].phoneExtension);
-                    f_connect("admin","admin","200");
-
+                    f_connect(user[0].loginName,user[0].phonePassword,user[0].phoneExtension);
                 }else{
                     $("#dial").addClass("disabled");
+                    $("#hangup").addClass("disabled");
                 }
 
                 if(phoneType&&phoneType == '2'){

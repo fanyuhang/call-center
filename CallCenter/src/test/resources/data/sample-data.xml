@@ -404,6 +404,23 @@
              fldIcon="/static/ligerUI/icons/32X32/user.gif"
              fldLink="/monitor/queue/init" fldType="1" fldPosition="2" />
 
+    <tblNode fldCode="0107" fldParent="01" fldName="分析报表" fldDesc=""
+             fldTarget="#" fldIcon="" fldLink="" fldType="1" fldPosition="7" />
+
+    <tblNode fldCode="010701" fldParent="0107" fldName="理财绩效日报" fldDesc="" fldTarget=""
+             fldIcon="/static/ligerUI/icons/32X32/report.gif"
+             fldLink="/report/yeJiDay/init" fldType="1" fldPosition="1" />
+    <tblNode fldCode="01070101" fldParent="010701" fldName="导出列表" fldDesc="" fldTarget="export"
+             fldIcon="/static/ligerUI/icons/silkicons/application_put.png"
+             fldLink="" fldType="2" fldPosition="1"/>
+
+    <tblNode fldCode="010702" fldParent="0107" fldName="理财绩效月报" fldDesc="" fldTarget=""
+             fldIcon="/static/ligerUI/icons/32X32/report.gif"
+             fldLink="/report/yeJiMonth/init" fldType="1" fldPosition="2" />
+    <tblNode fldCode="01070201" fldParent="010702" fldName="导出列表" fldDesc="" fldTarget="export"
+             fldIcon="/static/ligerUI/icons/silkicons/application_put.png"
+             fldLink="" fldType="2" fldPosition="1"/>
+
 	<tblRole fldId="1" fldRoleName="sysadmin" />
 
 	<tblUser fldId="1" fldLoginName="admin" fldUserName="admin"
