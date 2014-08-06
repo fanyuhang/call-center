@@ -177,6 +177,7 @@
 	            				return;
 	            			}
 	            			
+	            			LG.showLoading("正在导入中......");
 	            			LG.ajax({
 			                	url: '<c:url value="/telephone/import/save"/>',
 				                data: {importName:importName,fileName:fileName,fldDuplicateStatus:fldDuplicateStatus},
@@ -186,6 +187,7 @@
 				                complete: function () {
 				                },
 				                success: function () {
+				                	LG.hideLoading();
             						uploader.stop();
             						try{
 	        								var files = uploader.files;
@@ -199,6 +201,7 @@
             						f_reload();
 				                },
 				                error: function (message) {
+				                	LG.hideLoading();
 						            LG.showError(message);
 				                }
 				            });

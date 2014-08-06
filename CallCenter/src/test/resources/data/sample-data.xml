@@ -392,6 +392,19 @@
 	<tblNode fldCode="01050302" fldParent="010503" fldName="任务交接" fldDesc="" fldTarget="exchange"
 		fldIcon="/static/ligerUI/icons/silkicons/application_link.png" 
 		fldLink="/telephone/manage/exchange" fldType="2" fldPosition="2" />
+	<tblNode fldCode="01050303" fldParent="010503" fldName="任务回收" fldDesc="" fldTarget="recover"
+		fldIcon="/static/ligerUI/icons/silkicons/arrow_divide.png" 
+		fldLink="/telephone/manage/recover" fldType="2" fldPosition="3" />
+		
+	<tblNode fldCode="010504" fldParent="0105" fldName="话单管理" fldDesc="" fldTarget="" 
+		fldIcon="/static/ligerUI/icons/32X32/contact.gif"
+		fldLink="/telephone/customer/init" fldType="1" fldPosition="4" />
+	<tblNode fldCode="01050401" fldParent="010504" fldName="转为客户" fldDesc="" fldTarget="ascustomer"
+		fldIcon="/static/ligerUI/icons/silkicons/user_add.png" 
+		fldLink="/telephone/customer/ascustomer" fldType="2" fldPosition="1" />
+	<tblNode fldCode="01050402" fldParent="010504" fldName="导出" fldDesc="" fldTarget="export"
+		fldIcon="/static/ligerUI/icons/miniicons/action_save.gif"
+		fldLink="/telephone/customer/export" fldType="2" fldPosition="2"/>
 
     <tblNode fldCode="0106" fldParent="01" fldName="话务监控" fldDesc=""
              fldTarget="#" fldIcon="" fldLink="" fldType="1" fldPosition="6" />
@@ -487,12 +500,9 @@
 	<tblDictionary fldId="22" fldType="9" fldName="无效"
 		fldValue="9" fldStatus="0" fldComment="产品状态，无效" />
 
-	<tblDictionary fldId="23" fldType="10" fldName="缘故"
-		fldValue="0" fldStatus="0" fldComment="客户来源，缘故" />
-	<tblDictionary fldId="24" fldType="10" fldName="电话"
-		fldValue="1" fldStatus="0" fldComment="客户来源，电话" />
-	<tblDictionary fldId="25" fldType="10" fldName="传单"
-		fldValue="2" fldStatus="0" fldComment="客户来源，传单" />
+	<tblDictionary fldId="23" fldType="10" fldName="缘故" fldValue="0" fldStatus="0" fldComment="客户来源，缘故" />
+	<tblDictionary fldId="24" fldType="10" fldName="电话" fldValue="1" fldStatus="0" fldComment="客户来源，电话" />
+	<tblDictionary fldId="25" fldType="10" fldName="传单" fldValue="2" fldStatus="0" fldComment="客户来源，传单" />
 
 	<tblDictionary fldId="26" fldType="11" fldName="否"
 		fldValue="0" fldStatus="0" fldComment="是否已到期，否" />
@@ -592,6 +602,12 @@
     
     <tblDictionary fldId="96" fldType="23" fldName="未拨打" fldValue="0" fldStatus="0" fldComment="拨打状态,未拨打" />
     <tblDictionary fldId="97" fldType="23" fldName="已拨打" fldValue="1" fldStatus="0" fldComment="拨打状态,已拨打" />
+    
+    <tblDictionary fldId="98" fldType="24" fldName="未分配" fldValue="0" fldStatus="0" fldComment="分配状态,未分配" />
+    <tblDictionary fldId="99" fldType="24" fldName="已分配" fldValue="1" fldStatus="0" fldComment="分配状态,已分配" />
+    
+    <tblDictionary fldId="100" fldType="25" fldName="话务导入" fldValue="0" fldStatus="0" fldComment="客户来源，话务导入" />
+	<tblDictionary fldId="101" fldType="25" fldName="客户录入" fldValue="1" fldStatus="0" fldComment="客户来源，客户录入" />
 
     <tblSysParameter fldId="1" fldName="SYS_ADMIN"
 		fldValue="1" fldUnit="" fldStatus="0" fldDisplay="1" fldComment="" />

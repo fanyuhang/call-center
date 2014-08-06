@@ -9,6 +9,12 @@ public interface TelephoneCustomerDao extends PagingAndSortingRepository<Telepho
 	@Query("select count(m) from TelephoneCustomer m where m.fldCustomerName = ?1 and m.fldPhone = ?2")
     public Long countByPhone(String name,String phone);
 	
-	@Query("select count(m) from TelephoneCustomer m where m.fldCustomerName = ?1 and m.fldMobile = ?2")
-    public Long countByMobile(String name,String mobile);
+	@Query("select count(m) from TelephoneCustomer m where m.fldMobile = ?1")
+    public Long countByMobile(String mobile);
+	
+	@Query("select m from TelephoneCustomer m where m.fldCustomerName = ?1 and m.fldPhone = ?2")
+    public TelephoneCustomer findByPhone(String name,String phone);
+	
+	@Query("select count(m) from TelephoneCustomer m where m.fldMobile = ?1")
+    public TelephoneCustomer findByMobile(String mobile);
 }

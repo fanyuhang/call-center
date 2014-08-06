@@ -95,4 +95,29 @@ public class TelephoneExchangeManager extends GenericPageHQLQuery<TelephoneExcha
 		}
 		telephoneExchangeDetailDao.save(exchangeDetailList);
 	}
+	
+	@Transactional(readOnly = false)
+	public void saveRecover(TelephoneExchange telephoneExchange) {
+		//1.获取话务分配明细
+		List<TelephoneAssignDetail> assignDetailList = telephoneAssignDetailDao.listByCallUser(telephoneExchange.getFldOldCallUserNo());
+		
+		for(TelephoneAssignDetail telephoneAssignDetail : assignDetailList) {
+			//2.获取话务任务
+			List<TelephoneTask> taskList = telephoneTaskDao.listByAssignDetailId(telephoneAssignDetail.getFldId());
+			//3.未拨打的任务删除
+			int count = 0;
+			for(TelephoneTask telephoneTask : taskList) {
+				if(telephoneTask.getFldCallStatus() == Constant.TASK_CALL_STATUS_UN) {
+					telephoneTaskDao.delete(telephoneTask);
+					count++;
+				}
+			}
+			
+			//4.话务明细中的话务数减少
+			if(count > 0) {
+				telephoneAssignDetail.setFldTaskNumber(telephoneAssignDetail.getFldTaskNumber()-count);
+				telephoneAssignDetailDao.save(telephoneAssignDetail);
+			}
+		}
+	}
 }

@@ -80,7 +80,7 @@
 	    switch (item.id) {
 	        case "exchange":
 	        	top.f_addTab(null, '任务交接', '<c:url value="/telephone/manage/exchange"/>' + '?menuNo=${menuNo}');
-	          break;
+	          	break;
 	        case "detail":
 	        	if (grid.getSelectedRows().length > 1 || grid.getSelectedRows().length == 0) {
 	                LG.tip('请选择一行数据!');
@@ -88,6 +88,9 @@
 	            }
 	            var selected = grid.getSelected();
 	            top.f_addTab(null, '任务明细', '<c:url value="/telephone/manage/listTask"/>' + '?menuNo=${menuNo}&id='+selected.fldId);
+	       		break;
+	       	case "recover":
+	            top.f_addTab(null, '任务回收', '<c:url value="/telephone/manage/recover"/>' + '?menuNo=${menuNo}');
 	       		break;
 	    }
 	}
