@@ -35,14 +35,14 @@
                     <div class="control-group">
                         <label class="control-label"  for="txtUsername">用户名：</label>
                         <div class="controls">
-                            <input type="text" class="login-input required login-text" id="txtUsername" name="loginName" value="" />
+                            <input type="text" class="login-input required login-text" id="txtUsername" name="loginName" value="admin" />
                         </div>
                     </div>
                     <!--n_login_username end-->             
                     <div class="control-group">
                         <label class="control-label" for="txtPassword">密&#12288;码：</label>
                         <div class="controls">
-                            <input type="password" class="login-input required login-text" id="txtPassword" maxlength="32" name="password" value="" />
+                            <input type="password" class="login-input required login-text" id="txtPassword" maxlength="32" name="password" value="admin888" />
                         </div>
                     </div>
                     <!--n_login_password end-->             
