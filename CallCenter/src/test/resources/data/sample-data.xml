@@ -448,11 +448,6 @@
 		fldDesc="" fldTarget="" fldIcon="/static/ligerUI/icons/32X32/document_library.gif" 
 		fldLink="/email/template/init" fldType="1" fldPosition="0" />
 
-	<!-- 二级菜单 -->
-	<tblNode fldCode="010801" fldParent="0108" fldName="邮件模板管理"
-		fldDesc="" fldTarget="" fldIcon="/static/ligerUI/icons/32X32/document_library.gif" 
-		fldLink="/email/template/init" fldType="1" fldPosition="0" />
-
 	<!-- 三级菜单 -->
 	<tblNode fldCode="01080101" fldParent="010801" fldName="新增"
 		fldDesc="" fldTarget="add" fldIcon="/static/ligerUI/icons/silkicons/add.png"
@@ -653,7 +648,7 @@
     <tblDictionary fldId="99" fldType="24" fldName="已分配" fldValue="1" fldStatus="0" fldComment="分配状态,已分配" />
     
     <tblDictionary fldId="100" fldType="25" fldName="话务导入" fldValue="0" fldStatus="0" fldComment="客户来源，话务导入" />
-	<tblDictionary fldId="101" fldType="25" fldName="客户录入" fldValue="1" fldStatus="0" fldComment="客户来源，客户录入" />
+		<tblDictionary fldId="101" fldType="25" fldName="客户录入" fldValue="1" fldStatus="0" fldComment="客户来源，客户录入" />
 
     <tblDictionary fldId="102" fldType="26" fldName="去重" fldValue="0" fldStatus="0" fldComment="话务导入是否去重，去重" />
     <tblDictionary fldId="103" fldType="26" fldName="不去重" fldValue="1" fldStatus="0" fldComment="话务导入是否去重，不去重" />
