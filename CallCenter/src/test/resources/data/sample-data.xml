@@ -241,13 +241,13 @@
 	<tblNode fldCode="01030110" fldParent="010301" fldName="导出"
 		fldDesc="" fldTarget="export" fldIcon="/static/ligerUI/icons/miniicons/action_save.gif"
 		fldLink="/customer/customer/export" fldType="2" fldPosition="10" />
-	<tblNode fldCode="01030111" fldParent="010301" fldName="初始导入模板下载" fldDesc="" fldTarget="initimporttemplate" 
+	<tblNode fldCode="01030111" fldParent="010301" fldName="初始导入模板下载" fldDesc="" fldTarget="initimporttemplate"
 		fldIcon="/static/ligerUI/icons/silkicons/application_put.png" fldLink="/customer/customer/initimporttemplate" fldType="2" fldPosition="11" />
-	<tblNode fldCode="01030112" fldParent="010301" fldName="初始导入" fldDesc="" fldTarget="initimport" 
+	<tblNode fldCode="01030112" fldParent="010301" fldName="初始导入" fldDesc="" fldTarget="initimport"
 		fldIcon="/static/ligerUI/icons/silkicons/application_get.png" fldLink="/customer/customer/initimport" fldType="2" fldPosition="12" />
 
 	<!-- 二级菜单 -->
-	<tblNode fldCode="010302" fldParent="0103" fldName="客户交接" fldDesc="" fldTarget="" 
+	<tblNode fldCode="010302" fldParent="0103" fldName="客户交接" fldDesc="" fldTarget=""
 		fldIcon="/static/ligerUI/icons/32X32/communication.gif"
 		fldLink="/customer/exchange/init" fldType="1" fldPosition="1" />
 	<tblNode fldCode="01030201" fldParent="010302" fldName="交接" fldDesc="" fldTarget="exchange"
@@ -350,45 +350,89 @@
 
 	<tblNode fldCode="0105" fldParent="01" fldName="话务管理" fldDesc=""
 		fldTarget="#" fldIcon="" fldLink="" fldType="1" fldPosition="5" />
-	
-	<tblNode fldCode="010501" fldParent="0105" fldName="话务导入" fldDesc="" fldTarget="" 
+
+	<tblNode fldCode="010501" fldParent="0105" fldName="话务导入" fldDesc="" fldTarget=""
 		fldIcon="/static/ligerUI/icons/32X32/sign_up.gif"
 		fldLink="/telephone/import/init" fldType="1" fldPosition="1" />
 	<tblNode fldCode="01050101" fldParent="010501" fldName="下载导入模板" fldDesc="" fldTarget="template"
-		fldIcon="/static/ligerUI/icons/silkicons/application_put.png" 
+		fldIcon="/static/ligerUI/icons/silkicons/application_put.png"
 		fldLink="/telephone/import/template" fldType="2" fldPosition="1" />
-	<tblNode fldCode="01050102" fldParent="010501" fldName="导入" fldDesc="" fldTarget="import"
-		fldIcon="/static/ligerUI/icons/silkicons/application_get.png" 
+	<tblNode fldCode="01050102" fldParent="010501" fldName="话单导入" fldDesc="" fldTarget="import"
+		fldIcon="/static/ligerUI/icons/silkicons/application_get.png"
 		fldLink="/telephone/import/import" fldType="2" fldPosition="2" />
 	<tblNode fldCode="01050103" fldParent="010501" fldName="原始话单导出" fldDesc="" fldTarget="origexport"
-		fldIcon="/static/ligerUI/icons/miniicons/action_save.gif" 
+		fldIcon="/static/ligerUI/icons/miniicons/action_save.gif"
 		fldLink="/telephone/import/origexport" fldType="2" fldPosition="3"/>
 	<tblNode fldCode="01050104" fldParent="010501" fldName="非重复话单导出" fldDesc="" fldTarget="nodupexport"
-		fldIcon="/static/ligerUI/icons/miniicons/action_save.gif" 
+		fldIcon="/static/ligerUI/icons/miniicons/action_save.gif"
 		fldLink="/telephone/import/nodupexport" fldType="2" fldPosition="4"/>
 	<tblNode fldCode="01050105" fldParent="010501" fldName="重复话单导出" fldDesc="" fldTarget="dupexport"
-		fldIcon="/static/ligerUI/icons/miniicons/action_save.gif" 
+		fldIcon="/static/ligerUI/icons/miniicons/action_save.gif"
 		fldLink="/telephone/import/dupexport" fldType="2" fldPosition="5"/>
-		
-	<tblNode fldCode="010502" fldParent="0105" fldName="话务分配" fldDesc="" fldTarget="" 
+
+	<tblNode fldCode="010502" fldParent="0105" fldName="话务分配" fldDesc="" fldTarget=""
 		fldIcon="/static/ligerUI/icons/32X32/full_time.gif"
 		fldLink="/telephone/assign/init" fldType="1" fldPosition="2" />
-	<tblNode fldCode="01050201" fldParent="010502" fldName="分配" fldDesc="" fldTarget="assign"
-		fldIcon="/static/ligerUI/icons/silkicons/group_link.png" 
+	<tblNode fldCode="01050201" fldParent="010502" fldName="话务分配" fldDesc="" fldTarget="assign"
+		fldIcon="/static/ligerUI/icons/silkicons/group_link.png"
 		fldLink="/telephone/assign/assign" fldType="2" fldPosition="1" />
 	<tblNode fldCode="01050202" fldParent="010502" fldName="分配明细" fldDesc="" fldTarget="detail"
-		fldIcon="/static/ligerUI/icons/silkicons/application_view_detail.png" 
+		fldIcon="/static/ligerUI/icons/silkicons/application_view_detail.png"
 		fldLink="/telephone/assign/assignDetail" fldType="2" fldPosition="2" />
-	<tblNode fldCode="01050203" fldParent="010502" fldName="回收" fldDesc="" fldTarget="recover"
+	<tblNode fldCode="01050203" fldParent="010502" fldName="话务回收" fldDesc="" fldTarget="recover"
 		fldIcon="/static/ligerUI/icons/silkicons/arrow_divide.png" 
 		fldLink="/telephone/assign/recover" fldType="2" fldPosition="3" />
 		
 	<tblNode fldCode="010503" fldParent="0105" fldName="话务管理" fldDesc="" fldTarget="" 
 		fldIcon="/static/ligerUI/icons/32X32/suppliers.gif"
 		fldLink="/telephone/manage/init" fldType="1" fldPosition="3" />
-	<tblNode fldCode="01050301" fldParent="010503" fldName="任务交接" fldDesc="" fldTarget="exchange"
-		fldIcon="/static/ligerUI/icons/silkicons/application_link.png" 
+	<tblNode fldCode="01050301" fldParent="010503" fldName="任务明细" fldDesc="" fldTarget="detail"
+		fldIcon="/static/ligerUI/icons/silkicons/application_view_detail.png" 
 		fldLink="/telephone/manage/exchange" fldType="2" fldPosition="1" />
+	<tblNode fldCode="01050302" fldParent="010503" fldName="任务交接" fldDesc="" fldTarget="exchange"
+		fldIcon="/static/ligerUI/icons/silkicons/application_link.png" 
+		fldLink="/telephone/manage/exchange" fldType="2" fldPosition="2" />
+	<tblNode fldCode="01050303" fldParent="010503" fldName="任务回收" fldDesc="" fldTarget="recover"
+		fldIcon="/static/ligerUI/icons/silkicons/arrow_divide.png" 
+		fldLink="/telephone/manage/recover" fldType="2" fldPosition="3" />
+		
+	<tblNode fldCode="010504" fldParent="0105" fldName="话单管理" fldDesc="" fldTarget="" 
+		fldIcon="/static/ligerUI/icons/32X32/contact.gif"
+		fldLink="/telephone/customer/init" fldType="1" fldPosition="4" />
+	<tblNode fldCode="01050401" fldParent="010504" fldName="转为客户" fldDesc="" fldTarget="ascustomer"
+		fldIcon="/static/ligerUI/icons/silkicons/user_add.png" 
+		fldLink="/telephone/customer/ascustomer" fldType="2" fldPosition="1" />
+	<tblNode fldCode="01050402" fldParent="010504" fldName="导出" fldDesc="" fldTarget="export"
+		fldIcon="/static/ligerUI/icons/miniicons/action_save.gif"
+		fldLink="/telephone/customer/export" fldType="2" fldPosition="2"/>
+
+    <tblNode fldCode="0106" fldParent="01" fldName="话务监控" fldDesc=""
+             fldTarget="#" fldIcon="" fldLink="" fldType="1" fldPosition="6" />
+
+    <tblNode fldCode="010601" fldParent="0106" fldName="坐席监控" fldDesc="" fldTarget=""
+             fldIcon="/static/ligerUI/icons/32X32/consulting.gif"
+             fldLink="/monitor/phone/init" fldType="1" fldPosition="1" />
+
+    <tblNode fldCode="010602" fldParent="0106" fldName="排队监控" fldDesc="" fldTarget=""
+             fldIcon="/static/ligerUI/icons/32X32/user.gif"
+             fldLink="/monitor/queue/init" fldType="1" fldPosition="2" />
+
+    <tblNode fldCode="0107" fldParent="01" fldName="分析报表" fldDesc=""
+             fldTarget="#" fldIcon="" fldLink="" fldType="1" fldPosition="7" />
+
+    <tblNode fldCode="010701" fldParent="0107" fldName="理财绩效日报" fldDesc="" fldTarget=""
+             fldIcon="/static/ligerUI/icons/32X32/report.gif"
+             fldLink="/report/yeJiDay/init" fldType="1" fldPosition="1" />
+    <tblNode fldCode="01070101" fldParent="010701" fldName="导出列表" fldDesc="" fldTarget="export"
+             fldIcon="/static/ligerUI/icons/silkicons/application_put.png"
+             fldLink="" fldType="2" fldPosition="1"/>
+
+    <tblNode fldCode="010702" fldParent="0107" fldName="理财绩效月报" fldDesc="" fldTarget=""
+             fldIcon="/static/ligerUI/icons/32X32/report.gif"
+             fldLink="/report/yeJiMonth/init" fldType="1" fldPosition="2" />
+    <tblNode fldCode="01070201" fldParent="010702" fldName="导出列表" fldDesc="" fldTarget="export"
+             fldIcon="/static/ligerUI/icons/silkicons/application_put.png"
+             fldLink="" fldType="2" fldPosition="1"/>
 
 	<tblRole fldId="1" fldRoleName="sysadmin" />
 
@@ -456,12 +500,9 @@
 	<tblDictionary fldId="22" fldType="9" fldName="无效"
 		fldValue="9" fldStatus="0" fldComment="产品状态，无效" />
 
-	<tblDictionary fldId="23" fldType="10" fldName="缘故"
-		fldValue="0" fldStatus="0" fldComment="客户来源，缘故" />
-	<tblDictionary fldId="24" fldType="10" fldName="电话"
-		fldValue="1" fldStatus="0" fldComment="客户来源，电话" />
-	<tblDictionary fldId="25" fldType="10" fldName="传单"
-		fldValue="2" fldStatus="0" fldComment="客户来源，传单" />
+	<tblDictionary fldId="23" fldType="10" fldName="缘故" fldValue="0" fldStatus="0" fldComment="客户来源，缘故" />
+	<tblDictionary fldId="24" fldType="10" fldName="电话" fldValue="1" fldStatus="0" fldComment="客户来源，电话" />
+	<tblDictionary fldId="25" fldType="10" fldName="传单" fldValue="2" fldStatus="0" fldComment="客户来源，传单" />
 
 	<tblDictionary fldId="26" fldType="11" fldName="否"
 		fldValue="0" fldStatus="0" fldComment="是否已到期，否" />
@@ -496,10 +537,10 @@
 		fldValue="0" fldStatus="0" fldComment="短信发送状态，成功" />
 	<tblDictionary fldId="39" fldType="16" fldName="失败"
 		fldValue="9" fldStatus="0" fldComment="短信发送状态，失败" />
-		
+
 	<tblDictionary fldId="40" fldType="17" fldName="导入话务" fldValue="0" fldStatus="0" fldComment="话务来源，导入话务" />
 	<tblDictionary fldId="41" fldType="17" fldName="已有话务" fldValue="1" fldStatus="0" fldComment="话务来源，已有话务" />
-	
+
 	<tblDictionary fldId="42" fldType="18" fldName="未完成" fldValue="0" fldStatus="0" fldComment="任务完成状态，未完成" />
 	<tblDictionary fldId="43" fldType="18" fldName="已完成" fldValue="1" fldStatus="0" fldComment="任务完成状态，已完成" />
 
@@ -558,6 +599,18 @@
     <tblDictionary fldId="93" fldType="22" fldName="座席听取录音或留言" fldValue="40" fldStatus="0" fldComment="坐席状态，座席听取录音或留言" />
     <tblDictionary fldId="94" fldType="22" fldName="座席等待ivr验证结果返回" fldValue="41" fldStatus="0" fldComment="坐席状态，座席等待ivr验证结果返回" />
     <tblDictionary fldId="95" fldType="22" fldName="座席登出" fldValue="39" fldStatus="60" fldComment="坐席状态，座席登出" />
+    
+    <tblDictionary fldId="96" fldType="23" fldName="未拨打" fldValue="0" fldStatus="0" fldComment="拨打状态,未拨打" />
+    <tblDictionary fldId="97" fldType="23" fldName="已拨打" fldValue="1" fldStatus="0" fldComment="拨打状态,已拨打" />
+    
+    <tblDictionary fldId="98" fldType="24" fldName="未分配" fldValue="0" fldStatus="0" fldComment="分配状态,未分配" />
+    <tblDictionary fldId="99" fldType="24" fldName="已分配" fldValue="1" fldStatus="0" fldComment="分配状态,已分配" />
+    
+    <tblDictionary fldId="100" fldType="25" fldName="话务导入" fldValue="0" fldStatus="0" fldComment="客户来源，话务导入" />
+	<tblDictionary fldId="101" fldType="25" fldName="客户录入" fldValue="1" fldStatus="0" fldComment="客户来源，客户录入" />
+
+    <tblDictionary fldId="102" fldType="26" fldName="去重" fldValue="0" fldStatus="0" fldComment="话务导入是否去重，去重" />
+    <tblDictionary fldId="103" fldType="26" fldName="不去重" fldValue="1" fldStatus="0" fldComment="话务导入是否去重，不去重" />
 
     <tblSysParameter fldId="1" fldName="SYS_ADMIN"
 		fldValue="1" fldUnit="" fldStatus="0" fldDisplay="1" fldComment="" />
