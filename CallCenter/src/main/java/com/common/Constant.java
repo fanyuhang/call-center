@@ -531,4 +531,9 @@ public class Constant {
 	
 	public static final Integer TELEPHONE_TASK_AUDIT_STATUS_UN = 0;//审查状态,待审查
 	public static final Integer TELEPHONE_TASK_AUDIT_STATUS_ED = 1;//审查状态,已审查
+	
+	public static final Integer TELEPHONE_CUSTOMER_SOURCE_IMPORT = 0;//客户来源,话务导入
+	public static final Integer TELEPHONE_CUSTOMER_SOURCE_INPUT = 1;//客户来源,客户录入
+	
+	public static final Integer CUSTOMER_SOURCE_TELEPHONE = 1;//客户来源，电话
 }

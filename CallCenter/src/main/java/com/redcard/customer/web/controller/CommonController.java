@@ -43,7 +43,7 @@ import com.redcard.customer.service.CustomerManager;
 import com.redcard.customer.service.ProductDetailManager;
 import com.redcard.customer.service.ProductManager;
 
-@Controller
+@Controller("customerCommonController")
 @RequestMapping(value = "/customer/common")
 public class CommonController {
     private static Logger logger = LoggerFactory.getLogger(CommonController.class);

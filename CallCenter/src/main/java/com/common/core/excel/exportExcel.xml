@@ -76,4 +76,15 @@
     	<column cell="D1" propertyName="mobile" columnName="联系电话" nullAllowed="true"></column>
     	<column cell="E1" propertyName="address" columnName="地址" nullAllowed="true"></column>
     </table>
+    
+    <table class="com.redcard.telephone.entity.TelephoneCustomer" startRow="1">
+    	<column cell="A1" propertyName="fldCustomerName" columnName="客户名称" nullAllowed="true"></column>
+    	<column cell="B1" propertyName="fldGender" columnName="性别" nullAllowed="true">
+    		<mapping value="1" text="男"></mapping>
+    		<mapping value="0" text="女"></mapping>
+    	</column>
+    	<column cell="C1" propertyName="fldMobile" columnName="手机号" nullAllowed="true"></column>
+    	<column cell="D1" propertyName="fldPhone" columnName="固定电话" nullAllowed="true"></column>
+    	<column cell="E1" propertyName="fldAddress" columnName="地址" nullAllowed="true"></column>
+    </table>
 </tables>

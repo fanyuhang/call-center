@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.phone.dao.mybatis.PhoneMapper">
+    <select id="queryExtMonitor" resultType="com.phone.entity.ExtMonitor">
+      SELECT a.ch as nCh
+	,a.usercode as szExtension
+	,a.userpos as nPos
+	,a.STATUS as nStatus
+	,a.starttime as startTime
+	,a.uid as szAgentID
+	,a.NAME as szAgentName
+	,a.callerid as szPhoneNumber
+	,DATEDIFF(second,starttime,getdate()) as nStatusTime
+FROM (
+	SELECT a.ch
+		,a.usercode
+		,a.userpos
+		,b.STATUS
+		,b.starttime
+		,b.endtime
+		,b.uid
+		,c.NAME
+		,d.callerid
+		,ROW_NUMBER() OVER (
+			PARTITION BY a.usercode ORDER BY b.starttime DESC
+			) rowno
+	FROM userlist a
+	LEFT JOIN statrecord b ON a.usercode = b.extno
+	LEFT JOIN operator c ON b.uid = c.uid
+	LEFT JOIN calllog d ON b.callid = d.id
+	) a
+WHERE a.rowno = 1
+    </select>
+</mapper>

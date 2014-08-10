@@ -11,6 +11,9 @@ public interface TelephoneAssignDetailDao extends PagingAndSortingRepository<Tel
 	@Query("select m from TelephoneAssignDetail m where m.fldAssignId = ?1")
     public List<TelephoneAssignDetail> listByAssignId(String fldAssignId);
 	
+	@Query("select m from TelephoneAssignDetail m where m.fldCallUserNo = ?1")
+    public List<TelephoneAssignDetail> listByCallUser(String fldCallUserNo);
+	
 	@Query("select sum(m.fldTaskNumber) from TelephoneAssignDetail m where m.fldCallUserNo = ?1")
     public Long countTaskNumber(String fldCallUserNo);
 	

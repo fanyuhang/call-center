@@ -25,10 +25,10 @@
 	    inputWidth: 150,
 	    space: 30,
 	    fields: [
-	        {display: "操作人", name: "operateUser.userName", newline: true, type: "text", cssClass: "field"},
-	        {display: "开始时间", name: "startDate", newline: true, type: "date", cssClass: "field",
+	        {display: "话务分配人", name: "createUser.userName", newline: true, type: "text", cssClass: "field"},
+	        {display: "分配时间", name: "startDate", newline: true, type: "date", cssClass: "field",
 	        	attr:{op:'greaterorequal', vt:'date', field:"fldOperateDate"}},
-	        {display: "结束时间", name: "endDate", newline: false, type: "date", cssClass: "field",
+	        {display: "至", name: "endDate", newline: false, type: "date", cssClass: "field",
 	        	attr:{op:'lessorequal', vt:'date', field:"fldOperateDate"}}
 	    ],
 	    toJSON: JSON2.stringify
@@ -36,14 +36,14 @@
 	
 	//列表结构
 	var grid = $("#maingrid").ligerGrid({
-	    checkbox: true,
+	    checkbox: false,
 	    rownumbers: true,
 	    delayLoad: true,
 	    columnWidth: 180,
 	    columns: [
 	    	{display: "ID", name: "fldId", hide:1,width:1},
-	        {display: "操作人", name: "operateUserName"},
-	        {display: "操作时间", name: "fldOperateDate"},
+	        {display: "话务分配人", name: "createUserName"},
+	        {display: "分配时间", name: "fldCreateDate"},
 	        {display: "使用话务数", name: "fldAssignNumber"},
 	        {display: "话务员数", name: "fldCallUserNumber"},
 	        {display: "任务开始时间", name: "fldBeginDate"},

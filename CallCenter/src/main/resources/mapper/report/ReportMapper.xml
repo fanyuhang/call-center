@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redcard.report.dao.mybatis.ReportMapper">
+    <select id="yeJiDay" parameterType="map"
+            resultType="com.redcard.report.entity.YeJiDay">
+        SELECT DATEADD(day, DATEDIFF(day, 0, a.fldSignDate), 0) as reportDate
+        ,b.fldUserName as userName
+        ,d.fldDeptName as deptName
+        ,sum(a.fldPerformanceMoney) as totalMoney
+        FROM tblCustomerContract a
+        LEFT JOIN tblUser b ON a.fldFinancialUserNo = b.fldLoginName
+        LEFT JOIN tblUserDeptLink c ON b.fldLoginName = c.fldLoginName
+        LEFT JOIN tblDept d ON c.fldDeptCode = d.fldDeptCode
+        where 1=1
+        <if test="deptName != null">
+            and d.fldDeptName like #{deptName}
+        </if>
+        <if test="userName != null">
+            and b.fldUserName like #{userName}
+        </if>
+        <if test="startDate != null">
+            and DATEADD(day, DATEDIFF(day, 0, a.fldSignDate), 0) >= #{startDate}
+        </if>
+        <if test="endDate != null">
+            and DATEADD(day, DATEDIFF(day, 0, a.fldSignDate), 0) &lt;= #{endDate}
+        </if>
+        GROUP BY DATEADD(day, DATEDIFF(day, 0, a.fldSignDate), 0)
+        ,b.fldUserName
+        ,d.fldDeptName
+    </select>
+    <select id="yeJiMonth" parameterType="map"
+            resultType="com.redcard.report.entity.YeJiMonth">
+        SELECT DATEADD(month, DATEDIFF(month, 0, a.fldSignDate), 0) as reportDate
+        ,b.fldUserName as userName
+        ,d.fldDeptName as deptName
+        ,sum(a.fldPerformanceMoney) as totalMoney
+        FROM tblCustomerContract a
+        LEFT JOIN tblUser b ON a.fldFinancialUserNo = b.fldLoginName
+        LEFT JOIN tblUserDeptLink c ON b.fldLoginName = c.fldLoginName
+        LEFT JOIN tblDept d ON c.fldDeptCode = d.fldDeptCode
+        where 1=1
+        <if test="deptName != null">
+            and d.fldDeptName like #{deptName}
+        </if>
+        <if test="userName != null">
+            and b.fldUserName like #{userName}
+        </if>
+        <if test="startDate != null">
+            and DATEADD(month, DATEDIFF(month, 0, a.fldSignDate), 0) >= #{startDate}
+        </if>
+        <if test="endDate != null">
+            and DATEADD(month, DATEDIFF(month, 0, a.fldSignDate), 0) &lt;= #{endDate}
+        </if>
+        GROUP BY DATEADD(month, DATEDIFF(month, 0, a.fldSignDate), 0)
+        ,b.fldUserName
+        ,d.fldDeptName
+    </select>
+</mapper>

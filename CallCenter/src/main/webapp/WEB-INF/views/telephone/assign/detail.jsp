@@ -15,9 +15,9 @@
 	    	{display: "ID", name: "fldId", hide:1,width:1},
 	        {display: "话务员", name: "callUserName"},
 	        {display: "任务日期", name: "fldTaskDate"},
-	        {display: "话务数", name: "fldTaskNumber"},
+	        {display: "话务总数", name: "fldTaskNumber"},
 	        {display: "已拨打数", name: "fldFinishNumber"}
-	    ], dataAction: 'server', pageSize: 20, toolbar: {}, url: '<c:url value="/telephone/assign/listDetail"/>'+'?where='+where,
+	    ], dataAction: 'server', pageSize: 20, url: '<c:url value="/telephone/assign/listDetail"/>'+'?where='+where,
 	    width: '98%', height: '98%', toJSON: JSON2.stringify, onReload: f_reload
 	});
 

@@ -109,6 +109,10 @@
             return;
         }
 
+        if(LG.isTongHua!=0){
+            return;
+        }
+
         LG.connected(connected_type);
 
         if(connected_type!=0){
@@ -119,6 +123,10 @@
 
     function f_transfer(){
         if(LG.telephoneStatus!=0){
+            return;
+        }
+
+        if(LG.isTongHua!=0){
             return;
         }
         LG.transfer();
@@ -136,6 +144,11 @@
         if(LG.telephoneStatus!=0){
             return;
         }
+
+        if(LG.isTongHua!=0){
+            return;
+        }
+
         LG.mute(mute_type);
         if(mute_type==0){
             $("#mute").find('b').text("取消静音");
@@ -181,6 +194,7 @@
             $("#userStatus").addClass("i-ready");
             $("#userStatus").next('b').addClass("green").text("就绪");
             $("#dial").removeClass("disabled");
+            $("#hangup").removeClass("disabled");
             $("#control").removeClass("disabled");
             $(".select-status li").each(function(){
                 $(this).removeClass("off");
@@ -189,6 +203,7 @@
             $("#userStatus").removeClass("i-ready");
             $("#userStatus").addClass("i-offline");
             $("#userStatus").next('b').removeClass("green").text("不在线");
+            $("#hangup").addClass("disabled");
             $("#dial").addClass("disabled");
             $("#control").addClass("disabled");
             $(".select-status li").each(function(){
@@ -333,11 +348,11 @@
                 $("#pageloading").hide();
                 if(phoneExtension&&phoneExtension.length>0){
                     $("#dial").removeClass("disabled");
-
+                    $("#hangup").removeClass("disabled");
                     f_connect(user[0].loginName,user[0].phonePassword,user[0].phoneExtension);
-
                 }else{
                     $("#dial").addClass("disabled");
+                    $("#hangup").addClass("disabled");
                 }
 
                 if(phoneType&&phoneType == '2'){
@@ -470,7 +485,6 @@ $(function(){
         $("#telephoneStatus").next("b").removeClass();
         $("#telephoneStatus").next("b").addClass("green");
         $("#telephoneStatus").next("b").text("示闲");
-//        alert("坐席示闲成功");
     }
 
     function snlAgentBusyEvent(nFlag){
@@ -482,27 +496,22 @@ $(function(){
             case 0:
                 className = 'i-test';
                 text = '小休';
-//                alert("坐席小休成功");
                 break;
             case 1:
                 className = 'i-meals';
                 text = '就餐';
-//                alert("坐席就餐成功");
                 break;
             case 2:
                 className = 'i-training';
                 text = '培训';
-//                alert("坐席培训成功");
                 break;
             case 3:
                 className = 'i-meeting';
                 text = '会议中';
-//                alert("坐席会议成功");
                 break;
             case 4:
                 className = 'i-processing';
                 text = '后处理';
-//                alert("坐席后处理成功");
                 break;
             default:
                 alert("操作成功");
@@ -522,7 +531,7 @@ $(function(){
         $("#userStatus").addClass("i-calling");
         $("#userStatus").next("b").removeClass("green");
         $("#userStatus").next("b").text("通话中");
-//        alert("通话建立");
+        LG.isTongHua = 0;
     }
     function snlClearCallEvent(){
         $("#dial").removeClass("disabled");
@@ -537,29 +546,29 @@ $(function(){
         $("#userStatus").next("b").addClass("green");
         $("#userStatus").next("b").text("就绪");
         LG.isOutCall = 1;
-//        alert("本机或对方挂机");
+        LG.isTongHua = 1;
     }
     function snlReceiveDeliverCallEvent(szPhoneNumber, szPhoneParam, nCallID) {
         if(LG.isOutCall==1 && (szPhoneNumber.length>5||szPhoneNumber.length==0)){
             $("#telephone").html(szPhoneNumber);
+            snlEstablishCallEvent();
             var tabid;
-            f_addTab(tabid, '来电弹屏：'+szPhoneNumber, '');
+//            f_addTab(tabid, '来电弹屏：'+szPhoneNumber, '');
             alert("来电"+szPhoneNumber+","+szPhoneParam+","+nCallID);
         }
     }
     function snlHeldCallEvent() {
         $("#connected").find('b').text("继续通话");
-
         connected_type = 1;
     }
     function snlMakeTransferCallFailEvent(nType, szPhoneNumber, nReason) {
         alert("外拨或转接失败"+nType+","+szPhoneNumber+","+nReason);
     }
     function snlExtensionInfoEvent(nPos, nStatus, szExtension, szRxDTMF, szPhoneNumber, szAgentID, szAgentName, nStatusTime){
-        if(nStatus == 0){
-            return;
-        }
-        alert(nPos+","+nStatus+","+ szExtension+","+ szRxDTMF+","+ szPhoneNumber+","+ szAgentID+","+ szAgentName+","+ nStatusTime);
+//        if(nStatus == 0){
+//            return;
+//        }
+//        alert(nPos+","+nStatus+","+ szExtension+","+ szRxDTMF+","+ szPhoneNumber+","+ szAgentID+","+ szAgentName+","+ nStatusTime);
     }
 </script>
 </body>

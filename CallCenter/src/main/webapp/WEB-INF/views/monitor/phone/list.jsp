@@ -25,17 +25,17 @@
     <div id="extGrid">
     </div>
 </div>
-<div style="width:100%">
-    <div class="searchtitle" style="margin-top: 10px;width:98% ">
-        <span>外线</span><img
-            src='<c:url value="/static/ligerUI/icons/32X32/consulting.gif"/>'/>
+<%--<div style="width:100%">--%>
+<%--<div class="searchtitle" style="margin-top: 10px;width:98% ">--%>
+<%--<span>外线</span><img--%>
+<%--src='<c:url value="/static/ligerUI/icons/32X32/consulting.gif"/>'/>--%>
 
-        <div class="togglebtn"></div>
-    </div>
-    <div class="navline" style="margin-bottom: 4px; margin-top: 4px;width:98%"></div>
-    <div id="trunkGrid">
-    </div>
-</div>
+<%--<div class="togglebtn"></div>--%>
+<%--</div>--%>
+<%--<div class="navline" style="margin-bottom: 4px; margin-top: 4px;width:98%"></div>--%>
+<%--<div id="trunkGrid">--%>
+<%--</div>--%>
+<%--</div>--%>
 <script type="text/javascript">
 var statusData = <sys:dictList type = "22"/>;
 
@@ -44,53 +44,34 @@ var snocx = parent.document.getElementById("snocx");
 var extGridData = {"Rows": []};
 
 var trunkGridData = {"Rows": []};
-//
-//将秒数转换为时分秒
-//
-function formatSeconds(seconds) {
-    var hh;
-    var mm;
-    var ss;
-    //传入的时间为空或小于0
-    if (seconds == null || seconds < 0) {
-        return;
-    }
-    //得到小时
-    hh = seconds / 3600 | 0;
-    seconds = parseInt(seconds) - hh * 3600;
-    if (parseInt(hh) < 10) {
-        hh = "0" + hh;
-    }
-    //得到分
-    mm = seconds / 60 | 0;
-    //得到秒
-    ss = parseInt(seconds) - mm * 60;
-    if (parseInt(mm) < 10) {
-        mm = "0" + mm;
-    }
-    if (ss < 10) {
-        ss = "0" + ss;
-    }
-    return hh + ":" + mm + ":" + ss;
+
+function loadExtData() {
+    LG.ajax({
+        url: '<c:url value="/monitor/phone/list"/>',
+        datType: "json",
+        success: function (result) {
+            for (var i = 0; i < result.length; i++) {
+                extGridData.Rows[result[i].nPos] = {
+                    nPos: result[i].nPos,
+                    nStatus: result[i].nStatus,
+                    szExtension: result[i].szExtension,
+                    szRxDTMF: result[i].szRxDTMF,
+                    szPhoneNumber: result[i].szPhoneNumber,
+                    szAgentID: result[i].szAgentID,
+                    szAgentName: result[i].szAgentName,
+                    nStatusTime: formatSeconds(result[i].nStatusTime),
+                    sStatusTime: result[i].nStatusTime.toString()
+                };
+                extGrid.reload();
+            }
+        },
+        error: function (message) {
+            LG.showError(message);
+        }
+    });
 }
 
-//将时间字符串转换为秒
-function formattime(time) {
-    var seconds = 0;
-    var s = new Array();
-    s = time.split(":");
-    if (parseInt(s[0]) > 0) {
-        seconds += parseInt(s[0]) * 3600;
-    }
-    if (parseInt(s[1]) > 0) {
-        seconds += parseInt(s[1]) * 60;
-    }
-    if (parseInt(s[2]) > 0) {
-        seconds += parseInt(s[2]);
-    }
-    return seconds;
-}
-
+loadExtData();
 //
 //更新分机时间
 //
@@ -117,11 +98,10 @@ function updateTrutime() {
         trunkGridData.Rows[i].nStatusTime = formatSeconds(time);
     }
     if (trunkGridData.Rows.length > 0) {
-        trunkGrid.reload();
+//            trunkGrid.reload();
     }
 }
-
-if (!snocx) {
+try {
     snocx.attachEvent("snlExtensionInfoEvent", function (nPos, nStatus, szExtension, szRxDTMF, szPhoneNumber, szAgentID, szAgentName, nStatusTime) {
         extGridData.Rows[nPos] = {
             nPos: nPos,
@@ -136,21 +116,23 @@ if (!snocx) {
         };
         extGrid.reload();
     });
-    snocx.attachEvent("snlTrunkInfoEvent", function (nCh, nStatus, szIVR, szRxDTMF, szPhoneNumber, szAgentID, szAgentName, nStatusTime) {
-        trunkGridData.Rows[nCh] = {
-            nCh: nCh,
-            nStatus: nStatus,
-            szIVR: szIVR,
-            szRxDTMF: szRxDTMF,
-            szPhoneNumber: szPhoneNumber,
-            szAgentID: szAgentID,
-            szAgentName: szAgentName,
-            nStatusTime: formatSeconds(nStatusTime),
-            sStatusTime: nStatusTime.toString()
-        };
-        trunkGrid.reload();
-    });
+} catch (ex) {
+
 }
+//        snocx.attachEvent("snlTrunkInfoEvent", function (nCh, nStatus, szIVR, szRxDTMF, szPhoneNumber, szAgentID, szAgentName, nStatusTime) {
+//            trunkGridData.Rows[nCh] = {
+//                nCh: nCh,
+//                nStatus: nStatus,
+//                szIVR: szIVR,
+//                szRxDTMF: szRxDTMF,
+//                szPhoneNumber: szPhoneNumber,
+//                szAgentID: szAgentID,
+//                szAgentName: szAgentName,
+//                nStatusTime: formatSeconds(nStatusTime),
+//                sStatusTime: nStatusTime.toString()
+//            };
+//            trunkGrid.reload();
+//        });
 
 //搜索表单应用ligerui样式
 var formsearch = $("#formsearch");
@@ -222,41 +204,50 @@ var extGrid = $("#extGrid").ligerGrid({
             }},
         { display: "分机号", name: "szExtension", type: "text", align: "center" },
         { display: '收号', name: 'szRxDTMF', align: 'left', type: 'text'},
-        { display: '主叫号码', name: 'szPhoneNumber', align: 'left' },
+        { display: '主叫号码', name: 'szPhoneNumber', align: 'center', render: function (item) {
+            if(!item.szPhoneNumber){
+                return "";
+            }
+            if (item.szPhoneNumber == '-1'||item.szPhoneNumber.length<5) {
+                return "";
+            }
+            return item.szPhoneNumber;
+        } },
         { display: "登录用户", name: "szAgentName", type: "text", width: 130, align: "center" },
         { display: '工号', name: 'szAgentID', width: 130, align: 'center' },
         { display: '时长', name: 'nStatusTime', align: 'center' }
-    ], width: '98%', data: extGridData, height: '70%', pageSize: 20, rowHeight: 20, checkbox: false,
+    ], width: '98%', data: extGridData, height: '98%', pageSize: 20, rowHeight: 20, checkbox: false,
     rownumbers: true, usePager: false, onSelectRow: function (rowdata, rowid, rowobj) {
         $("#extPhone").val(rowdata.szExtension);
     }
 });
 
-var trunkGrid = $("#trunkGrid").ligerGrid({
-    columnWidth: 180,
-    columns: [
-        { display: "通道状态", name: "nStatus", type: "text", align: "center",
-            render: function (item) {
-                return renderLabel(
-                        statusData,
-                        item.nStatus);
-            }},
-        { display: "按键信息", name: "szRxDTMF", type: "text", align: "left" },
-        { display: '流程节点', name: 'szIVR', align: 'left', type: 'text'},
-        { display: "来电号码", name: "szPhoneNumber", type: "text", align: "left" },
-        { display: '登录用户', name: 'szAgentName', width: 130, align: 'center' },
-        { display: '工号', name: 'szAgentID', width: 130, align: 'center' },
-        { display: '时长', name: 'nStatusTime', align: 'center' }
-    ], width: '98%', data: trunkGridData, height: '25%', pageSize: 20, rowHeight: 20, checkbox: false,
-    rownumbers: true, usePager: false
-});
+
+//    var trunkGrid = $("#trunkGrid").ligerGrid({
+//        columnWidth: 180,
+//        columns: [
+//            { display: "通道状态", name: "nStatus", type: "text", align: "center",
+//                render: function (item) {
+//                    return renderLabel(
+//                            statusData,
+//                            item.nStatus);
+//                }},
+//            { display: "按键信息", name: "szRxDTMF", type: "text", align: "left" },
+//            { display: '流程节点', name: 'szIVR', align: 'left', type: 'text'},
+//            { display: "来电号码", name: "szPhoneNumber", type: "text", align: "left" },
+//            { display: '登录用户', name: 'szAgentName', width: 130, align: 'center' },
+//            { display: '工号', name: 'szAgentID', width: 130, align: 'center' },
+//            { display: '时长', name: 'nStatusTime', align: 'center' }
+//        ], width: '98%', data: trunkGridData, height: '25%', pageSize: 20, rowHeight: 20, checkbox: false,
+//        rownumbers: true, usePager: false
+//    });
 
 resizeDataGrid(extGrid);
-resizeDataGrid(trunkGrid);
+//    resizeDataGrid(trunkGrid);
 
 function startUpdateTime() {
     updateExttime();
-    updateTrutime();
+//        updateTrutime();
 }
 
 setInterval("startUpdateTime()", 1000);
