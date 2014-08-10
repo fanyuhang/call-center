@@ -16,8 +16,6 @@ import com.google.gson.Gson;
 import com.redcard.message.dao.MessageOperateDao;
 import com.redcard.message.entity.MessageOperate;
 
-import java.util.List;
-
 @Component
 public class MessageOperateManager extends GenericPageHQLQuery<MessageOperate> {
 
