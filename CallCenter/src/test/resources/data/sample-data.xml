@@ -405,6 +405,10 @@
 	<tblNode fldCode="01050402" fldParent="010504" fldName="导出" fldDesc="" fldTarget="export"
 		fldIcon="/static/ligerUI/icons/miniicons/action_save.gif"
 		fldLink="/telephone/customer/export" fldType="2" fldPosition="2"/>
+	
+	<tblNode fldCode="010505" fldParent="0105" fldName="我的外拨" fldDesc="" fldTarget="" 
+		fldIcon="/static/ligerUI/icons/32X32/free_for_job.gif"
+		fldLink="/telephone/dial/init" fldType="1" fldPosition="5" />
 
     <tblNode fldCode="0106" fldParent="01" fldName="话务监控" fldDesc=""
              fldTarget="#" fldIcon="" fldLink="" fldType="1" fldPosition="6" />
