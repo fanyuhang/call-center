@@ -405,6 +405,10 @@
 	<tblNode fldCode="01050402" fldParent="010504" fldName="导出" fldDesc="" fldTarget="export"
 		fldIcon="/static/ligerUI/icons/miniicons/action_save.gif"
 		fldLink="/telephone/customer/export" fldType="2" fldPosition="2"/>
+	
+	<tblNode fldCode="010505" fldParent="0105" fldName="我的外拨" fldDesc="" fldTarget="" 
+		fldIcon="/static/ligerUI/icons/32X32/free_for_job.gif"
+		fldLink="/telephone/dial/init" fldType="1" fldPosition="5" />
 
     <tblNode fldCode="0106" fldParent="01" fldName="话务监控" fldDesc=""
              fldTarget="#" fldIcon="" fldLink="" fldType="1" fldPosition="6" />
@@ -433,7 +437,44 @@
     <tblNode fldCode="01070201" fldParent="010702" fldName="导出列表" fldDesc="" fldTarget="export"
              fldIcon="/static/ligerUI/icons/silkicons/application_put.png"
              fldLink="" fldType="2" fldPosition="1"/>
+    
+	<!-- 一级菜单 -->
+	<tblNode fldCode="0108" fldParent="01" fldName="邮件管理" fldDesc=""
+		fldTarget="#" fldIcon="/static/ligerUI/icons/silkicons/application.png"
+		fldLink="" fldType="1" fldPosition="4" />
 
+	<!-- 二级菜单 -->
+	<tblNode fldCode="010801" fldParent="0108" fldName="邮件模板管理"
+		fldDesc="" fldTarget="" fldIcon="/static/ligerUI/icons/32X32/document_library.gif" 
+		fldLink="/email/template/init" fldType="1" fldPosition="0" />
+
+	<!-- 三级菜单 -->
+	<tblNode fldCode="01080101" fldParent="010801" fldName="新增"
+		fldDesc="" fldTarget="add" fldIcon="/static/ligerUI/icons/silkicons/add.png"
+		fldLink="/email/template/add" fldType="2" fldPosition="1" />
+	<tblNode fldCode="01080102" fldParent="010801" fldName="修改"
+		fldDesc="" fldTarget="modify" fldIcon="/static/ligerUI/icons/miniicons/page_edit.gif"
+		fldLink="/email/template/edit" fldType="2" fldPosition="2" />
+	<tblNode fldCode="01080103" fldParent="010801" fldName="删除"
+		fldDesc="" fldTarget="delete" fldIcon="/static/ligerUI/icons/miniicons/page_delete.gif"
+		fldLink="/email/template/delete" fldType="2" fldPosition="3" />
+	<tblNode fldCode="01080104" fldParent="010801" fldName="查看"
+		fldDesc="" fldTarget="view" fldIcon="/static/ligerUI/icons/silkicons/application_view_detail.png"
+		fldLink="/email/template/view" fldType="2" fldPosition="4" />
+
+	<!-- 二级菜单 -->
+	<tblNode fldCode="010802" fldParent="0108" fldName="邮件记录管理"
+		fldDesc="" fldTarget="" fldIcon="/static/ligerUI/icons/32X32/comment.gif"
+		fldLink="/email/operate/init" fldType="1" fldPosition="1" />
+
+	<!-- 三级菜单 -->
+	<tblNode fldCode="01080201" fldParent="010802" fldName="邮件发送"
+		fldDesc="" fldTarget="add" fldIcon="/static/ligerUI/icons/silkicons/add.png"
+		fldLink="/email/operate/add" fldType="2" fldPosition="1" />
+	<tblNode fldCode="01080202" fldParent="010802" fldName="邮件发送详情"
+		fldDesc="" fldTarget="view" fldIcon="/static/ligerUI/icons/silkicons/application_view_detail.png"
+		fldLink="/email/operate/view" fldType="2" fldPosition="2" />
+		
 	<tblRole fldId="1" fldRoleName="sysadmin" />
 
 	<tblUser fldId="1" fldLoginName="admin" fldUserName="admin"
@@ -607,10 +648,20 @@
     <tblDictionary fldId="99" fldType="24" fldName="已分配" fldValue="1" fldStatus="0" fldComment="分配状态,已分配" />
     
     <tblDictionary fldId="100" fldType="25" fldName="话务导入" fldValue="0" fldStatus="0" fldComment="客户来源，话务导入" />
-	<tblDictionary fldId="101" fldType="25" fldName="客户录入" fldValue="1" fldStatus="0" fldComment="客户来源，客户录入" />
+		<tblDictionary fldId="101" fldType="25" fldName="客户录入" fldValue="1" fldStatus="0" fldComment="客户来源，客户录入" />
 
     <tblDictionary fldId="102" fldType="26" fldName="去重" fldValue="0" fldStatus="0" fldComment="话务导入是否去重，去重" />
     <tblDictionary fldId="103" fldType="26" fldName="不去重" fldValue="1" fldStatus="0" fldComment="话务导入是否去重，不去重" />
+    
+    <tblDictionary fldId="104" fldType="27" fldName="未知" fldValue="0" fldStatus="0" fldComment="任务结果，未知" />
+    <tblDictionary fldId="105" fldType="27" fldName="错号" fldValue="1" fldStatus="0" fldComment="任务结果，错号" />
+    <tblDictionary fldId="106" fldType="27" fldName="空号" fldValue="2" fldStatus="0" fldComment="任务结果，空号" />
+    <tblDictionary fldId="107" fldType="27" fldName="待跟踪" fldValue="3" fldStatus="0" fldComment="任务结果，待跟踪" />
+    <tblDictionary fldId="108" fldType="27" fldName="有意向" fldValue="4" fldStatus="0" fldComment="任务结果，有意向" />
+    <tblDictionary fldId="109" fldType="27" fldName="其他" fldValue="9" fldStatus="0" fldComment="任务结果，其他" />
+    
+    <tblDictionary fldId="110" fldType="28" fldName="呼出" fldValue="0" fldStatus="0" fldComment="呼叫类型，呼出" />
+    <tblDictionary fldId="111" fldType="28" fldName="呼入" fldValue="1" fldStatus="0" fldComment="呼叫类型，呼入" />
 
     <tblSysParameter fldId="1" fldName="SYS_ADMIN"
 		fldValue="1" fldUnit="" fldStatus="0" fldDisplay="1" fldComment="" />
