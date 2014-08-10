@@ -317,4 +317,32 @@ public class TelephoneTask implements java.io.Serializable {
 	public String getCallUserName() {
 		return null != callUser ? callUser.getUserName() : "";
 	}	
+	
+	protected TelephoneImportDetail telephoneImportDetail;
+
+	@JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "FLDCUSTOMERID", referencedColumnName="FLDID", insertable = false, updatable = false)
+	public TelephoneImportDetail getTelephoneImportDetail() {
+		return telephoneImportDetail;
+	}
+
+	public void setTelephoneImportDetail(TelephoneImportDetail telephoneImportDetail) {
+		this.telephoneImportDetail = telephoneImportDetail;
+	}
+	
+	@Transient
+	public Integer getFldGender() {
+		return null != telephoneImportDetail.getFldGender() ? telephoneImportDetail.getFldGender() : null;
+	}
+	
+	@Transient
+	public String getFldMobile() {
+		return null != telephoneImportDetail.getFldMobile() ? telephoneImportDetail.getFldMobile() : "";
+	}
+	
+	@Transient
+	public String getFldPhone() {
+		return null != telephoneImportDetail.getFldPhone() ? telephoneImportDetail.getFldPhone() : "";
+	}
 }

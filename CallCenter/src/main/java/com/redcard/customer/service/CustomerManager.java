@@ -53,6 +53,15 @@ public class CustomerManager extends GenericPageHQLQuery<Customer> {
     public List<Customer> findCustomerByPhone(String phone) {
         return customerDao.findCustomerByPhone(phone);
     }
+    
+    public Customer findCustomerByMobileOrPhone(String customerName,String mobile,String phone) {
+    	Customer customer = customerDao.findByMobile(mobile);
+    	if(null != customer)
+    		return customer;
+    	else {
+    		return customerDao.findByCustNameAndPhone(customerName, phone);
+    	}
+    }
 
     public Page<Customer> findAllCustomer(GridPageRequest page, String where) {
         return (Page<Customer>) super.findAll(where, page);
