@@ -433,7 +433,44 @@
     <tblNode fldCode="01070201" fldParent="010702" fldName="导出列表" fldDesc="" fldTarget="export"
              fldIcon="/static/ligerUI/icons/silkicons/application_put.png"
              fldLink="" fldType="2" fldPosition="1"/>
+    
+	<!-- 一级菜单 -->
+	<tblNode fldCode="0108" fldParent="01" fldName="邮件管理" fldDesc=""
+		fldTarget="#" fldIcon="/static/ligerUI/icons/silkicons/application.png"
+		fldLink="" fldType="1" fldPosition="4" />
 
+	<!-- 二级菜单 -->
+	<tblNode fldCode="010801" fldParent="0108" fldName="邮件模板管理"
+		fldDesc="" fldTarget="" fldIcon="/static/ligerUI/icons/32X32/document_library.gif" 
+		fldLink="/email/template/init" fldType="1" fldPosition="0" />
+
+	<!-- 三级菜单 -->
+	<tblNode fldCode="01080101" fldParent="010801" fldName="新增"
+		fldDesc="" fldTarget="add" fldIcon="/static/ligerUI/icons/silkicons/add.png"
+		fldLink="/email/template/add" fldType="2" fldPosition="1" />
+	<tblNode fldCode="01080102" fldParent="010801" fldName="修改"
+		fldDesc="" fldTarget="modify" fldIcon="/static/ligerUI/icons/miniicons/page_edit.gif"
+		fldLink="/email/template/edit" fldType="2" fldPosition="2" />
+	<tblNode fldCode="01080103" fldParent="010801" fldName="删除"
+		fldDesc="" fldTarget="delete" fldIcon="/static/ligerUI/icons/miniicons/page_delete.gif"
+		fldLink="/email/template/delete" fldType="2" fldPosition="3" />
+	<tblNode fldCode="01080104" fldParent="010801" fldName="查看"
+		fldDesc="" fldTarget="view" fldIcon="/static/ligerUI/icons/silkicons/application_view_detail.png"
+		fldLink="/email/template/view" fldType="2" fldPosition="4" />
+
+	<!-- 二级菜单 -->
+	<tblNode fldCode="010802" fldParent="0108" fldName="邮件记录管理"
+		fldDesc="" fldTarget="" fldIcon="/static/ligerUI/icons/32X32/comment.gif"
+		fldLink="/email/operate/init" fldType="1" fldPosition="1" />
+
+	<!-- 三级菜单 -->
+	<tblNode fldCode="01080201" fldParent="010802" fldName="邮件发送"
+		fldDesc="" fldTarget="add" fldIcon="/static/ligerUI/icons/silkicons/add.png"
+		fldLink="/email/operate/add" fldType="2" fldPosition="1" />
+	<tblNode fldCode="01080202" fldParent="010802" fldName="邮件发送详情"
+		fldDesc="" fldTarget="view" fldIcon="/static/ligerUI/icons/silkicons/application_view_detail.png"
+		fldLink="/email/operate/view" fldType="2" fldPosition="2" />
+		
 	<tblRole fldId="1" fldRoleName="sysadmin" />
 
 	<tblUser fldId="1" fldLoginName="admin" fldUserName="admin"
