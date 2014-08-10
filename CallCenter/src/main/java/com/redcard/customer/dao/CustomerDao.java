@@ -29,6 +29,9 @@ public interface CustomerDao extends PagingAndSortingRepository<Customer,String>
     @Query("select c from Customer c where c.fldName = ?1 and c.fldMobile = ?2 ")
     public Customer findByCustNameAndMobile(String customerName,String mobile);
     
+    @Query("select c from Customer c where c.fldMobile = ?1 ")
+    public Customer findByMobile(String mobile);
+    
     @Query("select c from Customer c where c.fldServiceUserNo = ?1 ")
     public List<Customer> findByServiceUser(String serviceUserNo);
 }

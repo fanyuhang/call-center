@@ -7,6 +7,10 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
+import com.common.core.util.JsonTimestampSerializer;
+
 /**
  * TelephoneRecord entity. @author MyEclipse Persistence Tools
  */
@@ -124,6 +128,7 @@ public class TelephoneRecord implements java.io.Serializable {
 	}
 
 	@Column(name = "FLDCALLDATE")
+	@JsonSerialize(using = JsonTimestampSerializer.class)
 	public Date getFldCallDate() {
 		return this.fldCallDate;
 	}
@@ -169,6 +174,7 @@ public class TelephoneRecord implements java.io.Serializable {
 	}
 
 	@Column(name = "FLDCALLBEGINTIME")
+	@JsonSerialize(using = JsonTimestampSerializer.class)
 	public Date getFldCallBeginTime() {
 		return this.fldCallBeginTime;
 	}
@@ -178,6 +184,7 @@ public class TelephoneRecord implements java.io.Serializable {
 	}
 
 	@Column(name = "FLDCALLENDTIME")
+	@JsonSerialize(using = JsonTimestampSerializer.class)
 	public Date getFldCallEndTime() {
 		return this.fldCallEndTime;
 	}
@@ -259,6 +266,7 @@ public class TelephoneRecord implements java.io.Serializable {
 	}
 
 	@Column(name = "FLDOPERATEDATE")
+	@JsonSerialize(using = JsonTimestampSerializer.class)
 	public Date getFldOperateDate() {
 		return this.fldOperateDate;
 	}
