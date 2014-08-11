@@ -174,18 +174,20 @@
     }
 
     function f_connect(name,pwd,phoneNo){
-        var snell = document.getElementById("snocx");
-        if(snell && $.browser.msie){
-            snell.snlSetServer("192.168.0.207",60000);
-            snell.snlAgentLogin(name,pwd,phoneNo);
-
-            intervalId = setInterval(function () {
-                var snell = document.getElementById("snocx");
-                snell.snlSendAliveToServer();
-            }, 2000);
-        }else{
-            f_login_status(1);
-        }
+    		try{
+	        var snell = document.getElementById("snocx");
+	        if(snell && $.browser.msie){
+	            snell.snlSetServer("192.168.0.207",60000);
+	            snell.snlAgentLogin(name,pwd,phoneNo);
+	
+	            intervalId = setInterval(function () {
+	                var snell = document.getElementById("snocx");
+	                snell.snlSendAliveToServer();
+	            }, 2000);
+	        }else{
+	            f_login_status(1);
+	        }
+    		}catch(e){}
     }
 
     function f_login_status(success){
