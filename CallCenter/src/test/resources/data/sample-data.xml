@@ -649,6 +649,9 @@
     <tblDictionary fldId="102" fldType="26" fldName="去重" fldValue="0" fldStatus="0" fldComment="话务导入是否去重，去重" />
     <tblDictionary fldId="103" fldType="26" fldName="不去重" fldValue="1" fldStatus="0" fldComment="话务导入是否去重，不去重" />
 
+ 	<tblDictionary fldId="104" fldType="27" fldName="有效" fldValue="0" fldStatus="0" fldComment="邮件模板状态，有效" />
+    <tblDictionary fldId="105" fldType="27" fldName="无效" fldValue="9" fldStatus="0" fldComment="邮件模板状态，无效" /> 
+ 
     <tblSysParameter fldId="1" fldName="SYS_ADMIN"
 		fldValue="1" fldUnit="" fldStatus="0" fldDisplay="1" fldComment="" />
 	<tblSysParameter fldId="2" fldName="MAX_ERROR_LOGIN"
