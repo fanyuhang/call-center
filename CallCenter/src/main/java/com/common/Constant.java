@@ -489,8 +489,8 @@ public class Constant {
 	public static final Integer PRODUCT_STATUS_NORMAL = 0; // 产品状态，有效
 	public static final Integer PRODUCT_STATUS_DIABLED = 9; // 产品状态，无效
 
-    public static final Integer CONTRACT_FINISH_STATUS_NO = 0;//合同是否状态,否
-    public static final Integer CONTRACT_FINISH_STATUS_YES = 1;//合同是否状态,是
+	public static final Integer CONTRACT_FINISH_STATUS_NO = 0;// 合同是否状态,否
+	public static final Integer CONTRACT_FINISH_STATUS_YES = 1;// 合同是否状态,是
 
 	public static final Integer PRODUCT_DETAIL_STATUS_NORMAL = 0; // 产品明细状态，有效
 	public static final Integer PRODUCT_DETAIL_STATUS_DIABLED = 9; // 产品明细状态，无效
@@ -498,42 +498,45 @@ public class Constant {
 	public static final Integer MESSAGE_TEMPLATE_STATUS_NORMAL = 0; // 短信模板状态，有效
 	public static final Integer MESSAGE_TEMPLATE_STATUS_DIABLED = 9; // 短信模板状态，无效
 
+	public static final Integer EMAIL_TEMPLATE_STATUS_NORMAL = 0; // 邮件模板状态，有效
+	public static final Integer EMAIL_TEMPLATE_STATUS_DIABLED = 9; // 邮件模板状态，无效
+
 	public static final Integer DAY_UNIT_DAY = 0; // 天数单位，天
 	public static final Integer DAY_UNIT_MONTH = 1;// 天数单位，月
 
 	public static final Integer MESSAGE_SEND_STATUS_SUCCESS = 0; // 短信发送状态，成功
 	public static final Integer MESSAGE_SEND_STATUS_FAIL = 9; // 短信发送状态，失败
-	
-	public static final Integer DUPLICATE_STATUS_Y = 0;//是否去重，去重
-	public static final Integer DUPLICATE_STATUS_N = 1;//是否去重，不去重
-	
-	public static final String TELEPHONE_IMPORTT_PATH = "telephone"+File.separator+"import";//话单存放本地路径
-	
-	public static final String TELEPHONE_IMPORT_SAVE_TYPE_ORIG = "01";  //话单导入，原始话单
-	public static final String TELEPHONE_IMPORT_SAVE_TYPE_DUP = "02";   //话单导入，重复话单
-	public static final String TELEPHONE_IMPORT_SAVE_TYPE_NO_DUP = "03";//话单导入，非重复话单
-	
-	public static final Integer TELEPHONE_ASSIGN_STATUS_UNASSIGN = 0;//话单分配状态,未分配
-	public static final Integer TELEPHONE_ASSIGN_STATUS_ASSIGNED = 1;//话单分配状态,已分配
-	
-	public static final Integer TASK_FINISH_STATUS_UNFINISH = 0;//任务完成状态，未完成
-	public static final Integer TASK_FINISH_STATUS_DEAL = 1;//任务完成状态，待跟踪
-	public static final Integer TASK_FINISH_STATUS_FINISHED = 9;//任务完成状态，已完成
-	
-	public static final Integer TASK_TYPE_AUTO = 0;//任务类型,自动分配任务
-	public static final Integer TASK_TYPE_MANU = 1;//任务类型,手动分配任务
-	
-	public static final Integer TASK_CALL_STATUS_UN = 0;//拨打状态,未拨打
-	public static final Integer TASK_CALL_STATUS_ED = 1;//拨打状态,已拨打
 
-	public static final Integer TELEPHONE_SOURCE_IMPORT = 0;//话务来源，导入话务
-	public static final Integer TELEPHONE_SOURCE_CUSTOMER = 1;//话务来源，已有话务
-	
-	public static final Integer TELEPHONE_TASK_AUDIT_STATUS_UN = 0;//审查状态,待审查
-	public static final Integer TELEPHONE_TASK_AUDIT_STATUS_ED = 1;//审查状态,已审查
-	
-	public static final Integer TELEPHONE_CUSTOMER_SOURCE_IMPORT = 0;//客户来源,话务导入
-	public static final Integer TELEPHONE_CUSTOMER_SOURCE_INPUT = 1;//客户来源,客户录入
-	
-	public static final Integer CUSTOMER_SOURCE_TELEPHONE = 1;//客户来源，电话
+	public static final Integer DUPLICATE_STATUS_Y = 0;// 是否去重，去重
+	public static final Integer DUPLICATE_STATUS_N = 1;// 是否去重，不去重
+
+	public static final String TELEPHONE_IMPORTT_PATH = "telephone" + File.separator + "import";// 话单存放本地路径
+
+	public static final String TELEPHONE_IMPORT_SAVE_TYPE_ORIG = "01"; // 话单导入，原始话单
+	public static final String TELEPHONE_IMPORT_SAVE_TYPE_DUP = "02"; // 话单导入，重复话单
+	public static final String TELEPHONE_IMPORT_SAVE_TYPE_NO_DUP = "03";// 话单导入，非重复话单
+
+	public static final Integer TELEPHONE_ASSIGN_STATUS_UNASSIGN = 0;// 话单分配状态,未分配
+	public static final Integer TELEPHONE_ASSIGN_STATUS_ASSIGNED = 1;// 话单分配状态,已分配
+
+	public static final Integer TASK_FINISH_STATUS_UNFINISH = 0;// 任务完成状态，未完成
+	public static final Integer TASK_FINISH_STATUS_DEAL = 1;// 任务完成状态，待跟踪
+	public static final Integer TASK_FINISH_STATUS_FINISHED = 9;// 任务完成状态，已完成
+
+	public static final Integer TASK_TYPE_AUTO = 0;// 任务类型,自动分配任务
+	public static final Integer TASK_TYPE_MANU = 1;// 任务类型,手动分配任务
+
+	public static final Integer TASK_CALL_STATUS_UN = 0;// 拨打状态,未拨打
+	public static final Integer TASK_CALL_STATUS_ED = 1;// 拨打状态,已拨打
+
+	public static final Integer TELEPHONE_SOURCE_IMPORT = 0;// 话务来源，导入话务
+	public static final Integer TELEPHONE_SOURCE_CUSTOMER = 1;// 话务来源，已有话务
+
+	public static final Integer TELEPHONE_TASK_AUDIT_STATUS_UN = 0;// 审查状态,待审查
+	public static final Integer TELEPHONE_TASK_AUDIT_STATUS_ED = 1;// 审查状态,已审查
+
+	public static final Integer TELEPHONE_CUSTOMER_SOURCE_IMPORT = 0;// 客户来源,话务导入
+	public static final Integer TELEPHONE_CUSTOMER_SOURCE_INPUT = 1;// 客户来源,客户录入
+
+	public static final Integer CUSTOMER_SOURCE_TELEPHONE = 1;// 客户来源，电话
 }

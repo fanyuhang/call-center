@@ -92,14 +92,14 @@
          	 		render:function(item){
          	 			if(null == item.fldMobile  || "" == item.fldMobile)
          	 				return "";
-         	 			return '<span>'+item.fldMobile+'&nbsp;&nbsp;<a href="javascript:void(0);" title="拨打" style="background:url(/static/ligerUI/icons/silkicons/phone.png) no-repeat;text-decoration:none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></span>';
+         	 			return '<span>'+item.fldMobile+'&nbsp;&nbsp;<a href="javascript:void(0);" onclick="javascript:makecall(\''+item.fldMobile+'\');" title="拨打" style="background:url(/static/ligerUI/icons/silkicons/phone.png) no-repeat;text-decoration:none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></span>';
          	 		}
            },
            {display:'固定电话', name:'fldPhone',width:300,
         	   render:function(item){
         		   if(null == item.fldPhone  || "" == item.fldPhone)
     	 				   return "";
-		    	 	   return '<span>'+item.fldPhone+'&nbsp;&nbsp;<a href="javascript:void(0);" title="拨打" style="background:url(/static/ligerUI/icons/silkicons/telephone.png) no-repeat;text-decoration:none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></span>';
+		    	 	   return '<span>'+item.fldPhone+'&nbsp;&nbsp;<a href="javascript:void(0);" onclick="javascript:makecall(\''+item.fldPhone+'\');" title="拨打" style="background:url(/static/ligerUI/icons/silkicons/telephone.png) no-repeat;text-decoration:none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></span>';
 		    	 	 }
            },
            {display:'任务时间', name:'fldTaskDate'}
@@ -320,6 +320,13 @@
        LG.showError(message);
       }
     });
+	}
+	
+	function makecall(phone) {
+		if(parent.LG.telephoneStatus!=0){
+    	return;
+    }
+    parent.LG.call(phone);
 	}
 
 	function updateGridHeight() {

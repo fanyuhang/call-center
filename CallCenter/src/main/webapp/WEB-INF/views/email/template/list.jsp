@@ -16,7 +16,7 @@
 	</div>
 	<div id="maingrid"></div>
 	<script type="text/javascript">
-		var messageTemplateStatusData = <sys:dictList type = "12"/>;
+		var emailTemplateStatusData = <sys:dictList type = "27"/>;
 		//搜索表单应用ligerui样式
 		$("#formsearch").ligerForm({
 			labelWidth : 100,
@@ -25,7 +25,7 @@
 			fields : [ {
 				display : "模板名称",
 				name : "fldName",
-				newline : false,
+				newline : true,
 				type : "text",
 				cssClass : "field"
 			}, {
@@ -38,33 +38,34 @@
 					valueFieldID : "fldStatus",
 					valueField : "value",
 					textField : "text",
-					data : messageTemplateStatusData
+					data : emailTemplateStatusData,
+					initValue : 0
 				},
 				attr : {
 					"op" : "equal",
 					"vt" : "int"
 				}
-			},  {
-				display : "操作开始时间",
-				name : "operateStartDate",
+			}, {
+				display : "开始创建时间",
+				name : "createStartDate",
 				newline : true,
 				type : "date",
 				cssClass : "field",
 				attr : {
 					op : 'greaterorequal',
 					vt : 'date',
-					field : "fldOperateDate"
+					field : "fldCreateDate"
 				}
 			}, {
-				display : "操作结束时间",
-				name : "operateEndDate",
+				display : "结束创建时间",
+				name : "createEndDate",
 				newline : false,
 				type : "date",
 				cssClass : "field",
 				attr : {
 					op : 'lessorequal',
 					vt : 'date',
-					field : "fldOperateDate"
+					field : "fldCreateDate"
 				}
 			} ],
 			toJSON : JSON2.stringify
@@ -86,8 +87,7 @@
 								display : "模板状态",
 								name : "fldStatus",
 								render : function(item) {
-									return renderLabel(
-											messageTemplateStatusData,
+									return renderLabel(emailTemplateStatusData,
 											item.fldStatus);
 								}
 							}, {
@@ -106,7 +106,7 @@
 					dataAction : 'server',
 					pageSize : 20,
 					toolbar : {},
-					url : '<c:url value="/message/template/list"/>',
+					url : '<c:url value="/email/template/list"/>',
 					sortName : 'operateDate',
 					sortOrder : 'desc',
 					width : '98%',
@@ -125,8 +125,8 @@
 		function toolbarBtnItemClick(item) {
 			switch (item.id) {
 			case "add":
-				top.f_addTab(null, '新增短信模板',
-						'<c:url value="/message/template/add"/>'
+				top.f_addTab(null, '新增邮件模板',
+						'<c:url value="/email/template/add"/>'
 								+ '?menuNo=${menuNo}');
 				break;
 			case "view":
@@ -136,8 +136,8 @@
 					return;
 				}
 				var selected = grid.getSelected();
-				top.f_addTab(null, '查看短信模板',
-						'<c:url value="/message/template/view"/>'
+				top.f_addTab(null, '查看邮件模板',
+						'<c:url value="/email/template/view"/>'
 								+ '?menuNo=${menuNo}&fldId=' + selected.fldId);
 				break;
 			case "modify":
@@ -147,8 +147,8 @@
 					return;
 				}
 				var selected = grid.getSelected();
-				top.f_addTab(null, '修改短信模板',
-						'<c:url value="/message/template/edit"/>'
+				top.f_addTab(null, '修改邮件模板',
+						'<c:url value="/email/template/edit"/>'
 								+ '?menuNo=${menuNo}&fldId=' + selected.fldId);
 				break;
 			case "delete":
@@ -173,13 +173,13 @@
 			var selected = grid.getSelected();
 			if (selected) {
 				LG.ajax({
-					url : '<c:url value="/message/template/delete"/>',
+					url : '<c:url value="/email/template/delete"/>',
 					loading : '正在删除中...',
 					data : {
 						fldId : selected.fldId
 					},
 					success : function() {
-						LG.showSuccess('删除短信模板成功！');
+						LG.showSuccess('删除邮件模板成功！');
 						f_reload();
 					},
 					error : function(message) {

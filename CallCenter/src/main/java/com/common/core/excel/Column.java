@@ -2,6 +2,7 @@ package com.common.core.excel;
 
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
@@ -139,15 +140,14 @@ public class Column {
         Class dataType = getPropertyType(bean);
         String dataString = getCellString(cell);
         Object value = null;
-        if ((dataString != null && !dataString.equals("null")) || !nullAllowed) { // set only if null is not allowed!
+        if (!StringUtils.isBlank(dataString) && !dataString.equals("null")) { // set only if null is not allowed!
             if (dataType.equals(java.util.Date.class)) {
                 value = df.parse(dataString);
             } else {
                 value = ConvertUtils.convert(dataString, dataType);
             }
+            PropertyUtils.setProperty(bean, propertyName, value);
         }
-
-        PropertyUtils.setProperty(bean, propertyName, value);
     }
 
     // Added feature to set type by type-attribute in XML

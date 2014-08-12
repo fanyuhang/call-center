@@ -225,7 +225,7 @@ public class CommonController {
                                     customer.setFldComment(importEntity.getComment());
                                 } else {
                                     if (!StringUtils.isEmpty(customer.getFldMobile())) {
-                                        customer = customerManager.findByCustNameAndMobile(customer.getFldName(), customer.getFldMobile());
+                                        customer = customerManager.findByMobile(customer.getFldMobile());
                                     } else {
                                         customer = customerManager.findByCustNameAndPhone(customer.getFldName(), customer.getFldPhone());
                                     }
@@ -233,7 +233,7 @@ public class CommonController {
 
                                 //客户的瑞得卡金额是一个累加的金额
                                 if (!StringUtils.isEmpty(importEntity.getCardMoney())) {
-                                    if(customer.getFldCardTotalMoney()!=null){
+                                    if(null != customer && null != customer.getFldCardTotalMoney()){
                                         customer.setFldCardTotalMoney(Double.valueOf(importEntity.getCardMoney())+customer.getFldCardTotalMoney());
                                     }else{
                                         customer.setFldCardTotalMoney(Double.valueOf(importEntity.getCardMoney()));
@@ -262,13 +262,15 @@ public class CommonController {
                                 contract.setFldCollectMoney(Double.valueOf(importEntity.getCollectMoney()));
                                 contract.setFldBankNo(importEntity.getBankNo());
                                 contract.setFldBankName(importEntity.getBankName());
-                                contract.setFldCardMoney(Double.valueOf(importEntity.getCardMoney()));
+                                contract.setFldCardMoney(null != importEntity.getCardMoney() ? Double.valueOf(importEntity.getCardMoney()) : 0);
                                 contract.setFldCardLevel(importEntity.getCardLevel());
-
-                                if(DateUtils.truncatedCompareTo(productDetail.getFldDueDate(), new Date(), Calendar.DATE)>0){
-                                    contract.setFldFinishStatus(Constant.CONTRACT_FINISH_STATUS_NO);
-                                }else{
-                                    contract.setFldFinishStatus(Constant.CONTRACT_FINISH_STATUS_YES);
+                                
+                                if(null != productDetail.getFldDueDate()) {
+	                                if(DateUtils.truncatedCompareTo(productDetail.getFldDueDate(), new Date(), Calendar.DATE)>0){
+	                                    contract.setFldFinishStatus(Constant.CONTRACT_FINISH_STATUS_NO);
+	                                }else{
+	                                    contract.setFldFinishStatus(Constant.CONTRACT_FINISH_STATUS_YES);
+	                                }
                                 }
 
                                 if (!StringUtils.isEmpty(importEntity.getFinancialUserNo())) {
