@@ -20,6 +20,8 @@ public class DateUtil {
 	}
 	
 	public static Date getDateByStr(String dateStr) {
+		if(org.apache.commons.lang3.StringUtils.isBlank(dateStr))
+			return null;
 		try {
 			return DATEFORMAT1.parse(dateStr);
 		} catch (ParseException e) {
