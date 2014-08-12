@@ -22,7 +22,7 @@ import com.redcard.message.entity.MessageSendReturnCodeEnum;
 import com.redcard.message.service.MessageOperateManager;
 
 @Controller
-@RequestMapping(value = "/message/operate")
+@RequestMapping(value = "/email/operate")
 public class EmailOperateController {
 
     // private static Logger log =
