@@ -3,10 +3,13 @@
     <table class="com.redcard.customer.entity.Customer" startRow="1">
     	<column cell="A1" propertyName="fldName" nullAllowed="false"></column>
     	<column cell="B1" propertyName="fldSource" nullAllowed="true">
-    		<mapping value="0" text="缘故"></mapping>
-        	<mapping value="1" text="电话"></mapping>
+    		<mapping value="0" text="本人"></mapping>
+        	<mapping value="1" text="电销"></mapping>
         	<mapping value="2" text="传单"></mapping>
-    	</column>
+            <mapping value="3" text="缘故"></mapping>
+            <mapping value="4" text="陌生"></mapping>
+            <mapping value="5" text="老客户"></mapping>
+        </column>
     	<column cell="C1" propertyName="fldGender" nullAllowed="true">
     		<mapping value="1" text="男"></mapping>
     		<mapping value="0" text="女"></mapping>
@@ -49,9 +52,12 @@
     	<column cell="S1" propertyName="collectMoney" nullAllowed="true"/>
     	<column cell="T1" propertyName="financialUserNo" nullAllowed="true"/>
     	<column cell="U1" propertyName="source" nullAllowed="true">
-    		<mapping value="0" text="缘故"></mapping>
-    		<mapping value="1" text="电话"></mapping>
-    		<mapping value="2" text="传单"></mapping>
+            <mapping value="0" text="本人"></mapping>
+            <mapping value="1" text="电销"></mapping>
+            <mapping value="2" text="传单"></mapping>
+            <mapping value="3" text="缘故"></mapping>
+            <mapping value="4" text="陌生"></mapping>
+            <mapping value="5" text="老客户"></mapping>
     	</column>
     	<column cell="V1" propertyName="birthday" nullAllowed="true"/>
     	<column cell="W1" propertyName="mobile" nullAllowed="true"/>

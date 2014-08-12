@@ -541,9 +541,12 @@
 	<tblDictionary fldId="22" fldType="9" fldName="无效"
 		fldValue="9" fldStatus="0" fldComment="产品状态，无效" />
 
-	<tblDictionary fldId="23" fldType="10" fldName="缘故" fldValue="0" fldStatus="0" fldComment="客户来源，缘故" />
-	<tblDictionary fldId="24" fldType="10" fldName="电话" fldValue="1" fldStatus="0" fldComment="客户来源，电话" />
-	<tblDictionary fldId="25" fldType="10" fldName="传单" fldValue="2" fldStatus="0" fldComment="客户来源，传单" />
+	<tblDictionary fldId="1000" fldType="10" fldName="本人" fldValue="0" fldStatus="0" fldComment="客户来源，本人" />
+	<tblDictionary fldId="1001" fldType="10" fldName="电销" fldValue="1" fldStatus="0" fldComment="客户来源，电销" />
+	<tblDictionary fldId="1002" fldType="10" fldName="传单" fldValue="2" fldStatus="0" fldComment="客户来源，传单" />
+    <tblDictionary fldId="1003" fldType="10" fldName="缘故" fldValue="3" fldStatus="0" fldComment="客户来源，缘故" />
+    <tblDictionary fldId="1004" fldType="10" fldName="陌生" fldValue="4" fldStatus="0" fldComment="客户来源，陌生" />
+    <tblDictionary fldId="1005" fldType="10" fldName="老客户" fldValue="5" fldStatus="0" fldComment="客户来源，老客户" />
 
 	<tblDictionary fldId="26" fldType="11" fldName="否"
 		fldValue="0" fldStatus="0" fldComment="是否已到期，否" />
