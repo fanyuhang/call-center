@@ -651,7 +651,7 @@
     <tblDictionary fldId="99" fldType="24" fldName="已分配" fldValue="1" fldStatus="0" fldComment="分配状态,已分配" />
     
     <tblDictionary fldId="100" fldType="25" fldName="话务导入" fldValue="0" fldStatus="0" fldComment="客户来源，话务导入" />
-		<tblDictionary fldId="101" fldType="25" fldName="客户录入" fldValue="1" fldStatus="0" fldComment="客户来源，客户录入" />
+	<tblDictionary fldId="101" fldType="25" fldName="客户录入" fldValue="1" fldStatus="0" fldComment="客户来源，客户录入" />
 
     <tblDictionary fldId="102" fldType="26" fldName="去重" fldValue="0" fldStatus="0" fldComment="话务导入是否去重，去重" />
     <tblDictionary fldId="103" fldType="26" fldName="不去重" fldValue="1" fldStatus="0" fldComment="话务导入是否去重，不去重" />
@@ -666,8 +666,8 @@
     <tblDictionary fldId="110" fldType="28" fldName="呼出" fldValue="0" fldStatus="0" fldComment="呼叫类型，呼出" />
     <tblDictionary fldId="111" fldType="28" fldName="呼入" fldValue="1" fldStatus="0" fldComment="呼叫类型，呼入" />
 
- 	<tblDictionary fldId="104" fldType="27" fldName="有效" fldValue="0" fldStatus="0" fldComment="邮件模板状态，有效" />
-    <tblDictionary fldId="105" fldType="27" fldName="无效" fldValue="9" fldStatus="0" fldComment="邮件模板状态，无效" /> 
+ 	<tblDictionary fldId="112" fldType="29" fldName="有效" fldValue="0" fldStatus="0" fldComment="邮件模板状态，有效" />
+    <tblDictionary fldId="113" fldType="29" fldName="无效" fldValue="9" fldStatus="0" fldComment="邮件模板状态，无效" /> 
  
     <tblSysParameter fldId="1" fldName="SYS_ADMIN"
 		fldValue="1" fldUnit="" fldStatus="0" fldDisplay="1" fldComment="" />
