@@ -74,9 +74,11 @@ LG.dial = function () {
 };
 
 LG.call = function (phone) {
-    var snell = document.getElementById("snocx");
-    LG.isOutCall = 0;
-    snell.snlMakeCall("9" + phone, "0");
+	try{
+	    var snell = document.getElementById("snocx");
+	    LG.isOutCall = 0;
+	    snell.snlMakeCall("9" + phone, "0");
+	}catch(e){}
     $("#telephone").html(phone);
     $("#userStatus").removeClass("i-ready");
     $("#userStatus").addClass("i-dialing");

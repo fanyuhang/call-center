@@ -176,13 +176,17 @@
     function f_connect(name,pwd,phoneNo){
         var snell = document.getElementById("snocx");
         if(snell && $.browser.msie){
-            snell.snlSetServer("192.168.0.207",60000);
-            snell.snlAgentLogin(name,pwd,phoneNo);
+            try{
+                snell.snlSetServer("192.168.0.207",60000);
+                snell.snlAgentLogin(name,pwd,phoneNo);
 
-            intervalId = setInterval(function () {
-                var snell = document.getElementById("snocx");
-                snell.snlSendAliveToServer();
-            }, 2000);
+                intervalId = setInterval(function () {
+                    var snell = document.getElementById("snocx");
+                    snell.snlSendAliveToServer();
+                }, 2000);
+            }catch(Ex){
+                f_login_status(1);
+            }
         }else{
             f_login_status(1);
         }
@@ -346,14 +350,6 @@
                 var phoneType = user[0].phoneType;
 
                 $("#pageloading").hide();
-                if(phoneExtension&&phoneExtension.length>0){
-                    $("#dial").removeClass("disabled");
-                    $("#hangup").removeClass("disabled");
-                    f_connect(user[0].loginName,user[0].phonePassword,user[0].phoneExtension);
-                }else{
-                    $("#dial").addClass("disabled");
-                    $("#hangup").addClass("disabled");
-                }
 
                 if(phoneType&&phoneType == '2'){
                     $("#control").removeClass("disabled");
@@ -361,6 +357,18 @@
                     $("#liControl").remove();
                 }
 
+                if(phoneExtension&&phoneExtension.length>0){
+                    $("#dial").removeClass("disabled");
+                    $("#hangup").removeClass("disabled");
+                    try{
+                        f_connect(user[0].loginName,user[0].phonePassword,user[0].phoneExtension);
+                    }catch (Ex){
+                        $("#pageloading").hide();
+                    }
+                }else{
+                    $("#dial").addClass("disabled");
+                    $("#hangup").addClass("disabled");
+                }
             },
             error: function () {
                 $("#pageloading").hide();

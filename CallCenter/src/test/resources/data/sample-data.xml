@@ -405,6 +405,10 @@
 	<tblNode fldCode="01050402" fldParent="010504" fldName="导出" fldDesc="" fldTarget="export"
 		fldIcon="/static/ligerUI/icons/miniicons/action_save.gif"
 		fldLink="/telephone/customer/export" fldType="2" fldPosition="2"/>
+	
+	<tblNode fldCode="010505" fldParent="0105" fldName="我的外拨" fldDesc="" fldTarget="" 
+		fldIcon="/static/ligerUI/icons/32X32/free_for_job.gif"
+		fldLink="/telephone/dial/init" fldType="1" fldPosition="5" />
 
     <tblNode fldCode="0106" fldParent="01" fldName="话务监控" fldDesc=""
              fldTarget="#" fldIcon="" fldLink="" fldType="1" fldPosition="6" />
@@ -644,10 +648,20 @@
     <tblDictionary fldId="99" fldType="24" fldName="已分配" fldValue="1" fldStatus="0" fldComment="分配状态,已分配" />
     
     <tblDictionary fldId="100" fldType="25" fldName="话务导入" fldValue="0" fldStatus="0" fldComment="客户来源，话务导入" />
-	<tblDictionary fldId="101" fldType="25" fldName="客户录入" fldValue="1" fldStatus="0" fldComment="客户来源，客户录入" />
+		<tblDictionary fldId="101" fldType="25" fldName="客户录入" fldValue="1" fldStatus="0" fldComment="客户来源，客户录入" />
 
     <tblDictionary fldId="102" fldType="26" fldName="去重" fldValue="0" fldStatus="0" fldComment="话务导入是否去重，去重" />
     <tblDictionary fldId="103" fldType="26" fldName="不去重" fldValue="1" fldStatus="0" fldComment="话务导入是否去重，不去重" />
+    
+    <tblDictionary fldId="104" fldType="27" fldName="未知" fldValue="0" fldStatus="0" fldComment="任务结果，未知" />
+    <tblDictionary fldId="105" fldType="27" fldName="错号" fldValue="1" fldStatus="0" fldComment="任务结果，错号" />
+    <tblDictionary fldId="106" fldType="27" fldName="空号" fldValue="2" fldStatus="0" fldComment="任务结果，空号" />
+    <tblDictionary fldId="107" fldType="27" fldName="待跟踪" fldValue="3" fldStatus="0" fldComment="任务结果，待跟踪" />
+    <tblDictionary fldId="108" fldType="27" fldName="有意向" fldValue="4" fldStatus="0" fldComment="任务结果，有意向" />
+    <tblDictionary fldId="109" fldType="27" fldName="其他" fldValue="9" fldStatus="0" fldComment="任务结果，其他" />
+    
+    <tblDictionary fldId="110" fldType="28" fldName="呼出" fldValue="0" fldStatus="0" fldComment="呼叫类型，呼出" />
+    <tblDictionary fldId="111" fldType="28" fldName="呼入" fldValue="1" fldStatus="0" fldComment="呼叫类型，呼入" />
 
  	<tblDictionary fldId="104" fldType="27" fldName="有效" fldValue="0" fldStatus="0" fldComment="邮件模板状态，有效" />
     <tblDictionary fldId="105" fldType="27" fldName="无效" fldValue="9" fldStatus="0" fldComment="邮件模板状态，无效" /> 
