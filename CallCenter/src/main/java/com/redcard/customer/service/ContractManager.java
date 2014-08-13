@@ -1,10 +1,12 @@
 package com.redcard.customer.service;
 
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import com.redcard.customer.entity.CustomerProductDetail;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -42,6 +44,12 @@ public class ContractManager extends GenericPageHQLQuery<CustomerContract> {
     @Transactional(readOnly = false)
     public void save(CustomerContract customerContract) {
         CustomerProductDetail customerProductDetail = customerProductDetailDao.findOne(customerContract.getFldProductDetailId());
+
+        Double oldContractCardMoney = 0d;
+        if (StringUtils.isNotBlank(customerContract.getFldId())) {
+            CustomerContract oldCustomerContract = contractDao.findOne(customerContract.getFldId());
+            oldContractCardMoney = oldCustomerContract.getFldCardMoney()==null?0:oldCustomerContract.getFldCardMoney();
+        }
         String fldProductId = customerProductDetail.getFldProductId();
         customerContract.setFldProductId(fldProductId);
         //更新是否到期
@@ -60,7 +68,7 @@ public class ContractManager extends GenericPageHQLQuery<CustomerContract> {
             if (customer.getFldCardTotalMoney() == null) {
                 customer.setFldCardTotalMoney(customerContract.getFldCardMoney());
             } else {
-                customer.setFldCardTotalMoney(customer.getFldCardTotalMoney() + customerContract.getFldCardMoney());
+                customer.setFldCardTotalMoney(customer.getFldCardTotalMoney() + customerContract.getFldCardMoney() - oldContractCardMoney);
             }
         }
         customerDao.save(customer);
