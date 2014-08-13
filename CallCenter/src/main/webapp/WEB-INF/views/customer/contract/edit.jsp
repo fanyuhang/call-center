@@ -29,12 +29,16 @@
             {display: "年化收益率(%)", name: "fldAnnualizedRate", newline: true, type: "text", attr:{value:"${customerContract.fldAnnualizedRate}",readonly: "readonly"}},
             {display: "年化7天存款率(%)", name: "fldDepositRate", newline: false, type: "text", attr:{value:"${customerContract.fldDepositRate}",readonly: "readonly"}},
             {display: "购买金额(万元)", name: "fldPurchaseMoney", newline: true, validate: {required: true}, type: "text",attr:{value:"${customerContract.fldPurchaseMoney}"},group: "<label style=white-space:nowrap;>购买金额</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'},
-            {display: "预期收益(元)", name: "fldAnnualizedMoney", newline: false, type: "text", attr:{value:"${customerContract.fldAnnualizedMoney}",readonly: "readonly"}},
+            {display: "预期收益(元)", name: "fldAnnualizedMoney", newline: false, type: "text", attr:{value:"${customerContract.fldAnnualizedMoney}"}},
+            {display: "业绩系数", name: "fldPerformanceRadio", attr:{value:"${customerContract.fldPerformanceRadio}"}, newline: true, type: "float",group: "<label style=white-space:nowrap;>业绩信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'},
+            {display: "业绩额度", name: "fldPerformanceMoney", attr:{value:"${customerContract.fldPerformanceMoney}"}, newline: false, type: "float"},
+            {display: "佣金系数", name: "fldCommissionRadio", attr:{value:"${customerContract.fldCommissionRadio}"}, newline: true, type: "float",group: "<label style=white-space:nowrap;>佣金信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'},
+            {display: "佣金金额", name: "fldCommissionMoney", attr:{value:"${customerContract.fldCommissionMoney}"}, newline: false, type: "float"},
             {display: "银行卡号", name: "fldBankNo", newline: true, type: "text", attr:{value:"${customerContract.fldBankNo}"},validate: { maxlength: 64},group: "<label style=white-space:nowrap;>打款信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'},
             {display: "开户银行", name: "fldBankName", newline: false, type: "text", attr:{value:"${customerContract.fldBankName}"},validate: { maxlength: 64}},
             {display: "打款日期", name: "fldMoneyDate", newline: true, type: "date", validate: {required: true}, attr:{value:"<fmt:formatDate value='${customerContract.fldMoneyDate}' pattern='yyyy-MM-dd'/>",readonly: "readonly"},format:'yyyy-MM-dd',editor:{ type:'date' }},
             {display: "募集期天数", name: "fldCollectDays", newline: true, type: "text", attr:{value:"${customerContract.fldCollectDays}",readonly: "readonly"}},
-            {display: "募集期贴息(元)", name: "fldCollectMoney", newline: false, type: "text", attr:{value:"${customerContract.fldCollectMoney}",readonly: "readonly"}},
+            {display: "募集期贴息(元)", name: "fldCollectMoney", newline: false, type: "text", attr:{value:"${customerContract.fldCollectMoney}"}},
             {display: "卡号", name: "fldCardNo", newline: true, type: "text", attr:{value:"${customerContract.fldCardNo}"}, validate: { maxlength: 32},group: "<label style=white-space:nowrap;>瑞得卡信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'},
             {display: "等级", name: "fldCardLevel", newline: false, type: "select", comboboxName:"cardLevel",
             	options:{
@@ -52,11 +56,7 @@
                 comboboxName: "serviceUserNo", options: {valueFieldID: "serviceUserNo"}},
             {display: "客户经理", name: "fldCustomerUserNo", newline: true, type: "select",
                 comboboxName: "customerUserNo", options: {valueFieldID: "customerUserNo"}},
-            {display: "天数单位", name: "fldDayUnit", newline: false, type: "hidden", attr:{value:"${customerContract.dayUnit}",readonly: "readonly"}},
-            {display: "业绩系数", name: "fldPerformanceRadio", newline: true, type: "hidden", attr:{value:"${customerContract.fldPerformanceRadio}",readonly: "readonly"}},
-            {display: "业绩额度", name: "fldPerformanceMoney", newline: false, type: "hidden", attr:{value:"${customerContract.fldPerformanceMoney}",readonly: "readonly"}},
-            {display: "佣金系数", name: "fldCommissionRadio", newline: true, type: "hidden", attr:{value:"${customerContract.fldCommissionRadio}",readonly: "readonly"}},
-            {display: "佣金金额", name: "fldCommissionMoney", newline: false, type: "hidden", attr:{value:"${customerContract.fldCommissionMoney}",readonly: "readonly"}}
+            {display: "天数单位", name: "fldDayUnit", newline: false, type: "hidden", attr:{value:"${customerContract.dayUnit}",readonly: "readonly"}}
         ]
     });
     
