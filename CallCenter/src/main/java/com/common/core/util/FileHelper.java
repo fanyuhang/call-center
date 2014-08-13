@@ -1,5 +1,10 @@
 package com.common.core.util;
 
+import org.apache.commons.fileupload.FileItemIterator;
+import org.apache.commons.fileupload.FileItemStream;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.fileupload.util.Streams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,6 +17,7 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * <p>文件处理类</p>
@@ -136,6 +142,35 @@ public class FileHelper {
             return fileName;
         String displayName = fileName.substring(0, index);
         return displayName;
+    }
+
+    public static String uploadFile(HttpServletRequest request) throws Exception {
+        String filePath = null;
+        String dirPath = request.getSession().getServletContext().getRealPath("/") + File.separator + "upload" + File.separator;
+        if (ServletFileUpload.isMultipartContent(request)) {
+            DiskFileItemFactory dff = new DiskFileItemFactory();//创建该对象
+            dff.setRepository(new File(dirPath));//指定上传文件的临时目录
+            dff.setSizeThreshold(1024000);//指定在内存中缓存数据大小,单位为byte
+            ServletFileUpload sfu = new ServletFileUpload(dff);//创建该对象
+            sfu.setFileSizeMax(10*1024*1024);//指定单个上传文件的最大尺寸
+            sfu.setSizeMax(10*1024*1024);//指定一次上传多个文件的总尺寸
+            FileItemIterator fii = sfu.getItemIterator(request);//解析request 请求,并返回FileItemIterator集合
+            while (fii.hasNext()) {
+                FileItemStream fis = fii.next();//从集合中获得一个文件流
+                if (!fis.isFormField() && (fis.getName().length() > 0)) {//过滤掉表单中非文件域
+                    String fileName = fis.getName();//获得上传文件的文件名
+                    filePath = dirPath+ File.separator + UUID.randomUUID().toString() + fileName.substring(fileName.lastIndexOf("."));
+                    File outFile = new File(filePath);
+                    if (!outFile.exists()) {
+                        outFile.createNewFile();
+                    }
+                    BufferedInputStream in = new BufferedInputStream(fis.openStream());//获得文件输入流
+                    BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(outFile));//获得文件输出流
+                    Streams.copy(in, out, true);//开始把文件写到你指定的上传文件夹
+                }
+            }
+        }
+        return filePath;
     }
 
     /**
