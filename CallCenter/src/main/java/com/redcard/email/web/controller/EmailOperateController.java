@@ -37,7 +37,7 @@ public class EmailOperateController {
     @RequestMapping(value = "init")
     public String init(String menuNo, Model model) {
         model.addAttribute("menuNo", menuNo);
-        return "message/operate/list";
+        return "e/operate/list";
     }
 
     /**
@@ -57,7 +57,7 @@ public class EmailOperateController {
     public String add(String menuNo, Model model) {
         model.addAttribute("menuNo", menuNo);
         model.addAttribute("sendMessageSignFlag", sendMessageSignFlag);
-        return "message/operate/add";
+        return "email/operate/add";
     }
 
     /**
