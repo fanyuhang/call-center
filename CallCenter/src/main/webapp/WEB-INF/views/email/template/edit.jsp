@@ -4,7 +4,7 @@
 	<form:form id="mainform" name="mainform" method="post"
 		modelAttribute="messageTemplate"></form:form>
 	<script type="text/javascript">
-		var messageTemplateStatusData = <sys:dictList type = "12"/>;
+		var emailTemplateStatusData = <sys:dictList type = "29"/>;
 
 		//覆盖本页面grid的loading效果
 		LG.overrideGridLoading();
@@ -25,16 +25,16 @@
 								name : "fldId",
 								type : "hidden",
 								attr : {
-									value : "${messageTemplate.fldId}"
+									value : "${emailTemplate.fldId}"
 								}
 							},
 							{
 								display : "模板名称",
 								name : "fldName",
-								newline : false,
+								newline : true,
 								type : "text",
 								attr : {
-									value : "${messageTemplate.fldName}"
+									value : "${emailTemplate.fldName}"
 								},
 								validate : {
 									required : true,
@@ -42,7 +42,8 @@
 								},
 								group : "<label style=white-space:nowrap;>基本信息</label>",
 								groupicon : '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'
-							}, {
+							},
+							{
 								display : "模板状态",
 								name : "fldStatus",
 								newline : false,
@@ -51,42 +52,44 @@
 									valueField : 'value',
 									textField : 'text',
 									isMultiSelect : false,
-									data : messageTemplateStatusData,
-									initValue : '${messageTemplate.fldStatus}',
+									data : emailTemplateStatusData,
+									initValue : '${emailTemplate.fldStatus}',
 									valueFieldID : "fldStatus"
 								},
 								validate : {
 									required : true
 								}
+							},
+							{
+								display : "邮件标题",
+								name : "fldTitle",
+								newline : true,
+								type : "text",
+								attr : {
+									value : "${emailTemplate.fldTitle}"
+								},
+								validate : {
+									required : true,
+									maxlength : 25
+								},
+								group : "<label style=white-space:nowrap;>模板内容</label>",
+								groupicon : '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'
 							}, {
 								display : "模板内容",
 								name : "fldContent",
-								newline : true,
-                                width:"630",
-                                type : "textarea",
+								newline : false,
+								width : "630",
+								type : "textarea",
 								validate : {
 									required : true,
-									maxlength : 500
-								},
-                            group : "<label style=white-space:nowrap;>内容</label>",
-                            groupicon : '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'
-							}, {
-								display : "模板备注",
-								name : "fldComment",
-								newline : false,
-                                width:"630",
-                                type : "textarea",
-								validate : {
-									maxlength : 500
-								},
-                            group : "<label style=white-space:nowrap;>备注</label>",
-                            groupicon : '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'
+									maxlength : 1000
+								}
 							} ]
 				});
 
-		$("#fldContent").text('${messageTemplate.fldContent}');
-		$("#fldComment").text('${messageTemplate.fldComment}');
-		mainform.attr("action", '<c:url value="/message/template/update"/>');
+		$("#fldContent").text('${emailTemplate.fldContent}');
+
+		mainform.attr("action", '<c:url value="/email/template/update"/>');
 
 		function f_save() {
 			LG.validate(mainform);

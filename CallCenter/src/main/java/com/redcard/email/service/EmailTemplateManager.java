@@ -1,9 +1,11 @@
 package com.redcard.email.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.common.core.grid.GridPageRequest;
 import com.common.core.util.GenericPageHQLQuery;
 import com.redcard.email.dao.EmailTemplateDao;
 import com.redcard.email.entity.EmailTemplate;
@@ -22,10 +24,10 @@ public class EmailTemplateManager extends GenericPageHQLQuery<EmailTemplate> {
 		emailTemplateDao.save(emailTemplate);
 	}
 
-	// public MessageTemplate find(String fldId) {
-	// return messageTemplateDao.findOne(fldId);
-	// }
-	//
+	public EmailTemplate find(String fldId) {
+		return emailTemplateDao.findOne(fldId);
+	}
+
 	// public List<MessageTemplate> findAll() {
 	// return messageTemplateDao.findAll();
 	// }
@@ -38,10 +40,9 @@ public class EmailTemplateManager extends GenericPageHQLQuery<EmailTemplate> {
 			return false;
 		}
 	}
-	//
-	// public Page<MessageTemplate> queryMessageTemplates(GridPageRequest page,
-	// String where) {
-	// return (Page<MessageTemplate>) super.findAll(where, page);
-	// }
+
+	public Page<EmailTemplate> queryEmailTemplates(GridPageRequest page, String where) {
+		return (Page<EmailTemplate>) super.findAll(where, page);
+	}
 
 }

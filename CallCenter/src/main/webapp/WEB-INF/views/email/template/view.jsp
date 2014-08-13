@@ -4,7 +4,7 @@
 	<form:form id="mainform" name="mainform" method="post"
 		modelAttribute="messageTemplate"></form:form>
 	<script type="text/javascript">
-		var messageTemplateStatusData = <sys:dictList type = "12"/>;
+		var emailTemplateStatusData = <sys:dictList type = "29"/>;
 
 		//覆盖本页面grid的loading效果
 		LG.overrideGridLoading();
@@ -26,7 +26,7 @@
 								newline : true,
 								type : "text",
 								attr : {
-									value : "${messageTemplate.fldName}",
+									value : "${emailTemplate.fldName}",
 									readonly : "readonly"
 								},
 								group : "<label style=white-space:nowrap;>基本信息</label>",
@@ -42,39 +42,35 @@
 									textField : 'text',
 									isMultiSelect : false,
 									disabled : true,
-									data : messageTemplateStatusData,
-									initValue : '${messageTemplate.fldStatus}',
+									data : emailTemplateStatusData,
+									initValue : '${emailTemplate.fldStatus}',
 									valueFieldID : "fldStatus"
 								}
 							},
 							{
-								display : "模板内容",
-								name : "fldContent",
+								display : "邮件标题",
+								name : "fldTitle",
 								newline : true,
-								type : "textarea",
-								width : "630",
+								type : "text",
 								attr : {
+									value : "${emailTemplate.fldTitle}",
 									readonly : "readonly"
 								},
-								group : "<label style=white-space:nowrap;>内容</label>",
+								group : "<label style=white-space:nowrap;>模板内容</label>",
 								groupicon : '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'
-							},
-							{
-								display : "模板备注",
-								name : "fldComment",
+							}, {
+								display : "模板内容",
+								name : "fldContent",
 								newline : false,
 								type : "textarea",
 								width : "630",
 								attr : {
 									readonly : "readonly"
-								},
-								group : "<label style=white-space:nowrap;>备注</label>",
-								groupicon : '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'
+								}
 							} ]
 				});
 
-		$("#fldContent").text('${messageTemplate.fldContent}');
-		$("#fldComment").text('${messageTemplate.fldComment}');
+		$("#fldContent").text('${emailTemplate.fldContent}');
 
 		function f_cancel() {
 			var win = parent || window;
