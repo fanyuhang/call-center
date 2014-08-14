@@ -103,64 +103,43 @@
 									});
 						});
 
-		$.ligerui
-				.get("messageTemplateId")
-				.openSelect(
-						{
-							grid : {
-								columnWidth : 255,
-								columns : [
-										{
-											display : "ID",
-											name : "fldId",
-											hide : 1,
-											width : 1
-										},
-										{
-											display : "短信模板名称",
-											name : "fldName"
-										},
-										{
-											display : "短信模板状态",
-											name : "fldStatus",
-											render : function(item) {
-												return renderLabel(
-														messageTemplateStatusData,
-														item.fldStatus);
-											}
-										}, {
-											display : "短信模板内容",
-											name : "fldContent"
-										}, {
-											display : "短信模板备注",
-											name : "fldComment"
-										} ],
-								pageSize : 20,
-								heightDiff : -10,
-								url : '<c:url value="/message/template/conditionalList"/>',
-								sortName : 'fldName',
-								checkbox : false
-							},
-							search : {
-								fields : [ {
-									display : "短信模板名称",
-									name : "fldName",
-									newline : true,
-									type : "text",
-									cssClass : "field"
-								}, {
-									display : "短信模板状态",
-									name : "fldStatus",
-									type : "text",
-									cssClass : "field",
-									initValue : 0,
-									type : "hidden"
-								} ]
-							},
-							valueField : 'fldId',
-							textField : 'fldName',
-							top : 30
-						});
+		$.ligerui.get("messageTemplateId").openSelect({
+			grid : {
+				columnWidth : 255,
+				columns : [ {
+					display : "ID",
+					name : "fldId",
+					hide : 1,
+					width : 1
+				}, {
+					display : "短信模板名称",
+					name : "fldName"
+				}, {
+					display : "短信模板内容",
+					name : "fldContent"
+				}, {
+					display : "短信模板备注",
+					name : "fldComment"
+				} ],
+				pageSize : 20,
+				heightDiff : -10,
+				url : '<c:url value="/message/template/conditionalList"/>',
+				sortName : 'fldName',
+				checkbox : false
+			},
+			search : {
+				fields : [ {
+					display : "短信模板名称",
+					name : "fldName",
+					newline : true,
+					type : "text",
+					cssClass : "field"
+				} ]
+			},
+			valueField : 'fldId',
+			textField : 'fldName',
+			top : 30
+		});
 
 		//表单底部按钮
 		LG.setFormDefaultBtn(f_cancel, f_check);

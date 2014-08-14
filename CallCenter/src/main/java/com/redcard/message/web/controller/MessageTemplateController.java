@@ -4,17 +4,22 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.common.Constant;
+import com.common.core.filter.FilterGroup;
+import com.common.core.filter.FilterRule;
 import com.common.core.grid.AsyncResponse;
 import com.common.core.grid.DataResponse;
 import com.common.core.grid.GridPageRequest;
 import com.common.core.util.EntityUtil;
+import com.common.core.util.JsonHelper;
 import com.common.security.util.SecurityUtil;
 import com.redcard.message.entity.MessageTemplate;
 import com.redcard.message.service.MessageTemplateManager;
@@ -57,6 +62,21 @@ public class MessageTemplateController {
 	@ResponseBody
 	public DataResponse<MessageTemplate> conditionalList(GridPageRequest pageRequest, String where) {
 		pageRequest.setSort("fldOperateDate", "desc");
+		if (StringUtils.isEmpty(where)) {
+			where = "{\"op\":\"and\",\"rules\":[{\"op\":\"equal\",\"field\":\"fldStatus\",\"value\":\"0\",\"type\":\"int\"}]}";
+		} else {
+			FilterGroup filterGroup = JsonHelper.deserialize(where, FilterGroup.class);
+			List<FilterRule> filterRules = filterGroup.getRules();
+			if (!CollectionUtils.isEmpty(filterRules)) {
+				FilterRule statusFilterRule = new FilterRule();
+				statusFilterRule.setField("fldStatus");
+				statusFilterRule.setOp("equal");
+				statusFilterRule.setType("int");
+				statusFilterRule.setValue("0");
+				filterRules.add(statusFilterRule);
+			}
+			where = JsonHelper.serialize(filterGroup);
+		}
 		return (new DataResponse<MessageTemplate>(messageTemplateManager.queryMessageTemplates(pageRequest, where)));
 	}
 

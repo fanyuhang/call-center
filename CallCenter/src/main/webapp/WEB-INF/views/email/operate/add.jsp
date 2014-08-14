@@ -2,10 +2,10 @@
 <%@include file="../../include/formHeader.jsp"%>
 <body style="padding-bottom: 31px;">
 	<form:form id="mainform" name="mainform" method="post"
-		modelAttribute="messageOperate">
+		modelAttribute="emailOperate">
 	</form:form>
 	<script type="text/javascript">
-		var messageTemplateStatusData = <sys:dictList type = "12"/>;
+		var emailTemplateStatusData = <sys:dictList type = "29"/>;
 
 		//覆盖本页面grid的loading效果
 		LG.overrideGridLoading();
@@ -19,20 +19,23 @@
 					space : 10,
 					fields : [
 							{
-								display : "模板",
-								name : "fldMessageTemplateId",
+								display : "发送者邮箱",
+								name : "fldSenderEmail",
 								newline : true,
-								type : "select",
-								comboboxName : "messageTemplateId",
-								options : {
-									valueFieldID : "messageTemplateId"
+								type : "text",
+								validate : {
+									required : true,
 								},
-								group : "<label style=white-space:nowrap;>短信发送</label>",
+								attr : {
+									value : "${emailSendAccount}",
+									readonly : "readonly"
+								},
+								group : "<label style=white-space:nowrap;>邮件发送</label>",
 								groupicon : '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'
 							},
 							{
-								display : "手机列表<br/>（多个手机号以';'隔开，头尾不加分号！）",
-								name : "fldMobiles",
+								display : "接收邮箱列表<br/>（多个邮箱以';'隔开，头尾不加分号！）",
+								name : "fldReceiverEmails",
 								newline : true,
 								width : "630",
 								type : "textarea",
@@ -41,145 +44,114 @@
 								}
 							},
 							{
-								display : "内容",
+								display : "邮件模板",
+								name : "fldEmailTemplateId",
+								newline : true,
+								type : "select",
+								comboboxName : "emailTemplateId",
+								options : {
+									valueFieldID : "emailTemplateId"
+								},
+								group : "<label style=white-space:nowrap;>邮件内容</label>",
+								groupicon : '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'
+							}, {
+								display : "邮件标题",
+								name : "fldTitle",
+								newline : true,
+								type : "text",
+								validate : {
+									required : true,
+									maxlength : 128
+								}
+							}, {
+								display : "邮件内容",
 								name : "fldContent",
 								newline : true,
 								type : "textarea",
 								width : "630",
 								validate : {
 									required : true,
-									maxlength : 500
-								},
-								group : "<label style=white-space:nowrap;>内容</label>",
-								groupicon : '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'
-							},
-							{
-								display : "备注",
-								name : "fldComment",
-								newline : true,
-								width : "630",
-								type : "textarea",
-								validate : {
-									maxlength : 500
-								},
-								group : "<label style=white-space:nowrap;>备注</label>",
-								groupicon : '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'
+									maxlength : 1000
+								}
 							} ]
 				});
 
-		mainform.attr("action", '<c:url value="/message/operate/save"/>');
+		mainform.attr("action", '<c:url value="/email/operate/save"/>');
 
-		$("#fldContent").blur(function() {
-			f_operateMessageSignFlag($(this));
+		$.ligerui.get("emailTemplateId").openSelect({
+			grid : {
+				columnWidth : 255,
+				columns : [ {
+					display : "ID",
+					name : "fldId",
+					hide : 1
+				}, {
+					display : "邮件模板名称",
+					name : "fldName"
+				}, {
+					display : "邮件模板标题",
+					name : "fldTitle"
+				}, {
+					display : "邮件模板内容",
+					name : "fldContent",
+					hidden : true
+				} ],
+				pageSize : 20,
+				heightDiff : -10,
+				url : '<c:url value="/email/template/conditionalList"/>',
+				sortName : 'fldName',
+				checkbox : false
+			},
+			search : {
+				fields : [ {
+					display : "邮件模板名称",
+					name : "fldName",
+					newline : true,
+					type : "text",
+					cssClass : "field"
+				}, {
+					display : "邮件模板标题",
+					name : "fldTitle",
+					newline : false,
+					type : "text",
+					cssClass : "field"
+				} ]
+			},
+			valueField : 'fldId',
+			textField : 'fldName',
+			top : 30,
+			handleSelect : function(data) {
+				if (data.length < 1) {
+					return;
+				} else {
+					$("#fldTitle").val(data[0].fldTitle);
+					$("#fldContent").val(data[0].fldContent);
+				}
+			}
 		});
-
-		$("#messageTemplateId")
-				.change(
-						function() {
-							var chosedMessageTemplateId = $(
-									"#fldMessageTemplateId").val();
-							if (chosedMessageTemplateId == ""
-									|| chosedMessageTemplateId == null) {
-								$("#fldContent").val('');
-								return;
-							}
-							LG
-									.ajax({
-										url : '<c:url value="/message/template/findMessageTemplateDetail"/>',
-										data : {
-											fldId : chosedMessageTemplateId
-										},
-										beforeSend : function() {
-										},
-										complete : function() {
-										},
-										success : function(data) {
-											$("#fldContent").val(
-													data[0].fldContent);
-											f_operateMessageSignFlag($("#fldContent"));
-										},
-										error : function(message) {
-										}
-									});
-						});
-
-		$.ligerui
-				.get("messageTemplateId")
-				.openSelect(
-						{
-							grid : {
-								columnWidth : 255,
-								columns : [
-										{
-											display : "ID",
-											name : "fldId",
-											hide : 1,
-											width : 1
-										},
-										{
-											display : "短信模板名称",
-											name : "fldName"
-										},
-										{
-											display : "短信模板状态",
-											name : "fldStatus",
-											render : function(item) {
-												return renderLabel(
-														messageTemplateStatusData,
-														item.fldStatus);
-											}
-										}, {
-											display : "短信模板内容",
-											name : "fldContent"
-										}, {
-											display : "短信模板备注",
-											name : "fldComment"
-										} ],
-								pageSize : 20,
-								heightDiff : -10,
-								url : '<c:url value="/message/template/conditionalList"/>',
-								sortName : 'fldName',
-								checkbox : false
-							},
-							search : {
-								fields : [ {
-									display : "短信模板名称",
-									name : "fldName",
-									newline : true,
-									type : "text",
-									cssClass : "field"
-								}, {
-									display : "短信模板状态",
-									name : "fldStatus",
-									type : "text",
-									cssClass : "field",
-									initValue : 0,
-									type : "hidden"
-								} ]
-							},
-							valueField : 'fldId',
-							textField : 'fldName',
-							top : 30
-						});
 
 		//表单底部按钮
 		LG.setFormDefaultBtn(f_cancel, f_check);
 
-		//校验短信内容必须包含签名目前为【聚金理财】、【瑞得支付】
-		//校验手机列表的格式必须是以;隔开的一系列的手机号，否则提示具体的第几个手机号格式有误！
 		function f_check() {
-			var mobileNos = $("#fldMobiles").val();//手机号必须以;隔开
-			if (mobileNos.indexOf(";") < 0) { //如果只是一个手机号则没有问题；
-				if (!(/^1[3|4|5|8][0-9]\d{4,8}$/.test(mobileNos))) {
-					alert("不是完整的11位手机号或者正确的手机号前七位");
+			var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/;
+			var sendEmail = $("#fldSenderEmail").val();//发送者邮箱
+			if (!(reg.test(sendEmail))) {
+				jQuery.ligerDialog.alert("发送者邮箱格式不正确！");
+				return;
+			}
+			var emails = $("#fldReceiverEmails").val();//接收邮箱地址必须以;隔开
+			if (emails.indexOf(";") < 0) { //如果只是一个邮箱则没有问题；
+				if (!(reg.test(emails))) {
+					jQuery.ligerDialog.alert("接收者邮箱格式不正确！");
 					return;
 				}
 			} else {
-				var mobileNoArray = mobileNos.split(";");
-				for (var i = 0; i < mobileNoArray.length; i++) {
-					if (!(/^1[3|4|5|8][0-9]\d{4,8}$/.test(mobileNoArray[i]))) {
-						alert("第" + (parseInt(i) + 1)
-								+ "个不是完整的11位手机号或者正确的手机号前七位");
+				var emailArray = emails.split(";");
+				for (var i = 0; i < emailArray.length; i++) {
+					if (!(reg.test(emailArray[i]))) {
+						jQuery.ligerDialog.alert("第" + (parseInt(i) + 1)
+								+ "个接收者邮箱格式不合法！");
 						return;
 					}
 				}
@@ -204,19 +176,6 @@
 		function f_cancel() {
 			var win = parent || window;
 			win.LG.closeCurrentTab(null);
-		}
-
-		function f_operateMessageSignFlag(obj) {//处理是否需要在短信内容里加短信签名
-			var messageContent = obj.val();
-			if (messageContent.indexOf("${sendMessageSignFlag}") < 0) {
-				obj.val(messageContent + '${sendMessageSignFlag}');
-			} else {
-				var signIndex = messageContent
-						.lastIndexOf("${sendMessageSignFlag}");
-				if (signIndex != messageContent.length - 6) {
-					obj.val(messageContent + '${sendMessageSignFlag}');
-				}
-			}
 		}
 	</script>
 </body>

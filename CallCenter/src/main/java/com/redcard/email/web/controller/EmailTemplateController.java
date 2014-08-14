@@ -1,18 +1,24 @@
 package com.redcard.email.web.controller;
 
 import java.util.Date;
+import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.common.Constant;
+import com.common.core.filter.FilterGroup;
+import com.common.core.filter.FilterRule;
 import com.common.core.grid.AsyncResponse;
 import com.common.core.grid.DataResponse;
 import com.common.core.grid.GridPageRequest;
 import com.common.core.util.EntityUtil;
+import com.common.core.util.JsonHelper;
 import com.common.security.util.SecurityUtil;
 import com.redcard.email.entity.EmailTemplate;
 import com.redcard.email.service.EmailTemplateManager;
@@ -60,25 +66,27 @@ public class EmailTemplateController {
 		return (new DataResponse<EmailTemplate>(emailTemplateManager.queryEmailTemplates(pageRequest, where)));
 	}
 
-	//
-	// @RequestMapping(value = "listAll")
-	// @ResponseBody
-	// public AsyncResponse listAll() {
-	// AsyncResponse response = new AsyncResponse(false, "加载成功");
-	// response.setData(messageTemplateManager.findAll());
-	// return response;
-	// }
-	//
-	// @RequestMapping(value = "conditionalList")
-	// @ResponseBody
-	// public DataResponse<MessageTemplate> conditionalList(GridPageRequest
-	// pageRequest, String where) {
-	// pageRequest.setSort("fldOperateDate", "desc");
-	// return (new
-	// DataResponse<MessageTemplate>(messageTemplateManager.queryMessageTemplates(pageRequest,
-	// where)));
-	// }
-	//
+	@RequestMapping(value = "conditionalList")
+	@ResponseBody
+	public DataResponse<EmailTemplate> conditionalList(GridPageRequest pageRequest, String where) {
+		pageRequest.setSort("fldOperateDate", "desc");
+		if (StringUtils.isEmpty(where)) {
+			where = "{\"op\":\"and\",\"rules\":[{\"op\":\"equal\",\"field\":\"fldStatus\",\"value\":\"0\",\"type\":\"int\"}]}";
+		} else {
+			FilterGroup filterGroup = JsonHelper.deserialize(where, FilterGroup.class);
+			List<FilterRule> filterRules = filterGroup.getRules();
+			if (!CollectionUtils.isEmpty(filterRules)) {
+				FilterRule statusFilterRule = new FilterRule();
+				statusFilterRule.setField("fldStatus");
+				statusFilterRule.setOp("equal");
+				statusFilterRule.setType("int");
+				statusFilterRule.setValue("0");
+				filterRules.add(statusFilterRule);
+			}
+			where = JsonHelper.serialize(filterGroup);
+		}
+		return (new DataResponse<EmailTemplate>(emailTemplateManager.queryEmailTemplates(pageRequest, where)));
+	}
 
 	@RequestMapping(value = "add")
 	public String add(String menuNo, Model model) {
@@ -124,16 +132,4 @@ public class EmailTemplateController {
 		emailTemplateManager.save(emailTemplate);
 		return result;
 	}
-	//
-	// @RequestMapping(value = "findMessageTemplateDetail")
-	// @ResponseBody
-	// public AsyncResponse findMessageTemplateDetail(String fldId) {
-	// AsyncResponse response = new AsyncResponse();
-	// List<MessageTemplate> list = new ArrayList<MessageTemplate>();
-	// MessageTemplate messageTemplate = messageTemplateManager.find(fldId);
-	// list.add(messageTemplate);
-	// response.addData(list);
-	// response.setIsError(false);
-	// return response;
-	// }
 }
