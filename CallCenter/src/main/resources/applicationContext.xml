@@ -84,6 +84,7 @@
     		<entry key="messageAccountName" value="${sendMessage.accountName}" />
     		<entry key="messageAccountPassword" value="${sendMessage.accountPassword}" />
     		<entry key="messageMethodName" value="${sendMessage.methodName}" />
+    		<entry key="emailSendAccount" value="${sendEmail.server.username}" />
 		</util:map>
 
         <!-- 数据源配置, 使用应用中的DBCP数据库连接池 -->
@@ -102,6 +103,21 @@
             <property name="timeBetweenEvictionRunsMillis" value="3600000"/>
             <property name="minEvictableIdleTimeMillis" value="3600000"/>
         </bean>
+        
+        <!-- Spring 邮件服务 -->
+		<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+			<property name="defaultEncoding" value="UTF-8" />  
+			<property name="host" value="${sendEmail.server.address}"></property>
+			<property name="username" value="${sendEmail.server.username}"></property>
+			<property name="password" value="${sendEmail.server.password}"></property>
+			<property name="javaMailProperties">  
+            <props>  
+                <prop key="mail.smtp.auth">true</prop>  <!-- 设置认证开关 -->  
+                <prop key="mail.debug">true</prop>  <!-- 启动调试开关 -->  
+            </props>  
+        </property>  
+		</bean>
+	
     </beans>
 
     <!-- unit test环境 -->
@@ -131,6 +147,8 @@
             <property name="dataSource" ref="dataSource"/>
             <property name="dataFile" value="/data/sample-data.xml"/>
         </bean>
+      
     </beans>
-
+    
+  	
 </beans>
