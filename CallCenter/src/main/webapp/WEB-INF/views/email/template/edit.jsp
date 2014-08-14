@@ -2,7 +2,7 @@
 <%@include file="../../include/formHeader.jsp"%>
 <body style="padding-bottom: 31px;">
 	<form:form id="mainform" name="mainform" method="post"
-		modelAttribute="messageTemplate"></form:form>
+		modelAttribute="emailTemplate"></form:form>
 	<script type="text/javascript">
 		var emailTemplateStatusData = <sys:dictList type = "29"/>;
 

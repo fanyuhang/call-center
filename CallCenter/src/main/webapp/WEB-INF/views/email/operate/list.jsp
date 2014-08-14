@@ -45,7 +45,6 @@
 		</div>
 	</div>
 	<script type="text/javascript">
-		var messageSendStatusData = <sys:dictList type = "16"/>;
 		//搜索表单应用ligerui样式
 		$("#formsearch").ligerForm({
 			labelWidth : 120,

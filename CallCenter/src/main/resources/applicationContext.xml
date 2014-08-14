@@ -111,11 +111,11 @@
 			<property name="username" value="${sendEmail.server.username}"></property>
 			<property name="password" value="${sendEmail.server.password}"></property>
 			<property name="javaMailProperties">  
-            <props>  
-                <prop key="mail.smtp.auth">true</prop>  <!-- 设置认证开关 -->  
-                <prop key="mail.debug">true</prop>  <!-- 启动调试开关 -->  
-            </props>  
-        </property>  
+	            <props>  
+	                <prop key="mail.smtp.auth">true</prop>  <!-- 设置认证开关 -->  
+	                <prop key="mail.debug">true</prop>  <!-- 启动调试开关 -->  
+	            </props>  
+       		</property>  
 		</bean>
 	
     </beans>
