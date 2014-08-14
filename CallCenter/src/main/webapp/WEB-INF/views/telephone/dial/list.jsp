@@ -12,6 +12,14 @@
         border-left: 1px solid #D0D0D0;
         border-right: 1px solid #D0D0D0;
     }
+    
+    #innertabcontainer .l-tab-links {
+        border-top: 1px solid #D0D0D0;
+        border-left: 1px solid #D0D0D0;
+        border-right: 1px solid #D0D0D0;
+        margin-left:510px;
+        margin-top:-190px;
+    }
 
     .projectgrid .l-selected .l-grid-row-cell, .projectgrid .l-selected {
         background: none;
@@ -37,7 +45,7 @@
     }
 </style>
 </head>
-<body>
+<body style="overflow:hidden;">
 <div id="layout" style="margin:2px; margin-right:3px;">
     <div position="center" id="mainmenu" title="我的任务">
             <div id="tasklist" style="margin:2px auto;"></div>
@@ -46,12 +54,14 @@
         <div id="tabcontainer" style="margin:2px;">
             <div title="客户信息" tabid="custInfo">
                 <form:form id="customerInfo" name="customerInfo" method="post"></form:form>
-            </div>
-            <div title="合同信息" tabid="contractInfo">
-                <div id="contractInfo" style="margin:2px auto;"></div>
-            </div>
-            <div title="拨打历史" tabid="dialHis">
-                <div id="dialHistory" style="margin:2px auto;"></div>
+		          <div id="innertabcontainer">
+		          <div title="合同信息" tabid="contractInfo">
+	                <div id="contractInfo" style="margin:2px auto;"></div>
+	            </div>
+	            <div title="拨打历史" tabid="dialHis">
+	                <div id="dialHistory" style="margin:2px auto;"></div>
+	            </div>
+	            </div>
             </div>
         </div>
     </div>
@@ -76,7 +86,8 @@
 	
 	var bottomHeader = $(".l-layout-bottom > .l-layout-header:first");
 
-	var tab = $("#tabcontainer").ligerTab();
+	$("#tabcontainer").ligerTab();
+	$("#innertabcontainer").ligerTab();
 
 	var taskListGrid;
 
@@ -129,6 +140,7 @@
             		  origCustomer = data[1];
             	  }
             	  
+            	  $("#customerInfo").html("");
             	  customeForm = $("#customerInfo").ligerForm({
 							    labelWidth: 80,
 							    inputWidth: 150,
@@ -147,24 +159,21 @@
 						                    valueFieldID:"fldGender"
 						            }
 							        },
-							        {display: "出生日期", name: "fldBirthday", attr:{value:null!=origCustomer&&null!=origCustomer.fldBirthday?origCustomer.fldBirthday:""}, newline: false, type: "text", cssClass: "field"},
-							        {display: "手机", name: "fldMobile", attr:{value:customer.fldMobile}, newline: true, type: "text", cssClass: "field"},
-							        {display: "电话号码", name: "fldPhone", attr:{value:customer.fldPhone}, newline: false, type: "text", cssClass: "field"},
+							        {display: "手机", name: "fldMobile", attr:{value:null!=customer.fldMobile?customer.fldMobile:""}, newline: true, type: "text", cssClass: "field"},
+							        {display: "电话号码", name: "fldPhone", attr:{value:null!=customer.fldPhone?customer.fldPhone:""}, newline: false, type: "text", cssClass: "field"},
+							        {display: "出生日期", name: "fldBirthday", attr:{value:null!=origCustomer&&null!=origCustomer.fldBirthday?origCustomer.fldBirthday:""}, newline: true, type: "text", cssClass: "field"},
 							        {display: "身份证号", name: "fldIdentityNo", attr:{value:null!=origCustomer&&null!=origCustomer.fldIdentityNo?origCustomer.fldIdentityNo:""}, newline: false, type: "text", cssClass: "field"},
 							        {display: "地址", name: "fldAddress", attr:{value:null!=origCustomer&&null!=origCustomer.fldComment?origCustomer.fldComment:(customer.fldAddress!=null?customer.fldAddress:"")}, newline: true, type: "text", cssClass: "field"},
-							        {display: "邮箱", name: "fldEmail", attr:{value:null!=origCustomer&&null!=origCustomer.fldEmail?origCustomer.fldEmail:""}, newline: false, type: "text", cssClass: "field"},
-							        {display: "任务结果", name: "fldResultType", newline: false, type: "select", cssClass: "field",validate: {required: true},
-							        	options:{
-						                    valueField: 'value',
-						                    textField: 'text',
-						                    isMultiSelect:false,
-						                    data:resultTypeData,
-						                    valueFieldID:"fldResultType"
-						            }
-							        },
+							        {display: "邮箱", name: "fldEmail", attr:{value:null!=origCustomer&&null!=origCustomer.fldEmail?origCustomer.fldEmail:""}, newline: false, type: "text", cssClass: "field"}
 							    ],
 							    toJSON: JSON2.stringify
 								});
+            	  
+            	  $(".l-form-container").css("height","150");
+            	  var btn = $(".l-dialog-btn").html();
+            	  if(undefined == btn) {            		  
+            	  	$("#customerInfo").append('<div class="l-dialog-btn" style="margin-top:500px,margin-right:5px;" onclick="javascript:f_save();"><div class="l-dialog-btn-l"></div><div class="l-dialog-btn-r"></div><div class="l-dialog-btn-inner">保存</div></div>');
+            	  }
             	  
            	  if(null != data[1]) {
            		  origCustomer = data[1];
@@ -265,6 +274,8 @@
 						        ], dataAction: 'server', pageSize: 50, toolbar: null, url: '<c:url value="/customer/contract/list?where='+where+'"/>', sortName: 'fldOperateDate', sortOrder: 'desc',
 						        width: '98%', height: '32%', toJSON: JSON2.stringify
 						    });
+						    
+						    //$("#contractInfogrid").css("margin-left","500px");
            	  }
 					    }
             },
@@ -293,9 +304,10 @@
 	});
 	
 	//表单底部按钮
-  LG.setFormDefaultBtn(null, f_save);
+  //LG.setFormDefaultBtn(null, f_save);
 	
 	function f_save() {
+		return;
 		var fldResultType = $("#fldResultType").val();
 		if(undefined == fldResultType)return;
 		if("" == fldResultType) {
@@ -331,7 +343,7 @@
 
 	function updateGridHeight() {
     var bottomHeight = $(".l-layout-bottom");
-		bottomHeight.css("height",205);    	
+		bottomHeight.css("height",270);    	
 	}
 	
 	updateGridHeight();
