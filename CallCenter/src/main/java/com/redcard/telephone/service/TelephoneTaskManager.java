@@ -11,6 +11,7 @@ import com.common.Constant;
 import com.common.core.grid.GridPageRequest;
 import com.common.core.util.GenericPageHQLQuery;
 import com.redcard.telephone.dao.TelephoneTaskDao;
+import com.redcard.telephone.entity.TelephoneRecord;
 import com.redcard.telephone.entity.TelephoneTask;
 
 @Component
@@ -18,6 +19,8 @@ import com.redcard.telephone.entity.TelephoneTask;
 public class TelephoneTaskManager extends GenericPageHQLQuery<TelephoneTask> {
 	@Autowired
 	private TelephoneTaskDao telephoneTaskDao;
+	@Autowired
+	private TelephoneRecordManager telephoneRecordManager;
 	
 	public long getCount() {
 		return telephoneTaskDao.count();
@@ -33,5 +36,11 @@ public class TelephoneTaskManager extends GenericPageHQLQuery<TelephoneTask> {
 		oldTelephoneTask.setFldOperateDate(new Date());
 		oldTelephoneTask.setFldCallStatus(Constant.TASK_CALL_STATUS_ED);
 		telephoneTaskDao.save(oldTelephoneTask);
+		
+		TelephoneRecord telephoneRecord = new TelephoneRecord();
+		telephoneRecord.setFldTaskId(telephoneTask.getFldId());
+		telephoneRecord.setFldCustomerName(oldTelephoneTask.getFldCustomerName());
+		
+		telephoneRecordManager.save(telephoneRecord);
 	}
 }

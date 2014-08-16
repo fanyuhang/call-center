@@ -22,4 +22,9 @@ public class TelephoneRecordManager extends GenericPageHQLQuery<TelephoneRecord>
 			return telephoneRecordDao.findByNameAndPhone(name,mobile);
 		return telephoneRecordDao.findByNameAndPhone(name,phone);
 	}
+	
+	@Transactional(readOnly = false)
+	public void save(TelephoneRecord telephoneRecord) {
+		telephoneRecordDao.save(telephoneRecord);
+	}
 }

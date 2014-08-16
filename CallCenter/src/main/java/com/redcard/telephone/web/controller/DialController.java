@@ -45,7 +45,7 @@ public class DialController {
 	@RequestMapping(value = "listTask")
     @ResponseBody
     public DataResponse<TelephoneTask> list(GridPageRequest pageRequest, String where) {
-		where = "{\"op\":\"and\",\"rules\":[{\"op\":\"equal\",\"field\":\"fldCallStatus\",\"value\":0,\"type\":\"int\"}]}";
+		where = "{\"op\":\"and\",\"rules\":[{\"op\":\"lessorequal\",\"field\":\"fldTaskStatus\",\"value\":9,\"type\":\"int\"}]}";
         return (new DataResponse<TelephoneTask>(telephoneTaskManager.listTask(pageRequest, where)));
     }
 	
