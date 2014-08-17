@@ -4,12 +4,16 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.codehaus.jackson.map.annotate.JsonSerialize;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.common.core.util.JsonTimestampSerializer;
+import com.common.security.util.SecurityUtil;
 
 /**
  * TelephoneRecord entity. @author MyEclipse Persistence Tools
@@ -29,7 +33,9 @@ public class TelephoneRecord implements java.io.Serializable {
 	private Integer fldResultType;
 	private String fldComment;
 	private Integer fldCallLong;
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private Date fldCallBeginTime;
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private Date fldCallEndTime;
 	private String fldRecordFilePath;
 	private String fldCallButtons;
@@ -38,7 +44,7 @@ public class TelephoneRecord implements java.io.Serializable {
 	private String fldAuditComment;
 	private Integer fldAuditFraction;
 	private String fldAuditUserNo;
-	private String fldOperateUserNo;
+	private String fldOperateUserNo = SecurityUtil.getCurrentUserLoginName();
 	private Date fldOperateDate;
 	private String fldCreateUserNo;
 	private Date fldCreateDate;
@@ -91,6 +97,7 @@ public class TelephoneRecord implements java.io.Serializable {
 
 	// Property accessors
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "FLDID", unique = true, nullable = false)
 	public Long getFldId() {
 		return this.fldId;

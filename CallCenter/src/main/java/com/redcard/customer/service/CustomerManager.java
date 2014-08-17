@@ -1,5 +1,6 @@
 package com.redcard.customer.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -65,6 +66,16 @@ public class CustomerManager extends GenericPageHQLQuery<Customer> {
     	else {
     		return customerDao.findByCustNameAndPhone(customerName, phone);
     	}
+    }
+    
+    public List<Customer> findByMobileOrPhone(String num) {
+    	List<Customer> list = new ArrayList<Customer>();
+    	Customer customer = customerDao.findByMobile(num);
+    	if(null != customer) {
+    		list.add(customer);
+    		return list;
+    	}
+    	return customerDao.findCustomerByPhone(num);
     }
 
     public Page<Customer> findAllCustomer(GridPageRequest page, String where) {

@@ -1,5 +1,6 @@
 package com.redcard.telephone.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -18,9 +19,15 @@ public class TelephoneRecordManager extends GenericPageHQLQuery<TelephoneRecord>
 	private TelephoneRecordDao telephoneRecordDao;
 	
 	public List<TelephoneRecord> findByNameAndPhone(String name,String phone,String mobile) {
+		List<TelephoneRecord> list = new ArrayList<TelephoneRecord>();
 		if(!StringUtils.isBlank(mobile))
-			return telephoneRecordDao.findByNameAndPhone(name,mobile);
-		return telephoneRecordDao.findByNameAndPhone(name,phone);
+			list = telephoneRecordDao.findByNameAndPhone(name,mobile);
+		List<TelephoneRecord> tmpList = telephoneRecordDao.findByNameAndPhone(name,phone);
+		if(null != tmpList && tmpList.size() > 0) {
+			list.addAll(tmpList);
+		}
+		
+		return list;
 	}
 	
 	@Transactional(readOnly = false)

@@ -65,18 +65,18 @@ public class DialController {
 	
 	@RequestMapping(value = "dialHis")
     @ResponseBody
-	public AsyncResponse dialHis(String customerName,String phone,String mobile) {
-		AsyncResponse result = new AsyncResponse();
+	public DataResponse<TelephoneRecord> dialHis(String customerName,String phone,String mobile) {
 		List<TelephoneRecord> list = telephoneRecordManager.findByNameAndPhone(customerName, phone,mobile);
-		result.setData(list);
-        return result;
+		DataResponse<TelephoneRecord> response = new DataResponse<TelephoneRecord>();
+		response.setRows(list);
+        return response;
 	}
 	
 	@RequestMapping(value = "save")
     @ResponseBody
-    public AsyncResponse save(TelephoneTask telephoneTask) {
+    public AsyncResponse save(TelephoneRecord telephoneRecord) {
         AsyncResponse result = new AsyncResponse();
-        telephoneTaskManager.save(telephoneTask);
+        telephoneTaskManager.save(telephoneRecord);
         return result;
     }
 }

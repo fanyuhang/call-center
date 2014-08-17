@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@include file="../../include/header.jsp" %>
-<title>我的外拨</title>
+<title>来电弹屏</title>
 <script src="<c:url value="/static/ligerUI/ligerUI/js/plugins/ligerLayout.js"/>" type="text/javascript"></script>
 <style type="text/css">
     .cell-label {
@@ -56,7 +56,7 @@
 </head>
 <body style="overflow:hidden;">
 <div id="layout" style="margin:2px; margin-right:3px;">
-    <div position="center" id="mainmenu" title="我的任务">
+    <div position="center" id="mainmenu" title="客户信息">
             <div id="tasklist" style="margin:2px auto;"></div>
     </div>
     <div position="bottom" title="客户相关信息">
@@ -107,36 +107,18 @@
 
 	taskListGrid = $("#tasklist").ligerGrid({
     columns:[
-				{display:'任务时间', name:'fldTaskDate'},
-        {display:'客户姓名', name:'fldCustomerName',width:300},
+        {display:'客户姓名', name:'fldName',width:300},
            {display:'性别', name:'fldGender',width:60,
         	   render:function(item) {
    		 			   return renderLabel(genderData,item.fldGender);
              }
          	 },
-           {display:'手机', name:'fldMobile',width:250,
-         	 		render:function(item){
-         	 			if(null == item.fldMobile  || "" == item.fldMobile)
-         	 				return "";
-         	 			return '<span>'+item.fldMobile+'&nbsp;&nbsp;<a href="javascript:void(0);" onclick="javascript:makecall(\''+item.fldMobile+'\',\''+item.fldCustomerName+'\');" title="拨打" style="background:url(/static/ligerUI/icons/silkicons/phone.png) no-repeat;text-decoration:none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></span>';
-         	 		}
-           },
-           {display:'固定电话', name:'fldPhone',width:250,
-        	   render:function(item){
-        		   if(null == item.fldPhone  || "" == item.fldPhone)
-    	 				   return "";
-		    	 	   return '<span>'+item.fldPhone+'&nbsp;&nbsp;<a href="javascript:void(0);" onclick="javascript:makecall(\''+item.fldPhone+'\',\''+item.fldCustomerName+'\');" title="拨打" style="background:url(/static/ligerUI/icons/silkicons/telephone.png) no-repeat;text-decoration:none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></span>';
-		    	 	 }
-           },
-           {display:'拨打状态', name:'fldCallStatus',width:130,
-        	   render:function(item) {
-   		 			   return renderLabel(callStatusData,item.fldCallStatus);
-             }
-         	 }
+           {display:'手机', name:'fldMobile',width:250},
+           {display:'固定电话', name:'fldPhone',width:250}
     ], 
     width:'99%', height:190, rowHeight:20, fixedCellHeight:true,
     frozen:false, checkbox:false, rownumbers:true,
-    url:'<c:url value="/telephone/dial/listTask"/>'
+    url:'<c:url value="/telephone/incoming/listCustomer"/>?num='+'13611924283'
 	});
 	
 	var customeForm,taskId;
@@ -147,7 +129,7 @@
 	    heightDiff:-100,
 	    fields: [
 					{display: "ID",name: "fldId", newline: true, type: "hidden"},
-	        {display: "客户名称", name: "fldCustomerName", newline: true, type: "text", cssClass: "field"},
+	        {display: "客户名称", name: "fldName", newline: true, type: "text", cssClass: "field"},
 	        {display: "性别", name: "fldGender", newline: false, type: "select", cssClass: "field",comboboxName:"gender",
 	        	options:{
                     valueField: 'value',
@@ -239,13 +221,13 @@
   });
   
 	taskListGrid.bind('SelectRow', function (rowdata) {
-	    var customerName = rowdata.fldCustomerName;
+	    var customerName = rowdata.fldName;
 	    var mobile = rowdata.fldMobile;
 	    var phone = rowdata.fldPhone;
 	    taskId = rowdata.fldId;
 	    
 	    LG.ajax({
-            url:'<c:url value="/telephone/dial/findCustomer"/>',
+            url:'<c:url value="/telephone/incoming/findCustomer"/>',
             data:{customerName:customerName,mobile:mobile,phone:phone},
             dataType:'json', type:'post',
             success:function (data) {
@@ -258,19 +240,17 @@
             	  }
             	  
             	  $("#fldId").val(customer.fldId);
-            	  $("#fldCustomerName").val(customer.fldCustomerName);
+            	  $("#fldName").val(customer.fldName);
             	  $("#fldGender").val(customer.fldGender);
             	  $("#gender").val(renderLabel(genderData,customer.fldGender));
             	  $("#fldMobile").val(null!=customer.fldMobile?customer.fldMobile:"");
             	  $("#fldPhone").val(null!=customer.fldPhone?customer.fldPhone:"");
-            	  $("#fldBirthday").val(null!=origCustomer&&null!=origCustomer.fldBirthday?origCustomer.fldBirthday:"");
-            	  $("#fldIdentityNo").val(null!=origCustomer&&null!=origCustomer.fldIdentityNo?origCustomer.fldIdentityNo:"");
-            	  $("#fldAddress").val(null!=origCustomer&&null!=origCustomer.fldComment?origCustomer.fldComment:(customer.fldAddress!=null?customer.fldAddress:""));
-            	  $("#fldEmail").val(null!=origCustomer&&null!=origCustomer.fldEmail?origCustomer.fldEmail:"");
+            	  $("#fldBirthday").val(null!=customer.fldBirthday?customer.fldBirthday:"");
+            	  $("#fldIdentityNo").val(null!=customer.fldIdentityNo?customer.fldIdentityNo:"");
+            	  $("#fldAddress").val(null!=customer.fldAddress?customer.fldAddress:"");
+            	  $("#fldEmail").val(null!=customer.fldEmail?customer.fldEmail:"");
             	  
-           	  if(null != data[1]) {
-           		  origCustomer = data[1];
-           			var where = '{"op":"and","rules":[{"op":"like","field":"fldCustomerId","value":"'+origCustomer.fldId+'","type":"string"},{"op":"equal","field":"fldStatus","value":"0","type":"int"}]}';
+           			var where = '{"op":"and","rules":[{"op":"like","field":"fldCustomerId","value":"'+customer.fldId+'","type":"string"},{"op":"equal","field":"fldStatus","value":"0","type":"int"}]}';
 						    $("#contractInfo").ligerGrid({
 						        checkbox: false,
 						        rownumbers: true,
@@ -317,56 +297,6 @@
 						        ], dataAction: 'server', pageSize: 50, toolbar: null, url: '<c:url value="/customer/contract/list?where='+where+'"/>', sortName: 'fldOperateDate', sortOrder: 'desc',
 						        width: '98%', height: '33%', toJSON: JSON2.stringify
 						    });
-           	  } else {
-           			var where = '{"op":"and","rules":[{"op":"like","field":"fldCustomerId","value":"-1","type":"string"},{"op":"equal","field":"fldStatus","value":"0","type":"int"}]}';
-						    $("#contractInfo").ligerGrid({
-						        checkbox: false,
-						        rownumbers: true,
-						        delayLoad: false,
-						        columnWidth: 180,
-						        columns: [
-						            {display: "签订日期", name: "fldSignDate"},
-						            {display: "客户姓名", name: "customerName"},
-						            {display: "产品全称", name: "productFullName"},
-						            {display: "产品实际天数", name: "productClearDays"},
-						            {display: "成立日期", name: "establishDate"},
-						            {display: "到期日期", name: "dueDate"},
-						            {display: "打款日期", name: "fldMoneyDate"},
-						            {display: "年化收益率", name: "fldAnnualizedRate",
-						                render: function (item) {
-						                    return item.fldAnnualizedRate + "%";
-						                }},
-						            {display: "购买金额(万元)", name: "fldPurchaseMoney"},
-						            {display: "预期收益(元)", name: "fldAnnualizedMoney",
-						                render: function (item) {
-						                    return formatCurrency(item.fldAnnualizedMoney);
-						                }},
-						            {display: "合同状态", name: "fldStatus",
-						                render: function (item) {
-						                    return renderLabel(statusData, item.fldStatus);
-						                }
-						            },
-						            {display: "是否已到期", name: "fldFinishStatus",
-						                render: function (item) {
-						                    return renderLabel(finishStatus, item.fldFinishStatus);
-						                }},
-						            {display: "理财经理", name: "financialUserName"},
-						            {display: "客服经理", name: "serviceUserName"},
-						            {display: "客户经理", name: "customerUserName"},
-						            {display: "银行卡号", name: "fldBankNo"},
-						            {display: "瑞得卡号", name: "fldCardNo"},
-						            {display: "瑞得卡等级", name: "fldCardLevel",
-						                render: function (item) {
-						                    return renderLabel(cardLevelData, item.fldCardLevel);
-						                }
-						            },
-						            {display: "操作人", name: "operateUserName"},
-						            {display: "操作时间", name: "fldOperateDate"}
-						        ], dataAction: 'server', pageSize: 50, toolbar: null, url: '<c:url value="/customer/contract/list?where='+where+'"/>', sortName: 'fldOperateDate', sortOrder: 'desc',
-						        width: '98%', height: '33%', toJSON: JSON2.stringify
-						    });
-						    
-           	  }
 					    }
             },
             error:function (message) {}

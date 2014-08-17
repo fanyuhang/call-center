@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.common.Constant;
 import com.common.core.grid.GridPageRequest;
 import com.common.core.util.GenericPageHQLQuery;
+import com.common.security.util.SecurityUtil;
 import com.redcard.telephone.dao.TelephoneTaskDao;
 import com.redcard.telephone.entity.TelephoneRecord;
 import com.redcard.telephone.entity.TelephoneTask;
@@ -30,17 +31,18 @@ public class TelephoneTaskManager extends GenericPageHQLQuery<TelephoneTask> {
         return (Page<TelephoneTask>) super.findAll(where, page);
     }
 	
-	public void save(TelephoneTask telephoneTask) {
-		TelephoneTask oldTelephoneTask = telephoneTaskDao.findOne(telephoneTask.getFldId());
-		oldTelephoneTask.setFldResultType(telephoneTask.getFldResultType());
+	public void save(TelephoneRecord telephoneRecord) {
+		TelephoneTask oldTelephoneTask = telephoneTaskDao.findOne(telephoneRecord.getFldTaskId());
+		oldTelephoneTask.setFldResultType(telephoneRecord.getFldResultType());
 		oldTelephoneTask.setFldOperateDate(new Date());
 		oldTelephoneTask.setFldCallStatus(Constant.TASK_CALL_STATUS_ED);
 		telephoneTaskDao.save(oldTelephoneTask);
 		
-		TelephoneRecord telephoneRecord = new TelephoneRecord();
-		telephoneRecord.setFldTaskId(telephoneTask.getFldId());
 		telephoneRecord.setFldCustomerName(oldTelephoneTask.getFldCustomerName());
-		
+		telephoneRecord.setFldCallType(Constant.TELEPHONE_CALL_TYPE_OUT);
+		telephoneRecord.setFldCreateDate(new Date());
+		telephoneRecord.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
+		telephoneRecord.setFldOperateDate(new Date());
 		telephoneRecordManager.save(telephoneRecord);
 	}
 }
