@@ -558,11 +558,11 @@ $(function(){
     }
     function snlReceiveDeliverCallEvent(szPhoneNumber, szPhoneParam, nCallID) {
         if(LG.isOutCall==1 && (szPhoneNumber.length>5||szPhoneNumber.length==0)){
+            szPhoneNumber = szPhoneNumber.substring(1,szPhoneNumber.length);
             $("#telephone").html(szPhoneNumber);
             snlEstablishCallEvent();
             var tabid;
-//            f_addTab(tabid, '来电弹屏：'+szPhoneNumber, '');
-            alert("来电"+szPhoneNumber+","+szPhoneParam+","+nCallID);
+            f_addTab(tabid, '来电弹屏：'+szPhoneNumber, '<c:url value="/telephone/incoming/init"/>'+'?phone='+szPhoneNumber+'&callId='+nCallID);
         }
     }
     function snlHeldCallEvent() {

@@ -118,7 +118,7 @@
     ], 
     width:'99%', height:190, rowHeight:20, fixedCellHeight:true,
     frozen:false, checkbox:false, rownumbers:true,
-    url:'<c:url value="/telephone/incoming/listCustomer"/>?num='+'18930044401'
+    url:'<c:url value="/telephone/incoming/listCustomer"/>?num='+'${phone}'
 	});
 	
 	var customeForm,taskId;

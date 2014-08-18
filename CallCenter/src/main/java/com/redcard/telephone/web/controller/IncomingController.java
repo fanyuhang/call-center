@@ -21,8 +21,10 @@ public class IncomingController {
 	private CustomerManager customerManager;
 
 	@RequestMapping(value = "init")
-    public String init(String menuNo, Model model) {
+    public String init(String phone,Integer callId, String menuNo, Model model) {
         model.addAttribute("menuNo", menuNo);
+        model.addAttribute("phone", phone);
+        model.addAttribute("callId", callId);
         return "telephone/incoming/list";
     }
 	
