@@ -31,6 +31,7 @@ import com.common.core.grid.DataResponse;
 import com.common.core.grid.GridPageRequest;
 import com.common.core.util.EntityUtil;
 import com.common.core.util.FileHelper;
+import com.common.core.util.JsonHelper;
 import com.common.security.util.SecurityUtil;
 import com.redcard.telephone.entity.TelephoneCustomer;
 import com.redcard.telephone.entity.TelephoneImport;
@@ -115,11 +116,13 @@ public class TelephoneImportController {
         }
     }
 	
-	@RequestMapping(value = "save")
+	@RequestMapping(value = "fileUpload")
     @ResponseBody
-    public AsyncResponse upload(String importName,String fileName,String fldDuplicateStatus,HttpServletRequest request,HttpServletResponse response) {
+    public String fileUpload(String importName,Integer fldDuplicateStatus,HttpServletRequest request,HttpServletResponse response) {
 		AsyncResponse result = new AsyncResponse(false,"导入话单成功!");
         try {
+        	String fileName = FileHelper.uploadFile(request, response);
+        	
         	List<TelephoneImportEntity> objects = ExcelImportUtil.excelImport(TelephoneImportEntity.class, fileName);
             if(null != objects && objects.size()>0) {
             	String uuid = EntityUtil.getId();
@@ -296,11 +299,11 @@ public class TelephoneImportController {
             	}
             	telephoneCustomerManager.save(telephoneCustomerList);
             }
-            return result;
         } catch (Exception e) {
             log.error("导入文件失败, {}", e.getMessage());
-            return new AsyncResponse(true, "导入话单失败！");
+            return JsonHelper.serialize(new AsyncResponse(true, "导入话单失败！"));
         }
+        return JsonHelper.serialize(result);
     }
 	
 	@SuppressWarnings("unchecked")

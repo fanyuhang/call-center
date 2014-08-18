@@ -162,7 +162,8 @@
 	        {display: "出生日期", name: "fldBirthday", newline: true, type: "text", cssClass: "field"},
 	        {display: "身份证号", name: "fldIdentityNo", newline: false, type: "text", cssClass: "field"},
 	        {display: "地址", name: "fldAddress", newline: true, type: "text", cssClass: "field"},
-	        {display: "邮箱", name: "fldEmail", newline: false, type: "text", cssClass: "field"}
+	        {display: "邮箱", name: "fldEmail", newline: false, type: "text", cssClass: "field"},
+	        {display:"custId",name:"custId",type:"hidden"}
 	    ],
 	    toJSON: JSON2.stringify
 		});
@@ -270,6 +271,8 @@
             	  
            	  if(null != data[1]) {
            		  origCustomer = data[1];
+           		  $("#custId").val(origCustomer.fldId);
+           		  
            			var where = '{"op":"and","rules":[{"op":"like","field":"fldCustomerId","value":"'+origCustomer.fldId+'","type":"string"},{"op":"equal","field":"fldStatus","value":"0","type":"int"}]}';
 						    $("#contractInfo").ligerGrid({
 						        checkbox: false,
