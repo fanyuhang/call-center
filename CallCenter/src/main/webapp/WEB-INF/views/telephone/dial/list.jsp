@@ -14,7 +14,7 @@
     }
     
     #innertabcontainer {
-    	width:800px;
+    	width:715px;
     	margin-left:500px;
       margin-top:-179px;
     }
