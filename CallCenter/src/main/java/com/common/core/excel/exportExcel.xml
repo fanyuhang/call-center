@@ -87,4 +87,24 @@
     	<column cell="D1" propertyName="fldPhone" columnName="固定电话" nullAllowed="true"></column>
     	<column cell="E1" propertyName="fldAddress" columnName="地址" nullAllowed="true"></column>
     </table>
+    
+    <table class="com.redcard.telephone.entity.TelephoneRecord" startRow="1">
+    	<column cell="A1" propertyName="callUserName" columnName="话务员" nullAllowed="true"></column>
+    	<column cell="B1" propertyName="fldCallType" columnName="呼叫类型" nullAllowed="true">
+    		<mapping value="1" text="呼入"></mapping>
+    		<mapping value="0" text="呼出"></mapping>
+    	</column>
+    	<column cell="C1" propertyName="fldCallBeginTime" columnName="呼叫时间" nullAllowed="true"></column>
+    	<column cell="D1" propertyName="fldResultType" columnName="跟踪结果" nullAllowed="true">
+    		<mapping value="0" text="未知"></mapping>
+    		<mapping value="1" text="错号"></mapping>
+    		<mapping value="2" text="空号"></mapping>
+    		<mapping value="3" text="待跟踪"></mapping>
+    		<mapping value="4" text="有意向"></mapping>
+    		<mapping value="9" text="其他"></mapping>
+    	</column>
+    	<column cell="E1" propertyName="fldPhone" columnName="拨打号码" nullAllowed="true"></column>
+    	<column cell="F1" propertyName="fldCustomerName" columnName="客户姓名" nullAllowed="true"></column>
+    	<column cell="G1" propertyName="fldComment" columnName="备注" nullAllowed="true"></column>
+    </table>
 </tables>
