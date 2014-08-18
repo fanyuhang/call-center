@@ -14,7 +14,7 @@
     }
     
     #innertabcontainer {
-    	width:800px;
+    	width:715px;
     	margin-left:500px;
       margin-top:-179px;
     }
@@ -118,7 +118,7 @@
     ], 
     width:'99%', height:190, rowHeight:20, fixedCellHeight:true,
     frozen:false, checkbox:false, rownumbers:true,
-    url:'<c:url value="/telephone/incoming/listCustomer"/>?num='+'13611924283'
+    url:'<c:url value="/telephone/incoming/listCustomer"/>?num='+'18930044401'
 	});
 	
 	var customeForm,taskId;
