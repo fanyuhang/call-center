@@ -5,9 +5,11 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.common.core.grid.GridPageRequest;
 import com.common.core.util.GenericPageHQLQuery;
 import com.redcard.telephone.dao.TelephoneRecordDao;
 import com.redcard.telephone.entity.TelephoneRecord;
@@ -34,4 +36,8 @@ public class TelephoneRecordManager extends GenericPageHQLQuery<TelephoneRecord>
 	public void save(TelephoneRecord telephoneRecord) {
 		telephoneRecordDao.save(telephoneRecord);
 	}
+	
+	public Page<TelephoneRecord> findAllTelephoneRecord(GridPageRequest page, String where) {
+        return (Page<TelephoneRecord>) super.findAll(where, page);
+    }
 }

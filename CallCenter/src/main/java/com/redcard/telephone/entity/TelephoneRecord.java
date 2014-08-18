@@ -4,15 +4,21 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.common.core.util.JsonTimestampSerializer;
+import com.common.security.entity.User;
 import com.common.security.util.SecurityUtil;
 
 /**
@@ -298,5 +304,26 @@ public class TelephoneRecord implements java.io.Serializable {
 
 	public void setFldCreateDate(Date fldCreateDate) {
 		this.fldCreateDate = fldCreateDate;
+	}
+	
+	protected User callUser;
+	
+	@JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "FLDCREATEUSERNO", referencedColumnName="FLDLOGINNAME", insertable = false, updatable = false)
+	public User getCallUser() {
+		return callUser;
+	}
+
+	public void setCallUser(User callUser) {
+		this.callUser = callUser;
+	}
+	
+	@Transient
+	private String callUserName;
+	
+	@Transient
+	public String getCallUserName() {
+		return null != callUser ? callUser.getUserName() : "";
 	}
 }

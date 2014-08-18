@@ -107,14 +107,17 @@
 
 	taskListGrid = $("#tasklist").ligerGrid({
     columns:[
-        {display:'客户姓名', name:'fldName',width:300},
+        {display:'客户姓名', name:'fldName',width:350},
            {display:'性别', name:'fldGender',width:60,
         	   render:function(item) {
    		 			   return renderLabel(genderData,item.fldGender);
              }
          	 },
            {display:'手机', name:'fldMobile',width:250},
-           {display:'固定电话', name:'fldPhone',width:250}
+           {display:'固定电话', name:'fldPhone',width:250},
+           {display:'来电反馈',width:250,render:function(item){
+        	   return '<a href="javascript:void(0);" onclick="javascript:incomingcall();" title="反馈">反馈</a>';
+           }}
     ], 
     width:'99%', height:190, rowHeight:20, fixedCellHeight:true,
     frozen:false, checkbox:false, rownumbers:true,
@@ -366,10 +369,10 @@
         labelWidth:100,
         inputWidth:150,
         fields:[
-            {display: "拨打号码", name: "currCallPhone", newline:true, type:"text",attr:{readonly:"readonly"}},
+            {display: "来电号码", name: "currCallPhone", newline:true, type:"text",attr:{readonly:"readonly"}},
             {display:"客户名称",name:"currCallCustomerName",newline:false,type:"text",attr:{readonly:"readonly"}},
             {display:"通话开始时间", name:"currCallBeginTime", newline:true, type:"text",attr:{readonly:"readonly"},format:'yyyy-MM-dd hh:mm:ss'},
-            {display:"任务结果", name:"fldResultType", newline: false, type:"select", validate:{required:true},
+            {display:"反馈结果", name:"fldResultType", newline: false, type:"select", validate:{required:true},
             	options:{
                     valueField: 'value',
                     textField: 'text',
@@ -382,12 +385,7 @@
     });
 	
 	var callWin;
-	function makecall(phone,customerName) {
-		if(parent.LG.telephoneStatus!=0){
-    	//return;
-    }
-    parent.LG.call(phone);
-    
+	function incomingcall(phone,customerName) {
     var date = new Date();
     $("#currCallBeginTime").val(date.getFullYear()+"-"+parseInt(parseInt(date.getMonth())+1)+"-"+date.getDate()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds());
     $("#currCallPhone").val(phone);
@@ -398,7 +396,7 @@
     	showMin:true,
     	allowClose:false,
     	showToggle:false,
-    	title:"拨打信息",
+    	title:"来电信息",
       target:$("#callDialog"),
       width:650, height:200, top:30, left:550,
       buttons:[
