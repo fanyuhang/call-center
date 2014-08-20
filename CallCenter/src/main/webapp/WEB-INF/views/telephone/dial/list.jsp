@@ -12,6 +12,23 @@
         border-left: 1px solid #D0D0D0;
         border-right: 1px solid #D0D0D0;
     }
+    
+    #innertabcontainer {
+    	width:715px;
+    	margin-left:500px;
+      margin-top:-179px;
+    }
+    
+    #innertabcontainer .l-tab-links {
+        border-top: 0px solid #D0D0D0;
+        border-left: 0px solid #D0D0D0;
+        border-right: 0px solid #D0D0D0;
+    }
+    
+    #innertabcontainer .l-tab-content-item{
+    	margin-left:-7px;
+    	margin-top:0px;
+    }
 
     .projectgrid .l-selected .l-grid-row-cell, .projectgrid .l-selected {
         background: none;
@@ -37,7 +54,7 @@
     }
 </style>
 </head>
-<body>
+<body style="overflow:hidden;">
 <div id="layout" style="margin:2px; margin-right:3px;">
     <div position="center" id="mainmenu" title="我的任务">
             <div id="tasklist" style="margin:2px auto;"></div>
@@ -45,16 +62,22 @@
     <div position="bottom" title="客户相关信息">
         <div id="tabcontainer" style="margin:2px;">
             <div title="客户信息" tabid="custInfo">
-                <form:form id="customerInfo" name="customerInfo" method="post"></form:form>
-            </div>
-            <div title="合同信息" tabid="contractInfo">
-                <div id="contractInfo" style="margin:2px auto;"></div>
-            </div>
-            <div title="拨打历史" tabid="dialHis">
-                <div id="dialHistory" style="margin:2px auto;"></div>
+                <!--<form:form id="customerInfo" name="customerInfo" method="post"></form:form>-->
+                <div id="customerInfo" style="margin:2px auto;"></div>
+		          <div id="innertabcontainer">
+		          <div title="合同信息" tabid="contractInfo">
+	                <div id="contractInfo" style="margin:2px auto;"></div>
+	            </div>
+	            <div title="拨打历史" tabid="dialHis">
+	                <div id="dialHistory" style="margin:2px auto;"></div>
+	            </div>
+	            </div>
             </div>
         </div>
     </div>
+</div>
+<div id="callDialog" style="display:none;">
+    <form:form id="callMainform" name="callMainform" method="post" modelAttribute="call"></form:form>
 </div>
 <script type="text/javascript">
 	//覆盖本页面grid的loading效果
@@ -66,6 +89,7 @@
 	var finishStatus = <sys:dictList type = "21" nullable="true"/>;
 	var cardLevelData = <sys:dictList type = "13"/>;
 	var callTypeData = <sys:dictList type = "28"/>;
+	var callStatusData = <sys:dictList type = "23"/>;
 
 	var layout = $("#layout").ligerLayout({
     bottomHeight:$(window).height()*0.50,
@@ -76,33 +100,44 @@
 	
 	var bottomHeader = $(".l-layout-bottom > .l-layout-header:first");
 
-	var tab = $("#tabcontainer").ligerTab();
+	$("#tabcontainer").ligerTab();
+	$("#innertabcontainer").ligerTab();
 
 	var taskListGrid;
 
 	taskListGrid = $("#tasklist").ligerGrid({
     columns:[
-        {display:'客户姓名', name:'fldCustomerName',width:300},
-           {display:'性别', name:'fldGender',width:60,
+				{display:'任务时间', name:'fldTaskDate'},
+        {display:'客户姓名', name:'fldCustomerName',width:200},
+           {display:'性别', name:'fldGender',width:50,
         	   render:function(item) {
    		 			   return renderLabel(genderData,item.fldGender);
              }
          	 },
-           {display:'手机', name:'fldMobile',width:300,
+           {display:'手机', name:'fldMobile',width:240,
          	 		render:function(item){
          	 			if(null == item.fldMobile  || "" == item.fldMobile)
          	 				return "";
-         	 			return '<span>'+item.fldMobile+'&nbsp;&nbsp;<a href="javascript:void(0);" onclick="javascript:makecall(\''+item.fldMobile+'\');" title="拨打" style="background:url(/static/ligerUI/icons/silkicons/phone.png) no-repeat;text-decoration:none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></span>';
+         	 			return '<span>'+item.fldMobile+'&nbsp;&nbsp;<a href="javascript:void(0);" onclick="javascript:makecall(\''+item.fldMobile+'\',\''+item.fldCustomerName+'\');" title="拨打" style="background:url(/static/ligerUI/icons/silkicons/phone.png) no-repeat;text-decoration:none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></span>';
          	 		}
            },
-           {display:'固定电话', name:'fldPhone',width:300,
+           {display:'固定电话', name:'fldPhone',width:240,
         	   render:function(item){
         		   if(null == item.fldPhone  || "" == item.fldPhone)
     	 				   return "";
-		    	 	   return '<span>'+item.fldPhone+'&nbsp;&nbsp;<a href="javascript:void(0);" onclick="javascript:makecall(\''+item.fldPhone+'\');" title="拨打" style="background:url(/static/ligerUI/icons/silkicons/telephone.png) no-repeat;text-decoration:none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></span>';
+		    	 	   return '<span>'+item.fldPhone+'&nbsp;&nbsp;<a href="javascript:void(0);" onclick="javascript:makecall(\''+item.fldPhone+'\',\''+item.fldCustomerName+'\');" title="拨打" style="background:url(/static/ligerUI/icons/silkicons/telephone.png) no-repeat;text-decoration:none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></span>';
 		    	 	 }
            },
-           {display:'任务时间', name:'fldTaskDate'}
+           {display:'拨打状态', name:'fldCallStatus',width:130,
+        	   render:function(item) {
+   		 			   return renderLabel(callStatusData,item.fldCallStatus);
+             }
+         	 },
+         	 {display:"任务结果",name:"fldResultType",
+         	   render:function(item) {
+         		   return renderLabel(resultTypeData,item.fldResultType);
+         	   }
+         	 }
     ], 
     width:'99%', height:190, rowHeight:20, fixedCellHeight:true,
     frozen:false, checkbox:false, rownumbers:true,
@@ -110,6 +145,106 @@
 	});
 	
 	var customeForm,taskId;
+	customeForm = $("#customerInfo");
+	customeForm.ligerForm({
+	    labelWidth: 80,
+	    inputWidth: 150,
+	    space: 30,
+	    heightDiff:-100,
+	    fields: [
+					{display: "ID",name: "fldId", newline: true, type: "hidden"},
+	        {display: "客户名称", name: "teleCustomerName", newline: true, type: "text", validate: {required: true},cssClass: "field"},
+	        {display: "性别", name: "teleGender", newline: false, type: "select",cssClass: "field",comboboxName:"gender",
+	        	options:{
+                    valueField: 'value',
+                    textField: 'text',
+                    isMultiSelect:false,
+                    data:genderData,
+                    valueFieldID:"teleGender"
+            }
+	        },
+	        {display: "手机", name: "teleMobile", newline: true, type: "text", cssClass: "field"},
+	        {display: "电话号码", name: "telePhone", newline: false, type: "text", cssClass: "field"},
+	        {display: "出生日期", name: "custBirthday", newline: true, type: "date", cssClass: "field"},
+	        {display: "身份证号", name: "custIdentityNo", newline: false, type: "text", cssClass: "field"},
+	        {display: "地址", name: "teleAddress", newline: true, type: "text", cssClass: "field"},
+	        {display: "邮箱", name: "custEmail", newline: false, type: "text", cssClass: "field"},
+	        {display:"custId",name:"custId",type:"hidden"}
+	    ],
+	    toJSON: JSON2.stringify
+		});
+	
+	$(".l-form-container").css("height","175");
+	$(".l-form-container").css("width","520");
+ 	$('<div class="l-dialog-btn" style="margin-right:30px;margin-top:20px;" onclick="javascript:f_savecust();"><div class="l-dialog-btn-l"></div><div class="l-dialog-btn-r"></div><div class="l-dialog-btn-inner">保存</div></div>').appendTo(".l-form-container");
+	
+  $("#contractInfo").ligerGrid({
+      checkbox: false,
+      rownumbers: true,
+      delayLoad: false,
+      columnWidth: 180,
+      columns: [
+          {display: "签订日期", name: "fldSignDate"},
+          {display: "客户姓名", name: "customerName"},
+          {display: "产品全称", name: "productFullName"},
+          {display: "产品实际天数", name: "productClearDays"},
+          {display: "成立日期", name: "establishDate"},
+          {display: "到期日期", name: "dueDate"},
+          {display: "打款日期", name: "fldMoneyDate"},
+          {display: "年化收益率", name: "fldAnnualizedRate",
+              render: function (item) {
+                  return item.fldAnnualizedRate + "%";
+              }},
+          {display: "购买金额(万元)", name: "fldPurchaseMoney"},
+          {display: "预期收益(元)", name: "fldAnnualizedMoney",
+              render: function (item) {
+                  return formatCurrency(item.fldAnnualizedMoney);
+              }},
+          {display: "合同状态", name: "fldStatus",
+              render: function (item) {
+                  return renderLabel(statusData, item.fldStatus);
+              }
+          },
+          {display: "是否已到期", name: "fldFinishStatus",
+              render: function (item) {
+                  return renderLabel(finishStatus, item.fldFinishStatus);
+              }},
+          {display: "理财经理", name: "financialUserName"},
+          {display: "客服经理", name: "serviceUserName"},
+          {display: "客户经理", name: "customerUserName"},
+          {display: "银行卡号", name: "fldBankNo"},
+          {display: "瑞得卡号", name: "fldCardNo"},
+          {display: "瑞得卡等级", name: "fldCardLevel",
+              render: function (item) {
+                  return renderLabel(cardLevelData, item.fldCardLevel);
+              }
+          },
+          {display: "操作人", name: "operateUserName"},
+          {display: "操作时间", name: "fldOperateDate"}
+      ], dataAction: 'server', pageSize: 50, toolbar: null, url: null,
+      width: '98%', height: '33%', toJSON: JSON2.stringify
+  });
+  
+  var dialHistory = $("#dialHistory");
+  var dialHistorGrid = dialHistory.ligerGrid({
+      checkbox: false,
+      rownumbers: true,
+      delayLoad: false,
+      columnWidth: 180,
+      columns: [
+          {display: "呼叫类型", name: "fldCallType",
+          	render: function (item) {
+              return renderLabel(callTypeStatus, item.fldCallType);
+          }},
+        {display: "拨打号码", name: "fldPhone"},
+          {display: "拨打/呼入时间", name: "fldCallDate"},
+          {display: "通话时长", name: "fldCallLong"},
+          {display: "通话开始时间", name: "fldCallBeginTime"},
+          {display: "通话结束时间", name: "fldCallEndTime"}
+      ], dataAction: 'server', pageSize: 50, toolbar: null, url: null,
+      width: '98%', height: '33%', toJSON: JSON2.stringify
+  });
+  
 	taskListGrid.bind('SelectRow', function (rowdata) {
 	    var customerName = rowdata.fldCustomerName;
 	    var mobile = rowdata.fldMobile;
@@ -129,45 +264,21 @@
             		  origCustomer = data[1];
             	  }
             	  
-            	  customeForm = $("#customerInfo").ligerForm({
-							    labelWidth: 80,
-							    inputWidth: 150,
-							    space: 30,
-							    heightDiff:-100,
-							    fields: [
-											{display: "ID",name: "fldId", newline: true, type: "hidden", attr:{value:customer.fldId}},
-							        {display: "客户名称", name: "fldCustomerName", attr:{value:customer.fldCustomerName,readonly: "readonly"}, newline: true, type: "text", cssClass: "field"},
-							        {display: "性别", name: "fldGender", attr:{value:customer.fldGender}, newline: false, type: "select", cssClass: "field",
-							        	options:{
-						                    valueField: 'value',
-						                    textField: 'text',
-						                    isMultiSelect:false,
-						                    data:genderData,
-						                    initValue: customer.fldGender,
-						                    valueFieldID:"fldGender"
-						            }
-							        },
-							        {display: "出生日期", name: "fldBirthday", attr:{value:null!=origCustomer&&null!=origCustomer.fldBirthday?origCustomer.fldBirthday:""}, newline: false, type: "text", cssClass: "field"},
-							        {display: "手机", name: "fldMobile", attr:{value:customer.fldMobile}, newline: true, type: "text", cssClass: "field"},
-							        {display: "电话号码", name: "fldPhone", attr:{value:customer.fldPhone}, newline: false, type: "text", cssClass: "field"},
-							        {display: "身份证号", name: "fldIdentityNo", attr:{value:null!=origCustomer&&null!=origCustomer.fldIdentityNo?origCustomer.fldIdentityNo:""}, newline: false, type: "text", cssClass: "field"},
-							        {display: "地址", name: "fldAddress", attr:{value:null!=origCustomer&&null!=origCustomer.fldComment?origCustomer.fldComment:(customer.fldAddress!=null?customer.fldAddress:"")}, newline: true, type: "text", cssClass: "field"},
-							        {display: "邮箱", name: "fldEmail", attr:{value:null!=origCustomer&&null!=origCustomer.fldEmail?origCustomer.fldEmail:""}, newline: false, type: "text", cssClass: "field"},
-							        {display: "任务结果", name: "fldResultType", newline: false, type: "select", cssClass: "field",validate: {required: true},
-							        	options:{
-						                    valueField: 'value',
-						                    textField: 'text',
-						                    isMultiSelect:false,
-						                    data:resultTypeData,
-						                    valueFieldID:"fldResultType"
-						            }
-							        },
-							    ],
-							    toJSON: JSON2.stringify
-								});
+            	  $("#fldId").val(customer.fldId);
+            	  $("#teleCustomerName").val(customer.fldCustomerName);
+            	  $("#teleGender").val(customer.fldGender);
+            	  $("#gender").val(renderLabel(genderData,customer.fldGender));
+            	  $("#teleMobile").val(null!=customer.fldMobile?customer.fldMobile:(null!=origCustomer&&null!=origCustomer.fldMobile?origCustomer.fldMobile:""));
+            	  $("#telePhone").val(null!=customer.fldPhone?customer.fldPhone:(null!=origCustomer&&null!=origCustomer.fldPhone?origCustomer.fldPhone:""));
+            	  $("#custBirthday").val(null!=origCustomer&&null!=origCustomer.fldBirthday?origCustomer.fldBirthday:"");
+            	  $("#custIdentityNo").val(null!=origCustomer&&null!=origCustomer.fldIdentityNo?origCustomer.fldIdentityNo:"");
+            	  $("#teleAddress").val(null!=origCustomer&&null!=origCustomer.fldComment?origCustomer.fldComment:(customer.fldAddress!=null?customer.fldAddress:""));
+            	  $("#custEmail").val(null!=origCustomer&&null!=origCustomer.fldEmail?origCustomer.fldEmail:"");
             	  
            	  if(null != data[1]) {
            		  origCustomer = data[1];
+           		  $("#custId").val(origCustomer.fldId);
+           		  
            			var where = '{"op":"and","rules":[{"op":"like","field":"fldCustomerId","value":"'+origCustomer.fldId+'","type":"string"},{"op":"equal","field":"fldStatus","value":"0","type":"int"}]}';
 						    $("#contractInfo").ligerGrid({
 						        checkbox: false,
@@ -175,7 +286,6 @@
 						        delayLoad: false,
 						        columnWidth: 180,
 						        columns: [
-						            {display: "合同编号", name: "fldId"},
 						            {display: "签订日期", name: "fldSignDate"},
 						            {display: "客户姓名", name: "customerName"},
 						            {display: "产品全称", name: "productFullName"},
@@ -214,7 +324,7 @@
 						            {display: "操作人", name: "operateUserName"},
 						            {display: "操作时间", name: "fldOperateDate"}
 						        ], dataAction: 'server', pageSize: 50, toolbar: null, url: '<c:url value="/customer/contract/list?where='+where+'"/>', sortName: 'fldOperateDate', sortOrder: 'desc',
-						        width: '98%', height: '32%', toJSON: JSON2.stringify
+						        width: '98%', height: '33%', toJSON: JSON2.stringify
 						    });
            	  } else {
            			var where = '{"op":"and","rules":[{"op":"like","field":"fldCustomerId","value":"-1","type":"string"},{"op":"equal","field":"fldStatus","value":"0","type":"int"}]}';
@@ -224,7 +334,6 @@
 						        delayLoad: false,
 						        columnWidth: 180,
 						        columns: [
-						            {display: "合同编号", name: "fldId"},
 						            {display: "签订日期", name: "fldSignDate"},
 						            {display: "客户姓名", name: "customerName"},
 						            {display: "产品全称", name: "productFullName"},
@@ -263,8 +372,9 @@
 						            {display: "操作人", name: "operateUserName"},
 						            {display: "操作时间", name: "fldOperateDate"}
 						        ], dataAction: 'server', pageSize: 50, toolbar: null, url: '<c:url value="/customer/contract/list?where='+where+'"/>', sortName: 'fldOperateDate', sortOrder: 'desc',
-						        width: '98%', height: '32%', toJSON: JSON2.stringify
+						        width: '98%', height: '33%', toJSON: JSON2.stringify
 						    });
+						    
            	  }
 					    }
             },
@@ -272,7 +382,7 @@
         });
 	    
 	    var where = encodeURI('?customerName='+customerName+'&phone='+phone+'&mobile='+mobile);
-	    $("#dialHistory").ligerGrid({
+	    dialHistorGrid = dialHistory.ligerGrid({
 	        checkbox: false,
 	        rownumbers: true,
 	        delayLoad: false,
@@ -280,7 +390,7 @@
 	        columns: [
 	            {display: "呼叫类型", name: "fldCallType",
 	            	render: function (item) {
-                    return renderLabel(callTypeStatus, item.fldCallType);
+                    return renderLabel(callTypeData, item.fldCallType);
                 }},
               {display: "拨打号码", name: "fldPhone"},
 	            {display: "拨打/呼入时间", name: "fldCallDate"},
@@ -288,12 +398,56 @@
 	            {display: "通话开始时间", name: "fldCallBeginTime"},
 	            {display: "通话结束时间", name: "fldCallEndTime"}
 	        ], dataAction: 'server', pageSize: 50, toolbar: null, url: '<c:url value="/telephone/dial/dialHis'+where+'"/>', sortName: 'fldOperateDate', sortOrder: 'desc',
-	        width: '98%', height: '32%', toJSON: JSON2.stringify
+	        width: '98%', height: '33%', toJSON: JSON2.stringify
 	    });
 	});
 	
-	//表单底部按钮
-  LG.setFormDefaultBtn(null, f_save);
+	function f_savecust() {
+		if("" == $("#teleCustomerName").val()) {
+			LG.showError('请录入客户名称');
+			return;
+		}
+		
+		if("" == $("#teleMobile").val() && "" == $("#telePhone").val()) {
+			LG.showError('请录入客户手机或电话号码');
+			return;
+		}
+		
+		if("" == $("#fldId").val())return;
+		
+		var telephoneCustomer = {};
+		telephoneCustomer.fldId = $("#fldId").val();
+		telephoneCustomer.fldCustomerName = $("#teleCustomerName").val();
+		telephoneCustomer.fldGender = $("#teleGender").val();
+		telephoneCustomer.fldMobile = $("#teleMobile").val();
+		telephoneCustomer.fldPhone = $("#telePhone").val();
+		telephoneCustomer.fldAddress = $("#teleAddress").val();
+		
+		var customer = {};
+		customer.fldId = $("#custId").val();
+		if("" != $("#custBirthday").val()) {
+			customer.fldBirthday = $("#custBirthday").val();
+		}
+		customer.fldIdentityNo = $("#custIdentityNo").val();
+		customer.fldEmail = $("#custEmail").val();
+		
+		LG.ajax({
+		      url: '<c:url value="/telephone/dial/saveCust"/>',
+		      data: {taskId:taskId,telephoneCustomer:JSON2.stringify(telephoneCustomer),customer:JSON2.stringify(customer)},
+		      beforeSend: function () {
+		      	
+		      },
+		      complete: function () {
+		      },
+		      success: function () {
+		      	LG.tip("保存成功");
+		      	taskListGrid.loadData();
+		      },
+		      error: function (message) {
+		       LG.showError(message);
+		      }
+		    });
+	}
 	
 	function f_save() {
 		var fldResultType = $("#fldResultType").val();
@@ -303,9 +457,23 @@
 			return;
 		}
 		
+		var fldComment = $("#fldComment").val();
+		if("" == fldComment) {
+			LG.showError("请填写备注");
+			return;
+		}
+		
+		var data = {};
+		data.fldTaskId = taskId;
+		data.fldResultType = fldResultType;
+		data.fldPhone = $("#currCallPhone").val();
+		data.fldCustomerName = $("#currCallCustomerName").val();
+		data.fldCallBeginTime = $("#currCallBeginTime").val();
+		data.fldComment = fldComment;
+		
 		LG.ajax({
       url: '<c:url value="/telephone/dial/save"/>',
-      data: {fldId:taskId,fldResultType:fldResultType},
+      data: data,
       beforeSend: function () {
       	
       },
@@ -313,8 +481,9 @@
       },
       success: function () {
     	  taskListGrid.loadData();
-    	  $("#customerInfo").html("");
+    	  callWin.hide();
       	LG.tip("保存成功");
+      	dialHistorGrid.loadData();
       },
       error: function (message) {
        LG.showError(message);
@@ -322,16 +491,59 @@
     });
 	}
 	
-	function makecall(phone) {
+	var callMainform = $("#callMainform");
+	callMainform.ligerForm({
+        labelWidth:100,
+        inputWidth:150,
+        fields:[
+            {display: "拨打号码", name: "currCallPhone", newline:true, type:"text",attr:{readonly:"readonly"}},
+            {display:"客户名称",name:"currCallCustomerName",newline:false,type:"text",attr:{readonly:"readonly"}},
+            {display:"通话开始时间", name:"currCallBeginTime", newline:true, type:"text",attr:{readonly:"readonly"},format:'yyyy-MM-dd hh:mm:ss'},
+            {display:"任务结果", name:"fldResultType", newline: false, type:"select", validate:{required:true},comboboxName:"resultType",
+            	options:{
+                    valueField: 'value',
+                    textField: 'text',
+                    isMultiSelect:false,
+                    data: resultTypeData,
+                    valueFieldID:"fldResultType"
+            	}
+            },
+            {display:"备注",name:"fldComment",newline:true,type:"text",validate:{required:true}}
+        ]
+    });
+	
+	var callWin;
+	function makecall(phone,customerName) {
 		if(parent.LG.telephoneStatus!=0){
-    	return;
+    	//return;
     }
     parent.LG.call(phone);
+    
+    var date = new Date();
+    $("#currCallBeginTime").val(date.getFullYear()+"-"+parseInt(parseInt(date.getMonth())+1)+"-"+date.getDate()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds());
+    $("#currCallPhone").val(phone);
+    $("#currCallCustomerName").val(customerName);
+    
+    callWin = $.ligerDialog.open({
+    	modal:true,
+    	showMin:true,
+    	allowClose:false,
+    	showToggle:false,
+    	title:"拨打信息",
+      target:$("#callDialog"),
+      width:650, height:200, top:30, left:550,
+      buttons:[
+          { text:'确定', onclick:function () {
+        	  f_save();
+           } 
+          }
+      ]
+    });
 	}
 
 	function updateGridHeight() {
     var bottomHeight = $(".l-layout-bottom");
-		bottomHeight.css("height",205);    	
+		bottomHeight.css("height",270);    	
 	}
 	
 	updateGridHeight();
