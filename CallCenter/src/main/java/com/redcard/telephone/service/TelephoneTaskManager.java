@@ -2,6 +2,7 @@ package com.redcard.telephone.service;
 
 import java.util.Date;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
@@ -11,7 +12,11 @@ import com.common.Constant;
 import com.common.core.grid.GridPageRequest;
 import com.common.core.util.GenericPageHQLQuery;
 import com.common.security.util.SecurityUtil;
+import com.redcard.customer.dao.CustomerDao;
+import com.redcard.customer.entity.Customer;
+import com.redcard.telephone.dao.TelephoneCustomerDao;
 import com.redcard.telephone.dao.TelephoneTaskDao;
+import com.redcard.telephone.entity.TelephoneCustomer;
 import com.redcard.telephone.entity.TelephoneRecord;
 import com.redcard.telephone.entity.TelephoneTask;
 
@@ -22,6 +27,10 @@ public class TelephoneTaskManager extends GenericPageHQLQuery<TelephoneTask> {
 	private TelephoneTaskDao telephoneTaskDao;
 	@Autowired
 	private TelephoneRecordManager telephoneRecordManager;
+	@Autowired
+	private TelephoneCustomerDao telephoneCustomerDao;
+	@Autowired
+	private CustomerDao customerDao;
 	
 	public long getCount() {
 		return telephoneTaskDao.count();
@@ -44,5 +53,30 @@ public class TelephoneTaskManager extends GenericPageHQLQuery<TelephoneTask> {
 		telephoneRecord.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
 		telephoneRecord.setFldOperateDate(new Date());
 		telephoneRecordManager.save(telephoneRecord);
+	}
+	
+	public void updateCust(TelephoneCustomer telephoneCustomer,Customer customer) {
+		//更新话单原始表
+		TelephoneCustomer tmpTelephoneCustomer = telephoneCustomerDao.findOne(telephoneCustomer.getFldId());
+		tmpTelephoneCustomer.setFldCustomerName(telephoneCustomer.getFldCustomerName());
+		tmpTelephoneCustomer.setFldGender(telephoneCustomer.getFldGender());
+		tmpTelephoneCustomer.setFldMobile(telephoneCustomer.getFldMobile());
+		tmpTelephoneCustomer.setFldPhone(telephoneCustomer.getFldPhone());
+		tmpTelephoneCustomer.setFldAddress(telephoneCustomer.getFldAddress());
+		telephoneCustomerDao.save(tmpTelephoneCustomer);
+		
+		//若客户存在，则更新客户表
+		if(!StringUtils.isBlank(customer.getFldId())) {
+			Customer tmpCustomer = customerDao.findOne(customer.getFldId());
+			tmpCustomer.setFldName(telephoneCustomer.getFldCustomerName());
+			tmpCustomer.setFldGender(telephoneCustomer.getFldGender());
+			tmpCustomer.setFldMobile(telephoneCustomer.getFldMobile());
+			tmpCustomer.setFldPhone(telephoneCustomer.getFldPhone());
+			tmpCustomer.setFldBirthday(customer.getFldBirthday());
+			tmpCustomer.setFldIdentityNo(customer.getFldIdentityNo());
+			tmpCustomer.setFldAddress(telephoneCustomer.getFldAddress());
+			tmpCustomer.setFldEmail(customer.getFldEmail());
+			customerDao.save(tmpCustomer);
+		}
 	}
 }

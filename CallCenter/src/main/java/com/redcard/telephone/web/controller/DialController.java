@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.common.core.grid.AsyncResponse;
 import com.common.core.grid.DataResponse;
 import com.common.core.grid.GridPageRequest;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.redcard.customer.entity.Customer;
 import com.redcard.customer.service.CustomerManager;
 import com.redcard.telephone.entity.TelephoneCustomer;
@@ -77,6 +79,17 @@ public class DialController {
     public AsyncResponse save(TelephoneRecord telephoneRecord) {
         AsyncResponse result = new AsyncResponse();
         telephoneTaskManager.save(telephoneRecord);
+        return result;
+    }
+	
+	@RequestMapping(value = "saveCust")
+    @ResponseBody
+    public AsyncResponse saveCust(String telephoneCustomer,String customer) {
+        AsyncResponse result = new AsyncResponse(false,"保存客户信息成功");
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create(); 
+        TelephoneCustomer telephoneCustomerObject = gson.fromJson(telephoneCustomer, TelephoneCustomer.class);
+        Customer customerObject = gson.fromJson(customer, Customer.class);
+        telephoneTaskManager.updateCust(telephoneCustomerObject, customerObject);
         return result;
     }
 }

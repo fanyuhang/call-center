@@ -147,22 +147,22 @@
 	    heightDiff:-100,
 	    fields: [
 					{display: "ID",name: "fldId", newline: true, type: "hidden"},
-	        {display: "客户名称", name: "fldCustomerName", newline: true, type: "text", cssClass: "field"},
-	        {display: "性别", name: "fldGender", newline: false, type: "select", cssClass: "field",comboboxName:"gender",
+	        {display: "客户名称", name: "teleCustomerName", newline: true, type: "text", cssClass: "field"},
+	        {display: "性别", name: "teleGender", newline: false, type: "select", cssClass: "field",comboboxName:"gender",
 	        	options:{
                     valueField: 'value',
                     textField: 'text',
                     isMultiSelect:false,
                     data:genderData,
-                    valueFieldID:"fldGender"
+                    valueFieldID:"teleGender"
             }
 	        },
-	        {display: "手机", name: "fldMobile", newline: true, type: "text", cssClass: "field"},
-	        {display: "电话号码", name: "fldPhone", newline: false, type: "text", cssClass: "field"},
-	        {display: "出生日期", name: "fldBirthday", newline: true, type: "text", cssClass: "field"},
-	        {display: "身份证号", name: "fldIdentityNo", newline: false, type: "text", cssClass: "field"},
-	        {display: "地址", name: "fldAddress", newline: true, type: "text", cssClass: "field"},
-	        {display: "邮箱", name: "fldEmail", newline: false, type: "text", cssClass: "field"},
+	        {display: "手机", name: "teleMobile", newline: true, type: "text", cssClass: "field"},
+	        {display: "电话号码", name: "telePhone", newline: false, type: "text", cssClass: "field"},
+	        {display: "出生日期", name: "custBirthday", newline: true, type: "text", cssClass: "field"},
+	        {display: "身份证号", name: "custIdentityNo", newline: false, type: "text", cssClass: "field"},
+	        {display: "地址", name: "teleAddress", newline: true, type: "text", cssClass: "field"},
+	        {display: "邮箱", name: "custEmail", newline: false, type: "text", cssClass: "field"},
 	        {display:"custId",name:"custId",type:"hidden"}
 	    ],
 	    toJSON: JSON2.stringify
@@ -259,15 +259,15 @@
             	  }
             	  
             	  $("#fldId").val(customer.fldId);
-            	  $("#fldCustomerName").val(customer.fldCustomerName);
-            	  $("#fldGender").val(customer.fldGender);
+            	  $("#teleCustomerName").val(customer.fldCustomerName);
+            	  $("#teleGender").val(customer.fldGender);
             	  $("#gender").val(renderLabel(genderData,customer.fldGender));
-            	  $("#fldMobile").val(null!=customer.fldMobile?customer.fldMobile:"");
-            	  $("#fldPhone").val(null!=customer.fldPhone?customer.fldPhone:"");
-            	  $("#fldBirthday").val(null!=origCustomer&&null!=origCustomer.fldBirthday?origCustomer.fldBirthday:"");
-            	  $("#fldIdentityNo").val(null!=origCustomer&&null!=origCustomer.fldIdentityNo?origCustomer.fldIdentityNo:"");
-            	  $("#fldAddress").val(null!=origCustomer&&null!=origCustomer.fldComment?origCustomer.fldComment:(customer.fldAddress!=null?customer.fldAddress:""));
-            	  $("#fldEmail").val(null!=origCustomer&&null!=origCustomer.fldEmail?origCustomer.fldEmail:"");
+            	  $("#teleMobile").val(null!=customer.fldMobile?customer.fldMobile:"");
+            	  $("#telePhone").val(null!=customer.fldPhone?customer.fldPhone:"");
+            	  $("#custBirthday").val(null!=origCustomer&&null!=origCustomer.fldBirthday?origCustomer.fldBirthday:"");
+            	  $("#custIdentityNo").val(null!=origCustomer&&null!=origCustomer.fldIdentityNo?origCustomer.fldIdentityNo:"");
+            	  $("#teleAddress").val(null!=origCustomer&&null!=origCustomer.fldComment?origCustomer.fldComment:(customer.fldAddress!=null?customer.fldAddress:""));
+            	  $("#custEmail").val(null!=origCustomer&&null!=origCustomer.fldEmail?origCustomer.fldEmail:"");
             	  
            	  if(null != data[1]) {
            		  origCustomer = data[1];
@@ -397,7 +397,37 @@
 	});
 	
 	function f_savecust() {
+		var telephoneCustomer = {};
+		telephoneCustomer.fldId = $("#fldId").val();
+		telephoneCustomer.fldCustomerName = $("#teleCustomerName").val();
+		telephoneCustomer.fldGender = $("#teleGender").val();
+		telephoneCustomer.fldMobile = $("#teleMobile").val();
+		telephoneCustomer.fldPhone = $("#telePhone").val();
+		telephoneCustomer.fldAddress = $("#teleAddress").val();
 		
+		var customer = {};
+		customer.fldId = $("#custId").val();
+		if("" != $("#custBirthday").val()) {
+			customer.fldBirthday = $("#custBirthday").val();
+		}
+		customer.fldIdentityNo = $("#custIdentityNo").val();
+		customer.fldEmail = $("#custEmail").val();
+		
+		LG.ajax({
+		      url: '<c:url value="/telephone/dial/saveCust"/>',
+		      data: {telephoneCustomer:JSON2.stringify(telephoneCustomer),customer:JSON2.stringify(customer)},
+		      beforeSend: function () {
+		      	
+		      },
+		      complete: function () {
+		      },
+		      success: function () {
+		      	LG.tip("保存成功");
+		      },
+		      error: function (message) {
+		       LG.showError(message);
+		      }
+		    });
 	}
 	
 	function f_save() {
