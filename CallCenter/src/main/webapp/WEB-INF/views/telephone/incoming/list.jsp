@@ -121,7 +121,7 @@
     ], 
     width:'99%', height:190, rowHeight:20, fixedCellHeight:true,
     frozen:false, checkbox:false, rownumbers:true,
-    url:'<c:url value="/telephone/incoming/listCustomer"/>?num='+'${phone}'
+    url:'<c:url value="/telephone/incoming/listCustomer"/>?num=18930044401'
 	});
 	
 	var customeForm,taskId;
@@ -132,22 +132,22 @@
 	    heightDiff:-100,
 	    fields: [
 					{display: "ID",name: "fldId", newline: true, type: "hidden"},
-	        {display: "客户名称", name: "fldName", newline: true, type: "text", cssClass: "field"},
-	        {display: "性别", name: "fldGender", newline: false, type: "select", cssClass: "field",comboboxName:"gender",
+	        {display: "客户名称", name: "custName", newline: true, type: "text", cssClass: "field"},
+	        {display: "性别", name: "custGender", newline: false, type: "select", cssClass: "field",comboboxName:"gender",
 	        	options:{
                     valueField: 'value',
                     textField: 'text',
                     isMultiSelect:false,
                     data:genderData,
-                    valueFieldID:"fldGender"
+                    valueFieldID:"custGender"
             }
 	        },
-	        {display: "手机", name: "fldMobile", newline: true, type: "text", cssClass: "field"},
-	        {display: "电话号码", name: "fldPhone", newline: false, type: "text", cssClass: "field"},
-	        {display: "出生日期", name: "fldBirthday", newline: true, type: "text", cssClass: "field"},
-	        {display: "身份证号", name: "fldIdentityNo", newline: false, type: "text", cssClass: "field"},
-	        {display: "地址", name: "fldAddress", newline: true, type: "text", cssClass: "field"},
-	        {display: "邮箱", name: "fldEmail", newline: false, type: "text", cssClass: "field"}
+	        {display: "手机", name: "custMobile", newline: true, type: "text", cssClass: "field"},
+	        {display: "电话号码", name: "custPhone", newline: false, type: "text", cssClass: "field"},
+	        {display: "出生日期", name: "custBirthday", newline: true, type: "text", cssClass: "field"},
+	        {display: "身份证号", name: "custIdentityNo", newline: false, type: "text", cssClass: "field"},
+	        {display: "地址", name: "custAddress", newline: true, type: "text", cssClass: "field"},
+	        {display: "邮箱", name: "custEmail", newline: false, type: "text", cssClass: "field"}
 	    ],
 	    toJSON: JSON2.stringify
 		});
@@ -243,15 +243,15 @@
             	  }
             	  
             	  $("#fldId").val(customer.fldId);
-            	  $("#fldName").val(customer.fldName);
-            	  $("#fldGender").val(customer.fldGender);
+            	  $("#custName").val(customer.fldName);
+            	  $("#custGender").val(customer.fldGender);
             	  $("#gender").val(renderLabel(genderData,customer.fldGender));
-            	  $("#fldMobile").val(null!=customer.fldMobile?customer.fldMobile:"");
-            	  $("#fldPhone").val(null!=customer.fldPhone?customer.fldPhone:"");
-            	  $("#fldBirthday").val(null!=customer.fldBirthday?customer.fldBirthday:"");
-            	  $("#fldIdentityNo").val(null!=customer.fldIdentityNo?customer.fldIdentityNo:"");
-            	  $("#fldAddress").val(null!=customer.fldAddress?customer.fldAddress:"");
-            	  $("#fldEmail").val(null!=customer.fldEmail?customer.fldEmail:"");
+            	  $("#custMobile").val(null!=customer.fldMobile?customer.fldMobile:"");
+            	  $("#custPhone").val(null!=customer.fldPhone?customer.fldPhone:"");
+            	  $("#custBirthday").val(null!=customer.fldBirthday?customer.fldBirthday:"");
+            	  $("#custIdentityNo").val(null!=customer.fldIdentityNo?customer.fldIdentityNo:"");
+            	  $("#custAddress").val(null!=customer.fldAddress?customer.fldAddress:"");
+            	  $("#custEmail").val(null!=customer.fldEmail?customer.fldEmail:"");
             	  
            			var where = '{"op":"and","rules":[{"op":"like","field":"fldCustomerId","value":"'+customer.fldId+'","type":"string"},{"op":"equal","field":"fldStatus","value":"0","type":"int"}]}';
 						    $("#contractInfo").ligerGrid({
@@ -327,7 +327,35 @@
 	});
 	
 	function f_savecust() {
+		var customer = {};
+		customer.fldId = $("#fldId").val();
+		customer.fldName = $("#custName").val();
+		customer.fldGender = $("#custGender").val();
+		customer.fldMobile = $("#custMobile").val();
+		customer.fldPhone = $("#custPhone").val();
+		customer.fldAddress = $("#custAddress").val();
 		
+		if("" != $("#custBirthday").val()) {
+			customer.fldBirthday = $("#custBirthday").val();
+		}
+		customer.fldIdentityNo = $("#custIdentityNo").val();
+		customer.fldEmail = $("#custEmail").val();
+		
+		LG.ajax({
+		      url: '<c:url value="/telephone/incoming/saveCust"/>',
+		      data: {customer:JSON2.stringify(customer)},
+		      beforeSend: function () {
+		      	
+		      },
+		      complete: function () {
+		      },
+		      success: function () {
+		      	LG.tip("保存成功");
+		      },
+		      error: function (message) {
+		       LG.showError(message);
+		      }
+		    });
 	}
 	
 	function f_save() {

@@ -40,6 +40,7 @@ public class TelephoneTaskManager extends GenericPageHQLQuery<TelephoneTask> {
         return (Page<TelephoneTask>) super.findAll(where, page);
     }
 	
+	@Transactional(readOnly = false)
 	public void save(TelephoneRecord telephoneRecord) {
 		TelephoneTask oldTelephoneTask = telephoneTaskDao.findOne(telephoneRecord.getFldTaskId());
 		oldTelephoneTask.setFldResultType(telephoneRecord.getFldResultType());
@@ -55,6 +56,7 @@ public class TelephoneTaskManager extends GenericPageHQLQuery<TelephoneTask> {
 		telephoneRecordManager.save(telephoneRecord);
 	}
 	
+	@Transactional(readOnly = false)
 	public void updateCust(TelephoneCustomer telephoneCustomer,Customer customer) {
 		//更新话单原始表
 		TelephoneCustomer tmpTelephoneCustomer = telephoneCustomerDao.findOne(telephoneCustomer.getFldId());

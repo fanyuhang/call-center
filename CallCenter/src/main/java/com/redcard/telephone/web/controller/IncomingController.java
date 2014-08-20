@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.common.core.grid.AsyncResponse;
 import com.common.core.grid.DataResponse;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.redcard.customer.entity.Customer;
 import com.redcard.customer.service.CustomerManager;
 
@@ -48,4 +50,14 @@ public class IncomingController {
 		result.setData(list);
         return result;
 	}
+	
+	@RequestMapping(value = "saveCust")
+    @ResponseBody
+    public AsyncResponse saveCust(String customer) {
+        AsyncResponse result = new AsyncResponse(false,"保存客户信息成功");
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create(); 
+        Customer customerObject = gson.fromJson(customer, Customer.class);
+        customerManager.updateCust(customerObject);
+        return result;
+    }
 }
