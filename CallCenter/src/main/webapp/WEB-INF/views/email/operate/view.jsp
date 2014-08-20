@@ -2,10 +2,8 @@
 <%@include file="../../include/formHeader.jsp"%>
 <body style="padding-bottom: 31px;">
 	<form:form id="mainform" name="mainform" method="post"
-		modelAttribute="messageOperate"></form:form>
+		modelAttribute="emailOperate"></form:form>
 	<script type="text/javascript">
-		var messageSendStatusData = <sys:dictList type = "16"/>;
-
 		//覆盖本页面grid的loading效果
 		LG.overrideGridLoading();
 
@@ -21,49 +19,24 @@
 					space : 30,
 					fields : [
 							{
-								display : "发送状态",
-								name : "fldSendStatus",
-								newline : true,
-								type : "select",
-								options : {
-									valueField : 'value',
-									textField : 'text',
-									isMultiSelect : false,
-									data : messageSendStatusData,
-									disabled : true,
-									initValue : '${messageOperate.fldSendStatus}',
-									valueFieldID : "fldSendStatus"
+								display : "发送时间",
+								name : "fldCreateDate",
+								type : "text",
+								newline : false,
+								attr : {
+									value : "${emailOperate.fldCreateDate}",
+									readonly : "readonly"
 								},
 								group : "<label style=white-space:nowrap;>状态信息</label>",
 								groupicon : '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'
 							},
 							{
 								display : "发送数量",
-								name : "fldMessageNum",
+								name : "fldEmailNum",
 								newline : false,
 								type : "text",
 								attr : {
-									value : "${messageOperate.fldMessageNum}",
-									readonly : "readonly"
-								}
-							},
-							{
-								display : "发送结果描述",
-								name : "fldSendResult",
-								newline : true,
-								type : "text",
-								attr : {
-									value : "${messageOperate.fldSendResult}",
-									readonly : "readonly"
-								}
-							},
-							{
-								display : "发送任务编号",
-								name : "fldTaskId",
-								newline : false,
-								type : "text",
-								attr : {
-									value : "${messageOperate.fldTaskId}",
+									value : "${emailOperate.fldEmailNum}",
 									readonly : "readonly"
 								}
 							},
@@ -73,35 +46,23 @@
 								type : "text",
 								newline : true,
 								attr : {
-									value : "${messageOperate.createUserName}",
+									value : "${emailOperate.createUserName}",
 									readonly : "readonly"
 								}
 							},
 							{
-								display : "发送时间",
-								name : "fldCreateDate",
+								display : "发送邮箱",
+								name : "fldSenderEmail",
 								type : "text",
 								newline : false,
 								attr : {
-									value : "${messageOperate.fldCreateDate}",
+									value : "${emailOperate.fldSenderEmail}",
 									readonly : "readonly"
 								}
 							},
 							{
-								display : "使用模板",
-								name : "messageTemplateName",
-								newline : true,
-								type : "text",
-								attr : {
-									value : "${messageOperate.messageTemplateName}",
-									readonly : "readonly"
-								},
-								group : "<label style=white-space:nowrap;>基本信息</label>",
-								groupicon : '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'
-							},
-							{
-								display : "手机列表",
-								name : "fldMobiles",
+								display : "收件邮箱",
+								name : "fldReceiverEmails",
 								newline : true,
 								width : "630",
 								type : "textarea",
@@ -110,7 +71,27 @@
 								}
 							},
 							{
-								display : "内容",
+								display : "使用邮件模板",
+								name : "emailTemplateName",
+								newline : true,
+								type : "text",
+								attr : {
+									value : "${emailOperate.emailTemplateName}",
+									readonly : "readonly"
+								},
+								group : "<label style=white-space:nowrap;>基本信息</label>",
+								groupicon : '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'
+							}, {
+								display : "邮件标题",
+								name : "fldTitle",
+								newline : false,
+								type : "text",
+								attr : {
+									value : "${emailOperate.fldTitle}",
+									readonly : "readonly"
+								}
+							}, {
+								display : "邮件内容",
 								name : "fldContent",
 								width : "630",
 								newline : true,
@@ -118,24 +99,11 @@
 								attr : {
 									readonly : "readonly"
 								}
-							},
-							{
-								display : "备注",
-								name : "fldComment",
-								width : "630",
-								newline : true,
-								type : "textarea",
-								attr : {
-									readonly : "readonly"
-								},
-								group : "<label style=white-space:nowrap;>备注</label>",
-								groupicon : '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'
 							} ]
 				});
 
-		$("#fldContent").text('${messageOperate.fldContent}');
-		$("#fldMobiles").text('${messageOperate.fldMobiles}');
-		$("#fldComment").text('${messageOperate.fldComment}');
+		$("#fldReceiverEmails").text('${emailOperate.fldReceiverEmails}');
+		$("#fldContent").text('${emailOperate.fldContent}');
 
 		function f_cancel() {
 			var win = parent || window;

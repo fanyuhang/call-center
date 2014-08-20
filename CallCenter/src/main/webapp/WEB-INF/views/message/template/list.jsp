@@ -73,7 +73,7 @@
 		//列表结构
 		var grid = $("#maingrid").ligerGrid(
 				{
-					checkbox : true,
+					checkbox : false,
 					rownumbers : true,
 					delayLoad : true,
 					columnWidth : 180,

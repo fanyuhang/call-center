@@ -28,12 +28,16 @@
             {display: "年化收益率(%)", name: "fldAnnualizedRate", newline: true, type: "text", attr:{readonly: "readonly"}},
             {display: "年化7天存款率(%)", name: "fldDepositRate", newline: false, type: "text", attr:{readonly: "readonly"}},
             {display: "购买金额(万元)", name: "fldPurchaseMoney", newline: true, validate: {required: true},type: "text",group: "<label style=white-space:nowrap;>购买金额</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'},
-            {display: "预期收益(元)", name: "fldAnnualizedMoney", newline: false, type: "text", attr:{readonly: "readonly"}},
+            {display: "预期收益(元)", name: "fldAnnualizedMoney", newline: false, type: "text"},
+            {display: "业绩系数", name: "fldPerformanceRadio", newline: true, type: "float",group: "<label style=white-space:nowrap;>业绩信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'},
+            {display: "业绩额度", name: "fldPerformanceMoney", newline: false, type: "float"},
+            {display: "佣金系数", name: "fldCommissionRadio", newline: true, type: "float",group: "<label style=white-space:nowrap;>佣金信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'},
+            {display: "佣金金额", name: "fldCommissionMoney", newline: false, type: "float"},
             {display: "银行卡号", name: "fldBankNo", newline: true, type: "text", validate: { maxlength: 64},group: "<label style=white-space:nowrap;>打款信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'},
             {display: "开户银行", name: "fldBankName", newline: false, type: "text", validate: { maxlength: 64}},
             {display: "打款日期", name: "fldMoneyDate", newline: true, type: "date", validate: {required: true}},
             {display: "募集期天数", name: "fldCollectDays", newline: true, type: "text", attr:{readonly: "readonly"}},
-            {display: "募集期贴息(元)", name: "fldCollectMoney", newline: false, type: "text", attr:{readonly: "readonly"}},
+            {display: "募集期贴息(元)", name: "fldCollectMoney", newline: false, type: "text"},
             {display: "卡号", name: "fldCardNo", newline: true, type: "text", validate: { maxlength: 32},group: "<label style=white-space:nowrap;>瑞得卡信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'},
             {display: "等级", name: "fldCardLevel", newline: false, type: "select",comboboxName:"cardLevel",
                 options:{
@@ -50,11 +54,7 @@
                 comboboxName: "customerUserNo", options: {valueFieldID: "customerUserNo"}},
             {display: "客服经理", name: "fldServiceUserNo", newline: true, type: "select",
                 comboboxName: "serviceUserNo", options: {valueFieldID: "serviceUserNo"}},
-            {display: "天数单位", name: "fldDayUnit", newline: false, type: "hidden"},
-            {display: "业绩系数", name: "fldPerformanceRadio", newline: true, type: "hidden"},
-            {display: "业绩额度", name: "fldPerformanceMoney", newline: false, type: "hidden"},
-            {display: "佣金系数", name: "fldCommissionRadio", newline: true, type: "hidden"},
-            {display: "佣金金额", name: "fldCommissionMoney", newline: false, type: "hidden"}
+            {display: "天数单位", name: "fldDayUnit", newline: false, type: "hidden"}
         ]
     });
     

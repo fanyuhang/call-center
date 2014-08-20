@@ -16,7 +16,7 @@
 	</div>
 	<div id="maingrid"></div>
 	<script type="text/javascript">
-		var emailTemplateStatusData = <sys:dictList type = "27"/>;
+		var emailTemplateStatusData = <sys:dictList type = "29"/>;
 		//搜索表单应用ligerui样式
 		$("#formsearch").ligerForm({
 			labelWidth : 100,
@@ -38,8 +38,7 @@
 					valueFieldID : "fldStatus",
 					valueField : "value",
 					textField : "text",
-					data : emailTemplateStatusData,
-					initValue : 0
+					data : emailTemplateStatusData
 				},
 				attr : {
 					"op" : "equal",
@@ -74,7 +73,7 @@
 		//列表结构
 		var grid = $("#maingrid").ligerGrid(
 				{
-					checkbox : true,
+					checkbox : false,
 					rownumbers : true,
 					delayLoad : true,
 					columnWidth : 180,
@@ -84,18 +83,16 @@
 								name : "fldName"
 							},
 							{
+								display : "邮件标题",
+								name : "fldTitle"
+							},
+							{
 								display : "模板状态",
 								name : "fldStatus",
 								render : function(item) {
 									return renderLabel(emailTemplateStatusData,
 											item.fldStatus);
 								}
-							}, {
-								display : "操作人",
-								name : "operateUserName"
-							}, {
-								display : "操作时间",
-								name : "fldOperateDate"
 							}, {
 								display : "创建人",
 								name : "createUserName"

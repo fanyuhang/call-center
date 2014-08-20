@@ -539,4 +539,7 @@ public class Constant {
 	public static final Integer TELEPHONE_CUSTOMER_SOURCE_INPUT = 1;// 客户来源,客户录入
 
 	public static final Integer CUSTOMER_SOURCE_TELEPHONE = 1;// 客户来源，电话
+	
+	public static final Integer TELEPHONE_CALL_TYPE_OUT = 0;//呼叫类型，呼出
+	public static final Integer TELEPHONE_CALL_TYPE_IN = 1;//呼叫类型，呼人
 }

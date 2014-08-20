@@ -409,6 +409,17 @@
 	<tblNode fldCode="010505" fldParent="0105" fldName="我的外拨" fldDesc="" fldTarget="" 
 		fldIcon="/static/ligerUI/icons/32X32/free_for_job.gif"
 		fldLink="/telephone/dial/init" fldType="1" fldPosition="5" />
+	
+	<tblNode fldCode="010506" fldParent="0105" fldName="来电弹屏" fldDesc="" fldTarget="" 
+		fldIcon="/static/ligerUI/icons/32X32/upcoming_work.gif"
+		fldLink="/telephone/incoming/init" fldType="1" fldPosition="6" />
+		
+	<tblNode fldCode="010507" fldParent="0105" fldName="呼叫管理" fldDesc="" fldTarget="" 
+		fldIcon="/static/ligerUI/icons/32X32/total.gif"
+		fldLink="/telephone/record/init" fldType="1" fldPosition="7" />
+	<tblNode fldCode="01050701" fldParent="010507" fldName="导出" fldDesc="" fldTarget="export"
+		fldIcon="/static/ligerUI/icons/miniicons/action_save.gif"
+		fldLink="/telephone/record/export" fldType="2" fldPosition="1"/>
 
     <tblNode fldCode="0106" fldParent="01" fldName="话务监控" fldDesc=""
              fldTarget="#" fldIcon="" fldLink="" fldType="1" fldPosition="6" />

@@ -23,7 +23,7 @@
 								type : "text",
 								validate : {
 									required : true,
-									maxlength : 25
+									maxlength : 128
 								},
 								group : "<label style=white-space:nowrap;>基本信息</label>",
 								groupicon : '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'
@@ -35,10 +35,11 @@
 								type : "text",
 								validate : {
 									required : true,
-									maxlength : 123
-								}
-							},
-							{
+									maxlength : 128
+								},
+								group : "<label style=white-space:nowrap;>模板内容</label>",
+								groupicon : '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'
+							}, {
 								display : "模板内容",
 								name : "fldContent",
 								newline : true,
@@ -46,10 +47,8 @@
 								width : "630",
 								validate : {
 									required : true,
-									maxlength : 500
-								},
-								group : "<label style=white-space:nowrap;>内容</label>",
-								groupicon : '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'
+									maxlength : 1000
+								}
 							} ]
 				});
 

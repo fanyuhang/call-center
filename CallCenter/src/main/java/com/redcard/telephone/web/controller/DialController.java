@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.common.core.grid.AsyncResponse;
 import com.common.core.grid.DataResponse;
 import com.common.core.grid.GridPageRequest;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.redcard.customer.entity.Customer;
 import com.redcard.customer.service.CustomerManager;
 import com.redcard.telephone.entity.TelephoneCustomer;
@@ -45,7 +47,7 @@ public class DialController {
 	@RequestMapping(value = "listTask")
     @ResponseBody
     public DataResponse<TelephoneTask> list(GridPageRequest pageRequest, String where) {
-		where = "{\"op\":\"and\",\"rules\":[{\"op\":\"equal\",\"field\":\"fldCallStatus\",\"value\":0,\"type\":\"int\"}]}";
+		where = "{\"op\":\"and\",\"rules\":[{\"op\":\"lessorequal\",\"field\":\"fldTaskStatus\",\"value\":9,\"type\":\"int\"}]}";
         return (new DataResponse<TelephoneTask>(telephoneTaskManager.listTask(pageRequest, where)));
     }
 	
@@ -65,18 +67,29 @@ public class DialController {
 	
 	@RequestMapping(value = "dialHis")
     @ResponseBody
-	public AsyncResponse dialHis(String customerName,String phone,String mobile) {
-		AsyncResponse result = new AsyncResponse();
+	public DataResponse<TelephoneRecord> dialHis(String customerName,String phone,String mobile) {
 		List<TelephoneRecord> list = telephoneRecordManager.findByNameAndPhone(customerName, phone,mobile);
-		result.setData(list);
-        return result;
+		DataResponse<TelephoneRecord> response = new DataResponse<TelephoneRecord>();
+		response.setRows(list);
+        return response;
 	}
 	
 	@RequestMapping(value = "save")
     @ResponseBody
-    public AsyncResponse save(TelephoneTask telephoneTask) {
+    public AsyncResponse save(TelephoneRecord telephoneRecord) {
         AsyncResponse result = new AsyncResponse();
-        telephoneTaskManager.save(telephoneTask);
+        telephoneTaskManager.save(telephoneRecord);
+        return result;
+    }
+	
+	@RequestMapping(value = "saveCust")
+    @ResponseBody
+    public AsyncResponse saveCust(String taskId,String telephoneCustomer,String customer) {
+        AsyncResponse result = new AsyncResponse(false,"保存客户信息成功");
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create(); 
+        TelephoneCustomer telephoneCustomerObject = gson.fromJson(telephoneCustomer, TelephoneCustomer.class);
+        Customer customerObject = gson.fromJson(customer, Customer.class);
+        telephoneTaskManager.updateCust(taskId, telephoneCustomerObject, customerObject);
         return result;
     }
 }

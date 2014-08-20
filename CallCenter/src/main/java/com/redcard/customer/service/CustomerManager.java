@@ -1,5 +1,6 @@
 package com.redcard.customer.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -23,6 +24,7 @@ import com.redcard.customer.dao.CustomerExchangeDao;
 import com.redcard.customer.entity.Customer;
 import com.redcard.customer.entity.CustomerExchange;
 import com.redcard.customer.entity.CustomerExchangeCustomer;
+import com.redcard.telephone.entity.TelephoneCustomer;
 
 @Component
 @Transactional(readOnly = true)
@@ -65,6 +67,16 @@ public class CustomerManager extends GenericPageHQLQuery<Customer> {
     	else {
     		return customerDao.findByCustNameAndPhone(customerName, phone);
     	}
+    }
+    
+    public List<Customer> findByMobileOrPhone(String num) {
+    	List<Customer> list = new ArrayList<Customer>();
+    	Customer customer = customerDao.findByMobile(num);
+    	if(null != customer) {
+    		list.add(customer);
+    		return list;
+    	}
+    	return customerDao.findCustomerByPhone(num);
     }
 
     public Page<Customer> findAllCustomer(GridPageRequest page, String where) {
@@ -141,4 +153,18 @@ public class CustomerManager extends GenericPageHQLQuery<Customer> {
         oldCustomer.setFldOperateUserNo(SecurityUtil.getCurrentUserLoginName());
         customerDao.save(oldCustomer);
     }
+    
+    @Transactional(readOnly = false)
+    public void updateCust(Customer customer) {
+		Customer tmpCustomer = customerDao.findOne(customer.getFldId());
+		tmpCustomer.setFldName(customer.getFldName());
+		tmpCustomer.setFldGender(customer.getFldGender());
+		tmpCustomer.setFldMobile(customer.getFldMobile());
+		tmpCustomer.setFldPhone(customer.getFldPhone());
+		tmpCustomer.setFldBirthday(customer.getFldBirthday());
+		tmpCustomer.setFldIdentityNo(customer.getFldIdentityNo());
+		tmpCustomer.setFldAddress(customer.getFldAddress());
+		tmpCustomer.setFldEmail(customer.getFldEmail());
+		customerDao.save(tmpCustomer);
+	}
 }
