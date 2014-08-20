@@ -15,12 +15,16 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.redcard.customer.entity.Customer;
 import com.redcard.customer.service.CustomerManager;
+import com.redcard.telephone.entity.TelephoneCustomer;
+import com.redcard.telephone.service.TelephoneCustomerManager;
 
 @Controller
 @RequestMapping(value = "/telephone/incoming")
 public class IncomingController {
 	@Autowired
 	private CustomerManager customerManager;
+	@Autowired
+	private TelephoneCustomerManager telephoneCustomerManager;
 
 	@RequestMapping(value = "init")
     public String init(String phone,Integer callId, String menuNo, Model model) {
@@ -47,6 +51,8 @@ public class IncomingController {
 		Customer customer = customerManager.findCustomerByMobileOrPhone(customerName,mobile,phone);
 		List list = new ArrayList();
 		list.add(customer);
+		TelephoneCustomer telephoneCustomer = telephoneCustomerManager.findByPhoneOrMobile(customerName, phone, mobile);
+		list.add(telephoneCustomer);
 		result.setData(list);
         return result;
 	}

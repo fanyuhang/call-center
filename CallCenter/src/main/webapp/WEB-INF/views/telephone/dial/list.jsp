@@ -108,20 +108,20 @@
 	taskListGrid = $("#tasklist").ligerGrid({
     columns:[
 				{display:'任务时间', name:'fldTaskDate'},
-        {display:'客户姓名', name:'fldCustomerName',width:300},
-           {display:'性别', name:'fldGender',width:60,
+        {display:'客户姓名', name:'fldCustomerName',width:200},
+           {display:'性别', name:'fldGender',width:50,
         	   render:function(item) {
    		 			   return renderLabel(genderData,item.fldGender);
              }
          	 },
-           {display:'手机', name:'fldMobile',width:250,
+           {display:'手机', name:'fldMobile',width:240,
          	 		render:function(item){
          	 			if(null == item.fldMobile  || "" == item.fldMobile)
          	 				return "";
          	 			return '<span>'+item.fldMobile+'&nbsp;&nbsp;<a href="javascript:void(0);" onclick="javascript:makecall(\''+item.fldMobile+'\',\''+item.fldCustomerName+'\');" title="拨打" style="background:url(/static/ligerUI/icons/silkicons/phone.png) no-repeat;text-decoration:none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></span>';
          	 		}
            },
-           {display:'固定电话', name:'fldPhone',width:250,
+           {display:'固定电话', name:'fldPhone',width:240,
         	   render:function(item){
         		   if(null == item.fldPhone  || "" == item.fldPhone)
     	 				   return "";
@@ -132,6 +132,11 @@
         	   render:function(item) {
    		 			   return renderLabel(callStatusData,item.fldCallStatus);
              }
+         	 },
+         	 {display:"任务结果",name:"fldResultType",
+         	   render:function(item) {
+         		   return renderLabel(resultTypeData,item.fldResultType);
+         	   }
          	 }
     ], 
     width:'99%', height:190, rowHeight:20, fixedCellHeight:true,
@@ -140,15 +145,16 @@
 	});
 	
 	var customeForm,taskId;
-	customeForm = $("#customerInfo").ligerForm({
+	customeForm = $("#customerInfo");
+	customeForm.ligerForm({
 	    labelWidth: 80,
 	    inputWidth: 150,
 	    space: 30,
 	    heightDiff:-100,
 	    fields: [
 					{display: "ID",name: "fldId", newline: true, type: "hidden"},
-	        {display: "客户名称", name: "teleCustomerName", newline: true, type: "text", cssClass: "field"},
-	        {display: "性别", name: "teleGender", newline: false, type: "select", cssClass: "field",comboboxName:"gender",
+	        {display: "客户名称", name: "teleCustomerName", newline: true, type: "text", validate: {required: true},cssClass: "field"},
+	        {display: "性别", name: "teleGender", newline: false, type: "select",cssClass: "field",comboboxName:"gender",
 	        	options:{
                     valueField: 'value',
                     textField: 'text',
@@ -159,7 +165,7 @@
 	        },
 	        {display: "手机", name: "teleMobile", newline: true, type: "text", cssClass: "field"},
 	        {display: "电话号码", name: "telePhone", newline: false, type: "text", cssClass: "field"},
-	        {display: "出生日期", name: "custBirthday", newline: true, type: "text", cssClass: "field"},
+	        {display: "出生日期", name: "custBirthday", newline: true, type: "date", cssClass: "field"},
 	        {display: "身份证号", name: "custIdentityNo", newline: false, type: "text", cssClass: "field"},
 	        {display: "地址", name: "teleAddress", newline: true, type: "text", cssClass: "field"},
 	        {display: "邮箱", name: "custEmail", newline: false, type: "text", cssClass: "field"},
@@ -220,7 +226,7 @@
   });
   
   var dialHistory = $("#dialHistory");
-  dialHistory.ligerGrid({
+  var dialHistorGrid = dialHistory.ligerGrid({
       checkbox: false,
       rownumbers: true,
       delayLoad: false,
@@ -262,8 +268,8 @@
             	  $("#teleCustomerName").val(customer.fldCustomerName);
             	  $("#teleGender").val(customer.fldGender);
             	  $("#gender").val(renderLabel(genderData,customer.fldGender));
-            	  $("#teleMobile").val(null!=customer.fldMobile?customer.fldMobile:"");
-            	  $("#telePhone").val(null!=customer.fldPhone?customer.fldPhone:"");
+            	  $("#teleMobile").val(null!=customer.fldMobile?customer.fldMobile:(null!=origCustomer&&null!=origCustomer.fldMobile?origCustomer.fldMobile:""));
+            	  $("#telePhone").val(null!=customer.fldPhone?customer.fldPhone:(null!=origCustomer&&null!=origCustomer.fldPhone?origCustomer.fldPhone:""));
             	  $("#custBirthday").val(null!=origCustomer&&null!=origCustomer.fldBirthday?origCustomer.fldBirthday:"");
             	  $("#custIdentityNo").val(null!=origCustomer&&null!=origCustomer.fldIdentityNo?origCustomer.fldIdentityNo:"");
             	  $("#teleAddress").val(null!=origCustomer&&null!=origCustomer.fldComment?origCustomer.fldComment:(customer.fldAddress!=null?customer.fldAddress:""));
@@ -376,7 +382,7 @@
         });
 	    
 	    var where = encodeURI('?customerName='+customerName+'&phone='+phone+'&mobile='+mobile);
-	    dialHistory.ligerGrid({
+	    dialHistorGrid = dialHistory.ligerGrid({
 	        checkbox: false,
 	        rownumbers: true,
 	        delayLoad: false,
@@ -397,6 +403,18 @@
 	});
 	
 	function f_savecust() {
+		if("" == $("#teleCustomerName").val()) {
+			LG.showError('请录入客户名称');
+			return;
+		}
+		
+		if("" == $("#teleMobile").val() && "" == $("#telePhone").val()) {
+			LG.showError('请录入客户手机或电话号码');
+			return;
+		}
+		
+		if("" == $("#fldId").val())return;
+		
 		var telephoneCustomer = {};
 		telephoneCustomer.fldId = $("#fldId").val();
 		telephoneCustomer.fldCustomerName = $("#teleCustomerName").val();
@@ -415,7 +433,7 @@
 		
 		LG.ajax({
 		      url: '<c:url value="/telephone/dial/saveCust"/>',
-		      data: {telephoneCustomer:JSON2.stringify(telephoneCustomer),customer:JSON2.stringify(customer)},
+		      data: {taskId:taskId,telephoneCustomer:JSON2.stringify(telephoneCustomer),customer:JSON2.stringify(customer)},
 		      beforeSend: function () {
 		      	
 		      },
@@ -423,6 +441,7 @@
 		      },
 		      success: function () {
 		      	LG.tip("保存成功");
+		      	taskListGrid.loadData();
 		      },
 		      error: function (message) {
 		       LG.showError(message);
@@ -438,12 +457,19 @@
 			return;
 		}
 		
+		var fldComment = $("#fldComment").val();
+		if("" == fldComment) {
+			LG.showError("请填写备注");
+			return;
+		}
+		
 		var data = {};
 		data.fldTaskId = taskId;
 		data.fldResultType = fldResultType;
 		data.fldPhone = $("#currCallPhone").val();
 		data.fldCustomerName = $("#currCallCustomerName").val();
 		data.fldCallBeginTime = $("#currCallBeginTime").val();
+		data.fldComment = fldComment;
 		
 		LG.ajax({
       url: '<c:url value="/telephone/dial/save"/>',
@@ -457,6 +483,7 @@
     	  taskListGrid.loadData();
     	  callWin.hide();
       	LG.tip("保存成功");
+      	dialHistorGrid.loadData();
       },
       error: function (message) {
        LG.showError(message);
@@ -472,7 +499,7 @@
             {display: "拨打号码", name: "currCallPhone", newline:true, type:"text",attr:{readonly:"readonly"}},
             {display:"客户名称",name:"currCallCustomerName",newline:false,type:"text",attr:{readonly:"readonly"}},
             {display:"通话开始时间", name:"currCallBeginTime", newline:true, type:"text",attr:{readonly:"readonly"},format:'yyyy-MM-dd hh:mm:ss'},
-            {display:"任务结果", name:"fldResultType", newline: false, type:"select", validate:{required:true},
+            {display:"任务结果", name:"fldResultType", newline: false, type:"select", validate:{required:true},comboboxName:"resultType",
             	options:{
                     valueField: 'value',
                     textField: 'text',
@@ -480,7 +507,8 @@
                     data: resultTypeData,
                     valueFieldID:"fldResultType"
             	}
-            }
+            },
+            {display:"备注",name:"fldComment",newline:true,type:"text",validate:{required:true}}
         ]
     });
 	

@@ -84,12 +84,12 @@ public class DialController {
 	
 	@RequestMapping(value = "saveCust")
     @ResponseBody
-    public AsyncResponse saveCust(String telephoneCustomer,String customer) {
+    public AsyncResponse saveCust(String taskId,String telephoneCustomer,String customer) {
         AsyncResponse result = new AsyncResponse(false,"保存客户信息成功");
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create(); 
         TelephoneCustomer telephoneCustomerObject = gson.fromJson(telephoneCustomer, TelephoneCustomer.class);
         Customer customerObject = gson.fromJson(customer, Customer.class);
-        telephoneTaskManager.updateCust(telephoneCustomerObject, customerObject);
+        telephoneTaskManager.updateCust(taskId, telephoneCustomerObject, customerObject);
         return result;
     }
 }

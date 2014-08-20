@@ -57,7 +57,7 @@ public class TelephoneTaskManager extends GenericPageHQLQuery<TelephoneTask> {
 	}
 	
 	@Transactional(readOnly = false)
-	public void updateCust(TelephoneCustomer telephoneCustomer,Customer customer) {
+	public void updateCust(String taskId,TelephoneCustomer telephoneCustomer,Customer customer) {
 		//更新话单原始表
 		TelephoneCustomer tmpTelephoneCustomer = telephoneCustomerDao.findOne(telephoneCustomer.getFldId());
 		tmpTelephoneCustomer.setFldCustomerName(telephoneCustomer.getFldCustomerName());
@@ -80,5 +80,10 @@ public class TelephoneTaskManager extends GenericPageHQLQuery<TelephoneTask> {
 			tmpCustomer.setFldEmail(customer.getFldEmail());
 			customerDao.save(tmpCustomer);
 		}
+		
+		//更新话务任务表
+		TelephoneTask tmpTelephoneTask = telephoneTaskDao.findOne(Long.valueOf(taskId));
+		tmpTelephoneTask.setFldCustomerName(telephoneCustomer.getFldCustomerName());
+		telephoneTaskDao.save(tmpTelephoneTask);
 	}
 }
