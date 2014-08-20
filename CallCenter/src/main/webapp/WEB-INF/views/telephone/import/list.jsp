@@ -130,7 +130,8 @@ LG.validate(importFormSearch);
 var detailWin = null;
 function f_upload() {
     var win = parent || window;
-
+	
+	$("#importName").val("");
     if (detailWin) {
         detailWin.show();
     } else {

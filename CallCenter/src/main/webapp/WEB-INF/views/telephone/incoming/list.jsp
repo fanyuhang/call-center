@@ -116,22 +116,22 @@
            {display:'手机', name:'fldMobile',width:250},
            {display:'固定电话', name:'fldPhone',width:250},
            {display:'来电反馈',width:250,render:function(item){
-        	   return '<a href="javascript:void(0);" onclick="javascript:incomingcall();" title="反馈">反馈</a>';
+        	   return '<a href="javascript:void(0);" onclick="javascript:incomingcall(\''+item.fldName+'\');" title="反馈">反馈</a>';
            }}
     ], 
     width:'99%', height:190, rowHeight:20, fixedCellHeight:true,
     frozen:false, checkbox:false, rownumbers:true,
-    url:'<c:url value="/telephone/incoming/listCustomer"/>?num=18930044401'
+    url:'<c:url value="/telephone/incoming/listCustomer"/>?num='+'${phone}'
 	});
 	
-	var customeForm,taskId;
+	var customeForm;
 	customeForm = $("#customerInfo").ligerForm({
 	    labelWidth: 80,
 	    inputWidth: 150,
 	    space: 30,
 	    heightDiff:-100,
 	    fields: [
-					{display: "ID",name: "fldId", newline: true, type: "hidden"},
+			{display: "ID",name: "fldId", newline: true, type: "hidden"},
 	        {display: "客户名称", name: "custName", newline: true, type: "text", cssClass: "field"},
 	        {display: "性别", name: "custGender", newline: false, type: "select", cssClass: "field",comboboxName:"gender",
 	        	options:{
@@ -144,10 +144,11 @@
 	        },
 	        {display: "手机", name: "custMobile", newline: true, type: "text", cssClass: "field"},
 	        {display: "电话号码", name: "custPhone", newline: false, type: "text", cssClass: "field"},
-	        {display: "出生日期", name: "custBirthday", newline: true, type: "text", cssClass: "field"},
+	        {display: "出生日期", name: "custBirthday", newline: true, type: "date", cssClass: "field"},
 	        {display: "身份证号", name: "custIdentityNo", newline: false, type: "text", cssClass: "field"},
 	        {display: "地址", name: "custAddress", newline: true, type: "text", cssClass: "field"},
-	        {display: "邮箱", name: "custEmail", newline: false, type: "text", cssClass: "field"}
+	        {display: "邮箱", name: "custEmail", newline: false, type: "text", cssClass: "field"},
+	        {display:"custId",name:"custId",type:"hidden"}
 	    ],
 	    toJSON: JSON2.stringify
 		});
@@ -204,7 +205,7 @@
   });
   
   var dialHistory = $("#dialHistory");
-  dialHistory.ligerGrid({
+  var dialHistoryGrid = dialHistory.ligerGrid({
       checkbox: false,
       rownumbers: true,
       delayLoad: false,
@@ -214,7 +215,7 @@
           	render: function (item) {
               return renderLabel(callTypeStatus, item.fldCallType);
           }},
-        {display: "拨打号码", name: "fldPhone"},
+          {display: "拨打号码", name: "fldPhone"},
           {display: "拨打/呼入时间", name: "fldCallDate"},
           {display: "通话时长", name: "fldCallLong"},
           {display: "通话开始时间", name: "fldCallBeginTime"},
@@ -227,31 +228,43 @@
 	    var customerName = rowdata.fldName;
 	    var mobile = rowdata.fldMobile;
 	    var phone = rowdata.fldPhone;
-	    taskId = rowdata.fldId;
 	    
 	    LG.ajax({
             url:'<c:url value="/telephone/incoming/findCustomer"/>',
             data:{customerName:customerName,mobile:mobile,phone:phone},
             dataType:'json', type:'post',
             success:function (data) {
-              if(null != data && null != data[0]){
+              if(null != data){
             	  var customer = data[0];
             	  
-            	  var origCustomer = null;
+            	  var origCustomer = {};
             	  if(null != data[1]) {
             		  origCustomer = data[1];
             	  }
             	  
-            	  $("#fldId").val(customer.fldId);
-            	  $("#custName").val(customer.fldName);
-            	  $("#custGender").val(customer.fldGender);
-            	  $("#gender").val(renderLabel(genderData,customer.fldGender));
-            	  $("#custMobile").val(null!=customer.fldMobile?customer.fldMobile:"");
-            	  $("#custPhone").val(null!=customer.fldPhone?customer.fldPhone:"");
-            	  $("#custBirthday").val(null!=customer.fldBirthday?customer.fldBirthday:"");
-            	  $("#custIdentityNo").val(null!=customer.fldIdentityNo?customer.fldIdentityNo:"");
-            	  $("#custAddress").val(null!=customer.fldAddress?customer.fldAddress:"");
-            	  $("#custEmail").val(null!=customer.fldEmail?customer.fldEmail:"");
+            	  if(null != customer) {
+            	  	$("#fldId").val(customer.fldId);
+            	  	$("#custName").val(customer.fldName);
+            	  	$("#custGender").val(customer.fldGender);
+            	  	$("#gender").val(renderLabel(genderData,customer.fldGender));
+            	  	$("#custMobile").val(null!=customer.fldMobile?customer.fldMobile:"");
+            	  	$("#custPhone").val(null!=customer.fldPhone?customer.fldPhone:"");
+            	  	$("#custBirthday").val(null!=customer.fldBirthday?customer.fldBirthday:"");
+            	  	$("#custIdentityNo").val(null!=customer.fldIdentityNo?customer.fldIdentityNo:"");
+            	  	$("#custAddress").val(null!=customer.fldAddress?customer.fldAddress:"");
+            	  	$("#custEmail").val(null!=customer.fldEmail?customer.fldEmail:"");
+            	  } else if(null != origCustomer) {
+            	  	$("#custId").val(origCustomer.fldId);
+            	  	$("#custName").val(origCustomer.fldCustomerName);
+            	  	$("#custGender").val(origCustomer.fldGender);
+            	  	$("#gender").val(renderLabel(genderData,origCustomer.fldGender));
+            	  	$("#custMobile").val(null!=origCustomer.fldMobile?origCustomer.fldMobile:"");
+            	  	$("#custPhone").val(null!=origCustomer.fldPhone?origCustomer.fldPhone:"");
+            	  	$("#custBirthday").val("");
+            	  	$("#custIdentityNo").val("");
+            	  	$("#custAddress").val(null!=origCustomer.fldAddress?origCustomer.fldAddress:"");
+            	  	$("#custEmail").val("");
+            	  }
             	  
            			var where = '{"op":"and","rules":[{"op":"like","field":"fldCustomerId","value":"'+customer.fldId+'","type":"string"},{"op":"equal","field":"fldStatus","value":"0","type":"int"}]}';
 						    $("#contractInfo").ligerGrid({
@@ -341,9 +354,11 @@
 		customer.fldIdentityNo = $("#custIdentityNo").val();
 		customer.fldEmail = $("#custEmail").val();
 		
+		var telephoneCustomerId = $("#custId").val();
+		
 		LG.ajax({
 		      url: '<c:url value="/telephone/incoming/saveCust"/>',
-		      data: {customer:JSON2.stringify(customer)},
+		      data: {customer:JSON2.stringify(customer),telephoneCustomerId:telephoneCustomerId},
 		      beforeSend: function () {
 		      	
 		      },
@@ -351,6 +366,7 @@
 		      },
 		      success: function () {
 		      	LG.tip("保存成功");
+		      	taskListGrid.loadData();
 		      },
 		      error: function (message) {
 		       LG.showError(message);
@@ -367,14 +383,13 @@
 		}
 		
 		var data = {};
-		data.fldTaskId = taskId;
 		data.fldResultType = fldResultType;
 		data.fldPhone = $("#currCallPhone").val();
 		data.fldCustomerName = $("#currCallCustomerName").val();
 		data.fldCallBeginTime = $("#currCallBeginTime").val();
 		
 		LG.ajax({
-      url: '<c:url value="/telephone/dial/save"/>',
+      url: '<c:url value="/telephone/incoming/save"/>',
       data: data,
       beforeSend: function () {
       	
@@ -382,7 +397,7 @@
       complete: function () {
       },
       success: function () {
-    	  taskListGrid.loadData();
+    	  dialHistoryGrid.loadData();
     	  callWin.hide();
       	LG.tip("保存成功");
       },
@@ -397,7 +412,7 @@
         labelWidth:100,
         inputWidth:150,
         fields:[
-            {display: "来电号码", name: "currCallPhone", newline:true, type:"text",attr:{readonly:"readonly"}},
+            {display: "来电号码", name: "currCallPhone", newline:true, type:"text",attr:{readonly:"readonly",value:"${phone}"}},
             {display:"客户名称",name:"currCallCustomerName",newline:false,type:"text",attr:{readonly:"readonly"}},
             {display:"通话开始时间", name:"currCallBeginTime", newline:true, type:"text",attr:{readonly:"readonly"},format:'yyyy-MM-dd hh:mm:ss'},
             {display:"反馈结果", name:"fldResultType", newline: false, type:"select", validate:{required:true},
@@ -413,10 +428,10 @@
     });
 	
 	var callWin;
-	function incomingcall(phone,customerName) {
+	function incomingcall(customerName) {
     var date = new Date();
     $("#currCallBeginTime").val(date.getFullYear()+"-"+parseInt(parseInt(date.getMonth())+1)+"-"+date.getDate()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds());
-    $("#currCallPhone").val(phone);
+    $("#currCallPhone").val('${phone}');
     $("#currCallCustomerName").val(customerName);
     
     callWin = $.ligerDialog.open({

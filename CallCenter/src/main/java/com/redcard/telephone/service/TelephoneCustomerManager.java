@@ -1,5 +1,6 @@
 package com.redcard.telephone.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import com.common.core.grid.GridPageRequest;
 import com.common.core.util.EntityUtil;
 import com.common.core.util.GenericPageHQLQuery;
 import com.common.security.util.SecurityUtil;
+import com.redcard.customer.dao.CustomerDao;
 import com.redcard.customer.entity.Customer;
 import com.redcard.customer.service.CustomerManager;
 import com.redcard.telephone.dao.TelephoneCustomerDao;
@@ -26,6 +28,8 @@ public class TelephoneCustomerManager extends GenericPageHQLQuery<TelephoneCusto
 	private TelephoneCustomerDao telephoneCustomerDao;
 	@Autowired
 	private CustomerManager customerManager;
+	@Autowired
+    private CustomerDao customerDao;
 	
 	public Long countByPhoneOrMobile(String name,String phone,String mobile) {
 		Long rtn = 0L;
@@ -80,5 +84,42 @@ public class TelephoneCustomerManager extends GenericPageHQLQuery<TelephoneCusto
 			customerManager.save(customer);
 			return "true";
 		}
+	}
+	
+	@Transactional(readOnly = false)
+    public void updateCust(Customer customer,String telephoneCustomerId) {
+		if(!StringUtils.isBlank(customer.getFldId())) {
+			Customer tmpCustomer = customerDao.findOne(customer.getFldId());
+			tmpCustomer.setFldName(customer.getFldName());
+			tmpCustomer.setFldGender(customer.getFldGender());
+			tmpCustomer.setFldMobile(customer.getFldMobile());
+			tmpCustomer.setFldPhone(customer.getFldPhone());
+			tmpCustomer.setFldBirthday(customer.getFldBirthday());
+			tmpCustomer.setFldIdentityNo(customer.getFldIdentityNo());
+			tmpCustomer.setFldAddress(customer.getFldAddress());
+			tmpCustomer.setFldEmail(customer.getFldEmail());
+			customerDao.save(tmpCustomer);
+		}
+		
+		if(!StringUtils.isBlank(telephoneCustomerId)) {
+			TelephoneCustomer tmpTelephoneCustomer = telephoneCustomerDao.findOne(telephoneCustomerId);
+			tmpTelephoneCustomer.setFldCustomerName(customer.getFldName());
+			tmpTelephoneCustomer.setFldGender(customer.getFldGender());
+			tmpTelephoneCustomer.setFldMobile(customer.getFldMobile());
+			tmpTelephoneCustomer.setFldPhone(customer.getFldPhone());
+			tmpTelephoneCustomer.setFldAddress(customer.getFldAddress());
+			telephoneCustomerDao.save(tmpTelephoneCustomer);
+		}
+	}
+	
+	public List<TelephoneCustomer> findByMobileOrPhone(String num) {
+		List<TelephoneCustomer> list = new ArrayList<TelephoneCustomer>();
+		TelephoneCustomer telephoneCustomer = telephoneCustomerDao.findByMobile(num);
+		if(null != telephoneCustomer) {
+			list.add(telephoneCustomer);
+			return list;
+		}
+		
+		return telephoneCustomerDao.findByPhone(num);
 	}
 }

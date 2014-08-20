@@ -14,8 +14,10 @@ import com.common.core.util.GenericPageHQLQuery;
 import com.common.security.util.SecurityUtil;
 import com.redcard.customer.dao.CustomerDao;
 import com.redcard.customer.entity.Customer;
+import com.redcard.telephone.dao.TelephoneAssignDetailDao;
 import com.redcard.telephone.dao.TelephoneCustomerDao;
 import com.redcard.telephone.dao.TelephoneTaskDao;
+import com.redcard.telephone.entity.TelephoneAssignDetail;
 import com.redcard.telephone.entity.TelephoneCustomer;
 import com.redcard.telephone.entity.TelephoneRecord;
 import com.redcard.telephone.entity.TelephoneTask;
@@ -31,6 +33,8 @@ public class TelephoneTaskManager extends GenericPageHQLQuery<TelephoneTask> {
 	private TelephoneCustomerDao telephoneCustomerDao;
 	@Autowired
 	private CustomerDao customerDao;
+	@Autowired
+	private TelephoneAssignDetailDao telephoneAssignDetailDao;
 	
 	public long getCount() {
 		return telephoneTaskDao.count();
@@ -43,6 +47,8 @@ public class TelephoneTaskManager extends GenericPageHQLQuery<TelephoneTask> {
 	@Transactional(readOnly = false)
 	public void save(TelephoneRecord telephoneRecord) {
 		TelephoneTask oldTelephoneTask = telephoneTaskDao.findOne(telephoneRecord.getFldTaskId());
+		Integer oldStatus = oldTelephoneTask.getFldCallStatus();
+		
 		oldTelephoneTask.setFldResultType(telephoneRecord.getFldResultType());
 		oldTelephoneTask.setFldOperateDate(new Date());
 		oldTelephoneTask.setFldCallStatus(Constant.TASK_CALL_STATUS_ED);
@@ -54,6 +60,14 @@ public class TelephoneTaskManager extends GenericPageHQLQuery<TelephoneTask> {
 		telephoneRecord.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
 		telephoneRecord.setFldOperateDate(new Date());
 		telephoneRecordManager.save(telephoneRecord);
+		
+		//更新话务分配明细表的已拨打数
+		if(Constant.TASK_CALL_STATUS_UN.equals(oldStatus)) {
+			String assignDetailId = oldTelephoneTask.getFldAssignDetailId();
+			TelephoneAssignDetail telephoneAssignDetail = telephoneAssignDetailDao.findOne(assignDetailId);
+			telephoneAssignDetail.setFldFinishNumber(telephoneAssignDetail.getFldFinishNumber() + 1);
+			telephoneAssignDetailDao.save(telephoneAssignDetail);
+		}
 	}
 	
 	@Transactional(readOnly = false)

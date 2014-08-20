@@ -137,7 +137,8 @@
          	   render:function(item) {
          		   return renderLabel(resultTypeData,item.fldResultType);
          	   }
-         	 }
+         	 },
+         	 {display:"fldAssignDetailId",name:"fldAssignDetailId",hide:1,width:1}
     ], 
     width:'99%', height:190, rowHeight:20, fixedCellHeight:true,
     frozen:false, checkbox:false, rownumbers:true,
@@ -470,6 +471,7 @@
 		data.fldCustomerName = $("#currCallCustomerName").val();
 		data.fldCallBeginTime = $("#currCallBeginTime").val();
 		data.fldComment = fldComment;
+		data.fldAssignDetailId = $("#fldAssignDetailId").val();
 		
 		LG.ajax({
       url: '<c:url value="/telephone/dial/save"/>',
@@ -515,9 +517,11 @@
 	var callWin;
 	function makecall(phone,customerName) {
 		if(parent.LG.telephoneStatus!=0){
-    	//return;
+    	return;
     }
     parent.LG.call(phone);
+    
+    $("#fldComment").val("");
     
     var date = new Date();
     $("#currCallBeginTime").val(date.getFullYear()+"-"+parseInt(parseInt(date.getMonth())+1)+"-"+date.getDate()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds());

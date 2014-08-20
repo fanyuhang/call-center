@@ -1,5 +1,7 @@
 package com.redcard.telephone.dao;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
@@ -17,4 +19,7 @@ public interface TelephoneCustomerDao extends PagingAndSortingRepository<Telepho
 	
 	@Query("select m from TelephoneCustomer m where m.fldMobile = ?1")
     public TelephoneCustomer findByMobile(String mobile);
+	
+	@Query("select m from TelephoneCustomer m where m.fldPhone = ?1")
+    public List<TelephoneCustomer> findByPhone(String phone);
 }
