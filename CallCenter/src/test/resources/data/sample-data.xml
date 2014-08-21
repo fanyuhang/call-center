@@ -360,15 +360,6 @@
 	<tblNode fldCode="01050102" fldParent="010501" fldName="话单导入" fldDesc="" fldTarget="import"
 		fldIcon="/static/ligerUI/icons/silkicons/application_get.png"
 		fldLink="/telephone/import/import" fldType="2" fldPosition="2" />
-	<tblNode fldCode="01050103" fldParent="010501" fldName="原始话单导出" fldDesc="" fldTarget="origexport"
-		fldIcon="/static/ligerUI/icons/miniicons/action_save.gif"
-		fldLink="/telephone/import/origexport" fldType="2" fldPosition="3"/>
-	<tblNode fldCode="01050104" fldParent="010501" fldName="非重复话单导出" fldDesc="" fldTarget="nodupexport"
-		fldIcon="/static/ligerUI/icons/miniicons/action_save.gif"
-		fldLink="/telephone/import/nodupexport" fldType="2" fldPosition="4"/>
-	<tblNode fldCode="01050105" fldParent="010501" fldName="重复话单导出" fldDesc="" fldTarget="dupexport"
-		fldIcon="/static/ligerUI/icons/miniicons/action_save.gif"
-		fldLink="/telephone/import/dupexport" fldType="2" fldPosition="5"/>
 
 	<tblNode fldCode="010502" fldParent="0105" fldName="话务分配" fldDesc="" fldTarget=""
 		fldIcon="/static/ligerUI/icons/32X32/full_time.gif"

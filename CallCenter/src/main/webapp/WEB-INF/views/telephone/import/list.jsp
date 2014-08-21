@@ -68,14 +68,37 @@ var grid = $("#maingrid").ligerGrid({
     columns: [
         {display: "ID", name: "fldId", hide: 1, width: 1},
         {display: "话单名称", name: "fldName"},
-        {display: "是否去重", name: "fldDuplicateStatus",
+        {display: "是否去重", name: "fldDuplicateStatus",width:48,
             render:function(item) {
                 return renderLabel(radioData,item.fldDuplicateStatus);
             }},
         {display: "导入记录数", name: "fldImportTotalNumber",width:100},
-        {display: "重复记录数", name: "fldDuplicateTotalNumber",width:100},
+        {display: "原始记录数", name: "fldTotalNumber",width:100,
+        	render:function(item) {
+        		if(item.fldTotalNumber == 0)
+        			return item.fldTotalNumber;
+        		else 
+        			return "<span>"+item.fldTotalNumber+"&nbsp;<a href='javascript:void(0);' onclick=\"javascript:exportData('/telephone/import/origexport?id="+item.fldId+"');\">(下载)</a>"+"</span>";
+        	}
+        },
+        {display: "重复记录数", name: "fldDuplicateTotalNumber",width:100,
+        	render:function(item) {
+        		if(item.fldDuplicateTotalNumber == 0)
+        			return item.fldDuplicateTotalNumber;
+        		else
+        			return "<span>"+item.fldDuplicateTotalNumber+"&nbsp;<a href='javascript:void(0);' onclick=\"javascript:exportData('/telephone/import/dupexport?id="+item.fldId+"');\">(下载)</a>"+"</span>";
+        	}
+        },
+        {display: "非重复记录数", name: "fldNoDuplicateTotalNumber",width:90,
+        	render:function(item) {
+        		if((item.fldTotalNumber-item.fldDuplicateTotalNumber) == 0)
+        			return (item.fldTotalNumber-item.fldDuplicateTotalNumber);
+        		else
+        			return "<span>"+(item.fldTotalNumber-item.fldDuplicateTotalNumber)+"&nbsp;<a href='javascript:void(0);' onclick=\"javascript:exportData('/telephone/import/nodupexport?id="+item.fldId+"');\">(下载)</a>"+"</span>";
+        	}
+        },
         {display: "已分配记录数", name: "fldAssignTotalNumber",width:100},
-        {display: "导入人", name: "createUserName"},
+        {display: "导入人", name: "createUserName",width:50},
         {display: "导入时间", name: "fldCreateDate"},
         {display: "最近操作时间", name: "fldOperateDate"}
     ], dataAction: 'server', pageSize: 20, toolbar: {}, url: '<c:url value="/telephone/import/list"/>',
@@ -87,6 +110,10 @@ LG.appendSearchButtons("#formsearch", grid, true, true);
 
 //加载toolbar
 LG.loadToolbar(grid, toolbarBtnItemClick);
+
+	function exportData(url) {
+		f_export(url);
+	}
 
 //工具条事件
 function toolbarBtnItemClick(item) {
