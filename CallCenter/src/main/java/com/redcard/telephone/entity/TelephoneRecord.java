@@ -34,6 +34,7 @@ public class TelephoneRecord implements java.io.Serializable {
 	private Long fldTaskId;
 	private String fldCustomerName;
 	private String fldPhone;
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private Date fldCallDate;
 	private Integer fldCallType;
 	private Integer fldResultType;
@@ -54,6 +55,8 @@ public class TelephoneRecord implements java.io.Serializable {
 	private Date fldOperateDate;
 	private String fldCreateUserNo;
 	private Date fldCreateDate;
+	
+	private String callId;
 
 	// Constructors
 
@@ -325,5 +328,14 @@ public class TelephoneRecord implements java.io.Serializable {
 	@Transient
 	public String getCallUserName() {
 		return null != callUser ? callUser.getUserName() : "";
+	}
+
+	@Transient
+	public String getCallId() {
+		return callId;
+	}
+
+	public void setCallId(String callId) {
+		this.callId = callId;
 	}
 }

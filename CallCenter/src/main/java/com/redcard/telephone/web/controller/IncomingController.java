@@ -16,6 +16,8 @@ import com.common.core.grid.DataResponse;
 import com.common.security.util.SecurityUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.phone.entity.Calllog;
+import com.phone.service.CalllogManager;
 import com.redcard.customer.entity.Customer;
 import com.redcard.customer.service.CustomerManager;
 import com.redcard.telephone.entity.TelephoneCustomer;
@@ -32,12 +34,14 @@ public class IncomingController {
 	private TelephoneCustomerManager telephoneCustomerManager;
 	@Autowired
 	private TelephoneRecordManager telephoneRecordManager;
+	@Autowired
+	private CalllogManager calllogManager;
 
 	@RequestMapping(value = "init")
     public String init(String phone,Integer callId, String menuNo, Model model) {
         model.addAttribute("menuNo", menuNo);
-        model.addAttribute("phone", phone);
-        model.addAttribute("callId", callId);
+        model.addAttribute("phone", "18930044401");
+        model.addAttribute("callId", "3");
         return "telephone/incoming/list";
     }
 	
@@ -97,6 +101,17 @@ public class IncomingController {
         telephoneRecord.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
         telephoneRecord.setFldCallType(Constant.TELEPHONE_CALL_TYPE_IN);
         telephoneRecordManager.save(telephoneRecord);
+        return result;
+    }
+	
+	@RequestMapping(value = "findCall")
+    @ResponseBody
+    public AsyncResponse findCall(String callId) {
+        AsyncResponse result = new AsyncResponse();
+        Calllog calllog = calllogManager.find(Integer.valueOf(callId));
+        List<Calllog> list = new ArrayList<Calllog>();
+        list.add(calllog);
+        result.setData(list);
         return result;
     }
 }

@@ -34,7 +34,7 @@ public class CalllogManager extends GenericPageHQLQuery<Calllog> {
         return (Page<Calllog>) super.findAll(where, page);
     }
 
-    public Calllog find(int id) {
+    public Calllog find(long id) {
         return calllogDao.findOne(id);
     }
 
@@ -49,7 +49,7 @@ public class CalllogManager extends GenericPageHQLQuery<Calllog> {
     }
 
     @Transactional(readOnly = false)
-    public void delete(int id) {
+    public void delete(long id) {
         calllogDao.delete(id);
     }
 }

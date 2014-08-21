@@ -266,6 +266,7 @@
             	  	$("#custEmail").val("");
             	  }
             	  
+            	  if(null != customer) {
            			var where = '{"op":"and","rules":[{"op":"like","field":"fldCustomerId","value":"'+customer.fldId+'","type":"string"},{"op":"equal","field":"fldStatus","value":"0","type":"int"}]}';
 						    $("#contractInfo").ligerGrid({
 						        checkbox: false,
@@ -313,6 +314,7 @@
 						        ], dataAction: 'server', pageSize: 50, toolbar: null, url: '<c:url value="/customer/contract/list?where='+where+'"/>', sortName: 'fldOperateDate', sortOrder: 'desc',
 						        width: '98%', height: '33%', toJSON: JSON2.stringify
 						    });
+               }
 					    }
             },
             error:function (message) {}
@@ -331,7 +333,7 @@
                 }},
               {display: "拨打号码", name: "fldPhone"},
 	            {display: "拨打/呼入时间", name: "fldCallDate"},
-	            {display: "通话时长", name: "fldCallLong"},
+	            {display: "通话时长(秒)", name: "fldCallLong"},
 	            {display: "通话开始时间", name: "fldCallBeginTime"},
 	            {display: "通话结束时间", name: "fldCallEndTime"}
 	        ], dataAction: 'server', pageSize: 50, toolbar: null, url: '<c:url value="/telephone/dial/dialHis'+where+'"/>', sortName: 'fldOperateDate', sortOrder: 'desc',
@@ -386,7 +388,8 @@
 		data.fldResultType = fldResultType;
 		data.fldPhone = $("#currCallPhone").val();
 		data.fldCustomerName = $("#currCallCustomerName").val();
-		data.fldCallBeginTime = $("#currCallBeginTime").val();
+		//data.fldCallDate = $("#currCallBeginTime").val();
+		data.callId = $("#callId").val();
 		
 		LG.ajax({
       url: '<c:url value="/telephone/incoming/save"/>',
@@ -412,9 +415,10 @@
         labelWidth:100,
         inputWidth:150,
         fields:[
+            {display:"callId",name:"callId",newline:true,type:"hidden",attr:{value:"${callId}"}},
             {display: "来电号码", name: "currCallPhone", newline:true, type:"text",attr:{readonly:"readonly",value:"${phone}"}},
             {display:"客户名称",name:"currCallCustomerName",newline:false,type:"text",attr:{readonly:"readonly"}},
-            {display:"通话开始时间", name:"currCallBeginTime", newline:true, type:"text",attr:{readonly:"readonly"},format:'yyyy-MM-dd hh:mm:ss'},
+            {display:"来电时间", name:"currCallBeginTime", newline:true, type:"text",attr:{readonly:"readonly"},format:'yyyy-MM-dd hh:mm:ss'},
             {display:"反馈结果", name:"fldResultType", newline: false, type:"select", validate:{required:true},
             	options:{
                     valueField: 'value',
@@ -429,8 +433,24 @@
 	
 	var callWin;
 	function incomingcall(customerName) {
-    var date = new Date();
-    $("#currCallBeginTime").val(date.getFullYear()+"-"+parseInt(parseInt(date.getMonth())+1)+"-"+date.getDate()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds());
+		LG.ajax({
+		      url: '<c:url value="/telephone/incoming/findCall"/>?callId=${callId}',
+		      beforeSend: function () {
+		      	
+		      },
+		      complete: function () {
+		      },
+		      success: function (data) {
+		    		if(null != data && null != data[0]) {
+		    			var calllog = data[0];
+		    			$("#currCallBeginTime").val(calllog.inboundCallTime);
+		    		}
+		      },
+		      error: function (message) {
+		       
+		      }
+		    });
+		
     $("#currCallPhone").val('${phone}');
     $("#currCallCustomerName").val(customerName);
     

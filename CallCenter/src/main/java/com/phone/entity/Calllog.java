@@ -1,6 +1,11 @@
 package com.phone.entity;
 
 import javax.persistence.*;
+
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
+import com.common.core.util.JsonTimestampSerializer;
+
 import java.sql.Timestamp;
 
 /**
@@ -73,6 +78,7 @@ public class Calllog {
 
     @Basic
     @javax.persistence.Column(name = "InboundCallTime")
+    @JsonSerialize(using = JsonTimestampSerializer.class)
     public Timestamp getInboundCallTime() {
         return inboundCallTime;
     }
@@ -85,6 +91,7 @@ public class Calllog {
 
     @Basic
     @javax.persistence.Column(name = "InQueueTime")
+    @JsonSerialize(using = JsonTimestampSerializer.class)
     public Timestamp getInQueueTime() {
         return inQueueTime;
     }
@@ -97,6 +104,7 @@ public class Calllog {
 
     @Basic
     @javax.persistence.Column(name = "OutQueueTime")
+    @JsonSerialize(using = JsonTimestampSerializer.class)
     public Timestamp getOutQueueTime() {
         return outQueueTime;
     }
@@ -121,6 +129,7 @@ public class Calllog {
 
     @Basic
     @javax.persistence.Column(name = "StartRingTime")
+    @JsonSerialize(using = JsonTimestampSerializer.class)
     public Timestamp getStartRingTime() {
         return startRingTime;
     }
@@ -133,6 +142,7 @@ public class Calllog {
 
     @Basic
     @javax.persistence.Column(name = "AnsweredTime")
+    @JsonSerialize(using = JsonTimestampSerializer.class)
     public Timestamp getAnsweredTime() {
         return answeredTime;
     }
@@ -145,6 +155,7 @@ public class Calllog {
 
     @Basic
     @javax.persistence.Column(name = "HangUpTime")
+    @JsonSerialize(using = JsonTimestampSerializer.class)
     public Timestamp getHangUpTime() {
         return hangUpTime;
     }

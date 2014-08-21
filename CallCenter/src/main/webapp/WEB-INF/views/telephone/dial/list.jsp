@@ -239,7 +239,7 @@
           }},
         {display: "拨打号码", name: "fldPhone"},
           {display: "拨打/呼入时间", name: "fldCallDate"},
-          {display: "通话时长", name: "fldCallLong"},
+          {display: "通话时长(秒)", name: "fldCallLong"},
           {display: "通话开始时间", name: "fldCallBeginTime"},
           {display: "通话结束时间", name: "fldCallEndTime"}
       ], dataAction: 'server', pageSize: 50, toolbar: null, url: null,
@@ -517,7 +517,7 @@
 	var callWin;
 	function makecall(phone,customerName) {
 		if(parent.LG.telephoneStatus!=0){
-    	return;
+    	//return;
     }
     parent.LG.call(phone);
     

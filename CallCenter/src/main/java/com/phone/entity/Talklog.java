@@ -1,6 +1,11 @@
 package com.phone.entity;
 
 import javax.persistence.*;
+
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
+import com.common.core.util.JsonTimestampSerializer;
+
 import java.sql.Timestamp;
 
 /**
@@ -39,6 +44,7 @@ public class Talklog {
 
     @Basic
     @Column(name = "datetime")
+    @JsonSerialize(using = JsonTimestampSerializer.class)
     public Timestamp getDatetime() {
         return datetime;
     }

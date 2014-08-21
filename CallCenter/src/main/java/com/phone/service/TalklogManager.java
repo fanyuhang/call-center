@@ -34,7 +34,7 @@ public class TalklogManager extends GenericPageHQLQuery<Talklog> {
         return (Page<Talklog>) super.findAll(where, page);
     }
 
-    public Talklog find(int id) {
+    public Talklog find(long id) {
         return talklogDao.findOne(id);
     }
 
@@ -53,7 +53,7 @@ public class TalklogManager extends GenericPageHQLQuery<Talklog> {
     }
 
     @Transactional(readOnly = false)
-    public void delete(int id) {
+    public void delete(long id) {
         talklogDao.delete(id);
     }
 }
