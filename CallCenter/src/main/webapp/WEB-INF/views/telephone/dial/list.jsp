@@ -104,6 +104,7 @@
 	$("#innertabcontainer").ligerTab();
 
 	var taskListGrid;
+	var callId;
 
 	taskListGrid = $("#tasklist").ligerGrid({
     columns:[
@@ -472,6 +473,7 @@
 		data.fldCallBeginTime = $("#currCallBeginTime").val();
 		data.fldComment = fldComment;
 		data.fldAssignDetailId = $("#fldAssignDetailId").val();
+		data.callId = callId;
 		
 		LG.ajax({
       url: '<c:url value="/telephone/dial/save"/>',
@@ -551,6 +553,13 @@
 	}
 	
 	updateGridHeight();
+	
+	try{
+		var snocx = parent.document.getElementById("snocx");
+		snocx.attachEvent("snlReceiveDeliverCallEvent", function (szPhoneNumber, szPhoneParam, nCallID) {
+	  	callId = nCallID;
+	  });
+	}catch(e){}
 </script>
 </body>
 </html>

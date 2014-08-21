@@ -12,10 +12,15 @@ import com.common.Constant;
 import com.common.core.grid.GridPageRequest;
 import com.common.core.util.GenericPageHQLQuery;
 import com.common.security.util.SecurityUtil;
+import com.phone.dao.CalllogDao;
+import com.phone.dao.TalklogDao;
+import com.phone.entity.Calllog;
+import com.phone.entity.Talklog;
 import com.redcard.customer.dao.CustomerDao;
 import com.redcard.customer.entity.Customer;
 import com.redcard.telephone.dao.TelephoneAssignDetailDao;
 import com.redcard.telephone.dao.TelephoneCustomerDao;
+import com.redcard.telephone.dao.TelephoneRecordDao;
 import com.redcard.telephone.dao.TelephoneTaskDao;
 import com.redcard.telephone.entity.TelephoneAssignDetail;
 import com.redcard.telephone.entity.TelephoneCustomer;
@@ -28,13 +33,17 @@ public class TelephoneTaskManager extends GenericPageHQLQuery<TelephoneTask> {
 	@Autowired
 	private TelephoneTaskDao telephoneTaskDao;
 	@Autowired
-	private TelephoneRecordManager telephoneRecordManager;
+	private TelephoneRecordDao telephoneRecordDao;
 	@Autowired
 	private TelephoneCustomerDao telephoneCustomerDao;
 	@Autowired
 	private CustomerDao customerDao;
 	@Autowired
 	private TelephoneAssignDetailDao telephoneAssignDetailDao;
+	@Autowired
+	private CalllogDao calllogDao;
+	@Autowired
+	private TalklogDao talklogDao;
 	
 	public long getCount() {
 		return telephoneTaskDao.count();
@@ -59,7 +68,19 @@ public class TelephoneTaskManager extends GenericPageHQLQuery<TelephoneTask> {
 		telephoneRecord.setFldCreateDate(new Date());
 		telephoneRecord.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
 		telephoneRecord.setFldOperateDate(new Date());
-		telephoneRecordManager.save(telephoneRecord);
+		
+		String callId = telephoneRecord.getCallId();
+		if(!StringUtils.isBlank(callId)) {
+			Calllog calllog = calllogDao.findOne(Long.valueOf(callId));
+			telephoneRecord.setFldCallBeginTime(calllog.getAnsweredTime());
+			telephoneRecord.setFldCallEndTime(calllog.getHangUpTime());
+			telephoneRecord.setFldCallLong(calllog.getTalkDuration());
+			telephoneRecord.setFldCallDate(calllog.getInboundCallTime());
+			Talklog talkLog = talklogDao.findOne(Long.valueOf(callId));
+			telephoneRecord.setFldRecordFilePath(talkLog.getIispath());
+		}
+		
+		telephoneRecordDao.save(telephoneRecord);
 		
 		//更新话务分配明细表的已拨打数
 		if(Constant.TASK_CALL_STATUS_UN.equals(oldStatus)) {
