@@ -517,7 +517,7 @@
 	var callWin;
 	function makecall(phone,customerName) {
 		if(parent.LG.telephoneStatus!=0){
-    	//return;
+    	return;
     }
     parent.LG.call(phone);
     

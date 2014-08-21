@@ -40,8 +40,8 @@ public class IncomingController {
 	@RequestMapping(value = "init")
     public String init(String phone,Integer callId, String menuNo, Model model) {
         model.addAttribute("menuNo", menuNo);
-        model.addAttribute("phone", "18930044401");
-        model.addAttribute("callId", "3");
+        model.addAttribute("phone", phone);
+        model.addAttribute("callId", callId);
         return "telephone/incoming/list";
     }
 	
