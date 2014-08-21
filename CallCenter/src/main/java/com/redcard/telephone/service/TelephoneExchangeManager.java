@@ -17,10 +17,14 @@ import com.common.security.util.SecurityUtil;
 import com.redcard.telephone.dao.TelephoneAssignDetailDao;
 import com.redcard.telephone.dao.TelephoneExchangeDao;
 import com.redcard.telephone.dao.TelephoneExchangeDetailDao;
+import com.redcard.telephone.dao.TelephoneImportDao;
+import com.redcard.telephone.dao.TelephoneImportDetailDao;
 import com.redcard.telephone.dao.TelephoneTaskDao;
 import com.redcard.telephone.entity.TelephoneAssignDetail;
 import com.redcard.telephone.entity.TelephoneExchange;
 import com.redcard.telephone.entity.TelephoneExchangeDetail;
+import com.redcard.telephone.entity.TelephoneImport;
+import com.redcard.telephone.entity.TelephoneImportDetail;
 import com.redcard.telephone.entity.TelephoneTask;
 
 @Component
@@ -36,6 +40,10 @@ public class TelephoneExchangeManager extends GenericPageHQLQuery<TelephoneExcha
 	private TelephoneExchangeDao telephoneExchangeDao;
 	@Autowired
 	private TelephoneExchangeDetailDao telephoneExchangeDetailDao;
+	@Autowired
+	private TelephoneImportDetailDao telephoneImportDetailDao;
+	@Autowired
+	private TelephoneImportDao telephoneImportDao;
 	
 	@Transactional(readOnly = false)
 	public void saveExchange(TelephoneExchange telephoneExchange) {
@@ -108,6 +116,15 @@ public class TelephoneExchangeManager extends GenericPageHQLQuery<TelephoneExcha
 			int count = 0;
 			for(TelephoneTask telephoneTask : taskList) {
 				if(telephoneTask.getFldCallStatus() == Constant.TASK_CALL_STATUS_UN) {
+					//话务导入明细表的分配状态回滚
+					TelephoneImportDetail telephoneImportDetail = telephoneImportDetailDao.findOne(telephoneTask.getFldCustomerId());
+					telephoneImportDetail.setFldAssignStatus(Constant.TELEPHONE_ASSIGN_STATUS_UNASSIGN);//未分配
+					telephoneImportDetailDao.save(telephoneImportDetail);
+					//话务导入表的已分配记录数-1
+					TelephoneImport telephoneImport = telephoneImportDao.findOne(telephoneImportDetail.getFldImportId());
+					telephoneImport.setFldAssignTotalNumber(telephoneImport.getFldAssignTotalNumber() - 1);
+					telephoneImportDao.save(telephoneImport);
+					
 					telephoneTaskDao.delete(telephoneTask);
 					count++;
 				}

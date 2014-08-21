@@ -17,11 +17,13 @@ import com.common.core.util.GenericPageHQLQuery;
 import com.common.security.util.SecurityUtil;
 import com.redcard.telephone.dao.TelephoneAssignDao;
 import com.redcard.telephone.dao.TelephoneAssignDetailDao;
+import com.redcard.telephone.dao.TelephoneImportDao;
 import com.redcard.telephone.dao.TelephoneImportDetailDao;
 import com.redcard.telephone.dao.TelephoneTaskDao;
 import com.redcard.telephone.entity.TelephoneAssign;
 import com.redcard.telephone.entity.TelephoneAssignDetail;
 import com.redcard.telephone.entity.TelephoneCustomer;
+import com.redcard.telephone.entity.TelephoneImport;
 import com.redcard.telephone.entity.TelephoneImportDetail;
 import com.redcard.telephone.entity.TelephoneTask;
 
@@ -42,6 +44,8 @@ public class TelephoneAssignManager extends GenericPageHQLQuery<TelephoneAssign>
 	private TelephoneCustomerManager telephoneCustomerManager;
 	@Autowired
 	private TelephoneImportManager telephoneImportManager;
+	@Autowired
+	private TelephoneImportDao telephoneImportDao;
 	
 	public Page<TelephoneAssign> findAllTelephoneAssign(GridPageRequest page, String where) {
         return (Page<TelephoneAssign>) super.findAll(where, page);
@@ -172,6 +176,15 @@ public class TelephoneAssignManager extends GenericPageHQLQuery<TelephoneAssign>
 			int count = 0;
 			for(TelephoneTask telephoneTask : taskList) {
 				if(telephoneTask.getFldCallStatus() == Constant.TASK_CALL_STATUS_UN) {
+					//话务导入明细表的分配状态回滚
+					TelephoneImportDetail telephoneImportDetail = telephoneImportDetailDao.findOne(telephoneTask.getFldCustomerId());
+					telephoneImportDetail.setFldAssignStatus(Constant.TELEPHONE_ASSIGN_STATUS_UNASSIGN);//未分配
+					telephoneImportDetailDao.save(telephoneImportDetail);
+					//话务导入表的已分配记录数-1
+					TelephoneImport telephoneImport = telephoneImportDao.findOne(telephoneImportDetail.getFldImportId());
+					telephoneImport.setFldAssignTotalNumber(telephoneImport.getFldAssignTotalNumber() - 1);
+					telephoneImportDao.save(telephoneImport);
+					
 					telephoneTaskDao.delete(telephoneTask);
 					count++;
 				}
