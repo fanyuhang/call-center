@@ -15,6 +15,8 @@ import com.common.core.grid.GridPageRequest;
 import com.common.core.util.EntityUtil;
 import com.common.core.util.GenericPageHQLQuery;
 import com.common.security.util.SecurityUtil;
+import com.phone.dao.CalllogDao;
+import com.phone.entity.Calllog;
 import com.redcard.customer.dao.CustomerDao;
 import com.redcard.customer.entity.Customer;
 import com.redcard.customer.service.CustomerManager;
@@ -30,6 +32,8 @@ public class TelephoneCustomerManager extends GenericPageHQLQuery<TelephoneCusto
 	private CustomerManager customerManager;
 	@Autowired
     private CustomerDao customerDao;
+	@Autowired
+	private CalllogDao calllogDao;
 	
 	public Long countByPhoneOrMobile(String name,String phone,String mobile) {
 		Long rtn = 0L;
@@ -87,7 +91,7 @@ public class TelephoneCustomerManager extends GenericPageHQLQuery<TelephoneCusto
 	}
 	
 	@Transactional(readOnly = false)
-    public void updateCust(Customer customer,String telephoneCustomerId) {
+    public void updateCust(Customer customer,String telephoneCustomerId,String callId) {
 		if(!StringUtils.isBlank(customer.getFldId())) {
 			Customer tmpCustomer = customerDao.findOne(customer.getFldId());
 			tmpCustomer.setFldName(customer.getFldName());
@@ -108,6 +112,10 @@ public class TelephoneCustomerManager extends GenericPageHQLQuery<TelephoneCusto
 			tmpTelephoneCustomer.setFldMobile(customer.getFldMobile());
 			tmpTelephoneCustomer.setFldPhone(customer.getFldPhone());
 			tmpTelephoneCustomer.setFldAddress(customer.getFldAddress());
+			
+			Calllog calllog = calllogDao.findOne(Long.valueOf(callId));
+			tmpTelephoneCustomer.setFldLatestCallDate(calllog.getAnsweredTime());//最近通话时间
+			
 			telephoneCustomerDao.save(tmpTelephoneCustomer);
 		}
 	}

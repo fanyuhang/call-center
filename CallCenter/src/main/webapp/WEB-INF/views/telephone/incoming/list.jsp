@@ -360,7 +360,7 @@
 		
 		LG.ajax({
 		      url: '<c:url value="/telephone/incoming/saveCust"/>',
-		      data: {customer:JSON2.stringify(customer),telephoneCustomerId:telephoneCustomerId},
+		      data: {customer:JSON2.stringify(customer),telephoneCustomerId:telephoneCustomerId,callId:"${callId}"},
 		      beforeSend: function () {
 		      	
 		      },

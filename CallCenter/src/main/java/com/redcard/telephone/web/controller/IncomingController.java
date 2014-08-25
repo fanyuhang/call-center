@@ -84,11 +84,11 @@ public class IncomingController {
 	
 	@RequestMapping(value = "saveCust")
     @ResponseBody
-    public AsyncResponse saveCust(String customer,String telephoneCustomerId) {
+    public AsyncResponse saveCust(String customer,String telephoneCustomerId,String callId) {
         AsyncResponse result = new AsyncResponse(false,"保存客户信息成功");
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create(); 
         Customer customerObject = gson.fromJson(customer, Customer.class);
-        telephoneCustomerManager.updateCust(customerObject,telephoneCustomerId);
+        telephoneCustomerManager.updateCust(customerObject,telephoneCustomerId,callId);
         return result;
     }
 	

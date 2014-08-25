@@ -78,7 +78,7 @@ var grid = $("#maingrid").ligerGrid({
         		if(item.fldTotalNumber == 0)
         			return item.fldTotalNumber;
         		else 
-        			return "<span>"+item.fldTotalNumber+"&nbsp;<a href='javascript:void(0);' onclick=\"javascript:exportData('/telephone/import/origexport?id="+item.fldId+"');\">(下载)</a>"+"</span>";
+        			return "<span><a href='javascript:void(0);' title='下载' onclick=\"javascript:exportData('/telephone/import/origexport?id="+item.fldId+"');\">"+item.fldTotalNumber+"</a>"+"</span>";
         	}
         },
         {display: "重复记录数", name: "fldDuplicateTotalNumber",width:100,
@@ -86,7 +86,7 @@ var grid = $("#maingrid").ligerGrid({
         		if(item.fldDuplicateTotalNumber == 0)
         			return item.fldDuplicateTotalNumber;
         		else
-        			return "<span>"+item.fldDuplicateTotalNumber+"&nbsp;<a href='javascript:void(0);' onclick=\"javascript:exportData('/telephone/import/dupexport?id="+item.fldId+"');\">(下载)</a>"+"</span>";
+        			return "<span><a href='javascript:void(0);' title='下载' onclick=\"javascript:exportData('/telephone/import/dupexport?id="+item.fldId+"');\">"+item.fldDuplicateTotalNumber+"</a>"+"</span>";
         	}
         },
         {display: "非重复记录数", name: "fldNoDuplicateTotalNumber",width:90,
@@ -94,7 +94,7 @@ var grid = $("#maingrid").ligerGrid({
         		if((item.fldTotalNumber-item.fldDuplicateTotalNumber) == 0)
         			return (item.fldTotalNumber-item.fldDuplicateTotalNumber);
         		else
-        			return "<span>"+(item.fldTotalNumber-item.fldDuplicateTotalNumber)+"&nbsp;<a href='javascript:void(0);' onclick=\"javascript:exportData('/telephone/import/nodupexport?id="+item.fldId+"');\">(下载)</a>"+"</span>";
+        			return "<span><a href='javascript:void(0);' title='下载' onclick=\"javascript:exportData('/telephone/import/nodupexport?id="+item.fldId+"');\">"+(item.fldTotalNumber-item.fldDuplicateTotalNumber)+"</a>"+"</span>";
         	}
         },
         {display: "已分配记录数", name: "fldAssignTotalNumber",width:100},
