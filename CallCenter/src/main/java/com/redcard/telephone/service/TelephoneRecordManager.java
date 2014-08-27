@@ -56,4 +56,8 @@ public class TelephoneRecordManager extends GenericPageHQLQuery<TelephoneRecord>
 	public Page<TelephoneRecord> findAllTelephoneRecord(GridPageRequest page, String where) {
         return (Page<TelephoneRecord>) super.findAll(where, page);
     }
+	
+	public TelephoneRecord findById(String id) {
+		return telephoneRecordDao.findOne(Long.valueOf(id));
+	}
 }

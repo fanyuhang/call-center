@@ -40,6 +40,14 @@ public class RecordController {
         return (new DataResponse<TelephoneRecord>(telephoneRecordManager.findAllTelephoneRecord(pageRequest, where)));
     }
 	
+	@RequestMapping(value = "view")
+    public String view(String menuNo, String fldId, Model model) {
+		TelephoneRecord telephoneRecord = telephoneRecordManager.findById(fldId);
+        model.addAttribute("menuNo", menuNo);
+        model.addAttribute("telephoneRecord", telephoneRecord);
+        return "telephone/record/view";
+    }
+	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "export")
     @ResponseBody

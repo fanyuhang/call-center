@@ -76,7 +76,7 @@ var grid = $("#maingrid").ligerGrid({
         {display: "原始记录数", name: "fldTotalNumber",width:100,
         	render:function(item) {
         		if(item.fldTotalNumber == 0)
-        			return item.fldTotalNumber;
+        			return ''+item.fldTotalNumber+'';
         		else 
         			return "<span><a href='javascript:void(0);' title='下载' onclick=\"javascript:exportData('/telephone/import/origexport?id="+item.fldId+"');\">"+item.fldTotalNumber+"</a>"+"</span>";
         	}
@@ -84,7 +84,7 @@ var grid = $("#maingrid").ligerGrid({
         {display: "重复记录数", name: "fldDuplicateTotalNumber",width:100,
         	render:function(item) {
         		if(item.fldDuplicateTotalNumber == 0)
-        			return item.fldDuplicateTotalNumber;
+        			return ''+item.fldDuplicateTotalNumber+'';
         		else
         			return "<span><a href='javascript:void(0);' title='下载' onclick=\"javascript:exportData('/telephone/import/dupexport?id="+item.fldId+"');\">"+item.fldDuplicateTotalNumber+"</a>"+"</span>";
         	}
@@ -92,7 +92,7 @@ var grid = $("#maingrid").ligerGrid({
         {display: "非重复记录数", name: "fldNoDuplicateTotalNumber",width:90,
         	render:function(item) {
         		if((item.fldTotalNumber-item.fldDuplicateTotalNumber) == 0)
-        			return (item.fldTotalNumber-item.fldDuplicateTotalNumber);
+        			return ''+(item.fldTotalNumber-item.fldDuplicateTotalNumber)+'';
         		else
         			return "<span><a href='javascript:void(0);' title='下载' onclick=\"javascript:exportData('/telephone/import/nodupexport?id="+item.fldId+"');\">"+(item.fldTotalNumber-item.fldDuplicateTotalNumber)+"</a>"+"</span>";
         	}

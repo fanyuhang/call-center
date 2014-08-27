@@ -411,6 +411,9 @@
 	<tblNode fldCode="01050701" fldParent="010507" fldName="导出" fldDesc="" fldTarget="export"
 		fldIcon="/static/ligerUI/icons/miniicons/action_save.gif"
 		fldLink="/telephone/record/export" fldType="2" fldPosition="1"/>
+	<tblNode fldCode="01050702" fldParent="010507" fldName="查看" fldDesc="" fldTarget="view"
+		fldIcon="/static/ligerUI/icons/silkicons/application_view_detail.png"
+		fldLink="/telephone/record/view" fldType="2" fldPosition="2"/>
 
     <tblNode fldCode="0106" fldParent="01" fldName="话务监控" fldDesc=""
              fldTarget="#" fldIcon="" fldLink="" fldType="1" fldPosition="6" />

@@ -63,6 +63,7 @@
 	    delayLoad: false,
 	    columnWidth: 160,
 	    columns: [
+	        {display:"ID",name:"fldId",width:1,hide:1},
 	        {display: "话务员", name: "callUserName"},
 	        {display: "呼叫类型", name: "fldCallType",
 	        	render:function(item) {
@@ -94,6 +95,14 @@
 	    case "export":
         	f_export('<c:url value="/telephone/record/export"/>');
         	break;
+	    case "view":
+	    	if (grid.getSelectedRows().length > 1 || grid.getSelectedRows().length == 0) {
+        	LG.tip('请选择一行数据!');
+          return;
+        }
+        var selected = grid.getSelected();
+        top.f_addTab(null, '查看通话详细', '<c:url value="/telephone/record/view"/>' + '?menuNo=${menuNo}&fldId=' + selected.fldId);
+        break;
 	    }
 	}
 
