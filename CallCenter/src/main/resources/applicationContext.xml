@@ -85,6 +85,7 @@
     		<entry key="messageAccountPassword" value="${sendMessage.accountPassword}" />
     		<entry key="messageMethodName" value="${sendMessage.methodName}" />
     		<entry key="emailSendAccount" value="${sendEmail.server.username}" />
+    		<entry key="phoneRecordAddress" value="${phone.record.address}"/>
 		</util:map>
 
         <!-- 数据源配置, 使用应用中的DBCP数据库连接池 -->

@@ -62,12 +62,13 @@
 	$("#pauseRecord").hide();
 	$("#formBtn").insertAfter(panle).show();
 	
-	$(document).ready(function(){  
+	$(document).ready(function(){
+		var recordFile = "${phoneRecordAddress}${telephoneRecord.fldRecordFilePath}";
 	    $("#listenRecord").jPlayer({  
 	        ready: function () {   
 	           $(this).jPlayer("setMedia", {
-	        	   mp3: "${telephoneRecord.fldRecordFilePath}",
-	        	   wav: "${telephoneRecord.fldRecordFilePath}"
+	        	   mp3: recordFile,
+	        	   wav: recordFile
 	        	 }); },   
 	        swfPath: "/static/jPlayer",   
 	        supplied: "mp3,wav",

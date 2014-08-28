@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +27,9 @@ import com.redcard.telephone.service.TelephoneRecordManager;
 public class RecordController {
 	@Autowired
 	private TelephoneRecordManager telephoneRecordManager;
+	
+	@Value("#{settingsMap['phoneRecordAddress']}")
+	private String phoneRecordAddress;
 
 	@RequestMapping(value = "init")
     public String init(String menuNo, Model model) {
@@ -45,6 +49,7 @@ public class RecordController {
 		TelephoneRecord telephoneRecord = telephoneRecordManager.findById(fldId);
         model.addAttribute("menuNo", menuNo);
         model.addAttribute("telephoneRecord", telephoneRecord);
+        model.addAttribute("phoneRecordAddress",phoneRecordAddress);
         return "telephone/record/view";
     }
 	
