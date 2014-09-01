@@ -8,7 +8,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.codehaus.jackson.map.annotate.JsonSerialize;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import com.common.core.util.JsonDateSerializer;
 import com.common.core.util.JsonTimestampSerializer;
 import com.common.security.util.SecurityUtil;
 
@@ -24,9 +26,13 @@ public class TelephoneCustomer implements java.io.Serializable {
 	private String fldId;
 	private String fldCustomerName;
 	private Integer fldGender;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	private Date fldBirthday;
+	private String fldIdentityNo;
 	private String fldMobile;
 	private String fldPhone;
 	private String fldAddress;
+	private String fldEmail;
 	private Integer fldSource;
 	private Date fldLatestCallDate;
 	private Integer fldResultStatus;
@@ -235,4 +241,31 @@ public class TelephoneCustomer implements java.io.Serializable {
 		this.fldCreateDate = fldCreateDate;
 	}
 
+	@Column(name = "FLDBIRTHDAY")
+	@JsonSerialize(using = JsonDateSerializer.class)
+	public Date getFldBirthday() {
+		return fldBirthday;
+	}
+
+	public void setFldBirthday(Date fldBirthday) {
+		this.fldBirthday = fldBirthday;
+	}
+	
+	@Column(name = "FLDIDENTITYNO")
+	public String getFldIdentityNo() {
+		return this.fldIdentityNo;
+	}
+
+	public void setFldIdentityNo(String fldIdentityNo) {
+		this.fldIdentityNo = fldIdentityNo;
+	}
+	
+	@Column(name = "FLDEMAIL")
+	public String getFldEmail() {
+		return this.fldEmail;
+	}
+
+	public void setFldEmail(String fldEmail) {
+		this.fldEmail = fldEmail;
+	}
 }

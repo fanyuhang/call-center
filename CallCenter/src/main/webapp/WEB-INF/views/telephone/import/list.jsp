@@ -72,7 +72,12 @@ var grid = $("#maingrid").ligerGrid({
             render:function(item) {
                 return renderLabel(radioData,item.fldDuplicateStatus);
             }},
-        {display: "导入记录数", name: "fldImportTotalNumber",width:100},
+        {display: "导入记录数", name: "fldImportTotalNumber",width:100,render:function(item){
+        	if(item.fldImportTotalNumber == 0)
+    				return ''+item.fldImportTotalNumber+'';
+    			else 
+    				return "<span><a href='javascript:void(0);' title='查看明细' onclick=\"javascript:showImportDtl('"+item.fldId+"');\">"+item.fldImportTotalNumber+"</a>"+"</span>";
+        }},
         {display: "原始记录数", name: "fldTotalNumber",width:100,
         	render:function(item) {
         		if(item.fldTotalNumber == 0)
@@ -113,6 +118,10 @@ LG.loadToolbar(grid, toolbarBtnItemClick);
 
 	function exportData(url) {
 		f_export(url);
+	}
+	
+	function showImportDtl(id) {
+		top.f_addTab(null, '查看导入明细信息', '<c:url value="/telephone/import/viewDtl"/>' + '?menuNo=${menuNo}&fldId='+id);
 	}
 
 //工具条事件

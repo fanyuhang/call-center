@@ -368,4 +368,17 @@ public class TelephoneImportController {
 	public List<TelephoneImport> listAllUnAssignTelephone() {
 		return telephoneImportManager.listAllUnAssignTelephone();
 	}
+	
+	@RequestMapping(value = "viewDtl")
+    public String viewDtl(String menuNo, Model model, String fldId) {
+        model.addAttribute("menuNo", menuNo);
+        model.addAttribute("importId", fldId);
+        return "telephone/import/importDtl";
+    }
+	
+	@RequestMapping(value = "showDtl")
+    @ResponseBody
+	public DataResponse<TelephoneImportDetail> showDtl(String fldId) {
+		return new DataResponse<TelephoneImportDetail>(telephoneImportManager.viewDtl(fldId));
+	}
 }

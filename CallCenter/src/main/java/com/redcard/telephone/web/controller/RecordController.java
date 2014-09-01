@@ -73,4 +73,12 @@ public class RecordController {
         }
         return result;
     }
+	
+	@RequestMapping(value = "saveAudit")
+    @ResponseBody
+    public AsyncResponse saveAudit(String id,String taskId,String fldAuditFraction,String fldAuditComment) {
+        AsyncResponse result = new AsyncResponse(false,"保存审查信息成功");
+        telephoneRecordManager.saveAudti(id, taskId, fldAuditFraction, fldAuditComment);
+        return result;
+    }
 }
