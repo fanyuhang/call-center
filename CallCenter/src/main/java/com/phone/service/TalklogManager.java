@@ -38,7 +38,7 @@ public class TalklogManager extends GenericPageHQLQuery<Talklog> {
         return talklogDao.findOne(id);
     }
 
-    public Talklog findByCallId(Integer callId){
+    public Talklog findByCallId(Long callId){
         return talklogDao.findByCallId(callId);
     }
 
