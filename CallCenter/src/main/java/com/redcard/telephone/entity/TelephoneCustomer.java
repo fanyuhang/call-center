@@ -4,14 +4,20 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.common.core.util.JsonDateSerializer;
 import com.common.core.util.JsonTimestampSerializer;
+import com.common.security.entity.User;
 import com.common.security.util.SecurityUtil;
 
 /**
@@ -268,4 +274,22 @@ public class TelephoneCustomer implements java.io.Serializable {
 	public void setFldEmail(String fldEmail) {
 		this.fldEmail = fldEmail;
 	}
+	
+	private User financialUser;
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "FLDFINANCIALUSERNO", referencedColumnName="FLDLOGINNAME", insertable = false, updatable = false)
+    public User getFinancialUser() {
+        return financialUser;
+    }
+
+    public void setFinancialUser(User financialUser) {
+        this.financialUser = financialUser;
+    }
+
+    @Transient
+    public String getFinancialUserName() {
+        return financialUser!=null ? financialUser.getUserName() : "";
+    }
 }

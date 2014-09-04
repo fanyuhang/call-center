@@ -103,6 +103,7 @@ public class TelephoneTaskManager extends GenericPageHQLQuery<TelephoneTask> {
 		tmpTelephoneCustomer.setFldBirthday(customer.getFldBirthday());
 		tmpTelephoneCustomer.setFldIdentityNo(customer.getFldIdentityNo());
 		tmpTelephoneCustomer.setFldEmail(customer.getFldEmail());
+		tmpTelephoneCustomer.setFldFinancialUserNo(telephoneCustomer.getFldFinancialUserNo());
 		telephoneCustomerDao.save(tmpTelephoneCustomer);
 		
 		//若客户存在，则更新客户表

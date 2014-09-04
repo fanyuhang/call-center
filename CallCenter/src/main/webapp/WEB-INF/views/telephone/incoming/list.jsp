@@ -132,7 +132,7 @@
 	    heightDiff:-100,
 	    fields: [
 			{display: "ID",name: "fldId", newline: true, type: "hidden"},
-	        {display: "客户名称", name: "custName", newline: true, type: "text", cssClass: "field"},
+	        {display: "客户名称", name: "custName", newline: true, type: "text", validate: {required: true},cssClass: "field"},
 	        {display: "性别", name: "custGender", newline: false, type: "select", cssClass: "field",comboboxName:"gender",
 	        	options:{
                     valueField: 'value',
@@ -148,10 +148,44 @@
 	        {display: "身份证号", name: "custIdentityNo", newline: false, type: "text", cssClass: "field"},
 	        {display: "地址", name: "custAddress", newline: true, type: "text", cssClass: "field"},
 	        {display: "邮箱", name: "custEmail", newline: false, type: "text", cssClass: "field"},
+	        {display: "理财经理", name: "fldFinancialUserNo", newline: true, type:"select", validate: {required: true}, cssClass: "field",comboboxName:"financialUserNo",
+	        	options:{valueFieldID:"financialUserNo"}
+	        },
 	        {display:"custId",name:"custId",type:"hidden"}
 	    ],
 	    toJSON: JSON2.stringify
 		});
+	
+	$.ligerui.get("financialUserNo").openSelect({
+	    grid: {
+	        rownumbers: true,
+	        checkbox: true,
+	        columnWidth: 238,
+	        columns: [
+	            {display: "用户名称", name: "userName"},
+	            {display: "登录名称", name: "loginName"},
+	            {display: "部门", name: "deptName"}
+	        ], pageSize: 20, heightDiff: -10,
+	        url: '<c:url value="/security/user/list"/>', sortName: 'userName'
+	    },
+	    search: {
+	        fields: [
+	            {display: "用户名称", name: "userName", newline: true, type: "text", cssClass: "field"}
+	        ]
+	    },
+	    valueField: 'loginName', textField: 'userName', top: 30,
+	    handleSelect: function (data) {
+	        $("#fldCallUserNumber").val(data.length);
+
+	        var fldAssignNumber = $("#fldAssignNumber").val();
+	        if (fldAssignNumber == "" || fldAssignNumber == 0) return;
+
+	        var fldCallUserNumber = $("#fldCallUserNumber").val();
+	        if (fldCallUserNumber == "" || fldCallUserNumber == 0) return;
+
+	        $("#fldAverageNumber").val(parseFloat(fldAssignNumber) / parseFloat(fldCallUserNumber));
+	    }
+	});
 	
 	$(".l-form-container").css("height","175");
 	$(".l-form-container").css("width","520");
@@ -253,6 +287,8 @@
             	  	$("#custIdentityNo").val(null!=customer.fldIdentityNo?customer.fldIdentityNo:"");
             	  	$("#custAddress").val(null!=customer.fldAddress?customer.fldAddress:"");
             	  	$("#custEmail").val(null!=customer.fldEmail?customer.fldEmail:"");
+            	  	$("#fldFinancialUserNo").val(customer.fldFinancialUserNo);
+              	  $("#financialUserNo").val(customer.financialUserName);
             	  } else if(null != origCustomer) {
             	  	$("#custId").val(origCustomer.fldId);
             	  	$("#custName").val(origCustomer.fldCustomerName);
@@ -342,6 +378,21 @@
 	});
 	
 	function f_savecust() {
+		if("" == $("#custName").val()) {
+			LG.showError('请录入客户名称');
+			return;
+		}
+		
+		if("" == $("#custMobile").val() && "" == $("#custPhone").val()) {
+			LG.showError('请录入客户手机或电话号码');
+			return;
+		}
+		
+		if("" == $("#financialUserNo").val()) {
+			LG.showError('请选择理财经理');
+			return;
+		}
+		
 		var customer = {};
 		customer.fldId = $("#fldId").val();
 		customer.fldName = $("#custName").val();
@@ -355,6 +406,8 @@
 		}
 		customer.fldIdentityNo = $("#custIdentityNo").val();
 		customer.fldEmail = $("#custEmail").val();
+		
+		if("" == $("#custId").val())return;
 		
 		var telephoneCustomerId = $("#custId").val();
 		
