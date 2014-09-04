@@ -500,10 +500,10 @@
         labelWidth:100,
         inputWidth:150,
         fields:[
-            {display: "拨打号码", name: "currCallPhone", newline:true, type:"text",attr:{readonly:"readonly"}},
-            {display:"客户名称",name:"currCallCustomerName",newline:false,type:"text",attr:{readonly:"readonly"}},
-            {display:"通话开始时间", name:"currCallBeginTime", newline:true, type:"text",attr:{readonly:"readonly"},format:'yyyy-MM-dd hh:mm:ss'},
-            {display:"任务结果", name:"fldResultType", newline: false, type:"select", validate:{required:true},comboboxName:"resultType",
+            {display: "拨打号码", name: "currCallPhone", newline:true, type:"hidden",attr:{readonly:"readonly"}},
+            {display:"客户名称",name:"currCallCustomerName",newline:false,type:"hidden",attr:{readonly:"readonly"}},
+            {display:"通话开始时间", name:"currCallBeginTime", newline:true, type:"hidden",attr:{readonly:"readonly"},format:'yyyy-MM-dd hh:mm:ss'},
+            {display:"任务结果", name:"fldResultType", newline: true, type:"select", validate:{required:true},comboboxName:"resultType",
             	options:{
                     valueField: 'value',
                     textField: 'text',
@@ -512,7 +512,7 @@
                     valueFieldID:"fldResultType"
             	}
             },
-            {display:"备注",name:"fldComment",newline:true,type:"text",validate:{required:true}}
+            {display:"备注",name:"fldComment",newline:true,type:"textarea", width: 400, attr:{"cols":45},validate:{required:true}}
         ]
     });
 	
@@ -537,7 +537,7 @@
     	showToggle:false,
     	title:"拨打信息",
       target:$("#callDialog"),
-      width:650, height:200, top:30, left:550,
+      width:650, height:250, top:30,
       buttons:[
           { text:'确定', onclick:function () {
         	  f_save();
