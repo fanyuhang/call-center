@@ -76,7 +76,7 @@ public class TelephoneTaskManager extends GenericPageHQLQuery<TelephoneTask> {
 			telephoneRecord.setFldCallEndTime(calllog.getHangUpTime());
 			telephoneRecord.setFldCallLong(calllog.getTalkDuration());
 			telephoneRecord.setFldCallDate(calllog.getInboundCallTime());
-			Talklog talkLog = talklogDao.findByCallId(Integer.valueOf(callId));
+			Talklog talkLog = talklogDao.findByCallId(Long.valueOf(callId));
 			telephoneRecord.setFldRecordFilePath(talkLog.getIispath());
 		}
 		
