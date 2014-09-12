@@ -527,14 +527,10 @@
 	<tblDictionary fldId="14" fldType="6" fldName="无效"
 		fldValue="9" fldStatus="0" fldComment="客户状态，无效" />
 
-	<tblDictionary fldId="15" fldType="7" fldName="信托"
-		fldValue="0" fldStatus="0" fldComment="产品类型，信托" />
-	<tblDictionary fldId="16" fldType="7" fldName="资管"
-		fldValue="1" fldStatus="0" fldComment="产品类型，资管" />
-	<tblDictionary fldId="17" fldType="7" fldName="聚金系列"
-		fldValue="2" fldStatus="0" fldComment="产品类型，聚金系列" />
-	<tblDictionary fldId="18" fldType="7" fldName="其他"
-		fldValue="9" fldStatus="0" fldComment="产品类型，其他" />
+	<tblDictionary fldId="15" fldType="7" fldName="固定收益类"
+		fldValue="0" fldStatus="0" fldComment="产品类型，固定收益类" />
+	<tblDictionary fldId="16" fldType="7" fldName="固定+浮动收益类"
+		fldValue="1" fldStatus="0" fldComment="产品类型，固定+浮动收益类" />
 
 	<tblDictionary fldId="19" fldType="8" fldName="有效"
 		fldValue="0" fldStatus="0" fldComment="合同状态，有效" />

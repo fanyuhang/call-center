@@ -34,24 +34,28 @@
     	<column cell="A1" propertyName="custName" nullAllowed="false"/>
     	<column cell="B1" propertyName="productName" nullAllowed="false"/>
     	<column cell="C1" propertyName="contractNo" nullAllowed="false"/>
-    	<column cell="D1" propertyName="signDate" nullAllowed="true"/>
-    	<column cell="E1" propertyName="establishDate" nullAllowed="true"/>
-    	<column cell="F1" propertyName="valueDate" nullAllowed="true"/>
-    	<column cell="G1" propertyName="dueDate" nullAllowed="true"/>
-    	<column cell="H1" propertyName="clearDays" nullAllowed="true"/>
-    	<column cell="I1" propertyName="minPurchaseMoney" nullAllowed="false"/>
-    	<column cell="J1" propertyName="maxPurchaseMoney" nullAllowed="false"/>
-    	<column cell="K1" propertyName="purchaseMoney" nullAllowed="false"/>
-    	<column cell="L1" propertyName="performanceRadio" nullAllowed="true"/>
-    	<column cell="M1" propertyName="performanceMoney" nullAllowed="true"/>
-    	<column cell="N1" propertyName="annualizedRate" nullAllowed="true"/>
-    	<column cell="O1" propertyName="annualizedMoney" nullAllowed="true"/>
-    	<column cell="P1" propertyName="moneyDate" nullAllowed="true"/>
-    	<column cell="Q1" propertyName="collectDays" nullAllowed="true"/>
-    	<column cell="R1" propertyName="depositRate" nullAllowed="true"/>
-    	<column cell="S1" propertyName="collectMoney" nullAllowed="true"/>
-    	<column cell="T1" propertyName="financialUserNo" nullAllowed="true"/>
-    	<column cell="U1" propertyName="source" nullAllowed="true">
+        <column cell="D1" propertyName="productType" nullAllowed="false">
+            <mapping value="0" text="固定收益类"></mapping>
+            <mapping value="1" text="固定+浮动收益类"></mapping>
+        </column>
+    	<column cell="E1" propertyName="signDate" nullAllowed="true"/>
+        <column cell="F1" propertyName="establishDate" nullAllowed="true"/>
+    	<column cell="G1" propertyName="valueDate" nullAllowed="true"/>
+    	<column cell="H1" propertyName="dueDate" nullAllowed="true"/>
+    	<column cell="I1" propertyName="clearDays" nullAllowed="true"/>
+    	<column cell="J1" propertyName="minPurchaseMoney" nullAllowed="false"/>
+    	<column cell="K1" propertyName="maxPurchaseMoney" nullAllowed="false"/>
+    	<column cell="L1" propertyName="purchaseMoney" nullAllowed="false"/>
+    	<column cell="M1" propertyName="performanceRadio" nullAllowed="true"/>
+    	<column cell="N1" propertyName="performanceMoney" nullAllowed="true"/>
+    	<column cell="O1" propertyName="annualizedRate" nullAllowed="true"/>
+    	<column cell="P1" propertyName="annualizedMoney" nullAllowed="true"/>
+    	<column cell="Q1" propertyName="moneyDate" nullAllowed="true"/>
+    	<column cell="R1" propertyName="collectDays" nullAllowed="true"/>
+    	<column cell="S1" propertyName="depositRate" nullAllowed="true"/>
+    	<column cell="T1" propertyName="collectMoney" nullAllowed="true"/>
+    	<column cell="U1" propertyName="financialUserNo" nullAllowed="true"/>
+    	<column cell="V1" propertyName="source" nullAllowed="true">
             <mapping value="0" text="本人"></mapping>
             <mapping value="1" text="电销"></mapping>
             <mapping value="2" text="传单"></mapping>
@@ -59,21 +63,21 @@
             <mapping value="4" text="陌生"></mapping>
             <mapping value="5" text="老客户"></mapping>
     	</column>
-    	<column cell="V1" propertyName="birthday" nullAllowed="true"/>
-    	<column cell="W1" propertyName="mobile" nullAllowed="true"/>
-    	<column cell="X1" propertyName="phone" nullAllowed="true"/>
-    	<column cell="Y1" propertyName="identityNo" nullAllowed="true"/>
-    	<column cell="Z1" propertyName="bankNo" nullAllowed="true"/>
-    	<column cell="AA1" propertyName="bankName" nullAllowed="true"/>
-    	<column cell="AB1" propertyName="cardMoney" nullAllowed="true"/>
-    	<column cell="AC1" propertyName="cardLevel" nullAllowed="true">
+    	<column cell="W1" propertyName="birthday" nullAllowed="true"/>
+    	<column cell="X1" propertyName="mobile" nullAllowed="true"/>
+    	<column cell="Y1" propertyName="phone" nullAllowed="true"/>
+    	<column cell="Z1" propertyName="identityNo" nullAllowed="true"/>
+    	<column cell="AA1" propertyName="bankNo" nullAllowed="true"/>
+    	<column cell="AB1" propertyName="bankName" nullAllowed="true"/>
+    	<column cell="AC1" propertyName="cardMoney" nullAllowed="true"/>
+    	<column cell="AD1" propertyName="cardLevel" nullAllowed="true">
     		<mapping value="0" text="不做卡"></mapping>
     		<mapping value="1" text="贵宾卡"></mapping>
     		<mapping value="2" text="黄金卡"></mapping>
     		<mapping value="3" text="铂金卡"></mapping>
     	</column>
-    	<column cell="AD1" propertyName="cardNo" nullAllowed="true"/>
-    	<column cell="AE1" propertyName="comment" nullAllowed="true"/>
+    	<column cell="AE1" propertyName="cardNo" nullAllowed="true"/>
+    	<column cell="AF1" propertyName="comment" nullAllowed="true"/>
     </table>
     
     <table class="com.redcard.telephone.entity.TelephoneImportEntity" startRow="1">

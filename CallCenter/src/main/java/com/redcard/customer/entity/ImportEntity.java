@@ -18,6 +18,7 @@ public class ImportEntity implements Serializable {
 	private String productName;//产品名称
 	private String establishDate;//成立日期
 	private String valueDate;//起息日期
+    private Integer productType;//产品类型
 	
 	//产品明细
 	private String dueDate;//到期日期
@@ -228,4 +229,12 @@ public class ImportEntity implements Serializable {
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
 	}
+
+    public Integer getProductType() {
+        return productType;
+    }
+
+    public void setProductType(Integer productType) {
+        this.productType = productType;
+    }
 }

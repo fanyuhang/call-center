@@ -401,7 +401,7 @@ public class CommonController {
                                     customer.setFldSource(importEntity.getSource());
                                     customer.setFldBirthday(DateUtil.getDateByStr(importEntity.getBirthday()));
                                     customer.setFldIdentityNo(importEntity.getIdentityNo());
-                                    if (!StringUtils.isEmpty(importEntity.getFinancialUserNo())) {
+                                    if (StringUtils.isNotBlank(importEntity.getFinancialUserNo())) {
                                         List<User> listUser = userManager.findByUserName(importEntity.getFinancialUserNo());
                                         if (listUser != null && listUser.size() > 0)
                                             customer.setFldFinancialUserNo(listUser.get(0).getLoginName());
@@ -410,20 +410,33 @@ public class CommonController {
                                     customer.setFldCardNo(importEntity.getCardNo());
                                     customer.setFldComment(importEntity.getComment());
                                 } else {
-                                    if (!StringUtils.isEmpty(customer.getFldMobile())) {
+                                    if (StringUtils.isNotBlank(customer.getFldMobile())) {
                                         customer = customerManager.findByMobile(customer.getFldMobile());
+                                        if(customer==null){
+                                            logger.error("======="+customer+","+importEntity.getCardMoney()+","+JsonHelper.serialize(importEntity));
+                                            customer = customerManager.findByCustNameAndPhone(importEntity.getCustName(),importEntity.getPhone());
+                                        }
                                     } else {
                                         customer = customerManager.findByCustNameAndPhone(customer.getFldName(), customer.getFldPhone());
                                     }
                                 }
 
                                 //客户的瑞得卡金额是一个累加的金额
-                                if (!StringUtils.isEmpty(importEntity.getCardMoney())) {
+                                if (StringUtils.isNotBlank(importEntity.getCardMoney())) {
                                     if(null != customer && null != customer.getFldCardTotalMoney()){
                                         customer.setFldCardTotalMoney(Double.valueOf(importEntity.getCardMoney())+customer.getFldCardTotalMoney());
                                     }else{
+                                        logger.error("======="+customer+","+importEntity.getCardMoney()+","+JsonHelper.serialize(importEntity));
                                         customer.setFldCardTotalMoney(Double.valueOf(importEntity.getCardMoney()));
                                     }
+                                }
+
+                                if(StringUtils.isNotBlank(importEntity.getPhone())){
+                                    customer.setFldPhone(importEntity.getPhone());
+                                }
+
+                                if(StringUtils.isNotBlank(importEntity.getMobile())){
+                                    customer.setFldMobile(importEntity.getMobile());
                                 }
 
                                 customerManager.save(customer);
