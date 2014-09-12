@@ -43,9 +43,9 @@
     	<column cell="G1" propertyName="valueDate" nullAllowed="true"/>
     	<column cell="H1" propertyName="dueDate" nullAllowed="true"/>
     	<column cell="I1" propertyName="clearDays" nullAllowed="true"/>
-    	<column cell="J1" propertyName="minPurchaseMoney" nullAllowed="false"/>
+    	<column cell="J1" propertyName="purchaseMoney" nullAllowed="false"/>
     	<column cell="K1" propertyName="maxPurchaseMoney" nullAllowed="false"/>
-    	<column cell="L1" propertyName="purchaseMoney" nullAllowed="false"/>
+    	<column cell="L1" propertyName="minPurchaseMoney" nullAllowed="false"/>
     	<column cell="M1" propertyName="performanceRadio" nullAllowed="true"/>
     	<column cell="N1" propertyName="performanceMoney" nullAllowed="true"/>
     	<column cell="O1" propertyName="annualizedRate" nullAllowed="true"/>

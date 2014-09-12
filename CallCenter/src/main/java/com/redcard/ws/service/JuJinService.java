@@ -72,7 +72,7 @@ public class JuJinService implements IService {
                 customerContract.setMobile(contract.getCustomer().getFldMobile());
                 customerContract.setPhone(contract.getCustomer().getFldPhone());
                 customerContract.setProductType(AppContext.getInstance().getDictName(7, contract.getProductDetail().getCustomerProduct().getFldType()+""));
-                customerContract.setAnnualizedRate(contract.getProductDetail().getFldAnnualizedRate());
+                customerContract.setAnnualizedRate(contract.getProductDetail().getFldAnnualizedRate()*100);
                 customerContract.setAnnualizedMoney(contract.getFldAnnualizedMoney());
                 customerContract.setDeadLineUnit(AppContext.getInstance().getDictName(14, contract.getProductDetail().getFldDayUnit() + ""));
                 customerContract.setDueDate(DateFormatUtils.format(contract.getProductDetail().getFldDueDate(),"yyyy-MM-dd"));

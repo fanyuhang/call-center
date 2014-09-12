@@ -281,8 +281,8 @@ public class CommonController {
                                     if (listUser != null && listUser.size() > 0)
                                         contract.setFldFinancialUserNo(listUser.get(0).getLoginName());
                                 }
-                                contract.setFldDepositRate(Double.valueOf(importEntity.getDepositRate()) * 100);
-                                contract.setFldAnnualizedRate(Double.valueOf(importEntity.getAnnualizedRate()) * 100);
+                                contract.setFldDepositRate(Double.valueOf(importEntity.getDepositRate()));
+                                contract.setFldAnnualizedRate(Double.valueOf(importEntity.getAnnualizedRate()));
                                 contract.setFldPerformanceRadio(Double.valueOf(importEntity.getPerformanceRadio()));
                                 contract.setFldCardNo(importEntity.getCardNo());
                                 contractManager.saveOnly(contract);
@@ -348,6 +348,8 @@ public class CommonController {
                                 if (!(null != list && list.size() > 0)) {
                                     product.setFldId(EntityUtil.getId());
                                     product.setFldFullName(importEntity.getProductName());
+                                    product.setFldShortName(importEntity.getProductName());
+                                    product.setFldType(importEntity.getProductType());
                                     product.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
                                     product.setFldCreateDate(new Date());
                                     product.setFldOperateDate(new Date());
@@ -374,8 +376,8 @@ public class CommonController {
                                     productDetail.setFldDueDate(DateUtil.getDateByStr(importEntity.getDueDate()));
                                     productDetail.setFldClearDays(Integer.valueOf(importEntity.getClearDays()));
                                     productDetail.setFldPerformanceRadio(Double.valueOf(importEntity.getPerformanceRadio()));
-                                    productDetail.setFldAnnualizedRate(Double.valueOf(importEntity.getAnnualizedRate()) * 100);
-                                    productDetail.setFldDepositRate(Double.valueOf(importEntity.getDepositRate()) * 100);
+                                    productDetail.setFldAnnualizedRate(Double.valueOf(importEntity.getAnnualizedRate()));
+                                    productDetail.setFldDepositRate(Double.valueOf(importEntity.getDepositRate()));
                                     productDetail.setFldDayUnit(Constant.DAY_UNIT_DAY);
                                     productDetail.setFldMinPurchaseMoney(Double.valueOf(importEntity.getMinPurchaseMoney()));
                                     productDetail.setFldMaxPurchaseMoney(Double.valueOf(importEntity.getMaxPurchaseMoney()));
@@ -477,8 +479,8 @@ public class CommonController {
                                     if (listUser != null && listUser.size() > 0)
                                         contract.setFldFinancialUserNo(listUser.get(0).getLoginName());
                                 }
-                                contract.setFldDepositRate(Double.valueOf(importEntity.getDepositRate()) * 100);
-                                contract.setFldAnnualizedRate(Double.valueOf(importEntity.getAnnualizedRate()) * 100);
+                                contract.setFldDepositRate(Double.valueOf(importEntity.getDepositRate()));
+                                contract.setFldAnnualizedRate(Double.valueOf(importEntity.getAnnualizedRate()));
                                 contract.setFldPerformanceRadio(Double.valueOf(importEntity.getPerformanceRadio()));
                                 contract.setFldCardNo(importEntity.getCardNo());
                                 contractManager.saveOnly(contract);
