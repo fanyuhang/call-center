@@ -21,6 +21,7 @@
 <script type="text/javascript">
 	var sourceData = <sys:dictList type = "25" nullable="true"/>;
 	var assignStatusData = <sys:dictList type = "24" nullable="true"/>;
+	var resultStatusData = <sys:dictList type = "27"/>;
 	
 	//搜索表单应用ligerui样式
 	$("#formsearch").ligerForm({
@@ -46,14 +47,24 @@
 	                textField: "text",
 	                data: assignStatusData
 	            }, attr: {"op": "equal", "vt": "int"}
-        	}
+        	},
+        	{display: "跟踪结果", name: "fldResultStatus", newline: false, type: "select", cssClass: "field",
+	        	options: {
+	                valueFieldID: "fldResultStatus",
+	                valueField: "value",
+	                textField: "text",
+	                data: resultStatusData
+	            }, attr: {"op": "equal", "vt": "int"}
+        	},
+        	{display: "理财经理", name: "financialUser.userName", newline: true, type: "text", cssClass: "field"},
+        	{display: "客户经理", name: "callUser.userName", newline: false, type: "text", cssClass: "field"}
 	    ],
 	    toJSON: JSON2.stringify
 	});
 	
 	//列表结构
 	var grid = $("#maingrid").ligerGrid({
-	    checkbox: true,
+	    checkbox: false,
 	    rownumbers: true,
 	    delayLoad: true,
 	    columnWidth: 180,
@@ -69,6 +80,13 @@
             },
 	        {display: "最近通话时间", name: "fldLatestCallDate"},
 	        {display: "分配日期", name: "fldAssignDate"},
+	        {display: "跟踪结果", name: "fldResultStatus",
+                render:function(item) {
+                    return renderLabel(resultStatusData,item.fldResultStatus);
+                }
+            },
+            {display: "理财经理", name: "financialUserName"},
+            {display: "客户经理", name: "callUserName"},
 	        {display: "话务来源", name: "fldSource",
                 render:function(item) {
                     return renderLabel(sourceData,item.fldSource);
@@ -97,6 +115,22 @@
 	       		break;
 	        case "export":
 	        	f_export('<c:url value="/telephone/customer/export"/>');
+	        	break;
+	        case "dialHis":
+	        	if (grid.getSelectedRows().length > 1 || grid.getSelectedRows().length == 0) {
+	                LG.tip('请选择一行数据!');
+	                return;
+	            }
+	            var selected = grid.getSelected();
+	            top.f_addTab(null, '拨打记录明细', '<c:url value="/telephone/customer/dialHis"/>' + '?menuNo=${menuNo}&customerName='+selected.fldCustomerName+'&phone='+selected.fldPhone+'&mobile='+selected.fldMobile);
+	        	break;
+	        case "taskHis":
+	        	if (grid.getSelectedRows().length > 1 || grid.getSelectedRows().length == 0) {
+	                LG.tip('请选择一行数据!');
+	                return;
+	            }
+	            var selected = grid.getSelected();
+	            top.f_addTab(null, '任务记录明细', '<c:url value="/telephone/customer/tasklHis"/>' + '?menuNo=${menuNo}&customerId='+selected.fldId);
 	        	break;
 	    }
 	}

@@ -338,4 +338,16 @@ public class TelephoneRecord implements java.io.Serializable {
 	public void setCallId(String callId) {
 		this.callId = callId;
 	}
+	
+	@Transient
+	private Integer fldTaskStatus;
+
+	@Transient
+	public Integer getFldTaskStatus() {
+		return fldTaskStatus;
+	}
+
+	public void setFldTaskStatus(Integer fldTaskStatus) {
+		this.fldTaskStatus = fldTaskStatus;
+	}
 }

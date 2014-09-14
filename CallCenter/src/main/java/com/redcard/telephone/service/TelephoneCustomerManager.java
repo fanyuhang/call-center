@@ -21,7 +21,11 @@ import com.redcard.customer.dao.CustomerDao;
 import com.redcard.customer.entity.Customer;
 import com.redcard.customer.service.CustomerManager;
 import com.redcard.telephone.dao.TelephoneCustomerDao;
+import com.redcard.telephone.dao.TelephoneImportDetailDao;
+import com.redcard.telephone.dao.TelephoneTaskDao;
 import com.redcard.telephone.entity.TelephoneCustomer;
+import com.redcard.telephone.entity.TelephoneImportDetail;
+import com.redcard.telephone.entity.TelephoneTask;
 
 @Component
 @Transactional(readOnly = true)
@@ -34,6 +38,10 @@ public class TelephoneCustomerManager extends GenericPageHQLQuery<TelephoneCusto
     private CustomerDao customerDao;
 	@Autowired
 	private CalllogDao calllogDao;
+	@Autowired
+	private TelephoneImportDetailDao telephoneImportDetailDao;
+	@Autowired
+	private TelephoneTaskDao telephoneTaskDao;
 	
 	public Long countByPhoneOrMobile(String name,String phone,String mobile) {
 		Long rtn = 0L;
@@ -55,6 +63,18 @@ public class TelephoneCustomerManager extends GenericPageHQLQuery<TelephoneCusto
 	public Page<TelephoneCustomer> findAllTelephoneCustomer(GridPageRequest page, String where) {
         return (Page<TelephoneCustomer>) super.findAll(where, page);
     }
+	
+	public List<TelephoneTask> queryTaskHis(String custId) {
+		List<TelephoneTask> taskList = new ArrayList<TelephoneTask>();
+		List<TelephoneImportDetail> list = telephoneImportDetailDao.queryByCustId(custId);
+		
+		for(TelephoneImportDetail tmpTelephoneImportDetail : list) {
+			List<TelephoneTask> tmpTaskList = telephoneTaskDao.listByCustomerId(tmpTelephoneImportDetail.getFldId());		
+			taskList.addAll(tmpTaskList);
+		}
+		
+		return taskList;
+	}
 	
 	public TelephoneCustomer findByPhoneOrMobile(String name,String phone,String mobile) {
 		TelephoneCustomer telephoneCustomer = telephoneCustomerDao.findByPhone(name, phone);

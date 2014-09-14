@@ -83,6 +83,7 @@
         });
     });
     
+    var serviceWhere = '{"op":"and","rules":[{"field":"type","value":"20","op":"equal","type":"string"}]}';
 	$.ligerui.get("serviceUserNo").openSelect({
 	    grid:{
 	    	columnWidth: 255,
@@ -91,7 +92,7 @@
 	            {display:"登录名称", name:"loginName"},
 	            {display:"部门", name:"deptName"}
 	        ], pageSize:20,heightDiff:-10,
-	        url:'<c:url value="/security/user/list"/>', sortName:'userName', checkbox:false
+	        url:'<c:url value="/security/user/list"/>?where='+serviceWhere, sortName:'userName', checkbox:false
 	    },
 	    search:{
 	        fields:[
@@ -101,6 +102,7 @@
 	    valueField:'loginName', textField:'userName', top:30
 	});
 	
+	var serviceWhere = '{"op":"and","rules":[{"field":"type","value":"20","op":"equal","type":"string"}]}';
 	$.ligerui.get("newServiceUser").openSelect({
 	    grid:{
 	    	columnWidth: 255,
@@ -109,7 +111,7 @@
 	            {display:"登录名称", name:"loginName"},
 	            {display:"部门", name:"deptName"}
 	        ], pageSize:20,heightDiff:-10,
-	        url:'<c:url value="/security/user/list"/>', sortName:'userName', checkbox:false
+	        url:'<c:url value="/security/user/list"/>?where='+serviceWhere, sortName:'userName', checkbox:false
 	    },
 	    search:{
 	        fields:[

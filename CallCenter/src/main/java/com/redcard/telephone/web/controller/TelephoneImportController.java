@@ -242,11 +242,37 @@ public class TelephoneImportController {
             	telephoneImport.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
             	telephoneImportManager.save(telephoneImport);
             	
+            	//记录话单原始表
+            	List<TelephoneCustomer> telephoneCustomerList = new ArrayList<TelephoneCustomer>();
+            	int index = 0;
+            	for(TelephoneImportEntity telephoneImportEntity : list) {
+            		TelephoneCustomer telephoneCustomer = new TelephoneCustomer();
+            		telephoneCustomer.setFldId(EntityUtil.getId());
+            		telephoneCustomer.setFldCustomerName(telephoneImportEntity.getCustName());
+            		telephoneCustomer.setFldGender(telephoneImportEntity.getGender());
+            		telephoneCustomer.setFldMobile(telephoneImportEntity.getMobile());
+            		telephoneCustomer.setFldPhone(telephoneImportEntity.getTelephone());
+            		telephoneCustomer.setFldOperateDate(new Date());
+            		telephoneCustomer.setFldCreateDate(new Date());
+            		telephoneCustomer.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
+            		telephoneCustomer.setFldAssignStatus(Constant.TELEPHONE_ASSIGN_STATUS_UNASSIGN);//分配状态：未分配
+            		telephoneCustomer.setFldSource(Constant.TELEPHONE_CUSTOMER_SOURCE_IMPORT);//客户来源,话务导入
+            		
+            		telephoneCustomerList.add(telephoneCustomer);
+            		
+            		telephoneImportEntity.setFldTelephoneId(telephoneCustomer.getFldId());
+            		list.set(index, telephoneImportEntity);
+            		
+            		index++;
+            	}
+            	telephoneCustomerManager.save(telephoneCustomerList);
+            	
             	//记录话务导入明细表
             	List<TelephoneImportDetail> telephoneImportDetailList = new ArrayList<TelephoneImportDetail>();
             	for(TelephoneImportEntity telephoneImportEntity : list) {
             		TelephoneImportDetail telephoneImportDetail = new TelephoneImportDetail();
             		telephoneImportDetail.setFldId(EntityUtil.getId());
+            		telephoneImportDetail.setFldTelephoneId(telephoneImportEntity.getFldTelephoneId());
             		telephoneImportDetail.setFldImportId(telephoneImport.getFldId());
             		telephoneImportDetail.setFldCustomerName(telephoneImportEntity.getCustName());
             		telephoneImportDetail.setFldGender(telephoneImportEntity.getGender());
@@ -279,25 +305,6 @@ public class TelephoneImportController {
             		}
             	}
             	telephoneImportDetailManager.save(telephoneImportDetailList);
-            	
-            	//记录话单原始表
-            	List<TelephoneCustomer> telephoneCustomerList = new ArrayList<TelephoneCustomer>();
-            	for(TelephoneImportEntity telephoneImportEntity : list) {
-            		TelephoneCustomer telephoneCustomer = new TelephoneCustomer();
-            		telephoneCustomer.setFldId(EntityUtil.getId());
-            		telephoneCustomer.setFldCustomerName(telephoneImportEntity.getCustName());
-            		telephoneCustomer.setFldGender(telephoneImportEntity.getGender());
-            		telephoneCustomer.setFldMobile(telephoneImportEntity.getMobile());
-            		telephoneCustomer.setFldPhone(telephoneImportEntity.getTelephone());
-            		telephoneCustomer.setFldOperateDate(new Date());
-            		telephoneCustomer.setFldCreateDate(new Date());
-            		telephoneCustomer.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
-            		telephoneCustomer.setFldAssignStatus(Constant.TELEPHONE_ASSIGN_STATUS_UNASSIGN);//分配状态：未分配
-            		telephoneCustomer.setFldSource(Constant.TELEPHONE_CUSTOMER_SOURCE_IMPORT);//客户来源,话务导入
-            		
-            		telephoneCustomerList.add(telephoneCustomer);
-            	}
-            	telephoneCustomerManager.save(telephoneCustomerList);
             }
         } catch (Exception e) {
             log.error("导入文件失败, {}", e.getMessage());

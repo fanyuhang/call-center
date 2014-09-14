@@ -21,6 +21,7 @@ import com.common.core.grid.DataResponse;
 import com.common.core.grid.GridPageRequest;
 import com.common.security.util.SecurityUtil;
 import com.redcard.telephone.entity.TelephoneCustomer;
+import com.redcard.telephone.entity.TelephoneTask;
 import com.redcard.telephone.service.TelephoneCustomerManager;
 
 @Controller
@@ -37,10 +38,32 @@ public class TelephoneCustomerController {
         return "telephone/customer/list";
     }
 	
+	@RequestMapping(value = "dialHis")
+    public String dialHis(String menuNo, String customerName, String phone, String mobile,Model model) {
+        model.addAttribute("menuNo", menuNo);
+        model.addAttribute("customerName", customerName);
+        model.addAttribute("phone", phone);
+        model.addAttribute("mobile", mobile);
+        return "telephone/customer/dialHis";
+    }
+	
+	@RequestMapping(value = "tasklHis")
+    public String tasklHis(String menuNo, String customerId, Model model) {
+        model.addAttribute("menuNo", menuNo);
+        model.addAttribute("customerId", customerId);
+        return "telephone/customer/taskHis";
+    }
+	
 	@RequestMapping(value = "list")
     @ResponseBody
     public DataResponse<TelephoneCustomer> list(GridPageRequest pageRequest, String where) {
         return (new DataResponse<TelephoneCustomer>(telephoneCustomerManager.findAll(where,pageRequest)));
+    }
+	
+	@RequestMapping(value = "showTaskHis")
+    @ResponseBody
+    public DataResponse<TelephoneTask> showTaskHis(String custId) {
+		return (new DataResponse<TelephoneTask>(telephoneCustomerManager.queryTaskHis(custId)));
     }
 	
 	@RequestMapping(value = "ascustomer")

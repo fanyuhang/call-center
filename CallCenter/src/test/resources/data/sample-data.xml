@@ -390,12 +390,18 @@
 	<tblNode fldCode="010504" fldParent="0105" fldName="话单管理" fldDesc="" fldTarget="" 
 		fldIcon="/static/ligerUI/icons/32X32/contact.gif"
 		fldLink="/telephone/customer/init" fldType="1" fldPosition="4" />
-	<tblNode fldCode="01050401" fldParent="010504" fldName="转为客户" fldDesc="" fldTarget="ascustomer"
-		fldIcon="/static/ligerUI/icons/silkicons/user_add.png" 
+	<tblNode fldCode="01050401" fldParent="010504" fldName="查看拨打记录" fldDesc="" fldTarget="dialHis"
+		fldIcon="/static/ligerUI/icons/silkicons/clock.png" 
 		fldLink="/telephone/customer/ascustomer" fldType="2" fldPosition="1" />
-	<tblNode fldCode="01050402" fldParent="010504" fldName="导出" fldDesc="" fldTarget="export"
+	<tblNode fldCode="01050402" fldParent="010504" fldName="查看任务记录" fldDesc="" fldTarget="taskHis"
+		fldIcon="/static/ligerUI/icons/silkicons/date.png" 
+		fldLink="/telephone/customer/ascustomer" fldType="2" fldPosition="2" />
+	<tblNode fldCode="01050403" fldParent="010504" fldName="转为客户" fldDesc="" fldTarget="ascustomer"
+		fldIcon="/static/ligerUI/icons/silkicons/user_add.png" 
+		fldLink="/telephone/customer/ascustomer" fldType="2" fldPosition="3" />
+	<tblNode fldCode="01050404" fldParent="010504" fldName="导出" fldDesc="" fldTarget="export"
 		fldIcon="/static/ligerUI/icons/miniicons/action_save.gif"
-		fldLink="/telephone/customer/export" fldType="2" fldPosition="2"/>
+		fldLink="/telephone/customer/export" fldType="2" fldPosition="4"/>
 	
 	<tblNode fldCode="010505" fldParent="0105" fldName="我的外拨" fldDesc="" fldTarget="" 
 		fldIcon="/static/ligerUI/icons/32X32/free_for_job.gif"
@@ -414,6 +420,20 @@
 	<tblNode fldCode="01050702" fldParent="010507" fldName="查看" fldDesc="" fldTarget="view"
 		fldIcon="/static/ligerUI/icons/silkicons/application_view_detail.png"
 		fldLink="/telephone/record/view" fldType="2" fldPosition="2"/>
+		
+	<tblNode fldCode="010508" fldParent="0105" fldName="呼出审查" fldDesc="" fldTarget="" 
+		fldIcon="/static/ligerUI/icons/32X32/logout.gif"
+		fldLink="/telephone/record/outAuditInit" fldType="1" fldPosition="8" />
+	<tblNode fldCode="01050801" fldParent="010508" fldName="审查" fldDesc="" fldTarget="audit"
+		fldIcon="/static/ligerUI/icons/miniicons/icon_wand.gif"
+		fldLink="/telephone/record/outAudit" fldType="2" fldPosition="1"/>
+		
+	<tblNode fldCode="010509" fldParent="0105" fldName="呼入审查" fldDesc="" fldTarget="" 
+		fldIcon="/static/ligerUI/icons/32X32/login.gif"
+		fldLink="/telephone/record/inAuditInit" fldType="1" fldPosition="9" />
+	<tblNode fldCode="01050901" fldParent="010509" fldName="审查" fldDesc="" fldTarget="audit"
+		fldIcon="/static/ligerUI/icons/miniicons/icon_wand.gif"
+		fldLink="/telephone/record/inAudit" fldType="2" fldPosition="1"/>
 
     <tblNode fldCode="0106" fldParent="01" fldName="话务监控" fldDesc=""
              fldTarget="#" fldIcon="" fldLink="" fldType="1" fldPosition="6" />
@@ -669,6 +689,13 @@
 
  	<tblDictionary fldId="112" fldType="29" fldName="有效" fldValue="0" fldStatus="0" fldComment="邮件模板状态，有效" />
     <tblDictionary fldId="113" fldType="29" fldName="无效" fldValue="9" fldStatus="0" fldComment="邮件模板状态，无效" /> 
+    
+    <tblDictionary fldId="114" fldType="30" fldName="未完成" fldValue="0" fldStatus="0" fldComment="任务状态，未完成" />
+    <tblDictionary fldId="115" fldType="30" fldName="待跟踪" fldValue="1" fldStatus="0" fldComment="任务状态，待跟踪" /> 
+    <tblDictionary fldId="116" fldType="30" fldName="已完成" fldValue="9" fldStatus="0" fldComment="任务状态，已完成" />
+    
+    <tblDictionary fldId="117" fldType="31" fldName="待审查" fldValue="0" fldStatus="0" fldComment="审查状态，待审查" />
+    <tblDictionary fldId="118" fldType="31" fldName="已审查" fldValue="1" fldStatus="0" fldComment="审查状态，已审查" /> 
  
     <tblSysParameter fldId="1" fldName="SYS_ADMIN"
 		fldValue="1" fldUnit="" fldStatus="0" fldDisplay="1" fldComment="" />

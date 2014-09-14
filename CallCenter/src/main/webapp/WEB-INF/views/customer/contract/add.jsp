@@ -290,6 +290,7 @@
 	    valueField:'fldId', textField:'fldFullName', top:30
 	});
 	
+	var financialWhere = '{"op":"and","rules":[{"field":"type","value":"10","op":"equal","type":"string"}]}';
 	$.ligerui.get("financialUserNo").openSelect({
 	    grid:{
 	    	columnWidth: 255,
@@ -298,16 +299,17 @@
 	            {display:"登录名称", name:"loginName"},
 	            {display:"部门", name:"deptName"}
 	        ], pageSize:20,heightDiff:-10,
-	        url:'<c:url value="/security/user/list"/>', sortName:'userName', checkbox:false
+	        url:'<c:url value="/security/user/list"/>?where='+financialWhere, sortName:'userName', checkbox:false
 	    },
 	    search:{
 	        fields:[
 	            {display:"用户名称", name:"userName", newline:true, type:"text", cssClass:"field"}
 	        ]
 	    },
-	    valueField:'loginName', textField:'userName', top:30
+	    valueField:'loginName', textField:'userName', top:300
 	});
 
+	var customerWhere = '{"op":"and","rules":[{"field":"type","value":"30","op":"equal","type":"string"}]}';
     $.ligerui.get("customerUserNo").openSelect({
         grid:{
             columnWidth: 255,
@@ -316,16 +318,17 @@
                 {display:"登录名称", name:"loginName"},
                 {display:"部门", name:"deptName"}
             ], pageSize:20,heightDiff:-10,
-            url:'<c:url value="/security/user/list"/>', sortName:'userName', checkbox:false
+            url:'<c:url value="/security/user/list"/>?where='+customerWhere, sortName:'userName', checkbox:false
         },
         search:{
             fields:[
                 {display:"用户名称", name:"userName", newline:true, type:"text", cssClass:"field"}
             ]
         },
-        valueField:'loginName', textField:'userName', top:30
+        valueField:'loginName', textField:'userName', top:300
     });
 
+	var serviceWhere = '{"op":"and","rules":[{"field":"type","value":"20","op":"equal","type":"string"}]}';
     $.ligerui.get("serviceUserNo").openSelect({
         grid:{
             columnWidth: 255,
@@ -334,14 +337,14 @@
                 {display:"登录名称", name:"loginName"},
                 {display:"部门", name:"deptName"}
             ], pageSize:20,heightDiff:-10,
-            url:'<c:url value="/security/user/list"/>', sortName:'userName', checkbox:false
+            url:'<c:url value="/security/user/list"/>?where='+serviceWhere, sortName:'userName', checkbox:false
         },
         search:{
             fields:[
                 {display:"用户名称", name:"userName", newline:true, type:"text", cssClass:"field"}
             ]
         },
-        valueField:'loginName', textField:'userName', top:30
+        valueField:'loginName', textField:'userName', top:300
     });
 
     mainform.attr("action", '<c:url value="/customer/contract/save"/>');

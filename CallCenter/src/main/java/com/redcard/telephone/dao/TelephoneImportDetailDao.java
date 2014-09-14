@@ -13,4 +13,7 @@ public interface TelephoneImportDetailDao extends PagingAndSortingRepository<Tel
 	
 	@Query("select m from TelephoneImportDetail m where m.fldImportId = ?1")
 	public List<TelephoneImportDetail> queryByImportId(String id);
+	
+	@Query("select m from TelephoneImportDetail m where m.fldTelephoneId = ?1")
+	public List<TelephoneImportDetail> queryByCustId(String custId);
 }

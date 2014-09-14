@@ -7,6 +7,7 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -14,10 +15,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.common.Constant;
 import com.common.core.excel.ExcelExportUtil;
 import com.common.core.grid.AsyncResponse;
 import com.common.core.grid.DataResponse;
 import com.common.core.grid.GridPageRequest;
+import com.common.core.util.FilterGroupUtil;
 import com.common.security.util.SecurityUtil;
 import com.redcard.telephone.entity.TelephoneRecord;
 import com.redcard.telephone.service.TelephoneRecordManager;
@@ -37,10 +40,29 @@ public class RecordController {
         return "telephone/record/list";
     }
 	
+	@RequestMapping(value = "outAuditInit")
+    public String outAuditInit(String menuNo, Model model) {
+        model.addAttribute("menuNo", menuNo);
+        return "telephone/record/outAudit";
+    }
+	
+	@RequestMapping(value = "inAuditInit")
+    public String inAuditInit(String menuNo, Model model) {
+        model.addAttribute("menuNo", menuNo);
+        return "telephone/record/inAudit";
+    }
+	
 	@RequestMapping(value = "list")
     @ResponseBody
-    public DataResponse<TelephoneRecord> list(GridPageRequest pageRequest, String where) {
+    public DataResponse<TelephoneRecord> list(GridPageRequest pageRequest, String where, String type) {
         pageRequest.setSort("fldOperateDate", "desc");
+        if(!StringUtils.isEmpty(type)) {
+        	if(Constant.TELEPHONE_CALL_TYPE_OUT.toString().equals(type)) {
+        		where = FilterGroupUtil.addRule(where, "fldCallType", Constant.TELEPHONE_CALL_TYPE_OUT.toString(), "int", "equal");
+        	} else if(Constant.TELEPHONE_CALL_TYPE_IN.toString().equals(type)) {
+        		where = FilterGroupUtil.addRule(where, "fldCallType", Constant.TELEPHONE_CALL_TYPE_IN.toString(), "int", "equal");
+        	}
+        }
         return (new DataResponse<TelephoneRecord>(telephoneRecordManager.findAllTelephoneRecord(pageRequest, where)));
     }
 	
@@ -51,6 +73,15 @@ public class RecordController {
         model.addAttribute("telephoneRecord", telephoneRecord);
         model.addAttribute("phoneRecordAddress",phoneRecordAddress);
         return "telephone/record/view";
+    }
+	
+	@RequestMapping(value = "auditView")
+    public String auditView(String menuNo, String fldId, Model model) {
+		TelephoneRecord telephoneRecord = telephoneRecordManager.findById(fldId);
+        model.addAttribute("menuNo", menuNo);
+        model.addAttribute("telephoneRecord", telephoneRecord);
+        model.addAttribute("phoneRecordAddress",phoneRecordAddress);
+        return "telephone/record/auditView";
     }
 	
 	@SuppressWarnings("unchecked")

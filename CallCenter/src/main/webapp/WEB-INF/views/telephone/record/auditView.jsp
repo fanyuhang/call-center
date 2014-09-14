@@ -19,7 +19,7 @@
     LG.overrideGridLoading();
 
     //表单底部按钮
-    LG.setFormDefaultBtn(f_cancel);
+    LG.setFormDefaultBtn(f_cancel,f_save);
 
     var fields = [
         {display: "ID", name: "fldId", type: "hidden", attr: {value: "${telephoneRecord.fldId}", readonly: "readonly"}},
@@ -48,8 +48,12 @@
         {display: "通话时长(秒)", name: "fldCallLong", newline: false, type: "date", attr: {value: "${telephoneRecord.fldCallLong}", readonly: "readonly"}},
         {display: "通话开始时间", name: "fldCallBeginTime", newline: true, type: "text", attr: {value: "${telephoneRecord.fldCallBeginTime}", readonly: "readonly"}},
         {display: "通话结束时间", name: "fldCallEndTime", newline: true, type: "text", attr: {value: "${telephoneRecord.fldCallEndTime}", readonly: "readonly"}},
-        {display: "录音", name: "fldRecordFilePath", newline: false, type: "text", width: 71, fieldCss: "border:10px;"}
+        {display: "录音", name: "fldRecordFilePath", newline: false, type: "text", width: 71, fieldCss: "border:10px;"},
+        {display: "审查分数", name: "fldAuditFraction", newline: true, type: "text",attr:{value:"${telephoneRecord.fldAuditFraction}"}, validate: {required: true},
+            group: "<label style=white-space:nowrap;>审查信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'},
+        {display: "审查备注", name: "fldAuditComment",newline: false, type: "textarea"}
     ];
+    
 
     //创建表单结构
     var mainform = $("#mainform");
@@ -60,6 +64,8 @@
         fields: fields
     });
 
+    $("#fldAuditComment").text("${telephoneRecord.fldAuditComment}");
+    
     var panle = $("#fldRecordFilePath").parent();
     $("#fldRecordFilePath").parent().hide();
     $("#pauseRecord").hide();
@@ -76,6 +82,32 @@
         document.all.sound.src = '';
         $("#playRecord").show();
         $("#pauseRecord").hide();
+    }
+    
+    function f_save() {
+        var fldAuditFraction = $("#fldAuditFraction").val();
+        var fldAuditComment = $("#fldAuditComment").val();
+
+        if ($("#fldAuditFraction").val() == "") {
+            LG.showError("请录入审查分数!");
+            return;
+        }
+
+		var url = encodeURI('<c:url value="/telephone/record/saveAudit"/>' + '?id=${telephoneRecord.fldId}&taskId=${telephoneRecord.fldTaskId}' + '&fldAuditFraction=' + fldAuditFraction + '&fldAuditComment=' + fldAuditComment);
+        LG.ajax({
+            url: url,
+            data: {},
+            beforeSend: function () {
+
+            },
+            complete: function () {
+            },
+            success: function (message) {
+                f_cancel();
+            },
+            error: function (message) {
+            }
+        });
     }
 
     function f_cancel() {

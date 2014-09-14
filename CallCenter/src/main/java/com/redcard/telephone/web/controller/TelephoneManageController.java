@@ -1,7 +1,13 @@
 package com.redcard.telephone.web.controller;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,10 +17,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.common.core.excel.ExcelExportUtil;
 import com.common.core.grid.AsyncResponse;
 import com.common.core.grid.DataResponse;
 import com.common.core.grid.GridPageRequest;
 import com.common.core.util.FilterGroupUtil;
+import com.common.security.util.SecurityUtil;
+import com.redcard.customer.entity.Customer;
 import com.redcard.telephone.entity.TelephoneAssignDetail;
 import com.redcard.telephone.entity.TelephoneExchange;
 import com.redcard.telephone.entity.TelephoneTask;
@@ -101,6 +110,27 @@ public class TelephoneManageController {
     public AsyncResponse saveRecover(TelephoneExchange telephoneExchange) {
         AsyncResponse result = new AsyncResponse(false, "话务回收成功");
         telephoneExchangeManager.saveRecover(telephoneExchange);
+        return result;
+    }
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "export")
+    @ResponseBody
+    public AsyncResponse export(String fldAssignDetailId, HttpServletRequest request, HttpServletResponse response) {
+        AsyncResponse result = new AsyncResponse(false, "导出任务明细列表成功");
+        try {
+            ExcelExportUtil<TelephoneTask> listToExcel = new ExcelExportUtil<TelephoneTask>(telephoneTaskManager.listByAssignDtlId(fldAssignDetailId));
+            String date = new SimpleDateFormat("yyyyMMddHHmmssS").format(new Date());
+            String reportPath = request.getSession().getServletContext().getRealPath("/") + "/export/";
+            String fileName = SecurityUtil.getCurrentUserId() + "_" + date + ".xls";
+            File pathFile = new File(reportPath);
+            if (!pathFile.exists())
+                pathFile.mkdirs();
+            result.getData().add(listToExcel.generate(reportPath + fileName));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new AsyncResponse(true, "系统内部错误");
+        }
         return result;
     }
 }

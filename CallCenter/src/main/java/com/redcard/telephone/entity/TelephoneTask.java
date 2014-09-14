@@ -17,6 +17,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 import com.common.core.util.JsonDateSerializer;
+import com.common.core.util.JsonTimestampSerializer;
 import com.common.security.entity.User;
 import com.common.security.util.SecurityUtil;
 
@@ -147,6 +148,7 @@ public class TelephoneTask implements java.io.Serializable {
 	}
 
 	@Column(name = "FLDASSIGNDATE")
+	@JsonSerialize(using = JsonDateSerializer.class)
 	public Date getFldAssignDate() {
 		return this.fldAssignDate;
 	}
@@ -166,6 +168,7 @@ public class TelephoneTask implements java.io.Serializable {
 	}
 
 	@Column(name = "FLDCALLDATE")
+	@JsonSerialize(using = JsonTimestampSerializer.class)
 	public Date getFldCallDate() {
 		return this.fldCallDate;
 	}
@@ -312,6 +315,8 @@ public class TelephoneTask implements java.io.Serializable {
 	public void setCallUser(User callUser) {
 		this.callUser = callUser;
 	}
+	
+	private String callUserName;
 	
 	@Transient
 	public String getCallUserName() {

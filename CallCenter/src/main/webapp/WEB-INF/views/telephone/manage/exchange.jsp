@@ -3,6 +3,8 @@
 <body style="padding-bottom:31px;">
 <form:form id="mainform" name="mainform" method="post"></form:form>
 <script type="text/javascript">
+	var userTypeData = <sys:dictList type = "19"/>;
+	
 	//覆盖本页面grid的loading效果
 	LG.overrideGridLoading();
 
@@ -104,7 +106,16 @@
 	    },
 	    search:{
 	        fields:[
-	            {display:"用户名称", name:"userName", newline:true, type:"text", cssClass:"field"}
+	            {display:"用户名称", name:"userName", newline:true, type:"text", cssClass:"field"},
+	            {display:"用户类型",name:"type",newline:false,type:"select",comboboxName:"userType",cssClass: "field",
+	            	options:{
+	                    valueField: 'value',
+	                    textField: 'text',
+	                    isMultiSelect:false,
+	                    data:userTypeData,
+	                    valueFieldID:"type"
+	                }
+	            }
 	        ]
 	    },
 	    valueField:'loginName', textField:'userName', top:30
@@ -122,7 +133,16 @@
 	    },
 	    search:{
 	        fields:[
-	            {display:"用户名称", name:"userName", newline:true, type:"text", cssClass:"field"}
+	            {display:"用户名称", name:"userName", newline:true, type:"text", cssClass:"field"},
+	            {display:"用户类型",name:"type",newline:false,type:"select",comboboxName:"userType",cssClass: "field",
+	            	options:{
+	                    valueField: 'value',
+	                    textField: 'text',
+	                    isMultiSelect:false,
+	                    data:userTypeData,
+	                    valueFieldID:"type"
+	                }
+	            }
 	        ]
 	    },
 	    valueField:'loginName', textField:'userName', top:30

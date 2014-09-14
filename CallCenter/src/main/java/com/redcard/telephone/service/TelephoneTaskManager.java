@@ -1,6 +1,7 @@
 package com.redcard.telephone.service;
 
 import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +21,12 @@ import com.redcard.customer.dao.CustomerDao;
 import com.redcard.customer.entity.Customer;
 import com.redcard.telephone.dao.TelephoneAssignDetailDao;
 import com.redcard.telephone.dao.TelephoneCustomerDao;
+import com.redcard.telephone.dao.TelephoneImportDetailDao;
 import com.redcard.telephone.dao.TelephoneRecordDao;
 import com.redcard.telephone.dao.TelephoneTaskDao;
 import com.redcard.telephone.entity.TelephoneAssignDetail;
 import com.redcard.telephone.entity.TelephoneCustomer;
+import com.redcard.telephone.entity.TelephoneImportDetail;
 import com.redcard.telephone.entity.TelephoneRecord;
 import com.redcard.telephone.entity.TelephoneTask;
 
@@ -44,6 +47,8 @@ public class TelephoneTaskManager extends GenericPageHQLQuery<TelephoneTask> {
 	private CalllogDao calllogDao;
 	@Autowired
 	private TalklogDao talklogDao;
+	@Autowired
+	private TelephoneImportDetailDao telephoneImportDetailDao;
 	
 	public long getCount() {
 		return telephoneTaskDao.count();
@@ -53,6 +58,10 @@ public class TelephoneTaskManager extends GenericPageHQLQuery<TelephoneTask> {
         return (Page<TelephoneTask>) super.findAll(where, page);
     }
 	
+	public List<TelephoneTask> listByAssignDtlId(String assignDtlId) {
+		return telephoneTaskDao.listByAssignDetailId(assignDtlId);
+	}
+	
 	@Transactional(readOnly = false)
 	public void save(TelephoneRecord telephoneRecord) {
 		TelephoneTask oldTelephoneTask = telephoneTaskDao.findOne(telephoneRecord.getFldTaskId());
@@ -61,6 +70,7 @@ public class TelephoneTaskManager extends GenericPageHQLQuery<TelephoneTask> {
 		oldTelephoneTask.setFldResultType(telephoneRecord.getFldResultType());
 		oldTelephoneTask.setFldOperateDate(new Date());
 		oldTelephoneTask.setFldCallStatus(Constant.TASK_CALL_STATUS_ED);
+		oldTelephoneTask.setFldTaskStatus(telephoneRecord.getFldTaskStatus());
 		telephoneTaskDao.save(oldTelephoneTask);
 		
 		telephoneRecord.setFldCustomerName(oldTelephoneTask.getFldCustomerName());
@@ -89,6 +99,12 @@ public class TelephoneTaskManager extends GenericPageHQLQuery<TelephoneTask> {
 			telephoneAssignDetail.setFldFinishNumber(telephoneAssignDetail.getFldFinishNumber() + 1);
 			telephoneAssignDetailDao.save(telephoneAssignDetail);
 		}
+		
+		//更新话单原始表中的最近拨打时间
+		TelephoneImportDetail telephoneImportDetail = telephoneImportDetailDao.findOne(oldTelephoneTask.getFldCustomerId());
+		TelephoneCustomer telephoneCustomer = telephoneCustomerDao.findOne(telephoneImportDetail.getFldTelephoneId());
+		telephoneCustomer.setFldLatestCallDate(telephoneRecord.getFldCallDate());
+		telephoneCustomerDao.save(telephoneCustomer);
 	}
 	
 	@Transactional(readOnly = false)

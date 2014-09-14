@@ -107,4 +107,25 @@
     	<column cell="F1" propertyName="fldCustomerName" columnName="客户姓名" nullAllowed="true"></column>
     	<column cell="G1" propertyName="fldComment" columnName="备注" nullAllowed="true"></column>
     </table>
+    
+    <table class="com.redcard.telephone.entity.TelephoneTask" startRow="1">
+    	<column cell="A1" propertyName="callUserName" columnName="话务员" nullAllowed="true"></column>
+    	<column cell="B1" propertyName="fldCustomerName" columnName="客户姓名" nullAllowed="true"></column>
+    	<column cell="C1" propertyName="fldTaskDate" columnName="任务时间" nullAllowed="true"></column>
+    	<column cell="D1" propertyName="fldCallStatus" columnName="拨打状态" nullAllowed="true">
+    		<mapping value="0" text="未拨打"></mapping>
+    		<mapping value="1" text="已拨打"></mapping>
+    	</column>
+    	<column cell="E1" propertyName="fldResultType" columnName="任务结果" nullAllowed="true">
+    		<mapping value="0" text="未知"></mapping>
+    		<mapping value="1" text="错号"></mapping>
+    		<mapping value="2" text="空号"></mapping>
+    		<mapping value="3" text="待跟踪"></mapping>
+    		<mapping value="4" text="有意向"></mapping>
+    		<mapping value="9" text="其他"></mapping>
+    	</column>
+    	<column cell="F1" propertyName="fldComment" columnName="任务备注" nullAllowed="true"></column>
+    	<column cell="G1" propertyName="fldAuditFraction" columnName="审查分数" nullAllowed="true"></column>
+    	<column cell="H1" propertyName="fldAuditComment" columnName="审查备注" nullAllowed="true"></column>
+    </table>
 </tables>

@@ -292,4 +292,22 @@ public class TelephoneCustomer implements java.io.Serializable {
     public String getFinancialUserName() {
         return financialUser!=null ? financialUser.getUserName() : "";
     }
+    
+    private User callUser;
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "FLDCALLUSERNO", referencedColumnName="FLDLOGINNAME", insertable = false, updatable = false)
+	public User getCallUser() {
+		return callUser;
+	}
+
+	public void setCallUser(User callUser) {
+		this.callUser = callUser;
+	}
+	
+	@Transient
+	public String getCallUserName() {
+		return callUser!=null ? callUser.getUserName() : "";
+	}
 }

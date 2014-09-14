@@ -90,6 +90,7 @@
 	var cardLevelData = <sys:dictList type = "13"/>;
 	var callTypeData = <sys:dictList type = "28"/>;
 	var callStatusData = <sys:dictList type = "23"/>;
+	var taskStatusData = <sys:dictList type = "30"/>;
 
 	var layout = $("#layout").ligerLayout({
     bottomHeight:$(window).height()*0.50,
@@ -139,6 +140,7 @@
          		   return renderLabel(resultTypeData,item.fldResultType);
          	   }
          	 },
+         	 {display:"备注",name:"fldComment"},
          	 {display:"fldAssignDetailId",name:"fldAssignDetailId",hide:1,width:1}
     ], 
     width:'99%', height:190, rowHeight:20, fixedCellHeight:true,
@@ -179,6 +181,7 @@
 	    toJSON: JSON2.stringify
 		});
 	
+	var financialWhere = '{"op":"and","rules":[{"field":"type","value":"10","op":"equal","type":"string"}]}';
 	$.ligerui.get("financialUserNo").openSelect({
 	    grid: {
 	        rownumbers: true,
@@ -189,7 +192,7 @@
 	            {display: "登录名称", name: "loginName"},
 	            {display: "部门", name: "deptName"}
 	        ], pageSize: 20, heightDiff: -10,
-	        url: '<c:url value="/security/user/list"/>', sortName: 'userName'
+	        url: '<c:url value="/security/user/list"/>?where='+financialWhere, sortName: 'userName'
 	    },
 	    search: {
 	        fields: [
@@ -507,6 +510,12 @@
 			return;
 		}
 		
+		var fldTaskStatus = $("#fldTaskStatus").val();
+		if("" == fldTaskStatus) {
+			LG.showError("请选择任务状态");
+			return;
+		}
+		
 		var data = {};
 		data.fldTaskId = taskId;
 		data.fldResultType = fldResultType;
@@ -516,6 +525,7 @@
 		data.fldComment = fldComment;
 		data.fldAssignDetailId = $("#fldAssignDetailId").val();
 		data.callId = callId;
+		data.fldTaskStatus = fldTaskStatus;
 		
 		LG.ajax({
       url: '<c:url value="/telephone/dial/save"/>',
@@ -552,6 +562,16 @@
                     isMultiSelect:false,
                     data: resultTypeData,
                     valueFieldID:"fldResultType"
+            	}
+            },
+            {display:"任务状态", name:"fldTaskStatus", newline: false, type:"select", validate:{required:true},comboboxName:"taskStatus",
+            	options:{
+                    valueField: 'value',
+                    textField: 'text',
+                    isMultiSelect:false,
+                    data: taskStatusData,
+                    initValue:'9',
+                    valueFieldID:"fldTaskStatus"
             	}
             },
             {display:"备注",name:"fldComment",newline:true,type:"textarea", width: 400, attr:{"cols":45},validate:{required:true}}

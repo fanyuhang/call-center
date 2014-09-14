@@ -5,6 +5,19 @@
 <div id="maingrid"></div>
 <script type="text/javascript">
 	var callStatusData = <sys:dictList type = "23" nullable="true"/>;
+	var resultTypeData = <sys:dictList type = "27"/>;
+	
+	var toolbarOptions = {
+    	items:[
+        {
+            id:'export', text:'下载',
+            img:'<c:url value="/static/ligerUI/icons/miniicons/action_save.gif"/>',
+            click:function (item) {
+                exportDtl();
+            }
+        }
+    	]
+	};
 	
 	//列表结构
 	var grid = $("#maingrid").ligerGrid({
@@ -21,9 +34,19 @@
                     return renderLabel(callStatusData, item.fldCallStatus);
                 }
             },
-	    ], dataAction: 'server', pageSize: 20, toolbar: {}, url: '<c:url value="/telephone/manage/listTaskDetail"/>'+'?fldAssignDetailId=${assignDetailId}',
+            {display:"任务结果",name:"fldResultType",render:function(item){
+	        	return renderLabel(resultTypeData,item.fldResultType);
+	        }},
+	        {display:"任务备注",name:"fldComment"},
+	        {display:"审查分数",name:"fldAuditFraction"},
+	        {display:"审查备注",name:"fldAuditComment"}
+	    ], dataAction: 'server', pageSize: 20, toolbar: toolbarOptions, url: '<c:url value="/telephone/manage/listTaskDetail"/>?fldAssignDetailId=${assignDetailId}',
 	    width: '98%', height: '98%', toJSON: JSON2.stringify, onReload: f_reload
 	});
+	
+	function exportDtl() {
+		f_export('<c:url value="/telephone/manage/export"/>?fldAssignDetailId=${assignDetailId}');
+	}
 
 	function f_reload() {
 	    grid.loadData();

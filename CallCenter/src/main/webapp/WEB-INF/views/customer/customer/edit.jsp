@@ -66,6 +66,7 @@
         ]
     });
     
+    var financialWhere = '{"op":"and","rules":[{"field":"type","value":"10","op":"equal","type":"string"}]}';
     $.ligerui.get("financialUserNo").openSelect({
 	    grid:{
 	    	columnWidth: 255,
@@ -74,7 +75,7 @@
 	            {display:"登录名称", name:"loginName"},
 	            {display:"部门", name:"deptName"}
 	        ], pageSize:20,heightDiff:-10,
-	        url:'<c:url value="/security/user/list"/>', sortName:'userName', checkbox:false
+	        url:'<c:url value="/security/user/list"/>?where='+financialWhere, sortName:'userName', checkbox:false
 	    },
 	    search:{
 	        fields:[
@@ -85,6 +86,7 @@
 	});
 	$.ligerui.get("financialUserNo")._changeValue('${customer.fldFinancialUserNo}', '${customer.financialUserName}');
 	
+	var customerWhere = '{"op":"and","rules":[{"field":"type","value":"30","op":"equal","type":"string"}]}';
 	$.ligerui.get("customerUserNo").openSelect({
 	    grid:{
 	    	columnWidth: 255,
@@ -93,7 +95,7 @@
 	            {display:"登录名称", name:"loginName"},
 	            {display:"部门", name:"deptName"}
 	        ], pageSize:20,heightDiff:-10,
-	        url:'<c:url value="/security/user/list"/>', sortName:'userName', checkbox:false
+	        url:'<c:url value="/security/user/list"/>?where='+customerWhere, sortName:'userName', checkbox:false
 	    },
 	    search:{
 	        fields:[
@@ -104,6 +106,7 @@
 	});
 	$.ligerui.get("customerUserNo")._changeValue('${customer.fldCustomerUserNo}', '${customer.customerUserName}');
 	
+	var serviceWhere = '{"op":"and","rules":[{"field":"type","value":"20","op":"equal","type":"string"}]}';
 	$.ligerui.get("serviceUserNo").openSelect({
 	    grid:{
 	    	columnWidth: 255,
@@ -112,7 +115,7 @@
 	            {display:"登录名称", name:"loginName"},
 	            {display:"部门", name:"deptName"}
 	        ], pageSize:20,heightDiff:-10,
-	        url:'<c:url value="/security/user/list"/>', sortName:'userName', checkbox:false
+	        url:'<c:url value="/security/user/list"/>?where='+serviceWhere, sortName:'userName', checkbox:false
 	    },
 	    search:{
 	        fields:[

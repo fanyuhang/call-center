@@ -156,6 +156,7 @@
 	    toJSON: JSON2.stringify
 		});
 	
+	var financialWhere = '{"op":"and","rules":[{"field":"type","value":"10","op":"equal","type":"string"}]}';
 	$.ligerui.get("financialUserNo").openSelect({
 	    grid: {
 	        rownumbers: true,
@@ -166,7 +167,7 @@
 	            {display: "登录名称", name: "loginName"},
 	            {display: "部门", name: "deptName"}
 	        ], pageSize: 20, heightDiff: -10,
-	        url: '<c:url value="/security/user/list"/>', sortName: 'userName'
+	        url: '<c:url value="/security/user/list"/>?where='+financialWhere, sortName: 'userName'
 	    },
 	    search: {
 	        fields: [

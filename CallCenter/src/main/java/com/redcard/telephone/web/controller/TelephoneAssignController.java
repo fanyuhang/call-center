@@ -17,6 +17,7 @@ import com.common.core.grid.DataResponse;
 import com.common.core.grid.GridPageRequest;
 import com.redcard.telephone.entity.TelephoneAssign;
 import com.redcard.telephone.entity.TelephoneAssignDetail;
+import com.redcard.telephone.entity.TelephoneTask;
 import com.redcard.telephone.service.TelephoneAssignDetailManager;
 import com.redcard.telephone.service.TelephoneAssignManager;
 import com.redcard.telephone.service.TelephoneCustomerManager;
@@ -118,6 +119,26 @@ public class TelephoneAssignController {
 		model.addAttribute("menuNo", menuNo);
 		model.addAttribute("detailId", id);
         return "telephone/assign/detail";
+    }
+    
+    @RequestMapping(value = "viewDtlTask")
+    public String viewDtlTask(String dtlId, String menuNo, Model model) {
+		model.addAttribute("menuNo", menuNo);
+		model.addAttribute("detailId", dtlId);
+        return "telephone/assign/viewTask";
+    }
+    
+    @RequestMapping(value = "viewDialTask")
+    public String viewDialTask(String dtlId, String menuNo, Model model) {
+		model.addAttribute("menuNo", menuNo);
+		model.addAttribute("detailId", dtlId);
+        return "telephone/assign/viewDialTask";
+    }
+	
+	@RequestMapping(value = "listTaskByAssignDtlid")
+    @ResponseBody
+    public DataResponse<TelephoneTask> listTaskByAssignDtlid(String fldAssignDetailId) {
+        return (new DataResponse<TelephoneTask>(telephoneAssignDetailManager.listTaskByAssignDetailId(fldAssignDetailId)));
     }
 	
 	@RequestMapping(value = "listDetail")
