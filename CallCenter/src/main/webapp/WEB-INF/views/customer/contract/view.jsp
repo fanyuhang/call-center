@@ -20,12 +20,14 @@
         fields: [
             {display: "合同编号", name: "fldId", newline: true, type: "text", validate: {required: true, maxlength: 40}, attr:{value:"${customerContract.fldId}", readonly: "readonly"},group: "<label style=white-space:nowrap;>合同信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'},
             {display: "合同签订日期", name: "fldSignDate", newline: false, type: "date", validate: {required: true}, attr:{value:"<fmt:formatDate value='${customerContract.fldSignDate}' pattern='yyyy-MM-dd'/>",readonly: "readonly"},format:'yyyy-MM-dd',editor:{ type:'date' }},
+            {display: "成立日期", name: "fldEstablishDate", newline: true, type: "date", validate: {required: true}, attr:{value:"<fmt:formatDate value='${customerProduct.fldEstablishDate}' pattern='yyyy-MM-dd'/>",readonly: "readonly"},format:'yyyy-MM-dd',editor:{ type:'date' }},
+            {display: "起息日期", name: "fldValueDate", newline: false, type: "date", validate: {required: true}, attr:{value:"<fmt:formatDate value='${customerProduct.fldValueDate}' pattern='yyyy-MM-dd'/>",readonly: "readonly"},format:'yyyy-MM-dd',editor:{ type:'date' }}
             {display: "购买姓名",name: "fldCustomerId", newline: true, type: "select", validate: {required: true},
                 comboboxName: "customerName", options: {valueFieldID: "customerName"}},
             {display: "购买产品", name: "fldProductDetailId", newline: true, type: "select", comboboxName:"productId",
                 options:{valueFieldID:'productId'}, validate: {required: true},group: "<label style=white-space:nowrap;>购买产品</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'},
-            {display: "成立日期", name: "fldEstablishDate", newline: true, type: "text", attr:{value:"${customerContract.establishDate}",readonly: "readonly"}},
-            {display: "实际天/月数", name: "fldClearDays", newline: false, type: "text", attr:{value:"${customerContract.clearDays}",readonly: "readonly"}},
+            {display: "实际天/月数", name: "fldClearDays", newline: true, type: "text", attr:{value:"${customerContract.clearDays}",readonly: "readonly"}},
+            {display: "到期日期", name: "fldDueDate", newline: false, attr:{value:"<fmt:formatDate value='${customerProduct.fldDueDate}' pattern='yyyy-MM-dd'/>",readonly: "readonly"}, type: "date", validate: {required: true}},
             {display: "年化收益率(%)", name: "fldAnnualizedRate", newline: true, type: "text", attr:{value:"${customerContract.fldAnnualizedRate}",readonly: "readonly"}},
             {display: "年化7天存款率(%)", name: "fldDepositRate", newline: false, type: "text", attr:{value:"${customerContract.fldDepositRate}",readonly: "readonly"}},
             {display: "购买金额(万元)", name: "fldPurchaseMoney", newline: true, validate: {required: true}, type: "text",attr:{value:"${customerContract.fldPurchaseMoney}"},group: "<label style=white-space:nowrap;>购买金额</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'},

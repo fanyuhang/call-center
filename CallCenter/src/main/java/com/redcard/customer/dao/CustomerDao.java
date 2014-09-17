@@ -13,6 +13,9 @@ public interface CustomerDao extends PagingAndSortingRepository<Customer,String>
 	
 	@Query("select count(m) from Customer m where m.fldMobile = ?1")
     public Long countByMobile(String mobile);
+
+    @Query("select count(m) from Customer m where m.fldIdentityNo = ?1")
+    public Long countByIdentityNo(String fldIdentityNo);
 	
 	@Query("select count(m) from Customer m where m.fldServiceUserNo = ?1")
     public Long countByServiceUserNo(String serviceUserNo);
@@ -34,4 +37,10 @@ public interface CustomerDao extends PagingAndSortingRepository<Customer,String>
     
     @Query("select c from Customer c where c.fldServiceUserNo = ?1 ")
     public List<Customer> findByServiceUser(String serviceUserNo);
-}
+
+    @Query("select c from Customer c where c.fldIdentityNo = ?1")
+    public Customer findByIdentityNo(String identityNo);
+
+    @Query("select c from Customer c where c.fldName = ?1")
+    public Customer findByCustName(String customerName);
+    }

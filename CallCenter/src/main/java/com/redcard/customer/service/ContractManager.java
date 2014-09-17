@@ -53,7 +53,7 @@ public class ContractManager extends GenericPageHQLQuery<CustomerContract> {
         String fldProductId = customerProductDetail.getFldProductId();
         customerContract.setFldProductId(fldProductId);
         //更新是否到期
-        if (DateUtils.truncatedCompareTo(customerProductDetail.getFldDueDate(), new Date(), Calendar.DATE) > 0) {
+        if (DateUtils.truncatedCompareTo(customerContract.getFldDueDate(), new Date(), Calendar.DATE) > 0) {
             customerContract.setFldFinishStatus(Constant.CONTRACT_FINISH_STATUS_NO);
         } else {
             customerContract.setFldFinishStatus(Constant.CONTRACT_FINISH_STATUS_YES);

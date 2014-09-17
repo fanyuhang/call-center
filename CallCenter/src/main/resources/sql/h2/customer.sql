@@ -72,6 +72,9 @@ CREATE TABLE tblCustomerContract (
   fldOperateDate     DATETIME      NULL,
   fldCreateUserNo    NVARCHAR(32)  NULL,
   fldCreateDate      DATETIME      NULL,
+  fldEstablishDate DATETIME      NULL,
+  fldValueDate     DATETIME      NULL,
+  fldDueDate       DATETIME     NULL,
   CONSTRAINT PK_TBLCUSTOMERCONTRACT PRIMARY KEY (fldId)
 );
 
@@ -132,8 +135,6 @@ CREATE TABLE tblCustomerProduct (
   fldShortName     NVARCHAR(256) NULL,
   fldDescription   NVARCHAR(256) NULL,
   fldType              int                  null,
-  fldEstablishDate DATETIME      NULL,
-  fldValueDate     DATETIME      NULL,
   fldComment       NVARCHAR(256) NULL,
   fldStatus        INT           NULL,
   fldOperateUserNo NVARCHAR(32)  NULL,
@@ -149,7 +150,6 @@ CREATE TABLE tblCustomerProductDetail (
   fldId            NVARCHAR(40) NULL,
   fldProductId     NVARCHAR(40) NULL,
   fldClearDays     INT          NULL,
-  fldDueDate       DATETIME     NULL,
   fldDayUnit           int                  null,
   fldMinPurchaseMoney  decimal(20,2) NULL,
   fldMaxPurchaseMoney  decimal(20,2) NULL,

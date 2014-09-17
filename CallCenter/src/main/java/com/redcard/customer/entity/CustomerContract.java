@@ -64,6 +64,12 @@ public class CustomerContract implements java.io.Serializable {
     private String fldCreateUserNo;
     private Date fldCreateDate;
 
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date fldEstablishDate;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date fldValueDate;
+    private Date fldDueDate;
+
     // Constructors
 
     /**
@@ -537,12 +543,6 @@ public class CustomerContract implements java.io.Serializable {
         this.customerProduct = customerProduct;
     }
 
-    @Transient
-    @JsonSerialize(using = JsonDateSerializer.class)
-    public Date getEstablishDate() {
-        return customerProduct.getFldEstablishDate();
-    }
-
     private CustomerProductDetail customerProductDetail;
 
     @JsonIgnore
@@ -564,12 +564,6 @@ public class CustomerContract implements java.io.Serializable {
     @Transient
     public Integer getDayUnit() {
         return customerProductDetail.getFldDayUnit();
-    }
-
-    @Transient
-    @JsonSerialize(using = JsonDateSerializer.class)
-    public Date getDueDate() {
-        return customerProductDetail.getFldDueDate();
     }
 
     protected User customerUser;
@@ -608,4 +602,33 @@ public class CustomerContract implements java.io.Serializable {
         return serviceUser!=null ? serviceUser.getUserName() : "";
     }
 
+    @JsonSerialize(using = JsonDateSerializer.class)
+    @Column(name = "FLDESTABLISHDATE")
+    public Date getFldEstablishDate() {
+        return fldEstablishDate;
+    }
+
+    public void setFldEstablishDate(Date fldEstablishDate) {
+        this.fldEstablishDate = fldEstablishDate;
+    }
+
+    @JsonSerialize(using = JsonDateSerializer.class)
+    @Column(name = "FLDVALUEDATE")
+    public Date getFldValueDate() {
+        return fldValueDate;
+    }
+
+    public void setFldValueDate(Date fldValueDate) {
+        this.fldValueDate = fldValueDate;
+    }
+
+    @Column(name = "FLDDUEDATE")
+    @JsonSerialize(using = JsonDateSerializer.class)
+    public Date getFldDueDate() {
+        return fldDueDate;
+    }
+
+    public void setFldDueDate(Date fldDueDate) {
+        this.fldDueDate = fldDueDate;
+    }
 }

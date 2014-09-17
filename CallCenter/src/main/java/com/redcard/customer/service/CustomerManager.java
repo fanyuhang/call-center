@@ -46,6 +46,10 @@ public class CustomerManager extends GenericPageHQLQuery<Customer> {
     public Customer findByCustNameAndPhone(String customerName, String phone) {
         return customerDao.findByCustNameAndPhone(customerName, phone);
     }
+
+    public Customer findByIdentityNo(String identityNo){
+        return customerDao.findByIdentityNo(identityNo);
+    }
     
     public Customer findByMobile(String mobile) {
     	return customerDao.findByMobile(mobile);
@@ -84,11 +88,26 @@ public class CustomerManager extends GenericPageHQLQuery<Customer> {
 
     public Long countByPhoneOrMobile(String name, String phone, String mobile) {
         Long rtn = 0L;
-        if (!StringUtils.isEmpty(phone))
+        if (StringUtils.isNotBlank(phone))
             rtn += customerDao.countByPhone(name, phone);
-        if (!StringUtils.isEmpty(mobile))
+        if (StringUtils.isNotBlank(mobile))
             rtn += customerDao.countByMobile(mobile);
         return rtn;
+    }
+
+    public Long countByPhoneOrMobileOrIdentityNo(String name, String phone, String mobile,String identityNo) {
+        Long rtn = 0L;
+        if (StringUtils.isNotBlank(phone))
+            rtn += customerDao.countByPhone(name, phone);
+        if (StringUtils.isNotBlank(mobile))
+            rtn += customerDao.countByMobile(mobile);
+        if(StringUtils.isNotBlank(identityNo))
+            rtn+=customerDao.countByIdentityNo(identityNo);
+        return rtn;
+    }
+
+    public Customer findByCustName(String customerName){
+        return customerDao.findByCustName(customerName);
     }
 
     @Transactional(readOnly = false)

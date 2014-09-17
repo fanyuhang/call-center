@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      Microsoft SQL Server 2008                    */
-/* Created on:     2014-07-18 21:29:59                          */
+/* Created on:     2014-09-17 15:39:08                          */
 /*==============================================================*/
 
 
@@ -120,6 +120,9 @@ create table tblCustomerContract (
    fldOperateDate       datetime             null,
    fldCreateUserNo      nvarchar(32)         null,
    fldCreateDate        datetime             null,
+   fldEstablishDate     datetime             null,
+   fldValueDate         datetime             null,
+   fldDueDate           datetime             null,
    constraint PK_TBLCUSTOMERCONTRACT primary key (fldId)
 )
 go
@@ -184,8 +187,6 @@ create table tblCustomerProduct (
    fldShortName         nvarchar(256)        null,
    fldType              int                  null,
    fldDescription       nvarchar(256)        null,
-   fldEstablishDate     datetime             null,
-   fldValueDate         datetime             null,
    fldComment           nvarchar(256)        null,
    fldStatus            int                  null,
    fldOperateUserNo     nvarchar(32)         null,
@@ -203,14 +204,12 @@ create table tblCustomerProductDetail (
    fldProductId         nvarchar(40)         null,
    fldClearDays         int                  null,
    fldDayUnit           int                  null,
-   fldDueDate           datetime             null,
    fldMinPurchaseMoney  money                null,
    fldMaxPurchaseMoney  money                null,
    fldAnnualizedRate    money                null,
    fldDepositRate       money                null,
    fldPerformanceRadio  money                null,
    fldCommissionRadio   money                null,
-   fldStatus            int                  null,
    fldOperateUserNo     nvarchar(32)         null,
    fldOperateDate       datetime             null,
    fldCreateUserNo      nvarchar(32)         null,

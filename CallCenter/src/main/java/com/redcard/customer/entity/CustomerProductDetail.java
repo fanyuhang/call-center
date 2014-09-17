@@ -30,7 +30,6 @@ public class CustomerProductDetail implements java.io.Serializable {
 	private String fldId;
 	private String fldProductId;
 	private Integer fldClearDays;
-	private Date fldDueDate;
 	private Double fldMinPurchaseMoney;
 	private Double fldMaxPurchaseMoney;
 	private Double fldAnnualizedRate;
@@ -59,7 +58,7 @@ public class CustomerProductDetail implements java.io.Serializable {
 
 	/** full constructor */
 	public CustomerProductDetail(String fldId, String fldProductId,
-			Integer fldClearDays, Date fldDueDate,
+			Integer fldClearDays,
 			Double fldMinPurchaseMoney, Double fldMaxPurchaseMoney,
 			Double fldAnnualizedRate, Double fldDepositRate,
 			Double fldPerformanceRadio, Double fldCommissionRadio,
@@ -68,7 +67,6 @@ public class CustomerProductDetail implements java.io.Serializable {
 		this.fldId = fldId;
 		this.fldProductId = fldProductId;
 		this.fldClearDays = fldClearDays;
-		this.fldDueDate = fldDueDate;
 		this.fldMinPurchaseMoney = fldMinPurchaseMoney;
 		this.fldMaxPurchaseMoney = fldMaxPurchaseMoney;
 		this.fldAnnualizedRate = fldAnnualizedRate;
@@ -108,16 +106,6 @@ public class CustomerProductDetail implements java.io.Serializable {
 
 	public void setFldClearDays(Integer fldClearDays) {
 		this.fldClearDays = fldClearDays;
-	}
-
-	@Column(name = "FLDDUEDATE")
-	@JsonSerialize(using = JsonDateSerializer.class)
-	public Date getFldDueDate() {
-		return this.fldDueDate;
-	}
-
-	public void setFldDueDate(Date fldDueDate) {
-		this.fldDueDate = fldDueDate;
 	}
 
 	@Column(name = "FLDMINPURCHASEMONEY")
@@ -239,18 +227,6 @@ public class CustomerProductDetail implements java.io.Serializable {
 	@Transient
 	public Integer getFldType() {
 		return customerProduct.getFldType();
-	}
-	
-	@Transient
-	@JsonSerialize(using = JsonDateSerializer.class)
-	public Date getFldEstablishDate() {
-		return customerProduct.getFldEstablishDate();
-	}
-	
-	@Transient
-	@JsonSerialize(using = JsonDateSerializer.class)
-	public Date getFldValueDate() {
-		return customerProduct.getFldValueDate();
 	}
 	
 	protected User operateUser;

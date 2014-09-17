@@ -71,19 +71,18 @@
         fields: [
             {display: "产品编号",name: "fldId", newline: true, type: "hidden", attr:{value:"${customerProduct.fldId}",readonly: "readonly"},validate: {required: true}},
             {display: "产品全称", name: "fldFullName", newline: true, type: "text", attr:{value:"${customerProduct.fldFullName}"},validate: {required: true},group: "<label style=white-space:nowrap;>产品基本信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'},
-            {display: "产品简称", name: "fldShortName", newline: false, type: "text",attr:{value:"${customerProduct.fldShortName}"}},
-            {display: "产品描述", name: "fldDescription", newline: true, type: "text", attr:{value:"${customerProduct.fldDescription}"},validate: { maxlength: 64}},
             {display: "产品类型", name: "fldType", newline: false, type: "select",validate: {required: true},
-            	options:{
+                options:{
                     valueField: 'value',
                     textField: 'text',
                     isMultiSelect:false,
                     data:productTypeData,
                     initValue: '${customerProduct.fldType}',
                     valueFieldID:"fldType"
-            }},
-            {display: "成立日期", name: "fldEstablishDate", newline: true, type: "date", validate: {required: true}, attr:{value:"<fmt:formatDate value='${customerProduct.fldEstablishDate}' pattern='yyyy-MM-dd'/>",readonly: "readonly"},format:'yyyy-MM-dd',editor:{ type:'date' }},
-            {display: "起息日期", name: "fldValueDate", newline: false, type: "date", validate: {required: true}, attr:{value:"<fmt:formatDate value='${customerProduct.fldValueDate}' pattern='yyyy-MM-dd'/>",readonly: "readonly"},format:'yyyy-MM-dd',editor:{ type:'date' }}
+                }},
+            {display: "产品简称", name: "fldShortName", newline: true, type: "text",attr:{value:"${customerProduct.fldShortName}"}},
+            {display: "产品描述", name: "fldDescription", newline: false, type: "text", attr:{value:"${customerProduct.fldDescription}"},validate: { maxlength: 64}}
+
         ]
     });
 
@@ -162,7 +161,6 @@
                     	initValue: editData!=null ? editData.fldDayUnit : '',
                     	valueFieldID:"dtlDayUnit"
                 	}},
-                {display:"到期日期", name:"dtlDueDate", newline:true, type: "text", attr:{readonly: "readonly"},format:'yyyy-MM-dd'},
                 {display:"最低认购金额(万元)", name:"dtlMinPurchaseMoney", newline:true, type:"text", validate:{required:true}},
                 {display:"最高认购金额(万元)", name:"dtlMaxPurchaseMoney", newline:false, type:"text", validate:{required:true}},
                 {display:"年化收益率(%)", name:"dtlAnnualizedRate", newline:true, type:"text", validate:{required:true}, group: "<label style=white-space:nowrap;>收益信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'},
@@ -170,63 +168,6 @@
                 {display:"业绩系数", name:"dtlPerformanceRadio", newline:true, type:"text", validate:{required:true}, group: "<label style=white-space:nowrap;>其他信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'},
                 {display:"佣金系数", name:"dtlCommissionRadio", newline:false, type:"text", validate:{required:true}}
             ]
-        });
-        
-        $("#dayUnit").change(function(){
-	       	//到期日期=成立日期+实际天数
-	       	var dayUnit = $("#dtlDayUnit").val();
-	       	if(dayUnit == "") {
-	       		$("#dtlClearDays").val("");
-	        	$("#dtlDueDate").val("");
-	       		return;
-	       	}
-	       	var clearDays = $("#dtlClearDays").val();
-	       	if(clearDays == "") {
-	       		return;
-	       	}
-	       	
-	       	if(dayUnit == '0') {
-	       		var dueDate = new Date(Date.parse($("#fldEstablishDate").val()));
-	       		dueDate.setDate(dueDate.getDate()+parseInt($("#dtlClearDays").val()));
-	       		$("#dtlDueDate").val(dueDate.getFullYear()+"-"+parseInt(parseInt(dueDate.getMonth())+1)+"-"+dueDate.getDate());
-	       	} else {
-	       		var dueDate = new Date(Date.parse($("#fldEstablishDate").val()));
-	       		dueDate.setMonth(dueDate.getMonth()+parseInt($("#dtlClearDays").val()));
-	       		$("#dtlDueDate").val(dueDate.getFullYear()+"-"+parseInt(parseInt(dueDate.getMonth())+1)+"-"+dueDate.getDate());
-	       	}
-	    });
-        
-        $.ligerui.get("dtlClearDays").bind("blur",function(){
-        	//到期日期=成立日期+实际天数
-        	var dayUnit = $("#dayUnit").val();
-        	if(dayUnit == "") {
-	        	$("#dtlClearDays").val("");
-	        	win.LG.showError("请先选择天数单位");
-	        	return;
-	        } else {
-	        		if(dayUnit == "天") {
-	        		 $("#dtlDayUnit").val(0);
-	        		 dayUnit = 0;
-	        		} else {
-	        		 $("#dtlDayUnit").val(1);
-	        		 dayUnit = 1;
-	        		}
-	        	}
-        	if($("#dtlClearDays").val()=="") {
-        		$("#dtlDueDate").val("");
-        		return;
-        	}
-        	
-	        	
-        	if(dayUnit == 0) {
-        		var dueDate = new Date(Date.parse($("#fldEstablishDate").val()));
-        		dueDate.setDate(dueDate.getDate()+parseInt($("#dtlClearDays").val()));
-        		$("#dtlDueDate").val(dueDate.getFullYear()+"-"+parseInt(parseInt(dueDate.getMonth())+1)+"-"+dueDate.getDate());
-        	} else {
-        		var dueDate = new Date(Date.parse($("#fldEstablishDate").val()));
-        		dueDate.setMonth(dueDate.getMonth()+parseInt($("#dtlClearDays").val()));
-        		$("#dtlDueDate").val(dueDate.getFullYear()+"-"+parseInt(parseInt(dueDate.getMonth())+1)+"-"+dueDate.getDate());
-        	}
         });
         
       	//创建表单结构
@@ -264,18 +205,6 @@
         	$("#dtlAnnualizedRate").val(editData.fldAnnualizedRate);
         	$("#dtlDepositRate").val(editData.fldDepositRate);
         	$("#dtlCommissionRadio").val(editData.fldCommissionRadio);
-        	
-        	var dayUnit = $("#dtlDayUnit").val();
-        	if(dayUnit == 0) {
-        		var dueDate = new Date(Date.parse($("#fldEstablishDate").val()));
-        		dueDate.setDate(dueDate.getDate()+parseInt($("#dtlClearDays").val()));
-        		$("#dtlDueDate").val(dueDate.getFullYear()+"-"+parseInt(parseInt(dueDate.getMonth())+1)+"-"+dueDate.getDate());
-        	} else {
-        		var dueDate = new Date(Date.parse($("#fldEstablishDate").val()));
-        		dueDate.setMonth(dueDate.getMonth()+parseInt($("#dtlClearDays").val()));
-        		$("#dtlDueDate").val(dueDate.getFullYear()+"-"+parseInt(parseInt(dueDate.getMonth())+1)+"-"+dueDate.getDate());
-        	}
-        	
         	$("#dtlId", detailMainform).attr("readonly", "readonly");
         } else {
         	$("#dtlId").val("");
@@ -288,7 +217,6 @@
         	$("#dtlAnnualizedRate").val("");
         	$("#dtlDepositRate").val("");
         	$("#dtlCommissionRadio").val("");
-        	$("#dtlDueDate").val("");
         }
         
 	}
@@ -323,7 +251,6 @@
 			        detailData.fldPerformanceRadio = $("#dtlPerformanceRadio").val();
 			        detailData.fldDayUnit = $("#dtlDayUnit").val();
 			        detailData.fldClearDays = $("#dtlClearDays").val();
-			        detailData.fldDueDate = $("#dtlDueDate").val();
 			        detailData.fldMinPurchaseMoney = $("#dtlMinPurchaseMoney").val();
 			        detailData.fldMaxPurchaseMoney = $("#dtlMaxPurchaseMoney").val();
 			        detailData.fldAnnualizedRate = $("#dtlAnnualizedRate").val();
@@ -368,7 +295,6 @@
 			        detailData.fldPerformanceRadio = $("#dtlPerformanceRadio").val();
 			        detailData.fldDayUnit = $("#dtlDayUnit").val();
 			        detailData.fldClearDays = $("#dtlClearDays").val();
-			        detailData.fldDueDate = $("#dtlDueDate").val();
 			        detailData.fldMinPurchaseMoney = $("#dtlMinPurchaseMoney").val();
 			        detailData.fldMaxPurchaseMoney = $("#dtlMaxPurchaseMoney").val();
 			        detailData.fldAnnualizedRate = $("#dtlAnnualizedRate").val();
@@ -495,9 +421,6 @@
             {display:"天数单位", name:"dtlDayUnit",render:function(item){
                 return renderLabel(dayUnitData,item.fldDayUnit);
             }},
-            {display:"到期日期", name:"dtlDueDate",render:function(item){
-    			return item.fldDueDate;
-    		}},
             {display:"最低认购金额(万元)", name:"dtlMinPurchaseMoney",render:function(item){
     			return item.fldMinPurchaseMoney;
     		}},

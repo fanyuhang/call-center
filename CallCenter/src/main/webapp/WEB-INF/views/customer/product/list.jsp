@@ -43,9 +43,7 @@
                     data: statusData,
                     initValue: '0'
                 }, attr: {"op": "equal", "vt": "int"}
-            },
-            { display:"成立时间", newline:false, name:"fldEstablishDateStart", type:'date', cssClass:"field", attr:{op:'greaterorequal', vt:'date', field:"fldEstablishDate"}},
-            { display:"至", newline:false, name:"fldEstablishDateEnd", type:'date', cssClass:"field", attr:{op:'lessorequal', vt:'date', field:"fldEstablishDate"}}
+            }
         ],
         toJSON: JSON2.stringify
     });
@@ -70,8 +68,6 @@
                     return renderLabel(statusData, item.fldStatus);
                 }
             },
-            {display: "成立日期", name: "fldEstablishDate"},
-            {display: "起息日期", name: "fldValueDate"},
             {display: "操作人", name: "operateUserName"},
             {display: "操作时间", name: "fldOperateDate"}
         ], dataAction: 'server', pageSize: 20, toolbar: {}, url: '<c:url value="/customer/product/list"/>',

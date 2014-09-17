@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -193,18 +194,29 @@ public class Column {
                 case Cell.CELL_TYPE_ERROR:
                     break;
                 case Cell.CELL_TYPE_FORMULA:
-                    // attempt to read formula cell as numeric cell
                     try {
-                        dataString = readNumericCell(cell);
-                    } catch (Exception e1) {
-                        log.info("Failed to read formula cell as numeric. Next to try as string. Cell=" + cell.toString());
-                        try {
-                            dataString = cell.getRichStringCellValue().getString();
-                            log.info("Successfully read formula cell as string. Value=" + dataString);
-                        } catch (Exception e2) {
-                            log.warn("Failed to read formula cell as numeric or string. Cell=" + cell.toString());
+                        if (HSSFDateUtil.isCellDateFormatted(cell)) {
+                            Date date = cell.getDateCellValue();
+                            dataString = (date.getYear() + 1900) + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+                            break;
+                        } else {
+                            dataString = String.valueOf(cell.getNumericCellValue());
                         }
+                    } catch (IllegalStateException e) {
+                        dataString = String.valueOf(cell.getRichStringCellValue());
                     }
+            // attempt to read formula cell as numeric cell
+//                    try {
+//                        dataString = readNumericCell(cell);
+//                    } catch (Exception e1) {
+//                        log.info("Failed to read formula cell as numeric. Next to try as string. Cell=" + cell.toString());
+//                        try {
+//                            dataString = cell.getRichStringCellValue().getString();
+//                            log.info("Successfully read formula cell as string. Value=" + dataString);
+//                        } catch (Exception e2) {
+//                            log.warn("Failed to read formula cell as numeric or string. Cell=" + cell.toString());
+//                        }
+//                    }
 
                     break;
                 default:

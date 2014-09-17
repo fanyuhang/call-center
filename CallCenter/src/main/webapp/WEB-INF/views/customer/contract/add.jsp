@@ -19,12 +19,14 @@
         space: 30,
         fields: [
             {display: "合同编号", name: "fldId", newline: true, type: "text", validate: {required: true, maxlength: 40},group: "<label style=white-space:nowrap;>合同信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'},
-            {display: "合同签订日期", name: "fldSignDate", newline: false, type: "date", validate: {required: true},attr:{readonly: "readonly"}},
+            {display: "签订日期", name: "fldSignDate", newline: false, type: "date", validate: {required: true},attr:{readonly: "readonly"}},
+            {display: "成立日期", name: "fldEstablishDate", newline: true, type: "date", validate: {required: true}},
+            {display: "起息日期", name: "fldValueDate", newline: false, type: "date", validate: {required: true}},
             {display: "购买姓名",name: "fldCustomerId", newline: true, type: "select", validate: {required: true},
                 comboboxName: "customerName", options: {valueFieldID: "customerName"}},
             {display: "购买产品", name: "fldProductDetailId", newline: true, type: "select", comboboxName:"productId", options:{valueFieldID:'productId'}, validate: {required: true},group: "<label style=white-space:nowrap;>购买产品</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'},
-            {display: "成立日期", name: "fldEstablishDate", newline: true, type: "text", attr:{readonly: "readonly"}},
-            {display: "实际天/月数", name: "fldClearDays", newline: false, type: "text", attr:{readonly: "readonly"}},
+            {display: "实际天/月数", name: "fldClearDays", newline: true, type: "text", attr:{readonly: "readonly"}},
+            {display: "到期日期", name: "fldDueDate", newline: false, type: "date", validate: {required: true}},
             {display: "年化收益率(%)", name: "fldAnnualizedRate", newline: true, type: "text", attr:{readonly: "readonly"}},
             {display: "年化7天存款率(%)", name: "fldDepositRate", newline: false, type: "text", attr:{readonly: "readonly"}},
             {display: "购买金额(万元)", name: "fldPurchaseMoney", newline: true, validate: {required: true},type: "text",group: "<label style=white-space:nowrap;>购买金额</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'},
@@ -134,7 +136,6 @@
     		$("#fldCommissionMoney").val("");
     		$("#fldPerformanceRadio").val("");
     		$("#fldPerformanceMoney").val("");
-    		$("#fldEstablishDate").val("");
     		$("#fldDayUnitText").val("");
     		$("#fldDayUnit").val("");
     		$("#fldClearDays").val("");
@@ -157,13 +158,12 @@
 		    	$("#fldClearDays").val(productDetail.fldClearDays);
 		    	$("#fldDayUnit").val(productDetail.fldDayUnit);
 		    	$("#fldDayUnitText").val(renderLabel(dayUnitData,productDetail.fldDayUnit));
-		    	$("#fldEstablishDate").val(productDetail.fldEstablishDate);
 		    	
 		    	var fldPurchaseMoney = $("#fldPurchaseMoney").val();
+                var days = parseInt(productDetail.fldClearDays);
+                var dayUnit = parseInt(productDetail.fldDayUnit);
 		    	if(fldPurchaseMoney != "") {
 		    		//预期收益=购买金额*(年化收益率*实际天数/365)
-		    		var days = parseInt(productDetail.fldClearDays);
-		    		var dayUnit = parseInt(productDetail.fldDayUnit);
 		    		var fldAnnualizedMoney = 0;
 		    		if(dayUnit == 0) {
 		    			fldAnnualizedMoney = Math.round(parseFloat(fldPurchaseMoney)*10000*(parseFloat(fldAnnualizedRate)/100*days/365));
@@ -175,8 +175,8 @@
     				$("#fldAnnualizedMoney").val(0);
     			}
     			$("#fldDepositRate").val(productDetail.fldDepositRate);
-    			if($("#fldMoneyDate").val()!="" && productDetail.fldEstablishDate > $("#fldMoneyDate").val()) {//成立日期晚于打款日期
-    				var collectDays = (new Date(Date.parse(productDetail.fldEstablishDate)) - new Date(Date.parse($("#fldMoneyDate").val())))/(1000*60*60*24);
+    			if($("#fldMoneyDate").val()!="" && $("#fldEstablishDate").val() > $("#fldMoneyDate").val()) {//成立日期晚于打款日期
+    				var collectDays = (new Date(Date.parse($("#fldEstablishDate").val())) - new Date(Date.parse($("#fldMoneyDate").val())))/(1000*60*60*24);
     				$("#fldCollectDays").val(collectDays);
     				if(fldPurchaseMoney!="") {
     					//募集期贴息=购买金额*(年化7天存款率*募集期天数/365)
@@ -205,6 +205,16 @@
     			} else {
     				$("#fldPerformanceMoney").val(0);
     			}
+                //到期日期=成立日期+实际天数
+                if(dayUnit == '0') {
+                    var dueDate = new Date(Date.parse($("#fldEstablishDate").val()));
+                    dueDate.setDate(dueDate.getDate()+days);
+                    $("#fldDueDate").val(dueDate.getFullYear()+"-"+parseInt(parseInt(dueDate.getMonth())+1)+"-"+dueDate.getDate());
+                } else {
+                    var dueDate = new Date(Date.parse($("#fldEstablishDate").val()));
+                    dueDate.setMonth(dueDate.getMonth()+days);
+                    $("#fldDueDate").val(dueDate.getFullYear()+"-"+parseInt(parseInt(dueDate.getMonth())+1)+"-"+dueDate.getDate());
+                }
             },
             error: function (message) {
           		
@@ -265,13 +275,10 @@
 	        	{display: "ID", name: "fldId", hide:1,width:1},
 	            {display: "产品全称", name: "fldFullName"},
 		        {display: "产品简称", name: "fldShortName"},
-		        {display: "成立日期", name: "fldEstablishDate"},
-		        {display: "起息日期", name: "fldValueDate"},
                 {display: "实际天/月数", name: "fldClearDays"},
                 {display: "天/月数单位", name: "fldDayUnit",render:function(item){
 		    			return renderLabel(dayUnitData,item.fldDayUnit);
 		    		}},
-		        {display: "到期日期", name: "fldDueDate"},
 		        {display: "最低认购金额(万元)", name: "fldMinPurchaseMoney"},
 		        {display: "最高认购金额(万元)", name: "fldMaxPurchaseMoney"},
 		        {display: "年化收益率(%)", name: "fldAnnualizedRate"},

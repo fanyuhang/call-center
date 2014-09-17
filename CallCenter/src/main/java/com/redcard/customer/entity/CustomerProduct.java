@@ -33,10 +33,6 @@ public class CustomerProduct implements java.io.Serializable {
 	private String fldFullName;
 	private String fldShortName;
 	private String fldDescription;
-	@DateTimeFormat(pattern="yyyy-MM-dd")
-	private Date fldEstablishDate;
-	@DateTimeFormat(pattern="yyyy-MM-dd")
-	private Date fldValueDate;
 	private String fldComment;
 	private Integer fldStatus;
 	private String fldOperateUserNo = SecurityUtil.getCurrentUserLoginName();
@@ -60,7 +56,6 @@ public class CustomerProduct implements java.io.Serializable {
 	/** full constructor */
 	public CustomerProduct(String fldId, String fldFullName,
 			String fldShortName, String fldDescription,
-			Date fldEstablishDate, Date fldValueDate,
 			String fldComment, Integer fldStatus, String fldOperateUserNo,
 			Date fldOperateDate, String fldCreateUserNo,
 			Date fldCreateDate) {
@@ -68,8 +63,6 @@ public class CustomerProduct implements java.io.Serializable {
 		this.fldFullName = fldFullName;
 		this.fldShortName = fldShortName;
 		this.fldDescription = fldDescription;
-		this.fldEstablishDate = fldEstablishDate;
-		this.fldValueDate = fldValueDate;
 		this.fldComment = fldComment;
 		this.fldStatus = fldStatus;
 		this.fldOperateUserNo = fldOperateUserNo;
@@ -114,26 +107,6 @@ public class CustomerProduct implements java.io.Serializable {
 
 	public void setFldDescription(String fldDescription) {
 		this.fldDescription = fldDescription;
-	}
-
-	@Column(name = "FLDESTABLISHDATE")
-	@JsonSerialize(using = JsonDateSerializer.class)
-	public Date getFldEstablishDate() {
-		return this.fldEstablishDate;
-	}
-
-	public void setFldEstablishDate(Date fldEstablishDate) {
-		this.fldEstablishDate = fldEstablishDate;
-	}
-
-	@Column(name = "FLDVALUEDATE")
-	@JsonSerialize(using = JsonDateSerializer.class)
-	public Date getFldValueDate() {
-		return this.fldValueDate;
-	}
-
-	public void setFldValueDate(Date fldValueDate) {
-		this.fldValueDate = fldValueDate;
 	}
 
 	@Column(name = "FLDCOMMENT")
