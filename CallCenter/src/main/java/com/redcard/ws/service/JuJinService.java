@@ -75,9 +75,15 @@ public class JuJinService implements IService {
                 customerContract.setAnnualizedRate(contract.getProductDetail().getFldAnnualizedRate());
                 customerContract.setAnnualizedMoney(contract.getFldAnnualizedMoney());
                 customerContract.setDeadLineUnit(AppContext.getInstance().getDictName(14, contract.getProductDetail().getFldDayUnit() + ""));
-                customerContract.setDueDate(DateFormatUtils.format(contract.getFldDueDate(),"yyyy-MM-dd"));
-                customerContract.setSignDate(DateFormatUtils.format(contract.getFldSignDate(),"yyyy-MM-dd"));
-                customerContract.setMoneyDate(DateFormatUtils.format(contract.getFldMoneyDate(),"yyyy-MM-dd"));
+                if (contract.getFldDueDate() != null) {
+                    customerContract.setDueDate(DateFormatUtils.format(contract.getFldDueDate(), "yyyy-MM-dd"));
+                }
+                if (contract.getFldSignDate() != null) {
+                    customerContract.setSignDate(DateFormatUtils.format(contract.getFldSignDate(), "yyyy-MM-dd"));
+                }
+                if (contract.getFldMoneyDate() != null) {
+                    customerContract.setMoneyDate(DateFormatUtils.format(contract.getFldMoneyDate(), "yyyy-MM-dd"));
+                }
                 customerContract.setProductDeadLine(contract.getProductDetail().getFldClearDays());
                 customerContract.setProductName(contract.getProductFullName());
                 customerContract.setPurchaseMoney(contract.getFldPurchaseMoney());
