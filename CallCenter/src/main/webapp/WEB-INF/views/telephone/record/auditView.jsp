@@ -1,11 +1,20 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="../header.jsp" %>
 <body style="padding-bottom:31px;">
-<div id="formBtn" style="display:none; text-align:left; float:left; clear:both;">
+<div id="formBtn" style="display:none;">
+    <!--
     <input id="playRecord" onclick="javascript:listenRecord();" type="button" value="播放录音"
            style="height:20px;width:69px;background:url(/static/ligerUI/icons/silkicons/control_play_blue.png) no-repeat left bottom;text-indent:17px;border:1px solid;border-color:#b1b1b1;cursor:pointer;"/>
     <input id="pauseRecord" onclick="javascript:stopRecord();" type="button" value="停止播放"
            style="height:20px;width:69px;background:url(/static/ligerUI/icons/silkicons/control_pause_blue.png) no-repeat left bottom;text-indent:17px;border:1px solid;border-color:#b1b1b1;cursor:pointer;"/>
+    -->
+<object classid="CLSID:6BF52A52-394A-11d3-B153-00C04F79FAA6" id="MediaPlayer" 
+  width="250" height="60">
+	<param NAME="AutoStart" VALUE="0">
+	<param name="uiMode" value="full">
+	<param name="volume" value="100">
+	<param name="url" value="${phoneRecordAddress}${telephoneRecord.fldRecordFilePath}">
+</object>
 </div>
 
 <form:form id="mainform" name="mainform" method="post"></form:form>
@@ -48,7 +57,7 @@
         {display: "通话时长(秒)", name: "fldCallLong", newline: false, type: "date", attr: {value: "${telephoneRecord.fldCallLong}", readonly: "readonly"}},
         {display: "通话开始时间", name: "fldCallBeginTime", newline: true, type: "text", attr: {value: "${telephoneRecord.fldCallBeginTime}", readonly: "readonly"}},
         {display: "通话结束时间", name: "fldCallEndTime", newline: true, type: "text", attr: {value: "${telephoneRecord.fldCallEndTime}", readonly: "readonly"}},
-        {display: "录音", name: "fldRecordFilePath", newline: false, type: "text", width: 71, fieldCss: "border:10px;"},
+        {display: "录音", name: "fldRecordFilePath", newline: false, type: "text", width: 300, fieldCss: "border:10px;"},
         {display: "审查分数", name: "fldAuditFraction", newline: true, type: "text",attr:{value:"${telephoneRecord.fldAuditFraction}"}, validate: {required: true},
             group: "<label style=white-space:nowrap;>审查信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'},
         {display: "审查备注", name: "fldAuditComment",newline: false, type: "textarea"}
@@ -68,7 +77,7 @@
     
     var panle = $("#fldRecordFilePath").parent();
     $("#fldRecordFilePath").parent().hide();
-    $("#pauseRecord").hide();
+    //$("#pauseRecord").hide();
     $("#formBtn").insertAfter(panle).show();
 
     function listenRecord() {
