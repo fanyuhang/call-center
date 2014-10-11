@@ -177,7 +177,7 @@ public class CommonController {
                                 //productDetail = productDetailManager.findByProductIdAndClearDays(product.getFldId(), Integer.valueOf(importEntity.getClearDays()));
                                 BigDecimal bg = new BigDecimal(importEntity.getAnnualizedRate() * 100);
                                 Double annualizedRate = bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-                                Long countProductDetail = productDetailManager.countByCondition(Constant.DAY_UNIT_DAY, Integer.valueOf(importEntity.getClearDays()), annualizedRate, product.getFldId());
+                                Long countProductDetail = productDetailManager.countByCondition(Constant.DAY_UNIT_DAY, Double.valueOf(importEntity.getClearDays()).intValue(), annualizedRate, product.getFldId());
                                 if (countProductDetail <= 0) {
                                     productDetail = new CustomerProductDetail();
                                     productDetail.setFldId(EntityUtil.getId());
@@ -186,7 +186,7 @@ public class CommonController {
                                     productDetail.setFldOperateDate(new Date());
                                     productDetail.setFldStatus(Constant.PRODUCT_DETAIL_STATUS_NORMAL);
                                     productDetail.setFldProductId(product.getFldId());
-                                    productDetail.setFldClearDays(Integer.valueOf(importEntity.getClearDays()));
+                                    productDetail.setFldClearDays(Double.valueOf(importEntity.getClearDays()).intValue());
                                     productDetail.setFldPerformanceRadio(Double.valueOf(importEntity.getPerformanceRadio()));
                                     productDetail.setFldAnnualizedRate(Double.valueOf(importEntity.getAnnualizedRate()) * 100);
                                     productDetail.setFldDepositRate(Double.valueOf(importEntity.getDepositRate()) * 100);
@@ -195,7 +195,7 @@ public class CommonController {
                                     productDetail.setFldMaxPurchaseMoney(Double.valueOf(importEntity.getMaxPurchaseMoney()));
                                     productDetailManager.save(productDetail);
                                 } else {
-                                    productDetail = productDetailManager.findByCondition(Constant.DAY_UNIT_DAY, Integer.valueOf(importEntity.getClearDays()), annualizedRate, product.getFldId());
+                                    productDetail = productDetailManager.findByCondition(Constant.DAY_UNIT_DAY, Double.valueOf(importEntity.getClearDays()).intValue(), annualizedRate, product.getFldId());
                                 }
 
                                 //客户信息
@@ -362,7 +362,7 @@ public class CommonController {
                                 //productDetail = productDetailManager.findByProductIdAndClearDays(product.getFldId(), Integer.valueOf(importEntity.getClearDays()));
                                 BigDecimal bg = new BigDecimal(importEntity.getAnnualizedRate());
                                 Double annualizedRate = bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-                                Long countProductDetail = productDetailManager.countByCondition(Constant.DAY_UNIT_DAY, Integer.valueOf(importEntity.getClearDays()), annualizedRate, product.getFldId());
+                                Long countProductDetail = productDetailManager.countByCondition(Constant.DAY_UNIT_DAY, Double.valueOf(importEntity.getClearDays()).intValue(), annualizedRate, product.getFldId());
                                 if (countProductDetail <= 0) {
                                     productDetail = new CustomerProductDetail();
                                     productDetail.setFldId(EntityUtil.getId());
@@ -371,7 +371,7 @@ public class CommonController {
                                     productDetail.setFldOperateDate(new Date());
                                     productDetail.setFldStatus(Constant.PRODUCT_DETAIL_STATUS_NORMAL);
                                     productDetail.setFldProductId(product.getFldId());
-                                    productDetail.setFldClearDays(Integer.valueOf(importEntity.getClearDays()));
+                                    productDetail.setFldClearDays(Double.valueOf(importEntity.getClearDays()).intValue());
                                     productDetail.setFldPerformanceRadio(Double.valueOf(importEntity.getPerformanceRadio()));
                                     productDetail.setFldAnnualizedRate(Double.valueOf(importEntity.getAnnualizedRate()));
                                     productDetail.setFldDepositRate(Double.valueOf(importEntity.getDepositRate()));
@@ -380,7 +380,7 @@ public class CommonController {
                                     productDetail.setFldMaxPurchaseMoney(Double.valueOf(importEntity.getMaxPurchaseMoney()));
                                     productDetailManager.save(productDetail);
                                 } else {
-                                    productDetail = productDetailManager.findByCondition(Constant.DAY_UNIT_DAY, Integer.valueOf(importEntity.getClearDays()), annualizedRate, product.getFldId());
+                                    productDetail = productDetailManager.findByCondition(Constant.DAY_UNIT_DAY, Double.valueOf(importEntity.getClearDays()).intValue(), annualizedRate, product.getFldId());
                                 }
 
                                 //客户信息

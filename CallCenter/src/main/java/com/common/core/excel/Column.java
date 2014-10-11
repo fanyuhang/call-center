@@ -224,7 +224,7 @@ public class Column {
             }
         }
 
-        if (this.mapping != null && this.mapping.size() != 0) {
+        if (this.mapping != null && this.mapping.size() != 0&&dataString!=null) {
             return mapping.get(dataString.trim()) + "";
         }
         return dataString == null ? null : dataString.trim();
