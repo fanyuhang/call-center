@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class ImportEntity implements Serializable {
 	//客户相关
 	private String custName;//客户姓名
-	private Integer source;//客户来源
+	private Double source;//客户来源
 	private String birthday;//出生日期
 	private String phone;//电话
 	private String mobile;//手机
@@ -18,7 +18,7 @@ public class ImportEntity implements Serializable {
 	private String productName;//产品名称
 	private String establishDate;//成立日期
 	private String valueDate;//起息日期
-    private Integer productType;//产品类型
+    private Double productType;//产品类型
 	
 	//产品明细
 	private String dueDate;//到期日期
@@ -36,12 +36,12 @@ public class ImportEntity implements Serializable {
 	private float performanceMoney;//业绩额度
 	private float annualizedMoney;//预期收益
 	private String moneyDate;//打款日期
-	private int collectDays;//募集期天数
+	private Double collectDays;//募集期天数
 	private float collectMoney;//募集期贴息
 	private String bankNo;//银行卡号
 	private String bankName;//开户银行
 	private String cardMoney;//瑞得卡金额
-	private Integer cardLevel;//瑞得卡等级
+	private Double cardLevel;//瑞得卡等级
 	
 	public String getCustName() {
 		return custName;
@@ -133,12 +133,6 @@ public class ImportEntity implements Serializable {
 	public void setFinancialUserNo(String financialUserNo) {
 		this.financialUserNo = financialUserNo;
 	}
-	public Integer getSource() {
-		return source;
-	}
-	public void setSource(Integer source) {
-		this.source = source;
-	}
 	public String getBirthday() {
 		return birthday;
 	}
@@ -175,12 +169,6 @@ public class ImportEntity implements Serializable {
 	public void setCardMoney(String cardMoney) {
 		this.cardMoney = cardMoney;
 	}
-	public Integer getCardLevel() {
-		return cardLevel;
-	}
-	public void setCardLevel(Integer cardLevel) {
-		this.cardLevel = cardLevel;
-	}
 	public String getComment() {
 		return comment;
 	}
@@ -192,12 +180,6 @@ public class ImportEntity implements Serializable {
 	}
 	public void setCardNo(String cardNo) {
 		this.cardNo = cardNo;
-	}
-	public int getCollectDays() {
-		return collectDays;
-	}
-	public void setCollectDays(int collectDays) {
-		this.collectDays = collectDays;
 	}
 	public float getDepositRate() {
 		return depositRate;
@@ -230,11 +212,35 @@ public class ImportEntity implements Serializable {
 		this.mobile = mobile;
 	}
 
-    public Integer getProductType() {
+    public Double getSource() {
+        return source;
+    }
+
+    public void setSource(Double source) {
+        this.source = source;
+    }
+
+    public Double getProductType() {
         return productType;
     }
 
-    public void setProductType(Integer productType) {
+    public void setProductType(Double productType) {
         this.productType = productType;
+    }
+
+    public Double getCollectDays() {
+        return collectDays;
+    }
+
+    public void setCollectDays(Double collectDays) {
+        this.collectDays = collectDays;
+    }
+
+    public Double getCardLevel() {
+        return cardLevel;
+    }
+
+    public void setCardLevel(Double cardLevel) {
+        this.cardLevel = cardLevel;
     }
 }

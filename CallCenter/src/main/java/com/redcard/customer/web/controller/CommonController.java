@@ -212,7 +212,7 @@ public class CommonController {
                                     customer.setFldOperateDate(new Date());
                                     customer.setFldStatus(Constant.CUSTOMER_STATUS_NORMAL);
                                     customer.setFldCardTotalMoney((double) 0);
-                                    customer.setFldSource(importEntity.getSource());
+                                    customer.setFldSource(importEntity.getSource()==null?null:importEntity.getSource().intValue());
                                     customer.setFldBirthday(DateUtil.getDateByStr(importEntity.getBirthday()));
                                     customer.setFldIdentityNo(importEntity.getIdentityNo());
                                     if (!StringUtils.isEmpty(importEntity.getFinancialUserNo())) {
@@ -220,7 +220,7 @@ public class CommonController {
                                         if (listUser != null && listUser.size() > 0)
                                             customer.setFldFinancialUserNo(listUser.get(0).getLoginName());
                                     }
-                                    customer.setFldCardLevel(importEntity.getCardLevel());
+                                    customer.setFldCardLevel(importEntity.getCardLevel()==null?null:importEntity.getCardLevel().intValue());
                                     customer.setFldCardNo(importEntity.getCardNo());
                                     customer.setFldComment(importEntity.getComment());
                                 } else {
@@ -258,12 +258,12 @@ public class CommonController {
                                 contract.setFldPerformanceMoney(Double.valueOf(importEntity.getPerformanceMoney()));
                                 contract.setFldAnnualizedMoney(Double.valueOf(importEntity.getAnnualizedMoney()));
                                 contract.setFldMoneyDate(DateUtil.getDateByStr(importEntity.getMoneyDate()));
-                                contract.setFldCollectDays(Integer.valueOf(importEntity.getCollectDays()));
+                                contract.setFldCollectDays(importEntity.getCollectDays()==null?null:importEntity.getCollectDays().intValue());
                                 contract.setFldCollectMoney(Double.valueOf(importEntity.getCollectMoney()));
                                 contract.setFldBankNo(importEntity.getBankNo());
                                 contract.setFldBankName(importEntity.getBankName());
                                 contract.setFldCardMoney(null != importEntity.getCardMoney() ? Double.valueOf(importEntity.getCardMoney()) : 0);
-                                contract.setFldCardLevel(importEntity.getCardLevel());
+                                contract.setFldCardLevel(importEntity.getCardLevel()==null?null:importEntity.getCardLevel().intValue());
                                 contract.setFldEstablishDate(DateUtil.getDateByStr(importEntity.getEstablishDate()));
                                 contract.setFldValueDate(DateUtil.getDateByStr(importEntity.getValueDate()));
                                 contract.setFldDueDate(DateUtil.getDateByStr(importEntity.getDueDate()));
@@ -349,7 +349,7 @@ public class CommonController {
                                     product.setFldId(EntityUtil.getId());
                                     product.setFldFullName(importEntity.getProductName());
                                     product.setFldShortName(importEntity.getProductName());
-                                    product.setFldType(importEntity.getProductType());
+                                    product.setFldType(importEntity.getProductType()==null?null:importEntity.getProductType().intValue());
                                     product.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
                                     product.setFldCreateDate(new Date());
                                     product.setFldOperateDate(new Date());
@@ -406,7 +406,7 @@ public class CommonController {
                                         customer.setFldCreateDate(new Date());
                                         customer.setFldStatus(Constant.CUSTOMER_STATUS_NORMAL);
                                         customer.setFldCardTotalMoney((double) 0);
-                                        customer.setFldSource(importEntity.getSource());
+                                        customer.setFldSource(importEntity.getSource()==null?null:importEntity.getSource().intValue());
                                     }
                                 } else {
                                     if (StringUtils.isNotBlank(customer.getFldMobile())) {
@@ -424,7 +424,7 @@ public class CommonController {
 
                                 }
                                 customer.setFldBirthday(DateUtil.getDateByStr(importEntity.getBirthday()));
-                                customer.setFldCardLevel(importEntity.getCardLevel());
+                                customer.setFldCardLevel(importEntity.getCardLevel()==null?null:importEntity.getCardLevel().intValue());
                                 customer.setFldCardNo(importEntity.getCardNo());
                                 customer.setFldComment(importEntity.getComment());
                                 customer.setFldOperateDate(new Date());
@@ -470,12 +470,12 @@ public class CommonController {
                                 contract.setFldPerformanceMoney(Double.valueOf(importEntity.getPerformanceMoney()));
                                 contract.setFldAnnualizedMoney(Double.valueOf(importEntity.getAnnualizedMoney()));
                                 contract.setFldMoneyDate(DateUtil.getDateByStr(importEntity.getMoneyDate()));
-                                contract.setFldCollectDays(Integer.valueOf(importEntity.getCollectDays()));
+                                contract.setFldCollectDays(importEntity.getCollectDays()==null?null:importEntity.getCollectDays().intValue());
                                 contract.setFldCollectMoney(Double.valueOf(importEntity.getCollectMoney()));
                                 contract.setFldBankNo(importEntity.getBankNo());
                                 contract.setFldBankName(importEntity.getBankName());
                                 contract.setFldCardMoney(null != importEntity.getCardMoney() ? Double.valueOf(importEntity.getCardMoney()) : 0);
-                                contract.setFldCardLevel(importEntity.getCardLevel());
+                                contract.setFldCardLevel(importEntity.getCardLevel()==null?null:importEntity.getCardLevel().intValue());
                                 contract.setFldEstablishDate(DateUtil.getDateByStr(importEntity.getEstablishDate()));
                                 contract.setFldValueDate(DateUtil.getDateByStr(importEntity.getValueDate()));
                                 contract.setFldDueDate(DateUtil.getDateByStr(importEntity.getDueDate()));
