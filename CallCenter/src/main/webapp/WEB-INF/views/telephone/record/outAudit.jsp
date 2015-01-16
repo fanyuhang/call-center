@@ -1,10 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@include file="../header.jsp" %>
-<style>
-    .ui-autocomplete-loading {
-        background: white url('<c:url value="/static/ligerUI/jquery/themes/base/images/ui-anim_basic_16x16.gif"/>') right center no-repeat;
-    }
-</style>
 <body style="padding:10px;height:100%; text-align:center;">
 <input type="hidden" id="MenuNo" value="${menuNo}"/>
 <input type="hidden" id="fileName"/>
@@ -38,13 +33,13 @@
 	                data: resultTypeData
 	            }, attr: {"op": "equal", "vt": "int"}
         	},
-        	{display: "拨打号码", name: "fldPhone", newline: true, type: "text", cssClass: "field"},
-        	{display: "客户姓名", name: "fldCustomerName", newline: false, type: "text", cssClass: "field"},
+        	{display: "拨打号码", name: "fldPhone", newline: false, type: "text", cssClass: "field"},
 	        {display: "拨打起始时间", name: "startDate", newline: true, type: "date", cssClass: "field",
 	        	attr:{op:'greaterorequal', vt:'date', field:"fldCallBeginTime"}},
 	        {display: "拨打结束时间", name: "endDate", newline: false, type: "date", cssClass: "field",
-	        	attr:{op:'lessorequal', vt:'date', field:"fldCallBeginTime"}}
-	    ],
+	        	attr:{op:'lessorequal', vt:'date', field:"fldCallBeginTime"}},
+            {display: "客户姓名", name: "fldCustomerName", newline: false, type: "text", cssClass: "field"}
+        ],
 	    toJSON: JSON2.stringify
 	});
 	
@@ -57,19 +52,18 @@
 	    columns: [
 	        {display:"ID",name:"fldId",width:1,hide:1},
 	        {display: "话务员", name: "callUserName"},
-	        {display: "呼叫类型", name: "fldCallType",
-	        	render:function(item) {
-	        		return renderLabel(callTypeData,item.fldCallType);
-	        	}
-	        },
-	        {display: "呼叫时间", name: "fldCallBeginTime"},
-	        {display: "跟踪结果", name: "fldResultType",
+	        {display: "通话时间", name: "fldCallDate"},
+            {display: "通话时长(秒)", name: "fldCallLong",width:"100"},
+            {display: "来电号码", name: "fldPhone",
+                render:function(item) {
+                    return LG.hiddenPhone(item.fldPhone);
+                }},
+            {display: "客户姓名", name: "fldCustomerName"},
+            {display: "跟踪结果", name: "fldResultType",
 	        	render:function(item) {
 	        		return renderLabel(resultTypeData,item.fldResultType);
 	        	}
 	        },
-	        {display: "拨打号码", name: "fldPhone"},
-	        {display: "客户姓名", name: "fldCustomerName"},
 	        {display: "备注", name: "fldComment",width:170}
 	    ], dataAction: 'server', pageSize: 20, toolbar: {}, url: '<c:url value="/telephone/record/list"/>?type=0',
 	    width: '98%', height: '98%', toJSON: JSON2.stringify, onReload: f_reload
@@ -90,7 +84,7 @@
           		return;
         	}
         	var selected = grid.getSelected();
-        	top.f_addTab(null, '呼叫审查', '<c:url value="/telephone/record/auditView"/>' + '?menuNo=${menuNo}&fldId=' + selected.fldId);
+        	top.f_addTab(null, '呼出审查', '<c:url value="/telephone/record/auditView"/>' + '?menuNo=${menuNo}&fldId=' + selected.fldId);
         	break;
 	    }
 	}
@@ -98,6 +92,9 @@
 	function f_reload() {
 	    grid.loadData();
 	}
+
+    resizeDataGrid(grid);
+
 </script>
 </body>
 </html>

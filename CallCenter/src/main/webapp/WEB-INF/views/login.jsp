@@ -5,10 +5,10 @@
 <!DOCTYPE HTML>
 <html>
 <head runat="server">
-<title>上海聚金理财管理服务有限公司</title>
+<title>上海聚金金融服务有限公司</title>
 <meta charset="utf-8" />
-<meta content="上海聚金理财管理服务有限公司" name="keywords" />
-<meta content="上海聚金理财管理服务有限公司" name="description" />
+<meta content="上海聚金金融服务有限公司" name="keywords" />
+<meta content="上海聚金金融服务有限公司" name="description" />
 <link rel="stylesheet" href="<c:url value="/static/ligerUI/css/login.css" />" type="text/css" />
 
 <script src="<c:url value="/static/ligerUI/jquery/jquery-1.8.3.min.js" />"></script>
@@ -59,7 +59,7 @@
             </div>
         </div>
     </div>
-    <div class="copyright"><p>2014 &copy; 版权所有 上海聚金理财管理服务有限公司</p></div>
+    <div class="copyright"><p>2014 &copy; 版权所有 上海聚金金融服务有限公司</p></div>
 <script type="text/javascript">
     var fromUrl = getQueryStringByName("fromUrl");
     if (!fromUrl) {

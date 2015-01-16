@@ -50,11 +50,11 @@ public class FilterTranslator {
     static {
         currentParmMatch.put(Constant.FILTER_CONTEXT_USERID, new ContextParamHolder() {
             public Object getValue() {
-                return SecurityUtil.getCurrentUserId();
+                return SecurityUtil.getCurrentUserLoginName();
             }
 
             public Object getName() {
-                return SecurityUtil.getCurrentUserId();
+                return SecurityUtil.getCurrentUserLoginName();
             }
         });
         currentParmMatch.put(Constant.FILTER_CONTEXT_ROLEID, new ContextParamHolder() {

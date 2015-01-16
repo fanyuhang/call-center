@@ -683,5 +683,22 @@
         });
     }
 
+    LG.hiddenPhone = function(phone){
+
+        if(!phone){
+            return '';
+        }
+
+        if(phone.length<4){
+            return phone;
+        }
+        var begin = phone.length-4;
+        var end = phone.length;
+        var fstStr = phone.substring(0,begin);
+        var scdStr =phone.substring(begin,end);
+        var lstStr = phone.substring(end,phone.length);
+        var matchExp = /\w+?/g;
+        return fstStr+scdStr.replace(matchExp,'*')+lstStr;
+    }
 
 })(jQuery);

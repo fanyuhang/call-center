@@ -50,7 +50,7 @@
 	var grid = $("#maingrid").ligerGrid({
 	    checkbox: false,
 	    rownumbers: true,
-	    delayLoad: false,
+	    delayLoad: true,
 	    columnWidth: 180,
 	    columns: [
 	    	{display: "ID", name: "fldId", hide:1,width:1},
@@ -98,6 +98,9 @@
 	function f_reload() {
 	    grid.loadData();
 	}
+
+    resizeDataGrid(grid);
+
 </script>
 </body>
 </html>

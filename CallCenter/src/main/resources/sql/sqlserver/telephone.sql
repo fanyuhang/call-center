@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      Microsoft SQL Server 2008                    */
-/* Created on:     2014-07-13 16:00:43                          */
+/* Created on:     2015-01-16 15:49:57                          */
 /*==============================================================*/
 
 
@@ -121,8 +121,8 @@ create table tblTelephoneCustomer (
    fldCustomerName      nvarchar(40)         null,
    fldGender            int                  null,
    fldBirthday          datetime             null,
-   fldMobile            nvarchar(256)        null,
    fldIdentityNo        nvarchar(256)        null,
+   fldMobile            nvarchar(256)        null,
    fldPhone             nvarchar(256)        null,
    fldAddress           nvarchar(1000)       null,
    fldEmail             nvarchar(256)        null,
@@ -133,6 +133,7 @@ create table tblTelephoneCustomer (
    fldAssignDate        datetime             null,
    fldFinancialUserNo   nvarchar(32)         null,
    fldCallUserNo        nvarchar(40)         null,
+   fldComment           nvarchar(1000)       null,
    fldOperateUserNo     nvarchar(32)         null,
    fldOperateDate       datetime             null,
    fldCreateUserNo      nvarchar(32)         null,

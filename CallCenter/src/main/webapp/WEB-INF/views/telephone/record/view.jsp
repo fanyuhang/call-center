@@ -33,7 +33,7 @@
     var fields = [
         {display: "ID", name: "fldId", type: "hidden", attr: {value: "${telephoneRecord.fldId}", readonly: "readonly"}},
         {display: "客户姓名", name: "fldName", newline: true, type: "text", attr: {value: "${telephoneRecord.fldCustomerName}", readonly: "readonly"}, group: "<label style=white-space:nowrap;>基本信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'},
-        {display: "拨打号码", name: "fldPhone", newline: false, type: "text", attr: {value: "${telephoneRecord.fldPhone}", readonly: "readonly"}},
+        {display: "拨打号码", name: "fldPhone", newline: false, type: "text", attr: {value: LG.hiddenPhone("${telephoneRecord.fldPhone}"), readonly: "readonly"}},
         {display: "呼叫类型", name: "fldCallType", newline: true, type: "select",
             options: {
                 valueField: 'value',
@@ -54,7 +54,7 @@
             }},
         {display: "备注", name: "fldComment", newline: true, type: "text", attr: {value: "${telephoneRecord.fldComment}", readonly: "readonly"}},
         {display: "拨打/呼入时间", name: "fldCallDate", newline: true, type: "text", attr: {value: "${telephoneRecord.fldCallDate}", readonly: "readonly"}, group: "<label style=white-space:nowrap;>通话信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'},
-        {display: "通话时长(秒)", name: "fldCallLong", newline: false, type: "date", attr: {value: "${telephoneRecord.fldCallLong}", readonly: "readonly"}},
+        {display: "通话时长(秒)", name: "fldCallLong", newline: false, type: "text", attr: {value: "${telephoneRecord.fldCallLong}", readonly: "readonly"}},
         {display: "通话开始时间", name: "fldCallBeginTime", newline: true, type: "text", attr: {value: "${telephoneRecord.fldCallBeginTime}", readonly: "readonly"}},
         {display: "通话结束时间", name: "fldCallEndTime", newline: true, type: "text", attr: {value: "${telephoneRecord.fldCallEndTime}", readonly: "readonly"}},
         {display: "录音", name: "fldRecordFilePath", newline: false, type: "text", width: 71, fieldCss: "border:10px;"}

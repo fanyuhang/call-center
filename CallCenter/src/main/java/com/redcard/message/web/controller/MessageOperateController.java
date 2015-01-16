@@ -73,7 +73,7 @@ public class MessageOperateController {
         if (ArrayUtils.isNotEmpty(mobileNos)) {
             messageOperate.setFldMessageNum(mobileNos.length);
         }
-        int sendResultCode = messageOperateManager.sendMessages(fldMobileNos, messageOperate.getFldContent());
+        int sendResultCode = messageOperateManager.sendMessages(fldMobileNos, messageOperate.getFldContent() + sendMessageSignFlag);
         if (sendResultCode > 0) {// 提交成功
             messageOperate.setFldSendStatus(Constant.MESSAGE_SEND_STATUS_SUCCESS);
             messageOperate.setFldSendResult(MessageSendReturnCodeEnum.SUCCESS.getDesc());

@@ -93,8 +93,14 @@
 	    	{display: "ID", name: "fldId", hide:1,width:1},
 	        {display: "客户姓名", name: "fldName"},
 	        {display: "身份证号", name: "fldIdentityNo"},
-	        {display: "手机号", name: "fldMobile"},
-	        {display: "固定电话", name: "fldPhone"},
+	        {display: "手机号", name: "fldMobile",
+                render:function(item) {
+                    return LG.hiddenPhone(item.fldMobile);
+                }},
+	        {display: "固定电话", name: "fldPhone",
+                render:function(item) {
+                    return LG.hiddenPhone(item.fldPhone);
+                }},
 	        {display: "客户状态", name: "fldStatus",
 	        	render:function(item) {
 	        		return renderLabel(statusData,item.fldStatus);

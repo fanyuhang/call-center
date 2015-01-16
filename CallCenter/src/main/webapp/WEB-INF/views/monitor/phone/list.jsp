@@ -25,17 +25,6 @@
     <div id="extGrid">
     </div>
 </div>
-<%--<div style="width:100%">--%>
-<%--<div class="searchtitle" style="margin-top: 10px;width:98% ">--%>
-<%--<span>外线</span><img--%>
-<%--src='<c:url value="/static/ligerUI/icons/32X32/consulting.gif"/>'/>--%>
-
-<%--<div class="togglebtn"></div>--%>
-<%--</div>--%>
-<%--<div class="navline" style="margin-bottom: 4px; margin-top: 4px;width:98%"></div>--%>
-<%--<div id="trunkGrid">--%>
-<%--</div>--%>
-<%--</div>--%>
 <script type="text/javascript">
 var statusData = <sys:dictList type = "22"/>;
 
@@ -44,6 +33,11 @@ var snocx = parent.document.getElementById("snocx");
 var extGridData = {"Rows": []};
 
 var trunkGridData = {"Rows": []};
+
+function startUpdateTime() {
+    updateExttime();
+//        updateTrutime();
+}
 
 function loadExtData() {
     LG.ajax({
@@ -64,6 +58,7 @@ function loadExtData() {
                 };
                 extGrid.reload();
             }
+//            setInterval("startUpdateTime()", 10000);
         },
         error: function (message) {
             LG.showError(message);
@@ -78,7 +73,7 @@ loadExtData();
 function updateExttime() {
     for (var i = 0; i < extGridData.Rows.length; i++) {
         var time = parseInt(extGridData.Rows[i].sStatusTime);
-        time++;
+        time = time + 10;
         extGridData.Rows[i].sStatusTime = time;
         extGridData.Rows[i].nStatusTime = formatSeconds(time);
     }
@@ -93,7 +88,7 @@ function updateExttime() {
 function updateTrutime() {
     for (var i = 0; i < trunkGridData.Rows.length; i++) {
         var time = parseInt(trunkGridData.Rows[i].sStatusTime);
-        time++;
+        time = time + 10;
         trunkGridData.Rows[i].sStatusTime = time;
         trunkGridData.Rows[i].nStatusTime = formatSeconds(time);
     }
@@ -101,6 +96,7 @@ function updateTrutime() {
 //            trunkGrid.reload();
     }
 }
+
 try {
     snocx.attachEvent("snlExtensionInfoEvent", function (nPos, nStatus, szExtension, szRxDTMF, szPhoneNumber, szAgentID, szAgentName, nStatusTime) {
         extGridData.Rows[nPos] = {
@@ -211,7 +207,7 @@ var extGrid = $("#extGrid").ligerGrid({
             if (item.szPhoneNumber == '-1'||item.szPhoneNumber.length<5) {
                 return "";
             }
-            return item.szPhoneNumber;
+            return LG.hiddenPhone(item.szPhoneNumber);
         } },
         { display: "登录用户", name: "szAgentName", type: "text", width: 130, align: "center" },
         { display: '工号', name: 'szAgentID', width: 130, align: 'center' },
@@ -245,12 +241,7 @@ var extGrid = $("#extGrid").ligerGrid({
 resizeDataGrid(extGrid);
 //    resizeDataGrid(trunkGrid);
 
-function startUpdateTime() {
-    updateExttime();
-//        updateTrutime();
-}
 
-setInterval("startUpdateTime()", 1000);
 </script>
 </body>
 </html>

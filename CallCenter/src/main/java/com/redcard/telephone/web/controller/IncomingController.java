@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -108,6 +109,9 @@ public class IncomingController {
     @ResponseBody
     public AsyncResponse findCall(String callId) {
         AsyncResponse result = new AsyncResponse();
+        if(StringUtils.isBlank(callId)){
+            return new AsyncResponse(true,"无拨打历史");
+        }
         Calllog calllog = calllogManager.find(Integer.valueOf(callId));
         List<Calllog> list = new ArrayList<Calllog>();
         list.add(calllog);

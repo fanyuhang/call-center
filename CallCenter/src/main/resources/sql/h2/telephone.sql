@@ -76,6 +76,7 @@ CREATE TABLE tblTelephoneCustomer (
   fldOperateDate     DATETIME       NULL,
   fldCreateUserNo    NVARCHAR(32)   NULL,
   fldCreateDate      DATETIME       NULL,
+  fldComment           nvarchar(1000)       null,
   CONSTRAINT PK_TBLTELEPHONECUSTOMER PRIMARY KEY (fldId)
 );
 

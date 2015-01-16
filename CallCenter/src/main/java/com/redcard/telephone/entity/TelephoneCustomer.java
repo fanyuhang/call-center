@@ -50,6 +50,7 @@ public class TelephoneCustomer implements java.io.Serializable {
 	private Date fldOperateDate;
 	private String fldCreateUserNo;
 	private Date fldCreateDate;
+    private String fldComment;
 
 	// Constructors
 
@@ -292,7 +293,7 @@ public class TelephoneCustomer implements java.io.Serializable {
     public String getFinancialUserName() {
         return financialUser!=null ? financialUser.getUserName() : "";
     }
-    
+
     private User callUser;
 
     @JsonIgnore
@@ -310,4 +311,13 @@ public class TelephoneCustomer implements java.io.Serializable {
 	public String getCallUserName() {
 		return callUser!=null ? callUser.getUserName() : "";
 	}
+
+    @Column(name = "FLDCOMMENT")
+    public String getFldComment() {
+        return fldComment;
+    }
+
+    public void setFldComment(String fldComment) {
+        this.fldComment = fldComment;
+    }
 }

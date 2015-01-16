@@ -3,7 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>欢迎使用聚金理财呼叫中心</title>
+    <title>欢迎使用聚金金融呼叫中心</title>
     <link href="<c:url value="/static/ligerUI/ligerUI/skins/Aqua/css/ligerui-all.css"/>" rel="stylesheet"
           type="text/css"/>
     <link href="<c:url value="/static/ligerUI/ligerUI/skins/Gray/css/all.css"/>" rel="stylesheet" type="text/css"/>
@@ -76,7 +76,7 @@
             <li><div class="i-line"></div></li>
             <li><a href="javascript:f_mute();" class="disabled" id="mute" data-name="mute" title="通话双方不能听到对方声音，但电话未中断"><i class="i-mute"></i><b>静音</b></a></li>
             <li><div class="i-line"></div></li>
-            <li><a href="javascript:f_msm();" id="msm" data-name="msm" title="可以发送短消息"><i class="i-msm"></i><b>短消息</b></a></li>
+            <li><a class="disabled" id="msm" data-name="msm" title="可以发送短消息"><i class="i-msm"></i><b>短消息</b></a></li>
             <li><div class="i-line"></div></li>
             <li id="liControl"><a href="javascript:f_control();" id="control" class="disabled"  data-name="control" title="打开监控页面"><i class="i-control"></i><b>监控</b></a></li>
         </ul>
@@ -101,7 +101,6 @@
 </object>
 <script type="text/javascript">
     var intervalId;
-
     var connected_type = 0;
     var mute_type = 0;
     function f_connected(){
@@ -177,7 +176,7 @@
         var snell = document.getElementById("snocx");
         if(snell && $.browser.msie){
             try{
-                snell.snlSetServer("192.168.0.207",60000);
+                snell.snlSetServer(LG.serverIp,LG.serverPort);
                 snell.snlAgentLogin(name,pwd,phoneNo);
 
                 intervalId = setInterval(function () {
@@ -555,14 +554,30 @@ $(function(){
         $("#userStatus").next("b").text("就绪");
         LG.isOutCall = 1;
         LG.isTongHua = 1;
+        var recordId = LG.currentTelephoneRecordId;
+        var callId = LG.callId;
+        LG.ajax({
+            url: GLOBAL_CTX + '/telephone/record/updateWithTelephone',
+            data: { recordId: recordId, callId: callId },
+            success: function (data, message) {
+                LG.currentTelephoneRecordId = '';
+                LG.callId = '';
+            },
+            error: function (message) {
+                LG.currentTelephoneRecordId = '';
+                LG.callId = '';
+            }
+        });
     }
     function snlReceiveDeliverCallEvent(szPhoneNumber, szPhoneParam, nCallID) {
+        LG.callId = nCallID;
         if(LG.isOutCall==1 && (szPhoneNumber.length>5||szPhoneNumber.length==0)){
-            szPhoneNumber = szPhoneNumber.substring(1,szPhoneNumber.length);
-            $("#telephone").html(szPhoneNumber);
+//            szPhoneNumber = szPhoneNumber.substring(1,szPhoneNumber.length);
+            szPhoneNumber = szPhoneNumber.substring(0,szPhoneNumber.length);
+            $("#telephone").html(LG.hiddenPhone(szPhoneNumber));
             snlEstablishCallEvent();
             var tabid;
-            f_addTab(tabid, '来电弹屏：'+szPhoneNumber, '<c:url value="/telephone/incoming/init"/>'+'?phone='+szPhoneNumber+'&callId='+nCallID);
+            f_addTab(tabid, '来电弹屏：'+LG.hiddenPhone(szPhoneNumber), '<c:url value="/telephone/incoming/init"/>'+'?phone='+szPhoneNumber+'&callId='+nCallID);
         }
     }
     function snlHeldCallEvent() {
@@ -570,7 +585,77 @@ $(function(){
         connected_type = 1;
     }
     function snlMakeTransferCallFailEvent(nType, szPhoneNumber, nReason) {
-        alert("外拨或转接失败"+nType+","+szPhoneNumber+","+nReason);
+
+        var msg = '';
+
+        if(parseInt(nType) == 0){
+            msg = msg + '外拨失败,'+LG.hiddenPhone(szPhoneNumber)+",";
+
+            switch(parseInt(nReason)){
+                case 0:
+                    msg = msg +'正常';
+                    break;
+                case 1:
+                    msg = msg +'正在拨号';
+                    break;
+                case 2:
+                    msg = msg +'回铃';
+                    break;
+                case 3:
+                    msg = msg +'无拨号音';
+                    break;
+                case 4:
+                    msg = msg +'用户忙';
+                    break;
+                case 5:
+                    msg = msg +'回铃后无声';
+                    break;
+                case 6:
+                    msg = msg +'线路无声';
+                    break;
+                case 7:
+                case 8:
+                case 9:
+                    msg = msg +'用户摘机';
+                    break;
+                case 10:
+                    msg = msg +'无人接听';
+                    break;
+                case 11:
+                    msg = msg +'未知原因';
+                    break;
+                case 12:
+                    msg = msg +'空号';
+                    break;
+                case 13:
+                    msg = msg +'基本祯同步丢失超过100ms';
+                    break;
+                case 14:
+                    msg = msg +'无空闲通道';
+                    break;
+                default :
+                    msg = msg + nReason;
+                    break;
+            }
+        }else{
+            msg = msg + '转接失败,'+LG.hiddenPhone(szPhoneNumber)+",";
+            switch(parseInt(nReason)){
+                case 0:
+                    msg = msg +'无可以转接的电话';
+                    break;
+                case 1:
+                    msg = msg +'用户忙';
+                    break;
+                case 2:
+                    msg = msg +'空号';
+                    break;
+                default :
+                    msg = msg + nReason;
+                    break;
+            }
+        }
+
+        alert(msg);
     }
     function snlExtensionInfoEvent(nPos, nStatus, szExtension, szRxDTMF, szPhoneNumber, szAgentID, szAgentName, nStatusTime){
 //        if(nStatus == 0){

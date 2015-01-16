@@ -5,7 +5,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>欢迎使用聚金理财呼叫中心</title>
+    <title>欢迎使用聚金金融呼叫中心</title>
     <link href="<c:url value="/static/ligerUI/ligerUI/skins/Aqua/css/ligerui-all.css"/>" rel="stylesheet"
           type="text/css"/>
     <link href="<c:url value="/static/ligerUI/ligerUI/skins/Gray/css/all.css"/>" rel="stylesheet" type="text/css"/>
@@ -32,7 +32,7 @@
     <div class="navbar-r"></div>
     <div class="navbar-icon"><img src="<c:url value="/static/ligerUI/icons/32X32/hire_me.gif"/>"/></div>
     <div class="navbar-inner">
-        <b><span id="labelusername"></span><span>，</span><span id="labelwelcome"></span><span>欢迎使用聚金理财呼叫中心</span></b>
+        <b><span id="labelusername"></span><span>，</span><span id="labelwelcome"></span><span>欢迎使用聚金金融呼叫中心</span></b>
         <a href="javascript:void(0)" id="usersetup" style="display:none">账号设置</a>
     </div>
 </div>

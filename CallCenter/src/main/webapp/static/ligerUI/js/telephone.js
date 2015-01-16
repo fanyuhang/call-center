@@ -5,6 +5,14 @@ LG.isOutCall = 1;
 //是否正在通话
 LG.isTongHua = 1;
 
+LG.serverIp = '192.168.2.3';
+
+LG.serverPort = 60000;
+
+LG.currentTelephoneRecordId='';
+
+LG.callId='';
+
 LG.dial = function () {
     $(document).bind('keydown.dial', function (e) {
         if (e.keyCode == 13) {
@@ -56,19 +64,17 @@ LG.dial = function () {
         if (dialPanle.valid()) {
             LG.call(phone);
             window.dialWin.hide();
-//            LG.ajax({
-//                url:GLOBAL_CTX + '/user/dial',
-//                data:{ oldPassword:OldPassword, loginPassword:LoginPassword },
-//                success:function () {
-//                    LG.showSuccess('密码修改成功');
-//                    window.dialWin.hide();
-//                    $(document).unbind('keydown.dial');
-//                    cleanForm();
-//                },
-//                error:function (message) {
-//                    LG.showError(message);
-//                }
-//            });
+            LG.ajax({
+                url:GLOBAL_CTX + '/telephone/record/saveWithTelephone',
+                data:{ telephone:phone },
+                success:function (data,message) {
+                    cleanForm();
+                    LG.currentTelephoneRecordId = data[0];
+                },
+                error:function (message) {
+                    LG.showError(message);
+                }
+            });
         }
     }
 };
@@ -77,9 +83,10 @@ LG.call = function (phone) {
 	try{
 	    var snell = document.getElementById("snocx");
 	    LG.isOutCall = 0;
-	    snell.snlMakeCall("9" + phone, "0");
-	}catch(e){}
-    $("#telephone").html(phone);
+//	    snell.snlMakeCall("9" + phone, "0");
+        snell.snlMakeCall(phone, "0");
+    }catch(e){}
+    $("#telephone").html(LG.hiddenPhone(phone));
     $("#userStatus").removeClass("i-ready");
     $("#userStatus").addClass("i-dialing");
     $("#userStatus").next("b").removeClass("green");
@@ -149,19 +156,6 @@ LG.transfer = function () {
             var snell = document.getElementById("snocx");
             snell.snlTransferCall(extension);
             window.transferWin.hide();
-//            LG.ajax({
-//                url:GLOBAL_CTX + '/user/dial',
-//                data:{ oldPassword:OldPassword, loginPassword:LoginPassword },
-//                success:function () {
-//                    LG.showSuccess('密码修改成功');
-//                    window.transferWin.hide();
-//                    $(document).unbind('keydown.dial');
-//                    cleanForm();
-//                },
-//                error:function (message) {
-//                    LG.showError(message);
-//                }
-//            });
         }
     }
 };

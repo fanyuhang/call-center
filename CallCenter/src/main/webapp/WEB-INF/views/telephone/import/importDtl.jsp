@@ -22,7 +22,10 @@ var grid = $("#maingrid").ligerGrid({
         {display: "性别", name: "fldGender",width:100,render:function(item) {
             return renderLabel(genderData,item.fldGender);
         }},
-        {display: "手机", name: "fldMobile",width:50},
+        {display: "手机", name: "fldMobile",width:50,
+            render:function(item) {
+                return LG.hiddenPhone(item.fldMobile);
+            }},
         {display: "固定电话", name: "fldPhone"},
         {display: "地址", name: "fldAddress"}
     ], dataAction: 'server', pageSize: 20, toolbar: {}, url: '<c:url value="/telephone/import/showDtl?fldId=${importId}"/>',

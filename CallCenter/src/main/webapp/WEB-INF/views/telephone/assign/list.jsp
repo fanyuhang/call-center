@@ -26,7 +26,7 @@
 	    space: 30,
 	    fields: [
 	        {display: "话务分配人", name: "createUser.userName", newline: true, type: "text", cssClass: "field"},
-	        {display: "分配时间", name: "startDate", newline: true, type: "date", cssClass: "field",
+	        {display: "分配时间", name: "startDate", newline: false, type: "date", cssClass: "field",
 	        	attr:{op:'greaterorequal', vt:'date', field:"fldOperateDate"}},
 	        {display: "至", name: "endDate", newline: false, type: "date", cssClass: "field",
 	        	attr:{op:'lessorequal', vt:'date', field:"fldOperateDate"}}

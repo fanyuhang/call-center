@@ -697,8 +697,8 @@
                         <artifactId>maven-antrun-plugin</artifactId>
                         <configuration>
                             <target>
-                                 <!--<property file="src/main/resources/application.local.properties"/>-->
-                                <property file="src/main/resources/application.properties"/>
+                                 <property file="src/main/resources/application.local.properties"/>
+                                <!--<property file="src/main/resources/application.properties"/>-->
 
                                 <!-- <property name="sql.type" value="h2"/>
                                 <property name="sql.delimiter" value=";"/>

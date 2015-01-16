@@ -1,20 +1,5 @@
 package com.redcard.telephone.web.controller;
 
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.common.Constant;
 import com.common.core.excel.ExcelExportUtil;
 import com.common.core.grid.AsyncResponse;
@@ -24,68 +9,86 @@ import com.common.core.util.FilterGroupUtil;
 import com.common.security.util.SecurityUtil;
 import com.redcard.telephone.entity.TelephoneRecord;
 import com.redcard.telephone.service.TelephoneRecordManager;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Controller
 @RequestMapping(value = "/telephone/record")
 public class RecordController {
-	@Autowired
-	private TelephoneRecordManager telephoneRecordManager;
-	
-	@Value("#{settingsMap['phoneRecordAddress']}")
-	private String phoneRecordAddress;
 
-	@RequestMapping(value = "init")
+    private static Logger log = LoggerFactory.getLogger(RecordController.class);
+
+    @Autowired
+    private TelephoneRecordManager telephoneRecordManager;
+
+    @Value("#{settingsMap['phoneRecordAddress']}")
+    private String phoneRecordAddress;
+
+    @RequestMapping(value = "init")
     public String init(String menuNo, Model model) {
         model.addAttribute("menuNo", menuNo);
         return "telephone/record/list";
     }
-	
-	@RequestMapping(value = "outAuditInit")
+
+    @RequestMapping(value = "outAuditInit")
     public String outAuditInit(String menuNo, Model model) {
         model.addAttribute("menuNo", menuNo);
         return "telephone/record/outAudit";
     }
-	
-	@RequestMapping(value = "inAuditInit")
+
+    @RequestMapping(value = "inAuditInit")
     public String inAuditInit(String menuNo, Model model) {
         model.addAttribute("menuNo", menuNo);
         return "telephone/record/inAudit";
     }
-	
-	@RequestMapping(value = "list")
+
+    @RequestMapping(value = "list")
     @ResponseBody
     public DataResponse<TelephoneRecord> list(GridPageRequest pageRequest, String where, String type) {
         pageRequest.setSort("fldOperateDate", "desc");
-        if(!StringUtils.isEmpty(type)) {
-        	if(Constant.TELEPHONE_CALL_TYPE_OUT.toString().equals(type)) {
-        		where = FilterGroupUtil.addRule(where, "fldCallType", Constant.TELEPHONE_CALL_TYPE_OUT.toString(), "int", "equal");
-        	} else if(Constant.TELEPHONE_CALL_TYPE_IN.toString().equals(type)) {
-        		where = FilterGroupUtil.addRule(where, "fldCallType", Constant.TELEPHONE_CALL_TYPE_IN.toString(), "int", "equal");
-        	}
+        if (!StringUtils.isEmpty(type)) {
+            if (Constant.TELEPHONE_CALL_TYPE_OUT.toString().equals(type)) {
+                where = FilterGroupUtil.addRule(where, "fldCallType", Constant.TELEPHONE_CALL_TYPE_OUT.toString(), "int", "equal");
+            } else if (Constant.TELEPHONE_CALL_TYPE_IN.toString().equals(type)) {
+                where = FilterGroupUtil.addRule(where, "fldCallType", Constant.TELEPHONE_CALL_TYPE_IN.toString(), "int", "equal");
+            }
         }
         return (new DataResponse<TelephoneRecord>(telephoneRecordManager.findAllTelephoneRecord(pageRequest, where)));
     }
-	
-	@RequestMapping(value = "view")
+
+    @RequestMapping(value = "view")
     public String view(String menuNo, String fldId, Model model) {
-		TelephoneRecord telephoneRecord = telephoneRecordManager.findById(fldId);
+        TelephoneRecord telephoneRecord = telephoneRecordManager.findById(fldId);
         model.addAttribute("menuNo", menuNo);
         model.addAttribute("telephoneRecord", telephoneRecord);
-        model.addAttribute("phoneRecordAddress",phoneRecordAddress);
+        model.addAttribute("phoneRecordAddress", phoneRecordAddress);
         return "telephone/record/view";
     }
-	
-	@RequestMapping(value = "auditView")
+
+    @RequestMapping(value = "auditView")
     public String auditView(String menuNo, String fldId, Model model) {
-		TelephoneRecord telephoneRecord = telephoneRecordManager.findById(fldId);
+        TelephoneRecord telephoneRecord = telephoneRecordManager.findById(fldId);
         model.addAttribute("menuNo", menuNo);
         model.addAttribute("telephoneRecord", telephoneRecord);
-        model.addAttribute("phoneRecordAddress",phoneRecordAddress);
+        model.addAttribute("phoneRecordAddress", phoneRecordAddress);
         return "telephone/record/auditView";
     }
-	
-	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "export")
+
+    @SuppressWarnings("unchecked")
+    @RequestMapping(value = "export")
     @ResponseBody
     public AsyncResponse export(String where, HttpServletRequest request, HttpServletResponse response) {
         AsyncResponse result = new AsyncResponse(false, "导出呼叫记录成功");
@@ -104,12 +107,49 @@ public class RecordController {
         }
         return result;
     }
-	
-	@RequestMapping(value = "saveAudit")
+
+    @RequestMapping(value = "saveAudit")
     @ResponseBody
-    public AsyncResponse saveAudit(String id,String taskId,String fldAuditFraction,String fldAuditComment) {
-        AsyncResponse result = new AsyncResponse(false,"保存审查信息成功");
+    public AsyncResponse saveAudit(String id, String taskId, String fldAuditFraction, String fldAuditComment) {
+        AsyncResponse result = new AsyncResponse(false, "保存审查信息成功");
         telephoneRecordManager.saveAudti(id, taskId, fldAuditFraction, fldAuditComment);
+        return result;
+    }
+
+    @RequestMapping(value = "saveWithTelephone")
+    @ResponseBody
+    public AsyncResponse saveWithTelephone(String telephone) {
+        AsyncResponse result = new AsyncResponse(false, "保存成功");
+
+        try {
+            TelephoneRecord telephoneRecord = telephoneRecordManager.save(telephone);
+            result.getData().add(telephoneRecord.getFldId());
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(e.getMessage());
+            return new AsyncResponse(true,"系统错误，请联系管理人员");
+        }
+
+        return result;
+    }
+
+    @RequestMapping(value = "updateWithTelephone")
+    @ResponseBody
+    public AsyncResponse updateWithTelephone(String recordId, String callId) {
+        AsyncResponse result = new AsyncResponse(false, "保存成功");
+
+        if (StringUtils.isBlank(recordId) || StringUtils.isBlank(callId)) {
+            return new AsyncResponse(true, "系统错误，请联系管理人员");
+        }
+
+        try {
+            telephoneRecordManager.updateWithTelephone(recordId, callId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(e.getMessage());
+            return new AsyncResponse(true,"系统错误，请联系管理人员");
+        }
+
         return result;
     }
 }

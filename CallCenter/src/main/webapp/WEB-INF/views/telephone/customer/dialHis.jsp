@@ -18,7 +18,10 @@
           	render: function (item) {
                 return renderLabel(callTypeData, item.fldCallType);
             }},
-          {display: "拨打号码", name: "fldPhone"},
+          {display: "拨打号码", name: "fldPhone",
+              render:function(item) {
+                  return LG.hiddenPhone(item.fldPhone);
+              }},
           {display: "拨打/呼入时间", name: "fldCallDate"},
           {display: "通话时长", name: "fldCallLong"},
           {display: "通话开始时间", name: "fldCallBeginTime"},

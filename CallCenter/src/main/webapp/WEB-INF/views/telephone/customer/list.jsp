@@ -71,8 +71,14 @@
 	    columns: [
 	    	{display: "ID", name: "fldId", hide:1,width:1},
 	        {display: "客户名称", name: "fldCustomerName"},
-	        {display: "手机", name: "fldMobile"},
-	        {display: "电话号码", name: "fldPhone"},
+	        {display: "手机", name: "fldMobile",
+                render:function(item) {
+                    return LG.hiddenPhone(item.fldMobile);
+                }},
+	        {display: "电话号码", name: "fldPhone",
+                render:function(item) {
+                    return LG.hiddenPhone(item.fldPhone);
+                }},
 	        {display: "分配状态", name: "fldAssignStatus",
                 render:function(item) {
                     return renderLabel(assignStatusData,item.fldAssignStatus);
