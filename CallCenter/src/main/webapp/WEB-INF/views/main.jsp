@@ -103,6 +103,7 @@
     var intervalId;
     var connected_type = 0;
     var mute_type = 0;
+    var phoneType = 0;
     function f_connected(){
         if(LG.telephoneStatus!=0){
             return;
@@ -132,9 +133,9 @@
     }
 
     function f_hangup(){
-        if(LG.telephoneStatus!=0){
-            return;
-        }
+//        if(LG.telephoneStatus!=0){
+//            return;
+//        }
         LG.hangup();
     }
 
@@ -168,6 +169,10 @@
 //        if(LG.telephoneStatus!=0){
 //            return;
 //        }
+        if(phoneType!='2'){
+            return;
+        }
+
         var tabid="monitor";
         f_addTab(tabid, '坐席监控', '<c:url value="/monitor/phone/init" ></c:url>');
     }
@@ -346,7 +351,7 @@
                 $("#userName").html(user[0].loginName + " ( "+user[0].userName+" )");
                 $("#phoneExtension").html(user[0].phoneExtension);
                 var phoneExtension = user[0].phoneExtension;
-                var phoneType = user[0].phoneType;
+                phoneType = user[0].phoneType;
 
                 $("#pageloading").hide();
 

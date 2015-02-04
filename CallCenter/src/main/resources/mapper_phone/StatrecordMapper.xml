@@ -25,6 +25,7 @@
         LEFT JOIN operator b ON a.uid = b.uid
         WHERE a.rownum = 1
             AND a.extno IS NOT NULL
+            AND b.NAME is not null
 
     </select>
 </mapper>

@@ -32,20 +32,13 @@ var snocx = parent.document.getElementById("snocx");
 
 var extGridData = {"Rows": []};
 
-var trunkGridData = {"Rows": []};
-
-function startUpdateTime() {
-    updateExttime();
-//        updateTrutime();
-}
-
 function loadExtData() {
     LG.ajax({
         url: '<c:url value="/monitor/phone/list"/>',
         datType: "json",
         success: function (result) {
             for (var i = 0; i < result.length; i++) {
-                extGridData.Rows[result[i].nPos] = {
+                extGridData.Rows[i] = {
                     nPos: result[i].nPos,
                     nStatus: result[i].nStatus,
                     szExtension: result[i].szExtension,
@@ -56,9 +49,8 @@ function loadExtData() {
                     nStatusTime: formatSeconds(result[i].nStatusTime),
                     sStatusTime: result[i].nStatusTime.toString()
                 };
-                extGrid.reload();
             }
-//            setInterval("startUpdateTime()", 10000);
+            extGrid.reload();
         },
         error: function (message) {
             LG.showError(message);
@@ -66,69 +58,28 @@ function loadExtData() {
     });
 }
 
-loadExtData();
-//
-//更新分机时间
-//
-function updateExttime() {
-    for (var i = 0; i < extGridData.Rows.length; i++) {
-        var time = parseInt(extGridData.Rows[i].sStatusTime);
-        time = time + 10;
-        extGridData.Rows[i].sStatusTime = time;
-        extGridData.Rows[i].nStatusTime = formatSeconds(time);
-    }
-    if (extGridData.Rows.length > 0) {
-        extGrid.reload();
-    }
-}
-
-//
-//更新外线时间
-//
-function updateTrutime() {
-    for (var i = 0; i < trunkGridData.Rows.length; i++) {
-        var time = parseInt(trunkGridData.Rows[i].sStatusTime);
-        time = time + 10;
-        trunkGridData.Rows[i].sStatusTime = time;
-        trunkGridData.Rows[i].nStatusTime = formatSeconds(time);
-    }
-    if (trunkGridData.Rows.length > 0) {
-//            trunkGrid.reload();
-    }
-}
-
 try {
     snocx.attachEvent("snlExtensionInfoEvent", function (nPos, nStatus, szExtension, szRxDTMF, szPhoneNumber, szAgentID, szAgentName, nStatusTime) {
-        extGridData.Rows[nPos] = {
-            nPos: nPos,
-            nStatus: nStatus,
-            szExtension: szExtension,
-            szRxDTMF: szRxDTMF,
-            szPhoneNumber: szPhoneNumber,
-            szAgentID: szAgentID,
-            szAgentName: szAgentName,
-            nStatusTime: formatSeconds(nStatusTime),
-            sStatusTime: nStatusTime.toString()
-        };
-        extGrid.reload();
+
+        extGridData.Rows.each(function(index,element){
+            if(element.szExtension == szExtension){
+                extGridData.Rows[index] = {
+                    nPos: nPos,
+                    nStatus: nStatus,
+                    szExtension: szExtension,
+                    szRxDTMF: szRxDTMF,
+                    szPhoneNumber: szPhoneNumber,
+                    szAgentID: szAgentID,
+                    szAgentName: szAgentName,
+                    nStatusTime: formatSeconds(nStatusTime),
+                    sStatusTime: nStatusTime.toString()
+                };
+            }
+        });
     });
 } catch (ex) {
 
 }
-//        snocx.attachEvent("snlTrunkInfoEvent", function (nCh, nStatus, szIVR, szRxDTMF, szPhoneNumber, szAgentID, szAgentName, nStatusTime) {
-//            trunkGridData.Rows[nCh] = {
-//                nCh: nCh,
-//                nStatus: nStatus,
-//                szIVR: szIVR,
-//                szRxDTMF: szRxDTMF,
-//                szPhoneNumber: szPhoneNumber,
-//                szAgentID: szAgentID,
-//                szAgentName: szAgentName,
-//                nStatusTime: formatSeconds(nStatusTime),
-//                sStatusTime: nStatusTime.toString()
-//            };
-//            trunkGrid.reload();
-//        });
 
 //搜索表单应用ligerui样式
 var formsearch = $("#formsearch");
@@ -192,13 +143,14 @@ LG.createButton({appendTo: container3,
 var extGrid = $("#extGrid").ligerGrid({
     columnWidth: 180,
     columns: [
+        { display: "分机号", name: "szExtension", type: "text", align: "center" },
+        { display: "登录用户", name: "szAgentName", type: "text", width: 130, align: "center" },
         { display: "坐席状态", name: "nStatus", type: "text", align: "center",
             render: function (item) {
                 return renderLabel(
                         statusData,
                         item.nStatus);
             }},
-        { display: "分机号", name: "szExtension", type: "text", align: "center" },
         { display: '收号', name: 'szRxDTMF', align: 'left', type: 'text'},
         { display: '主叫号码', name: 'szPhoneNumber', align: 'center', render: function (item) {
             if(!item.szPhoneNumber){
@@ -209,38 +161,22 @@ var extGrid = $("#extGrid").ligerGrid({
             }
             return LG.hiddenPhone(item.szPhoneNumber);
         } },
-        { display: "登录用户", name: "szAgentName", type: "text", width: 130, align: "center" },
-        { display: '工号', name: 'szAgentID', width: 130, align: 'center' },
-        { display: '时长', name: 'nStatusTime', align: 'center' }
+        { display: '工号', name: 'szAgentID', width: 130, align: 'center' }
     ], width: '98%', data: extGridData, height: '98%', pageSize: 20, rowHeight: 20, checkbox: false,
     rownumbers: true, usePager: false, onSelectRow: function (rowdata, rowid, rowobj) {
         $("#extPhone").val(rowdata.szExtension);
     }
 });
 
-
-//    var trunkGrid = $("#trunkGrid").ligerGrid({
-//        columnWidth: 180,
-//        columns: [
-//            { display: "通道状态", name: "nStatus", type: "text", align: "center",
-//                render: function (item) {
-//                    return renderLabel(
-//                            statusData,
-//                            item.nStatus);
-//                }},
-//            { display: "按键信息", name: "szRxDTMF", type: "text", align: "left" },
-//            { display: '流程节点', name: 'szIVR', align: 'left', type: 'text'},
-//            { display: "来电号码", name: "szPhoneNumber", type: "text", align: "left" },
-//            { display: '登录用户', name: 'szAgentName', width: 130, align: 'center' },
-//            { display: '工号', name: 'szAgentID', width: 130, align: 'center' },
-//            { display: '时长', name: 'nStatusTime', align: 'center' }
-//        ], width: '98%', data: trunkGridData, height: '25%', pageSize: 20, rowHeight: 20, checkbox: false,
-//        rownumbers: true, usePager: false
-//    });
-
 resizeDataGrid(extGrid);
-//    resizeDataGrid(trunkGrid);
 
+loadExtData();
+
+function f_reload(){
+    extGrid.reload();
+}
+
+setInterval("f_reload()", 2000);
 
 </script>
 </body>
