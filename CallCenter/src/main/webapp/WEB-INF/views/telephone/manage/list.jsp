@@ -58,7 +58,8 @@
 	        {display: "任务时间", name: "fldTaskDate"},
 	        {display: "话务数", name: "fldTaskNumber"},
 	        {display: "已拨打数", name: "fldFinishNumber"},
-	        {display: "完成状态", name: "fldFinishStatus",
+            {display: "待跟踪数", name: "fldFollowNumber"},
+            {display: "完成状态", name: "fldFinishStatus",
 	        	render:function(item) {
 	        		return renderLabel(finishStatusData,item.fldFinishStatus);
 	        	}

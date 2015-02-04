@@ -8,6 +8,7 @@
 <script type="text/javascript">
     var typeData = <sys:dictList type="19"/>;
     var phoneTypeData = <sys:dictList type="20"/>;
+    var userStatusData = <sys:dictList type="2"/>;
     //覆盖本页面grid的loading效果
     LG.overrideGridLoading();
 
@@ -23,7 +24,6 @@
         fields:[
             {name:"id", type:"hidden", attr:{value:"${user.id}"}},
             {name:"loginStatus", type:"hidden", attr:{value:"${user.loginStatus}"}},
-            {name:"userStatus", type:"hidden", attr:{value:"${user.userStatus}"}},
             {name:"password", type:"hidden", attr:{value:"${user.password}"}},
             {display:"登陆名称", name:"loginName", newline:true, labelWidth:100, width:220, space:30, type:"text", attr:{readonly:"readonly", value:"${user.loginName}"}, validate:{required:true, maxlength:30}, group:"用户基本信息", groupicon:"<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>"},
             {display:"用户名称", name:"userName", newline:false, labelWidth:100, width:220, space:30, type:"text", attr:{value:"${user.userName}"}, validate:{required:true, maxlength:30}, groupicon:"<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>"},
@@ -45,6 +45,13 @@
                 isMultiSelect:true,
                 split:','
             }},
+            {display:"用户状态", name:"userStatus", newline:false, labelWidth:100, width:220, space:30, type:"select", comboboxName:"userStatusName", options:{
+                valueFieldID:"userStatus",
+                valueField:"value",
+                textField:"text",
+                initValue:"${user.userStatus}",
+                data:userStatusData
+            }, groupicon:"<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>"},
             {display:"分机号", name:"phoneExtension", newline:true, labelWidth:100, width:220, space:30, type:"text",attr:{value:"${user.phoneExtension}"}, validate:{maxlength:32}, group:"话务信息", groupicon:"<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>"},
             {display:"话务系统密码", name:"phonePassword", newline:true, labelWidth:100, width:220, space:30,attr:{value:"${user.phonePassword}"}, type:"hidden", validate:{maxlength:32}},
             {display:"职位类型", name:"type", newline:true, labelWidth:100, width:220, space:30, type:"select", comboboxName:"typeName", options:{

@@ -2,6 +2,7 @@ package com.phone.service;
 
 import com.common.core.grid.GridPageRequest;
 import com.common.core.util.GenericPageHQLQuery;
+import com.common.core.util.GenericPageHQLQueryForPhone;
 import com.phone.dao.UidroleDao;
 import com.phone.entity.Uidrole;
 import org.slf4j.Logger;
@@ -21,7 +22,7 @@ import java.util.List;
  */
 @Component
 @Transactional(readOnly = true)
-public class UidroleManager extends GenericPageHQLQuery<Uidrole> {
+public class UidroleManager extends GenericPageHQLQueryForPhone<Uidrole> {
     private static Logger logger = LoggerFactory.getLogger(UidroleManager.class);
     @Autowired
     private UidroleDao uidroleDao;

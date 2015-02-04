@@ -2,6 +2,7 @@ package com.phone.service;
 
 import com.common.core.grid.GridPageRequest;
 import com.common.core.util.GenericPageHQLQuery;
+import com.common.core.util.GenericPageHQLQueryForPhone;
 import com.phone.dao.CalllogDao;
 import com.phone.entity.Calllog;
 import org.slf4j.Logger;
@@ -21,7 +22,7 @@ import java.util.List;
  */
 @Component
 @Transactional(readOnly = true)
-public class CalllogManager extends GenericPageHQLQuery<Calllog> {
+public class CalllogManager extends GenericPageHQLQueryForPhone<Calllog> {
     private static Logger logger = LoggerFactory.getLogger(CalllogManager.class);
     @Autowired
     private CalllogDao calllogDao;

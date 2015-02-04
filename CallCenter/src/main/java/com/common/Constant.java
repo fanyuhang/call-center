@@ -214,7 +214,8 @@ public class Constant {
 
 	public static final String FILTER_CONTEXT_DEPTID = "{CurrentDeptID}"; // 查询条件用户变量----
 																			// 部门代码
-	// -------------------------------end
+    public static final String FILTER_CONTEXT_PARENT_DEPTID = "{CurrentParentDeptID}"; // 查询条件用户变量----
+    // -------------------------------end
 	// filter-----------------------------------------------
 
 	public static final int CACHE_NORMAL = 0; // 缓存状态-----正常

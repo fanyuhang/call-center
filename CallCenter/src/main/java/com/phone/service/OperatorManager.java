@@ -2,6 +2,7 @@ package com.phone.service;
 
 import com.common.core.grid.GridPageRequest;
 import com.common.core.util.GenericPageHQLQuery;
+import com.common.core.util.GenericPageHQLQueryForPhone;
 import com.common.security.entity.User;
 import com.phone.constants.PhoneTypeEnum;
 import com.phone.dao.OperatorDao;
@@ -28,7 +29,7 @@ import java.util.List;
  */
 @Component
 @Transactional(readOnly = true)
-public class OperatorManager extends GenericPageHQLQuery<Operator> {
+public class OperatorManager extends GenericPageHQLQueryForPhone<Operator> {
     private static Logger logger = LoggerFactory.getLogger(OperatorManager.class);
     @Autowired
     private OperatorDao operatorDao;

@@ -9,6 +9,7 @@ public class TelephoneImportEntity implements Serializable {
 	private String address;
 	private Integer gender;
 	private String fldTelephoneId;
+    private String fldComment;
 	
 	public String getCustName() {
 		return custName;
@@ -46,4 +47,12 @@ public class TelephoneImportEntity implements Serializable {
 	public void setFldTelephoneId(String fldTelephoneId) {
 		this.fldTelephoneId = fldTelephoneId;
 	}
+
+    public String getFldComment() {
+        return fldComment;
+    }
+
+    public void setFldComment(String fldComment) {
+        this.fldComment = fldComment;
+    }
 }

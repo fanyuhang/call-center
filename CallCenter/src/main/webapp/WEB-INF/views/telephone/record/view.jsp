@@ -26,9 +26,15 @@
 
     //覆盖本页面grid的loading效果
     LG.overrideGridLoading();
-
+    var buttons = [];
+    buttons.push({ text:'取消',onclick: f_cancel});
+    buttons.push({ text:'下载录音文件', onclick:f_download});
     //表单底部按钮
-    LG.setFormDefaultBtn(f_cancel);
+    LG.addFormButtons(buttons);
+
+    function f_download(){
+        window.location.href = "${phoneRecordAddress}${telephoneRecord.fldRecordFilePath}";
+    }
 
     var fields = [
         {display: "ID", name: "fldId", type: "hidden", attr: {value: "${telephoneRecord.fldId}", readonly: "readonly"}},

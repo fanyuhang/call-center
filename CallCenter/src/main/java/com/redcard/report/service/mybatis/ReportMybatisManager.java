@@ -1,6 +1,8 @@
 package com.redcard.report.service.mybatis;
 
 import com.redcard.report.dao.mybatis.ReportMapper;
+import com.redcard.report.entity.CallInDay;
+import com.redcard.report.entity.CallOutDay;
 import com.redcard.report.entity.YeJiDay;
 import com.redcard.report.entity.YeJiMonth;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,5 +23,13 @@ public class ReportMybatisManager {
 
     public List<YeJiMonth> yeJiMonth(Map<String, Object> param) {
         return reportMapper.yeJiMonth(param);
+    }
+
+    public List<CallOutDay> callOutDay(Map<String, Object> param) {
+        return reportMapper.callOutDay(param);
+    }
+
+    public List<CallInDay> callInDay(Map<String, Object> param) {
+        return reportMapper.callInDay(param);
     }
 }

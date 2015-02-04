@@ -76,6 +76,16 @@ public class FilterTranslator {
                 return "'" + SecurityUtil.getCurrentDept().getDeptCode() + "'";
             }
         });
+
+        currentParmMatch.put(Constant.FILTER_CONTEXT_PARENT_DEPTID, new ContextParamHolder() {
+            public Object getValue() {
+                return SecurityUtil.getCurrentDept().getParent();
+            }
+
+            public Object getName() {
+                return "'" + SecurityUtil.getCurrentDept().getParent() + "'";
+            }
+        });
     }
 
     public FilterTranslator() {
@@ -143,6 +153,21 @@ public class FilterTranslator {
      */
     public FilterTranslator addFilterRule(String field, Object value, String op) {
         FilterRule filterRule = new FilterRule(field, value, op);
+        this.getGroup().getRules().add(filterRule);
+        return this;
+    }
+
+    /**
+     * add a new filter rule to the current filter group
+     *
+     * @param field parameter name
+     * @param value parameter value
+     * @param op    the operation for current parameter in query condition
+     * @return filter translator
+     */
+    public FilterTranslator addFilterRule(String field, Object value, String op,String type) {
+        FilterRule filterRule = new FilterRule(field, value, op);
+        filterRule.setType(type);
         this.getGroup().getRules().add(filterRule);
         return this;
     }

@@ -35,6 +35,9 @@ var SysParms = [
     },
     { name:'{CurrentDeptID}', display:'{当前部门}', type:'string',
         editor:{ type:'combobox', options:deptDataOptions }
+    },
+    { name:'{CurrentParentDeptID}', display:'{上级部门}', type:'string',
+        editor:{ type:'combobox', options:deptDataOptions }
     }
 ];
 

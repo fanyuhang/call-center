@@ -2,6 +2,7 @@ package com.phone.service;
 
 import com.common.core.grid.GridPageRequest;
 import com.common.core.util.GenericPageHQLQuery;
+import com.common.core.util.GenericPageHQLQueryForPhone;
 import com.phone.dao.RolerightDao;
 import com.phone.entity.Roleright;
 import org.slf4j.Logger;
@@ -21,7 +22,7 @@ import java.util.List;
  */
 @Component
 @Transactional(readOnly = true)
-public class RolerightManager extends GenericPageHQLQuery<Roleright> {
+public class RolerightManager extends GenericPageHQLQueryForPhone<Roleright> {
     private static Logger logger = LoggerFactory.getLogger(RolerightManager.class);
     @Autowired
     private RolerightDao rolerightDao;

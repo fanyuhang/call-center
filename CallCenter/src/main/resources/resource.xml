@@ -1,1 +1,179 @@
-[{"name":"TelephoneRecord","display":"TelephoneRecord","columns":[{"name":"fldCreateUserNo","display":"话务员工号","type":"string"},{"name":"callUser.userDept.dept.deptCode","display":"话务员部门","type":"string"}]}]
+[{
+        "name": "TelephoneRecord",
+        "display": "TelephoneRecord",
+        "columns": [{
+        "name": "fldCreateUserNo",
+        "display": "话务员工号",
+        "type": "string"
+        },
+        {
+        "name": "callUser.userDept.dept.deptCode",
+        "display": "话务员部门",
+        "type": "string"
+        },
+        {
+        "name": "callUser.userDept.dept.parent",
+        "display": "话务员上级部门",
+        "type": "string"
+        }]
+        },{
+        "name": "TelephoneImport",
+        "display": "TelephoneImport",
+        "columns": [{
+        "name": "fldCreateUserNo",
+        "display": "导入人",
+        "type": "string"
+        },
+        {
+        "name": "createUser.userDept.dept.deptCode",
+        "display": "导入人部门",
+        "type": "string"
+        },
+        {
+        "name": "createUser.userDept.dept.parent",
+        "display": "导入人上级部门",
+        "type": "string"
+        }]
+        },{
+        "name": "TelephoneAssign",
+        "display": "TelephoneAssign",
+        "columns": [{
+        "name": "fldCreateUserNo",
+        "display": "分配人",
+        "type": "string"
+        },
+        {
+        "name": "createUser.userDept.dept.deptCode",
+        "display": "分配人部门",
+        "type": "string"
+        },
+        {
+        "name": "createUser.userDept.dept.parent",
+        "display": "分配人上级部门",
+        "type": "string"
+        }]
+        },{
+        "name": "TelephoneAssignDetail",
+        "display": "TelephoneAssignDetail",
+        "columns": [{
+        "name": "fldAssignUserNo",
+        "display": "分配人",
+        "type": "string"
+        },
+        {
+        "name": "assignUser.userDept.dept.deptCode",
+        "display": "分配人部门",
+        "type": "string"
+        },
+        {
+        "name": "assignUser.userDept.dept.parent",
+        "display": "分配人上级部门",
+        "type": "string"
+        },{
+        "name": "fldCallUserNo",
+        "display": "话务员",
+        "type": "string"
+        },
+        {
+        "name": "callUser.userDept.dept.deptCode",
+        "display": "话务员部门",
+        "type": "string"
+        },
+        {
+        "name": "callUser.userDept.dept.parent",
+        "display": "话务员上级部门",
+        "type": "string"
+        }]
+        },{
+        "name": "Customer",
+        "display": "Customer",
+        "columns": [{
+        "name": "fldFinancialUserNo",
+        "display": "理财经理",
+        "type": "string"
+        },
+        {
+        "name": "financialUser.userDept.dept.deptCode",
+        "display": "理财经理部门",
+        "type": "string"
+        },
+        {
+        "name": "financialUser.userDept.dept.parent",
+        "display": "理财经理上级部门",
+        "type": "string"
+        },{
+        "name": "fldCustomerUserNo",
+        "display": "客户经理",
+        "type": "string"
+        },
+        {
+        "name": "customerUser.userDept.dept.deptCode",
+        "display": "客户经理部门",
+        "type": "string"
+        },
+        {
+        "name": "customerUser.userDept.dept.parent",
+        "display": "客户经理上级部门",
+        "type": "string"
+        },{
+        "name": "fldServiceUserNo",
+        "display": "客服经理",
+        "type": "string"
+        },
+        {
+        "name": "serviceUser.userDept.dept.deptCode",
+        "display": "客服经理部门",
+        "type": "string"
+        },
+        {
+        "name": "serviceUser.userDept.dept.parent",
+        "display": "客服经理上级部门",
+        "type": "string"
+        }]
+        },{
+        "name": "CustomerContract",
+        "display": "CustomerContract",
+        "columns": [{
+        "name": "fldFinancialUserNo",
+        "display": "理财经理",
+        "type": "string"
+        },
+        {
+        "name": "financialUser.userDept.dept.deptCode",
+        "display": "理财经理部门",
+        "type": "string"
+        },
+        {
+        "name": "financialUser.userDept.dept.parent",
+        "display": "理财经理上级部门",
+        "type": "string"
+        },{
+        "name": "fldCustomerUserNo",
+        "display": "客户经理",
+        "type": "string"
+        },
+        {
+        "name": "customerUser.userDept.dept.deptCode",
+        "display": "客户经理部门",
+        "type": "string"
+        },
+        {
+        "name": "customerUser.userDept.dept.parent",
+        "display": "客户经理上级部门",
+        "type": "string"
+        },{
+        "name": "fldServiceUserNo",
+        "display": "客服经理",
+        "type": "string"
+        },
+        {
+        "name": "serviceUser.userDept.dept.deptCode",
+        "display": "客服经理部门",
+        "type": "string"
+        },
+        {
+        "name": "serviceUser.userDept.dept.parent",
+        "display": "客服经理上级部门",
+        "type": "string"
+        }]
+        }]

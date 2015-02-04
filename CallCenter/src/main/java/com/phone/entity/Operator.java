@@ -1,12 +1,15 @@
 package com.phone.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by thinkpad on 14-8-2.
  */
 @Entity
-public class Operator {
+public class Operator implements Serializable {
+
+    private static final long serialVersionUID = -4524376173769866478L;
     private Integer id;
     private String uid;
     private String pwd;

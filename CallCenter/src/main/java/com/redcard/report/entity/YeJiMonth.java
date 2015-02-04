@@ -20,6 +20,11 @@ public class YeJiMonth {
     private String reportDateStr;
 
     public String getReportDateStr() {
+
+        if(reportDate==null){
+            return null;
+        }
+
         return DateFormatUtils.format(reportDate,"yyyy-MM");
     }
 

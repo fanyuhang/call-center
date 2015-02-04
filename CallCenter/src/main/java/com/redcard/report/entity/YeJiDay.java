@@ -20,6 +20,9 @@ public class YeJiDay {
     private String reportDateStr;
 
     public String getReportDateStr() {
+        if(reportDate==null){
+            return null;
+        }
         return DateFormatUtils.format(reportDate,"yyyy-MM-dd");
     }
 

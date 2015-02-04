@@ -2,6 +2,7 @@ package com.phone.service;
 
 import com.common.core.grid.GridPageRequest;
 import com.common.core.util.GenericPageHQLQuery;
+import com.common.core.util.GenericPageHQLQueryForPhone;
 import com.phone.dao.UserlistDao;
 import com.phone.entity.Userlist;
 import org.slf4j.Logger;
@@ -21,7 +22,7 @@ import java.util.List;
  */
 @Component
 @Transactional(readOnly = true)
-public class UserlistManager extends GenericPageHQLQuery<Userlist> {
+public class UserlistManager extends GenericPageHQLQueryForPhone<Userlist> {
     private static Logger logger = LoggerFactory.getLogger(UserlistManager.class);
     @Autowired
     private UserlistDao rolerightDao;

@@ -55,4 +55,68 @@
         ,b.fldUserName
         ,d.fldDeptName
     </select>
+    <select id="callOutDay" parameterType="map"
+            resultType="com.redcard.report.entity.CallOutDay">
+        select *
+        from (SELECT DATEADD(day, DATEDIFF(day, 0, a.fldCallDate), 0) AS reportDate
+        ,b.fldUserName AS userName
+        ,d.fldDeptName AS deptName
+        ,isnull(sum(isnull(a.fldCallLong, 0)),0) AS totalCallLong
+        ,count(DISTINCT a.fldPhone) AS totalCutomerNum
+        ,count(*) AS totalCallNum
+        FROM tblTelephoneRecord a
+        LEFT JOIN tblUser b ON a.fldCreateUserNo = b.fldLoginName
+        LEFT JOIN tblUserDeptLink c ON b.fldLoginName = c.fldLoginName
+        LEFT JOIN tblDept d ON c.fldDeptCode = d.fldDeptCode
+        WHERE 1=1
+        <if test="deptName != null">
+            and d.fldDeptName like #{deptName}
+        </if>
+        <if test="userName != null">
+            and b.fldUserName like #{userName}
+        </if>
+        <if test="startDate != null">
+            and DATEADD(day, DATEDIFF(day, 0, a.fldCallDate), 0) >= #{startDate}
+        </if>
+        <if test="endDate != null">
+            and DATEADD(day, DATEDIFF(day, 0, a.fldCallDate), 0) &lt;= #{endDate}
+        </if>
+        AND a.fldCallType = 0
+        GROUP BY DATEADD(day, DATEDIFF(day, 0, a.fldCallDate), 0)
+        ,b.fldUserName
+        ,d.fldDeptName) a
+        order by a.reportDate, a.totalCallLong desc
+    </select>
+    <select id="callInDay" parameterType="map"
+            resultType="com.redcard.report.entity.CallInDay">
+        select *
+        from (SELECT DATEADD(day, DATEDIFF(day, 0, a.fldCallDate), 0) AS reportDate
+        ,b.fldUserName AS userName
+        ,d.fldDeptName AS deptName
+        ,isnull(sum(isnull(a.fldCallLong, 0)),0) AS totalCallLong
+        ,count(DISTINCT a.fldPhone) AS totalCutomerNum
+        ,count(*) AS totalCallNum
+        FROM tblTelephoneRecord a
+        LEFT JOIN tblUser b ON a.fldCreateUserNo = b.fldLoginName
+        LEFT JOIN tblUserDeptLink c ON b.fldLoginName = c.fldLoginName
+        LEFT JOIN tblDept d ON c.fldDeptCode = d.fldDeptCode
+        WHERE 1=1
+        <if test="deptName != null">
+            and d.fldDeptName like #{deptName}
+        </if>
+        <if test="userName != null">
+            and b.fldUserName like #{userName}
+        </if>
+        <if test="startDate != null">
+            and DATEADD(day, DATEDIFF(day, 0, a.fldCallDate), 0) >= #{startDate}
+        </if>
+        <if test="endDate != null">
+            and DATEADD(day, DATEDIFF(day, 0, a.fldCallDate), 0) &lt;= #{endDate}
+        </if>
+        AND a.fldCallType = 1
+        GROUP BY DATEADD(day, DATEDIFF(day, 0, a.fldCallDate), 0)
+        ,b.fldUserName
+        ,d.fldDeptName) a
+        order by a.reportDate, a.totalCallLong desc
+    </select>
 </mapper>

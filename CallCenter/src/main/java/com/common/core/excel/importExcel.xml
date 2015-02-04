@@ -89,5 +89,6 @@
     	<column cell="C1" propertyName="mobile" nullAllowed="true"></column>
     	<column cell="D1" propertyName="telephone" nullAllowed="true"></column>
     	<column cell="E1" propertyName="address" nullAllowed="true"></column>
+        <column cell="F1" propertyName="fldComment" nullAllowed="true"></column>
     </table>
 </tables>

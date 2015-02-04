@@ -217,8 +217,11 @@ public class CommonController {
                                     customer.setFldIdentityNo(importEntity.getIdentityNo());
                                     if (!StringUtils.isEmpty(importEntity.getFinancialUserNo())) {
                                         List<User> listUser = userManager.findByUserName(importEntity.getFinancialUserNo());
-                                        if (listUser != null && listUser.size() > 0)
+                                        if (listUser != null && listUser.size() > 0){
                                             customer.setFldFinancialUserNo(listUser.get(0).getLoginName());
+                                            customer.setFldServiceUserNo(listUser.get(0).getLoginName());
+                                            customer.setFldCustomerUserNo(listUser.get(0).getLoginName());
+                                        }
                                     }
                                     customer.setFldCardLevel(importEntity.getCardLevel()==null?null:importEntity.getCardLevel().intValue());
                                     customer.setFldCardNo(importEntity.getCardNo());
@@ -278,8 +281,11 @@ public class CommonController {
 
                                 if (!StringUtils.isEmpty(importEntity.getFinancialUserNo())) {
                                     List<User> listUser = userManager.findByUserName(importEntity.getFinancialUserNo());
-                                    if (listUser != null && listUser.size() > 0)
+                                    if (listUser != null && listUser.size() > 0){
                                         contract.setFldFinancialUserNo(listUser.get(0).getLoginName());
+                                        customer.setFldServiceUserNo(listUser.get(0).getLoginName());
+                                        customer.setFldCustomerUserNo(listUser.get(0).getLoginName());
+                                    }
                                 }
                                 contract.setFldDepositRate(Double.valueOf(importEntity.getDepositRate()));
                                 contract.setFldAnnualizedRate(Double.valueOf(importEntity.getAnnualizedRate()));
@@ -431,8 +437,11 @@ public class CommonController {
 
                                 if (StringUtils.isNotBlank(importEntity.getFinancialUserNo())) {
                                     List<User> listUser = userManager.findByUserName(importEntity.getFinancialUserNo());
-                                    if (listUser != null && listUser.size() > 0)
+                                    if (listUser != null && listUser.size() > 0){
                                         customer.setFldFinancialUserNo(listUser.get(0).getLoginName());
+                                        customer.setFldServiceUserNo(listUser.get(0).getLoginName());
+                                        customer.setFldCustomerUserNo(listUser.get(0).getLoginName());
+                                    }
                                 }
                                 //客户的瑞得卡金额是一个累加的金额
                                 if (StringUtils.isNotBlank(importEntity.getCardMoney())) {
@@ -491,8 +500,11 @@ public class CommonController {
 
                                 if (!StringUtils.isEmpty(importEntity.getFinancialUserNo())) {
                                     List<User> listUser = userManager.findByUserName(importEntity.getFinancialUserNo());
-                                    if (listUser != null && listUser.size() > 0)
+                                    if (listUser != null && listUser.size() > 0){
                                         contract.setFldFinancialUserNo(listUser.get(0).getLoginName());
+                                        customer.setFldServiceUserNo(listUser.get(0).getLoginName());
+                                        customer.setFldCustomerUserNo(listUser.get(0).getLoginName());
+                                    }
                                 }
                                 contract.setFldDepositRate(Double.valueOf(importEntity.getDepositRate()));
                                 contract.setFldAnnualizedRate(Double.valueOf(importEntity.getAnnualizedRate()));

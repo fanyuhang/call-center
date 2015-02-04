@@ -3,6 +3,10 @@ package com.redcard.telephone.web.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.common.Constant;
+import com.common.core.filter.FilterTranslator;
+import com.common.security.util.SecurityUtil;
+import com.redcard.telephone.common.TelephoneTaskStatusEnum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,8 +51,10 @@ public class DialController {
 	@RequestMapping(value = "listTask")
     @ResponseBody
     public DataResponse<TelephoneTask> list(GridPageRequest pageRequest, String where) {
-		where = "{\"op\":\"and\",\"rules\":[{\"op\":\"lessorequal\",\"field\":\"fldTaskStatus\",\"value\":9,\"type\":\"int\"}]}";
-        return (new DataResponse<TelephoneTask>(telephoneTaskManager.listTask(pageRequest, where)));
+        FilterTranslator translator = telephoneTaskManager.createFilter(where);
+        translator.addFilterRule("fldTaskStatus", TelephoneTaskStatusEnum.DONE_FINISH.getCode(), Constant.FILTER_OP_LESS, Constant.FILTER_TYPE_INT);
+        translator.addFilterRule("fldCallUserNo", SecurityUtil.getCurrentUserLoginName(),Constant.FILTER_OP_EQUAL,Constant.FILTER_TYPE_STRING);
+        return (new DataResponse<TelephoneTask>(telephoneTaskManager.findAll(translator,pageRequest)));
     }
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })

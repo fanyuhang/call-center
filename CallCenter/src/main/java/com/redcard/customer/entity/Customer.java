@@ -13,6 +13,8 @@ import javax.persistence.Transient;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.common.core.util.JsonDateSerializer;
@@ -336,8 +338,8 @@ public class Customer implements java.io.Serializable {
 
 	@JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "FLDFINANCIALUSERNO", referencedColumnName="FLDLOGINNAME", insertable = false, updatable = false)
-	public User getFinancialUser() {
+    @JoinColumn(name = "FLDFINANCIALUSERNO", referencedColumnName="FLDLOGINNAME", nullable = true, insertable = false, updatable = false)
+    public User getFinancialUser() {
 		return financialUser;
 	}
 
@@ -357,8 +359,8 @@ public class Customer implements java.io.Serializable {
 
 	@JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "FLDCUSTOMERUSERNO", referencedColumnName="FLDLOGINNAME", insertable = false, updatable = false)
-	public User getCustomerUser() {
+    @JoinColumn(name = "FLDCUSTOMERUSERNO", referencedColumnName="FLDLOGINNAME", nullable = true, insertable = false, updatable = false)
+    public User getCustomerUser() {
 		return customerUser;
 	}
 
@@ -375,8 +377,8 @@ public class Customer implements java.io.Serializable {
 
 	@JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "FLDSERVICEUSERNO", referencedColumnName="FLDLOGINNAME", insertable = false, updatable = false)
-	public User getServiceUser() {
+    @JoinColumn(name = "FLDSERVICEUSERNO", referencedColumnName="FLDLOGINNAME", nullable = true, insertable = false, updatable = false)
+    public User getServiceUser() {
 		return serviceUser;
 	}
 

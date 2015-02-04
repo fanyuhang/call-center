@@ -113,18 +113,18 @@ taskListGrid = $("#tasklist").ligerGrid({
     columns: [
         {display: '任务时间', name: 'fldTaskDate'},
         {display: '客户姓名', name: 'fldCustomerName', width: 200},
-        {display: '手机', name: 'fldMobile', width: 240,
+        {display: '手机', name: 'fldMobile', width: 120,
             render: function (item) {
                 if (null == item.fldMobile || "" == item.fldMobile)
                     return "";
-                return '<span>' + LG.hiddenPhone(item.fldMobile) + '&nbsp;&nbsp;<a href="javascript:void(0);" onclick="javascript:makecall(\'' + item.fldMobile + '\',\'' + item.fldCustomerName + '\');" title="拨打" style="background:url(/static/ligerUI/icons/silkicons/phone.png) no-repeat;text-decoration:none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></span>';
+                return '<span>' + item.fldMobile + '&nbsp;&nbsp;<a href="javascript:void(0);" onclick="javascript:makecall(\'' + item.fldMobile + '\',\'' + item.fldCustomerName + '\');" title="拨打" style="background:url(/static/ligerUI/icons/silkicons/phone.png) no-repeat;text-decoration:none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></span>';
             }
         },
-        {display: '固定电话', name: 'fldPhone', width: 240,
+        {display: '固定电话', name: 'fldPhone', width: 120,
             render: function (item) {
                 if (null == item.fldPhone || "" == item.fldPhone)
                     return "";
-                return '<span>' + LG.hiddenPhone(item.fldPhone) + '&nbsp;&nbsp;<a href="javascript:void(0);" onclick="javascript:makecall(\'' + item.fldPhone + '\',\'' + item.fldCustomerName + '\');" title="拨打" style="background:url(/static/ligerUI/icons/silkicons/telephone.png) no-repeat;text-decoration:none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></span>';
+                return '<span>' + item.fldPhone + '&nbsp;&nbsp;<a href="javascript:void(0);" onclick="javascript:makecall(\'' + item.fldPhone + '\',\'' + item.fldCustomerName + '\');" title="拨打" style="background:url(/static/ligerUI/icons/silkicons/telephone.png) no-repeat;text-decoration:none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></span>';
             }
         },
         {display: '拨打状态', name: 'fldCallStatus', width: 130,
@@ -137,10 +137,10 @@ taskListGrid = $("#tasklist").ligerGrid({
                 return renderLabel(resultTypeData, item.fldResultType);
             }
         },
-        {display: "备注", name: "fldComment"},
+        {display: "备注", name: "fldComment", width: 200},
         {display: "fldAssignDetailId", name: "fldAssignDetailId", hide: 1, width: 1}
     ],
-    width: '99%', height: 190, rowHeight: 20, fixedCellHeight: true,
+    width: '99%', height: 190, rowHeight: 20, fixedCellHeight: true, sortName:'fldTaskDate', sortOrder:'asc',
     frozen: false, checkbox: false, rownumbers: true,
     url: '<c:url value="/telephone/dial/listTask"/>'
 });

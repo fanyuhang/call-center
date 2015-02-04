@@ -1,10 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@include file="../header.jsp" %>
-<style>
-    .ui-autocomplete-loading {
-        background: white url('<c:url value="/static/ligerUI/jquery/themes/base/images/ui-anim_basic_16x16.gif"/>') right center no-repeat;
-    }
-</style>
 <body style="padding:10px;height:100%; text-align:center;">
 <input type="hidden" id="MenuNo" value="${menuNo}"/>
 
@@ -35,10 +30,10 @@ importFormSearch.ligerForm({
     space: 30,
     fields: [
         {display: "话单名称", name: "importName", newline: true, validate: {required: true, maxlength: 32}, type: "text", cssClass: "field"},
-        {display: "是否去重", name: "fldDuplicateStatus", newline: false, validate: {required: true}, type: "radiolist", cssClass: "field", options: {
-            data: radioData, textField: 'text', valueField:'value', valueFieldID: "fldDuplicateStatus",value:'0'
+        {display: "是否去重", name: "fldDuplicateStatus", newline: true, type: "radiolist", cssClass: "field", options: {
+            data: radioData, textField: 'text', valueField: 'value', valueFieldID: "fldDuplicateStatus", value: '0'
         }},
-        {display:"选择文件", name:"fldFile", type:"file"}
+        {display: "选择文件", name: "fldFile", type: "file"}
     ],
     toJSON: JSON2.stringify
 });
@@ -66,44 +61,43 @@ var grid = $("#maingrid").ligerGrid({
     delayLoad: true,
     columnWidth: 180,
     columns: [
-        {display: "ID", name: "fldId", hide: 1, width: 1},
         {display: "话单名称", name: "fldName"},
-        {display: "是否去重", name: "fldDuplicateStatus",width:48,
-            render:function(item) {
-                return renderLabel(radioData,item.fldDuplicateStatus);
+        {display: "是否去重", name: "fldDuplicateStatus", width: 100,
+            render: function (item) {
+                return renderLabel(radioData, item.fldDuplicateStatus);
             }},
-        {display: "导入记录数", name: "fldImportTotalNumber",width:100,render:function(item){
-        	if(item.fldImportTotalNumber == 0)
-    				return ''+item.fldImportTotalNumber+'';
-    			else 
-    				return "<span><a href='javascript:void(0);' title='查看明细' onclick=\"javascript:showImportDtl('"+item.fldId+"');\">"+item.fldImportTotalNumber+"</a>"+"</span>";
+        {display: "导入记录数", name: "fldImportTotalNumber", width: 100, render: function (item) {
+            if (item.fldImportTotalNumber == 0)
+                return '' + item.fldImportTotalNumber + '';
+            else
+                return "<span><a href='javascript:void(0);' title='查看明细' onclick=\"javascript:showImportDtl('" + item.fldId + "');\">" + item.fldImportTotalNumber + "</a>" + "</span>";
         }},
-        {display: "原始记录数", name: "fldTotalNumber",width:100,
-        	render:function(item) {
-        		if(item.fldTotalNumber == 0)
-        			return ''+item.fldTotalNumber+'';
-        		else 
-        			return "<span><a href='javascript:void(0);' title='下载' onclick=\"javascript:exportData('/telephone/import/origexport?id="+item.fldId+"');\">"+item.fldTotalNumber+"</a>"+"</span>";
-        	}
+        {display: "原始记录数", name: "fldTotalNumber", width: 100,
+            render: function (item) {
+                if (item.fldTotalNumber == 0)
+                    return '' + item.fldTotalNumber + '';
+                else
+                    return "<span><a href='javascript:void(0);' title='下载' onclick=\"javascript:exportData('/telephone/import/origexport?id=" + item.fldId + "');\">" + item.fldTotalNumber + "</a>" + "</span>";
+            }
         },
-        {display: "重复记录数", name: "fldDuplicateTotalNumber",width:100,
-        	render:function(item) {
-        		if(item.fldDuplicateTotalNumber == 0)
-        			return ''+item.fldDuplicateTotalNumber+'';
-        		else
-        			return "<span><a href='javascript:void(0);' title='下载' onclick=\"javascript:exportData('/telephone/import/dupexport?id="+item.fldId+"');\">"+item.fldDuplicateTotalNumber+"</a>"+"</span>";
-        	}
+        {display: "重复记录数", name: "fldDuplicateTotalNumber", width: 100,
+            render: function (item) {
+                if (item.fldDuplicateTotalNumber == 0)
+                    return '' + item.fldDuplicateTotalNumber + '';
+                else
+                    return "<span><a href='javascript:void(0);' title='下载' onclick=\"javascript:exportData('/telephone/import/dupexport?id=" + item.fldId + "');\">" + item.fldDuplicateTotalNumber + "</a>" + "</span>";
+            }
         },
-        {display: "非重复记录数", name: "fldNoDuplicateTotalNumber",width:90,
-        	render:function(item) {
-        		if((item.fldTotalNumber-item.fldDuplicateTotalNumber) == 0)
-        			return ''+(item.fldTotalNumber-item.fldDuplicateTotalNumber)+'';
-        		else
-        			return "<span><a href='javascript:void(0);' title='下载' onclick=\"javascript:exportData('/telephone/import/nodupexport?id="+item.fldId+"');\">"+(item.fldTotalNumber-item.fldDuplicateTotalNumber)+"</a>"+"</span>";
-        	}
+        {display: "非重复记录数", name: "fldNoDuplicateTotalNumber", width: 100,
+            render: function (item) {
+                if ((item.fldTotalNumber - item.fldDuplicateTotalNumber) == 0)
+                    return '' + (item.fldTotalNumber - item.fldDuplicateTotalNumber) + '';
+                else
+                    return "<span><a href='javascript:void(0);' title='下载' onclick=\"javascript:exportData('/telephone/import/nodupexport?id=" + item.fldId + "');\">" + (item.fldTotalNumber - item.fldDuplicateTotalNumber) + "</a>" + "</span>";
+            }
         },
-        {display: "已分配记录数", name: "fldAssignTotalNumber",width:100},
-        {display: "导入人", name: "createUserName",width:50},
+        {display: "已分配记录数", name: "fldAssignTotalNumber", width: 100},
+        {display: "导入人", name: "createUserName"},
         {display: "导入时间", name: "fldCreateDate"},
         {display: "最近操作时间", name: "fldOperateDate"}
     ], dataAction: 'server', pageSize: 20, toolbar: {}, url: '<c:url value="/telephone/import/list"/>',
@@ -116,13 +110,13 @@ LG.appendSearchButtons("#formsearch", grid, true, true);
 //加载toolbar
 LG.loadToolbar(grid, toolbarBtnItemClick);
 
-	function exportData(url) {
-		f_export(url);
-	}
-	
-	function showImportDtl(id) {
-		top.f_addTab(null, '查看导入明细信息', '<c:url value="/telephone/import/viewDtl"/>' + '?menuNo=${menuNo}&fldId='+id);
-	}
+function exportData(url) {
+    f_export(url);
+}
+
+function showImportDtl(id) {
+    top.f_addTab(null, '查看导入明细信息', '<c:url value="/telephone/import/viewDtl"/>' + '?menuNo=${menuNo}&fldId=' + id);
+}
 
 //工具条事件
 function toolbarBtnItemClick(item) {
@@ -166,15 +160,15 @@ LG.validate(importFormSearch);
 var detailWin = null;
 function f_upload() {
     var win = parent || window;
-	
-	$("#importName").val("");
+
+    $("#importName").val("");
     if (detailWin) {
         detailWin.show();
     } else {
         detailWin = $.ligerDialog.open({
             title: '话单导入',
             target: $("#upload"),
-            width: 550, height: 150, top: 30,
+            width: 400, height: 200, top: 50,
             buttons: [
                 {
                     text: "上传", onclick: function () {
@@ -189,22 +183,23 @@ function f_upload() {
                         return;
                     }
                     LG.showLoading("正在上传...");
-                    var url = '<c:url value="/telephone/import/fileUpload"/>?importName='+$("#importName").val()+'&fldDuplicateStatus='+$("#fldDuplicateStatus").val();
+                    var url = '<c:url value="/telephone/import/fileUpload"/>?importName=' + $("#importName").val() + '&fldDuplicateStatus=' + $("#fldDuplicateStatus").val();
                     $.ajaxFileUpload({
                         url: url,
-                        secureuri:false,
-                        fileElementId:'fldFile',
+                        secureuri: false,
+                        fileElementId: 'fldFile',
                         dataType: 'text/html',
-                        success: function (data, status){;
-                        		detailWin.hide();
+                        success: function (data, status) {
+                            ;
+                            detailWin.hide();
                             LG.hideLoading();
                             LG.showSuccess('导入话单成功!');
                         },
-                        error: function (data, status, e){
+                        error: function (data, status, e) {
                             LG.showError("导入话单失败!");
                         }
                     });
-                    
+
                 }
                 },
                 { text: '取消', onclick: function () {

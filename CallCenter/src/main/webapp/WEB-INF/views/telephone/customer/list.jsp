@@ -1,10 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@include file="../header.jsp" %>
-<style>
-    .ui-autocomplete-loading {
-        background: white url('<c:url value="/static/ligerUI/jquery/themes/base/images/ui-anim_basic_16x16.gif"/>') right center no-repeat;
-    }
-</style>
 <body style="padding:10px;height:100%; text-align:center;">
 <input type="hidden" id="MenuNo" value="${menuNo}"/>
 <div id="mainsearch" style=" width:98%">

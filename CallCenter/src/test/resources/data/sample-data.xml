@@ -446,6 +446,14 @@
              fldIcon="/static/ligerUI/icons/32X32/user.gif"
              fldLink="/monitor/queue/init" fldType="1" fldPosition="2" />
 
+    <tblNode fldCode="010603" fldParent="0106" fldName="坐席状态" fldDesc="" fldTarget=""
+             fldIcon="/static/ligerUI/icons/32X32/current_work.gif"
+             fldLink="/phone/stat/init" fldType="1" fldPosition="3" />
+
+    <tblNode fldCode="010604" fldParent="0106" fldName="坐席日志" fldDesc="" fldTarget=""
+             fldIcon="/static/ligerUI/icons/32X32/book.gif"
+             fldLink="/phone/statrecord/init" fldType="1" fldPosition="4" />
+
     <tblNode fldCode="0107" fldParent="01" fldName="分析报表" fldDesc=""
              fldTarget="#" fldIcon="" fldLink="" fldType="1" fldPosition="7" />
 
@@ -462,7 +470,20 @@
     <tblNode fldCode="01070201" fldParent="010702" fldName="导出列表" fldDesc="" fldTarget="export"
              fldIcon="/static/ligerUI/icons/silkicons/application_put.png"
              fldLink="" fldType="2" fldPosition="1"/>
-    
+
+    <tblNode fldCode="010703" fldParent="0107" fldName="呼出通时统计" fldDesc="" fldTarget=""
+             fldIcon="/static/ligerUI/icons/32X32/report.gif"
+             fldLink="/report/callOutDay/init" fldType="1" fldPosition="3" />
+    <tblNode fldCode="01070301" fldParent="010703" fldName="导出列表" fldDesc="" fldTarget="export"
+             fldIcon="/static/ligerUI/icons/silkicons/application_put.png"
+             fldLink="" fldType="2" fldPosition="1"/>
+
+    <tblNode fldCode="010704" fldParent="0107" fldName="呼入通时统计" fldDesc="" fldTarget=""
+             fldIcon="/static/ligerUI/icons/32X32/report.gif"
+             fldLink="/report/callInDay/init" fldType="1" fldPosition="4" />
+    <tblNode fldCode="01070401" fldParent="010704" fldName="导出列表" fldDesc="" fldTarget="export"
+             fldIcon="/static/ligerUI/icons/silkicons/application_put.png"
+             fldLink="" fldType="2" fldPosition="1"/>
 	<!-- 一级菜单 -->
 	<tblNode fldCode="0108" fldParent="01" fldName="邮件管理" fldDesc=""
 		fldTarget="#" fldIcon="/static/ligerUI/icons/silkicons/application.png"

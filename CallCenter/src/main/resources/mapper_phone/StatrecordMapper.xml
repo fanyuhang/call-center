@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.phone.dao.mybatis.StatrecordMapper">
+    <select id="operatorStat" resultType="com.phone.entity.Statrecord">
+      SELECT a.extno
+            ,b.NAME as operateUserName
+            ,a.StatusName
+            ,a.starttime
+            ,a.endtime
+            ,a.callid
+        FROM (
+            SELECT a.extno
+                ,a.uid
+                ,b.StatusName
+                ,a.starttime
+                ,a.endtime
+                ,a.callid
+                ,ROW_NUMBER() OVER (
+                    PARTITION BY a.extno ORDER BY starttime DESC
+                    ) rownum
+            FROM statrecord a
+            LEFT JOIN StatRecordValue b ON a.STATUS = b.StatusValue
+            WHERE a.endtime IS NULL
+            ) a
+        LEFT JOIN operator b ON a.uid = b.uid
+        WHERE a.rownum = 1
+            AND a.extno IS NOT NULL
+
+    </select>
+</mapper>
