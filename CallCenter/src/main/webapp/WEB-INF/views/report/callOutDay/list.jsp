@@ -28,6 +28,7 @@
         fields: [
             {display: "统计时间", name: "startDate", newline: true, cssClass: "field", type: "date", attr: {"op": 'equal'}},
             {display: "至", name: "endDate", newline: false, cssClass: "field", type: "date", attr: {"op": 'equal'}},
+            {display: "通话时长 >", name: "totalCallLong", newline: false, cssClass: "field", type: "text", attr: {"op": 'greater',"type":'int'}},
             {display: "话务员", name: "userName", newline: true, cssClass: "field", type: "text", attr: {"op": 'like'}},
             {display: "部门名称", name: "deptName", newline: false, cssClass: "field", type: "text", attr: {"op": 'like'}}
         ],

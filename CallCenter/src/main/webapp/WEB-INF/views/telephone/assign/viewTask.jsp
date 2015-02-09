@@ -26,7 +26,7 @@
 	        	return renderLabel(resultTypeData,item.fldResultType);
 	        }}
 	    ], dataAction: 'server', pageSize: 20, url: '<c:url value="/telephone/assign/listTaskByAssignDtlid"/>'+'?fldAssignDetailId=${detailId}',
-	    width: '98%', height: '98%', toJSON: JSON2.stringify, onReload: f_reload
+	    width: '98%', height: '98%', toJSON: JSON2.stringify, onReload: f_reload, usePager:false
 	});
 
 	function f_reload() {

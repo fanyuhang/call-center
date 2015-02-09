@@ -85,6 +85,10 @@
         GROUP BY DATEADD(day, DATEDIFF(day, 0, a.fldCallDate), 0)
         ,b.fldUserName
         ,d.fldDeptName) a
+        WHERE 1=1
+        <if test="totalCallLong != null">
+            and a.totalCallLong > #{totalCallLong}
+        </if>
         order by a.reportDate, a.totalCallLong desc
     </select>
     <select id="callInDay" parameterType="map"
@@ -117,6 +121,10 @@
         GROUP BY DATEADD(day, DATEDIFF(day, 0, a.fldCallDate), 0)
         ,b.fldUserName
         ,d.fldDeptName) a
+        WHERE 1=1
+        <if test="totalCallLong != null">
+            and a.totalCallLong > #{totalCallLong}
+        </if>
         order by a.reportDate, a.totalCallLong desc
     </select>
 </mapper>

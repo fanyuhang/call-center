@@ -51,6 +51,29 @@ function loadExtData() {
                 };
             }
             extGrid.reload();
+
+            try {
+                snocx.attachEvent("snlExtensionInfoEvent", function (nPos, nStatus, szExtension, szRxDTMF, szPhoneNumber, szAgentID, szAgentName, nStatusTime) {
+                    for(var i=0;i<extGridData.Rows.length;i++){
+                        if(extGridData.Rows[i].szExtension == szExtension){
+                            extGridData.Rows[i] = {
+                                nPos: nPos,
+                                nStatus: nStatus,
+                                szExtension: szExtension,
+                                szRxDTMF: szRxDTMF,
+                                szPhoneNumber: szPhoneNumber,
+                                szAgentID: szAgentID,
+                                szAgentName: szAgentName,
+                                nStatusTime: formatSeconds(nStatusTime),
+                                sStatusTime: nStatusTime.toString()
+                            };
+                            break;
+                        }
+                    }
+                });
+            } catch (ex) {
+
+            }
         },
         error: function (message) {
             LG.showError(message);
@@ -58,28 +81,6 @@ function loadExtData() {
     });
 }
 
-try {
-    snocx.attachEvent("snlExtensionInfoEvent", function (nPos, nStatus, szExtension, szRxDTMF, szPhoneNumber, szAgentID, szAgentName, nStatusTime) {
-
-        extGridData.Rows.each(function(index,element){
-            if(element.szExtension == szExtension){
-                extGridData.Rows[index] = {
-                    nPos: nPos,
-                    nStatus: nStatus,
-                    szExtension: szExtension,
-                    szRxDTMF: szRxDTMF,
-                    szPhoneNumber: szPhoneNumber,
-                    szAgentID: szAgentID,
-                    szAgentName: szAgentName,
-                    nStatusTime: formatSeconds(nStatusTime),
-                    sStatusTime: nStatusTime.toString()
-                };
-            }
-        });
-    });
-} catch (ex) {
-
-}
 
 //搜索表单应用ligerui样式
 var formsearch = $("#formsearch");

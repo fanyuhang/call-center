@@ -42,7 +42,7 @@
 	        	attr:{op:'greaterorequal', vt:'date', field:"fldTaskDate"}},
 	        {display: "任务结束时间", name: "endDate", newline: false, type: "date", cssClass: "field",
 	        	attr:{op:'lessorequal', vt:'date', field:"fldTaskDate"}}
-	    ],
+        ],
 	    toJSON: JSON2.stringify
 	});
 	

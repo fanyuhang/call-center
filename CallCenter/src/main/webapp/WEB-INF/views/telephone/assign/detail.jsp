@@ -26,7 +26,7 @@
 	        		return "<a href='javascript:void(0);' onclick=\"javascript:showDialDtl('"+item.fldId+"');\" title='查看拨打详情'>"+item.fldFinishNumber+"</a>";
 	        	} else 
 	        		return ''+item.fldFinishNumber+'';
-	        }},
+	        }}
 	    ], dataAction: 'server', pageSize: 20, url: '<c:url value="/telephone/assign/listDetail"/>'+'?where='+where,
 	    width: '98%', height: '98%', toJSON: JSON2.stringify, onReload: f_reload
 	});

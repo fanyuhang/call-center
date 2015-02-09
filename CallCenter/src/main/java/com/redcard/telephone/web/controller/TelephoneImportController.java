@@ -3,6 +3,7 @@ package com.redcard.telephone.web.controller;
 import com.common.Constant;
 import com.common.core.excel.ExcelExportUtil;
 import com.common.core.excel.ExcelImportUtil;
+import com.common.core.filter.FilterTranslator;
 import com.common.core.grid.AsyncResponse;
 import com.common.core.grid.DataResponse;
 import com.common.core.grid.GridPageRequest;
@@ -79,8 +80,10 @@ public class TelephoneImportController {
             os.flush();
         } catch (FileNotFoundException e) {
             log.error(e.toString());
+            e.printStackTrace();
         } catch (IOException e) {
             log.error(e.toString());
+            e.printStackTrace();
         } finally {
             if (inputStream != null) {
                 inputStream.close();
@@ -105,6 +108,7 @@ public class TelephoneImportController {
             }
         } catch (Exception e) {
             log.error("上传文件失败, {}", e.getMessage());
+            e.printStackTrace();
             return new AsyncResponse(true, "上传失败！");
         }
     }
@@ -146,11 +150,15 @@ public class TelephoneImportController {
                         }
                         boolean flag = true;
                         for (TelephoneImportEntity telephoneImportEntity : list) {
-                            if (telephoneImportEntity.getMobile().equals(importEntity.getMobile())) {
+                            if (StringUtils.isNotBlank(telephoneImportEntity.getMobile())
+                                    && StringUtils.isNotBlank(importEntity.getMobile())
+                                    && telephoneImportEntity.getMobile().equals(importEntity.getMobile())) {
                                 dupList.add(importEntity);
                                 flag = false;
                                 break;
-                            } else if (telephoneImportEntity.getCustName().equals(importEntity.getCustName())
+                            } else if (StringUtils.isNotBlank(telephoneImportEntity.getTelephone())
+                                    && StringUtils.isNotBlank(importEntity.getTelephone())
+                                    &&telephoneImportEntity.getCustName().equals(importEntity.getCustName())
                                     && telephoneImportEntity.getTelephone().equals(importEntity.getTelephone())) {
                                 dupList.add(importEntity);
                                 flag = false;
@@ -175,11 +183,15 @@ public class TelephoneImportController {
                             } else {
                                 boolean flag = true;
                                 for (TelephoneImportEntity telephoneImportEntity : list) {
-                                    if (telephoneImportEntity.getMobile().equals(importEntity.getMobile())) {
+                                    if (StringUtils.isNotBlank(telephoneImportEntity.getMobile())
+                                            && StringUtils.isNotBlank(importEntity.getMobile())
+                                            && telephoneImportEntity.getMobile().equals(importEntity.getMobile())) {
                                         dupList.add(importEntity);
                                         flag = false;
                                         break;
-                                    } else if (telephoneImportEntity.getCustName().equals(importEntity.getCustName())
+                                    } else if (StringUtils.isNotBlank(telephoneImportEntity.getTelephone())
+                                            && StringUtils.isNotBlank(importEntity.getTelephone())
+                                            && telephoneImportEntity.getCustName().equals(importEntity.getCustName())
                                             && telephoneImportEntity.getTelephone().equals(importEntity.getTelephone())) {
                                         dupList.add(importEntity);
                                         flag = false;
@@ -246,6 +258,7 @@ public class TelephoneImportController {
                     telephoneCustomer.setFldMobile(telephoneImportEntity.getMobile());
                     telephoneCustomer.setFldPhone(telephoneImportEntity.getTelephone());
                     telephoneCustomer.setFldComment(telephoneImportEntity.getFldComment());
+                    telephoneCustomer.setFldAddress(telephoneImportEntity.getAddress());
                     telephoneCustomer.setFldOperateDate(new Date());
                     telephoneCustomer.setFldCreateDate(new Date());
                     telephoneCustomer.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
@@ -273,6 +286,7 @@ public class TelephoneImportController {
                     telephoneImportDetail.setFldMobile(telephoneImportEntity.getMobile());
                     telephoneImportDetail.setFldPhone(telephoneImportEntity.getTelephone());
                     telephoneImportDetail.setFldComment(telephoneImportEntity.getFldComment());
+                    telephoneImportDetail.setFldAddress(telephoneImportEntity.getAddress());
                     telephoneImportDetail.setFldOperateDate(new Date());
                     telephoneImportDetail.setFldCreateDate(new Date());
                     telephoneImportDetail.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
@@ -291,6 +305,7 @@ public class TelephoneImportController {
                         telephoneImportDetail.setFldMobile(telephoneImportEntity.getMobile());
                         telephoneImportDetail.setFldPhone(telephoneImportEntity.getTelephone());
                         telephoneImportDetail.setFldComment(telephoneImportEntity.getFldComment());
+                        telephoneImportDetail.setFldAddress(telephoneImportEntity.getAddress());
                         telephoneImportDetail.setFldOperateDate(new Date());
                         telephoneImportDetail.setFldCreateDate(new Date());
                         telephoneImportDetail.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
@@ -304,6 +319,7 @@ public class TelephoneImportController {
             }
         } catch (Exception e) {
             log.error("导入文件失败, {}", e.getMessage());
+            e.printStackTrace();
             return JsonHelper.serialize(new AsyncResponse(true, "导入话单失败！"));
         }
         return JsonHelper.serialize(result);
@@ -323,6 +339,7 @@ public class TelephoneImportController {
             }
         } catch (Exception e) {
             log.error(e.toString());
+            e.printStackTrace();
             return new AsyncResponse(true, "系统内部错误");
         }
         return result;
@@ -342,6 +359,7 @@ public class TelephoneImportController {
             }
         } catch (Exception e) {
             log.error(e.toString());
+            e.printStackTrace();
             return new AsyncResponse(true, "系统内部错误");
         }
         return result;
@@ -361,6 +379,7 @@ public class TelephoneImportController {
             }
         } catch (Exception e) {
             log.error(e.toString());
+            e.printStackTrace();
             return new AsyncResponse(true, "系统内部错误");
         }
         return result;
@@ -381,7 +400,9 @@ public class TelephoneImportController {
 
     @RequestMapping(value = "showDtl")
     @ResponseBody
-    public DataResponse<TelephoneImportDetail> showDtl(String fldId) {
-        return new DataResponse<TelephoneImportDetail>(telephoneImportManager.viewDtl(fldId));
+    public DataResponse<TelephoneImportDetail> showDtl(GridPageRequest pageRequest, String fldId) {
+        FilterTranslator filterTranslator = telephoneImportDetailManager.createFilter(null);
+        filterTranslator.addFilterRule("fldImportId",fldId,Constant.FILTER_OP_EQUAL);
+        return new DataResponse<TelephoneImportDetail>(telephoneImportDetailManager.findAll(filterTranslator,pageRequest));
     }
 }

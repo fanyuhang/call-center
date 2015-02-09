@@ -14,12 +14,14 @@ import com.redcard.telephone.common.TelephoneAssignFinishStatusEnum;
 import com.redcard.telephone.common.TelephoneTaskStatusEnum;
 import com.redcard.telephone.dao.*;
 import com.redcard.telephone.entity.*;
+import org.apache.commons.lang.time.DateUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -66,6 +68,7 @@ public class TelephoneTaskManager extends GenericPageHQLQuery<TelephoneTask> {
         oldTelephoneTask.setFldCallStatus(Constant.TASK_CALL_STATUS_ED);
         oldTelephoneTask.setFldCallDate(new Date());
         oldTelephoneTask.setFldTaskStatus(telephoneRecord.getFldTaskStatus());
+        oldTelephoneTask.setFldComment(telephoneRecord.getFldComment());
         telephoneTaskDao.save(oldTelephoneTask);
 
         telephoneRecord.setFldCustomerName(oldTelephoneTask.getFldCustomerName());
@@ -73,16 +76,24 @@ public class TelephoneTaskManager extends GenericPageHQLQuery<TelephoneTask> {
         telephoneRecord.setFldCreateDate(new Date());
         telephoneRecord.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
         telephoneRecord.setFldOperateDate(new Date());
+        telephoneRecord.setFldCallBeginTime(new Date());
+        telephoneRecord.setFldCallEndTime(new Date());
+        telephoneRecord.setFldCallLong(0);
+        telephoneRecord.setFldCallDate(new Date());
 
         String callId = telephoneRecord.getCallId();
         if (!StringUtils.isBlank(callId)) {
             Calllog calllog = calllogDao.findOne(Long.valueOf(callId));
-            telephoneRecord.setFldCallBeginTime(calllog.getAnsweredTime());
-            telephoneRecord.setFldCallEndTime(calllog.getHangUpTime());
-            telephoneRecord.setFldCallLong(calllog.getTalkDuration());
-            telephoneRecord.setFldCallDate(calllog.getInboundCallTime());
+            if(calllog!=null){
+                telephoneRecord.setFldCallBeginTime(calllog.getAnsweredTime());
+                telephoneRecord.setFldCallEndTime(calllog.getHangUpTime());
+                telephoneRecord.setFldCallLong(calllog.getTalkDuration());
+                telephoneRecord.setFldCallDate(calllog.getInboundCallTime());
+            }
             Talklog talkLog = talklogDao.findByCallId(Long.valueOf(callId));
-            telephoneRecord.setFldRecordFilePath(talkLog.getIispath());
+            if(talkLog!=null){
+                telephoneRecord.setFldRecordFilePath(talkLog.getIispath());
+            }
         }
 
         telephoneRecordDao.save(telephoneRecord);
@@ -91,34 +102,33 @@ public class TelephoneTaskManager extends GenericPageHQLQuery<TelephoneTask> {
         TelephoneAssignDetail telephoneAssignDetail = telephoneAssignDetailDao.findOne(assignDetailId);
 
         //更新话务分配明细表的已拨打数
-        if (TelephoneTaskStatusEnum.DONE_FINISH.getCode().equals(oldTelephoneTask.getFldTaskStatus())
-                && !TelephoneTaskStatusEnum.DONE_FINISH.getCode().equals(oldTaskStatus)) {
-            if (TelephoneTaskStatusEnum.WAITING_FINISH.getCode().equals(oldTaskStatus)) {
-                if (telephoneAssignDetail.getFldFollowNumber() != null && telephoneAssignDetail.getFldFollowNumber().intValue() > 0) {
-                    telephoneAssignDetail.setFldFinishNumber(telephoneAssignDetail.getFldFollowNumber() - 1);
-                } else {
-                    telephoneAssignDetail.setFldFinishNumber(0);
-                }
-            }
-            telephoneAssignDetail.setFldFinishNumber(telephoneAssignDetail.getFldFinishNumber() + 1);
-            if (telephoneAssignDetail.getFldTaskNumber().intValue() == telephoneAssignDetail.getFldFinishNumber().intValue()) {
+        Long countOfFinish = telephoneTaskDao.countByDateAndTaskStatus(telephoneAssignDetail.getFldId(), TelephoneTaskStatusEnum.DONE_FINISH.getCode(), DateUtils.truncate(new Date(), Calendar.DATE));
+        if (countOfFinish != null) {
+            telephoneAssignDetail.setFldFinishNumber(countOfFinish.intValue());
+
+            if (countOfFinish.intValue() == telephoneAssignDetail.getFldTaskNumber().intValue()) {
                 telephoneAssignDetail.setFldFinishStatus(TelephoneAssignFinishStatusEnum.DONE_FINISH.getCode());
             }
-        } else {
-            if (TelephoneTaskStatusEnum.WAITING_FINISH.getCode().equals(oldTelephoneTask.getFldTaskStatus())
-                    && !TelephoneTaskStatusEnum.WAITING_FINISH.getCode().equals(oldTaskStatus)) {
-                telephoneAssignDetail.setFldFinishNumber(telephoneAssignDetail.getFldFollowNumber() == null ? 0 : telephoneAssignDetail.getFldFollowNumber() + 1);
-            }
+        }
+
+        Long countOfFollow = telephoneTaskDao.countByDateAndTaskStatus(telephoneAssignDetail.getFldId(), TelephoneTaskStatusEnum.WAITING_FINISH.getCode(), DateUtils.truncate(new Date(), Calendar.DATE));
+
+        if (countOfFollow != null) {
+            telephoneAssignDetail.setFldFollowNumber(countOfFollow.intValue());
         }
 
         telephoneAssignDetailDao.save(telephoneAssignDetail);
 
         //更新话单原始表中的最近拨打时间
         TelephoneImportDetail telephoneImportDetail = telephoneImportDetailDao.findOne(oldTelephoneTask.getFldCustomerId());
-        TelephoneCustomer telephoneCustomer = telephoneCustomerDao.findOne(telephoneImportDetail.getFldTelephoneId());
-        telephoneCustomer.setFldLatestCallDate(telephoneRecord.getFldCallDate());
-        telephoneCustomer.setFldCallUserNo(SecurityUtil.getCurrentUserLoginName());
-        telephoneCustomerDao.save(telephoneCustomer);
+        if (telephoneImportDetail != null && telephoneImportDetail.getFldTelephoneId() != null) {
+            TelephoneCustomer telephoneCustomer = telephoneCustomerDao.findOne(telephoneImportDetail.getFldTelephoneId());
+            if(telephoneCustomer!=null){
+                telephoneCustomer.setFldLatestCallDate(telephoneRecord.getFldCallDate());
+                telephoneCustomer.setFldCallUserNo(SecurityUtil.getCurrentUserLoginName());
+                telephoneCustomerDao.save(telephoneCustomer);
+            }
+        }
     }
 
     @Transactional(readOnly = false)

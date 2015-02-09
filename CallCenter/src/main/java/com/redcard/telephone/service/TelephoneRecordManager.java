@@ -63,8 +63,9 @@ public class TelephoneRecordManager extends GenericPageHQLQuery<TelephoneRecord>
         }
         Talklog talkLog = talklogDao.findByCallId(Long.valueOf(callId));
         if (talkLog != null) {
+            calllog = calllogDao.findOne(Long.valueOf(callId));
             telephoneRecord.setFldRecordFilePath(talkLog.getIispath());
-            telephoneRecord.setFldCallLong(talkLog.getTimelong());
+            telephoneRecord.setFldCallLong(calllog.getTalkDuration());
         }
         telephoneRecordDao.save(telephoneRecord);
     }
@@ -108,8 +109,9 @@ public class TelephoneRecordManager extends GenericPageHQLQuery<TelephoneRecord>
         Talklog talkLog = talklogDao.findByCallId(Long.valueOf(callId));
 
         if (talkLog != null) {
+            calllog = calllogDao.findOne(Long.valueOf(callId));
             telephoneRecord.setFldRecordFilePath(talkLog.getIispath());
-            telephoneRecord.setFldCallLong(talkLog.getTimelong());
+            telephoneRecord.setFldCallLong(calllog.getTalkDuration());
         }
 
         telephoneRecordDao.save(telephoneRecord);

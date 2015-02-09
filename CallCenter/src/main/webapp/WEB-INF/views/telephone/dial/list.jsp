@@ -117,14 +117,14 @@ taskListGrid = $("#tasklist").ligerGrid({
             render: function (item) {
                 if (null == item.fldMobile || "" == item.fldMobile)
                     return "";
-                return '<span>' + item.fldMobile + '&nbsp;&nbsp;<a href="javascript:void(0);" onclick="javascript:makecall(\'' + item.fldMobile + '\',\'' + item.fldCustomerName + '\');" title="拨打" style="background:url(/static/ligerUI/icons/silkicons/phone.png) no-repeat;text-decoration:none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></span>';
+                return '<span>' + item.fldMobile + '&nbsp;&nbsp;<a href="javascript:void(0);" onclick="javascript:makecall(\'' + item.fldMobile + '\',\'' + item.fldCustomerName + '\',\''+item.fldComment+ '\');" title="拨打" style="background:url(/static/ligerUI/icons/silkicons/phone.png) no-repeat;text-decoration:none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></span>';
             }
         },
         {display: '固定电话', name: 'fldPhone', width: 120,
             render: function (item) {
                 if (null == item.fldPhone || "" == item.fldPhone)
                     return "";
-                return '<span>' + item.fldPhone + '&nbsp;&nbsp;<a href="javascript:void(0);" onclick="javascript:makecall(\'' + item.fldPhone + '\',\'' + item.fldCustomerName + '\');" title="拨打" style="background:url(/static/ligerUI/icons/silkicons/telephone.png) no-repeat;text-decoration:none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></span>';
+                return '<span>' + item.fldPhone + '&nbsp;&nbsp;<a href="javascript:void(0);" onclick="javascript:makecall(\'' + item.fldPhone + '\',\'' + item.fldCustomerName + '\',\''+item.fldComment+ '\');" title="拨打" style="background:url(/static/ligerUI/icons/silkicons/telephone.png) no-repeat;text-decoration:none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></span>';
             }
         },
         {display: '拨打状态', name: 'fldCallStatus', width: 130,
@@ -500,23 +500,39 @@ function f_savecust() {
     });
 }
 
+var isSave = false;
+
 function f_save() {
+
+    if (isSave == true) {
+        LG.showError("正在处理，请勿重复操作");
+        return;
+    } else {
+        isSave = true;
+    }
+
     var fldResultType = $("#fldResultType").val();
-    if (undefined == fldResultType)return;
+    if (undefined == fldResultType) {
+        isSave = false;
+        return;
+    }
     if ("" == fldResultType) {
         LG.showError('请选择任务结果');
+        isSave = false;
         return;
     }
 
     var fldComment = $("#fldComment").val();
     if ("" == fldComment) {
         LG.showError("请填写备注");
+        isSave = false;
         return;
     }
 
     var fldTaskStatus = $("#fldTaskStatus").val();
     if ("" == fldTaskStatus) {
         LG.showError("请选择任务状态");
+        isSave = false;
         return;
     }
 
@@ -543,9 +559,11 @@ function f_save() {
             taskListGrid.loadData();
             callWin.hide();
             LG.tip("保存成功");
+            isSave = false;
             dialHistorGrid.loadData();
         },
         error: function (message) {
+            isSave = false;
             LG.showError(message);
         }
     });
@@ -583,13 +601,17 @@ callMainform.ligerForm({
 });
 
 var callWin;
-function makecall(phone, customerName) {
+function makecall(phone, customerName, fldComment) {
     if (parent.LG.telephoneStatus != 0) {
         return;
     }
     parent.LG.call(phone);
 
-    $("#fldComment").val("");
+    if(fldComment=='null'){
+        $("#fldComment").val('');
+    }else{
+        $("#fldComment").val(fldComment);
+    }
 
     var date = new Date();
     $("#currCallBeginTime").val(date.getFullYear() + "-" + parseInt(parseInt(date.getMonth()) + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds());
@@ -597,10 +619,6 @@ function makecall(phone, customerName) {
     $("#currCallCustomerName").val(customerName);
 
     callWin = $.ligerDialog.open({
-        modal: true,
-        showMin: true,
-        allowClose: false,
-        showToggle: false,
         title: "拨打信息",
         target: $("#callDialog"),
         width: 650, height: 250, top: 30,
