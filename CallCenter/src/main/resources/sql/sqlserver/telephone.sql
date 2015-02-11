@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      Microsoft SQL Server 2008                    */
-/* Created on:     2015-01-16 15:49:57                          */
+/* Created on:     2015-02-11 20:46:02                          */
 /*==============================================================*/
 
 
@@ -267,6 +267,9 @@ create table tblTelephoneRecord (
    fldOperateDate       datetime             null,
    fldCreateUserNo      nvarchar(32)         null,
    fldCreateDate        datetime             null,
+   fldTotalDuration     int                  null,
+   fldWaitTime          int                  null,
+   fldAnswerFlag        int                  null,
    constraint PK_TBLTELEPHONERECORD primary key (fldId)
 )
 go

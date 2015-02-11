@@ -79,6 +79,9 @@ public class TelephoneTaskManager extends GenericPageHQLQuery<TelephoneTask> {
         telephoneRecord.setFldCallBeginTime(new Date());
         telephoneRecord.setFldCallEndTime(new Date());
         telephoneRecord.setFldCallLong(0);
+        telephoneRecord.setFldCallLong(0);
+        telephoneRecord.setFldTotalDuration(0);
+        telephoneRecord.setFldWaitTime(0);
         telephoneRecord.setFldCallDate(new Date());
 
         String callId = telephoneRecord.getCallId();
@@ -89,6 +92,9 @@ public class TelephoneTaskManager extends GenericPageHQLQuery<TelephoneTask> {
                 telephoneRecord.setFldCallEndTime(calllog.getHangUpTime());
                 telephoneRecord.setFldCallLong(calllog.getTalkDuration());
                 telephoneRecord.setFldCallDate(calllog.getInboundCallTime());
+                telephoneRecord.setFldCallLong(calllog.getTalkDuration());
+                telephoneRecord.setFldTotalDuration(calllog.getTotalDuration());
+                telephoneRecord.setFldWaitTime(calllog.getWaitTime());
             }
             Talklog talkLog = talklogDao.findByCallId(Long.valueOf(callId));
             if(talkLog!=null){

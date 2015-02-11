@@ -685,6 +685,8 @@
 
     LG.hiddenPhone = function(phone){
 
+        return phone;
+
         if(!phone){
             return '';
         }

@@ -2,6 +2,8 @@ package com.redcard.telephone.web.controller;
 
 import com.common.Constant;
 import com.common.core.excel.ExcelExportUtil;
+import com.common.core.filter.FilterRule;
+import com.common.core.filter.FilterTranslator;
 import com.common.core.grid.AsyncResponse;
 import com.common.core.grid.DataResponse;
 import com.common.core.grid.GridPageRequest;
@@ -10,6 +12,8 @@ import com.common.security.util.SecurityUtil;
 import com.redcard.telephone.entity.TelephoneRecord;
 import com.redcard.telephone.service.TelephoneRecordManager;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,7 +70,20 @@ public class RecordController {
                 where = FilterGroupUtil.addRule(where, "fldCallType", Constant.TELEPHONE_CALL_TYPE_IN.toString(), "int", "equal");
             }
         }
-        return (new DataResponse<TelephoneRecord>(telephoneRecordManager.findAllTelephoneRecord(pageRequest, where)));
+
+        FilterTranslator filterTranslator = telephoneRecordManager.createFilter(where);
+        try {
+            if (filterTranslator != null) {
+                for (FilterRule filterRule : filterTranslator.getGroup().getRules()) {
+                    if ("fldCallBeginTime".equalsIgnoreCase(filterRule.getField()) && "lessorequal".equalsIgnoreCase(filterRule.getOp())) {
+                        filterRule.setValue(DateFormatUtils.format(DateUtils.addDays(DateUtils.parseDate((String) filterRule.getValue(), "yyyy-MM-dd"), 1), "yyyy-MM-dd"));
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return (new DataResponse<TelephoneRecord>(telephoneRecordManager.findAll(filterTranslator, pageRequest)));
     }
 
     @RequestMapping(value = "view")
@@ -127,7 +144,7 @@ public class RecordController {
         } catch (Exception e) {
             e.printStackTrace();
             log.error(e.getMessage());
-            return new AsyncResponse(true,"系统错误，请联系管理人员");
+            return new AsyncResponse(true, "系统错误，请联系管理人员");
         }
 
         return result;
@@ -147,7 +164,7 @@ public class RecordController {
         } catch (Exception e) {
             e.printStackTrace();
             log.error(e.getMessage());
-            return new AsyncResponse(true,"系统错误，请联系管理人员");
+            return new AsyncResponse(true, "系统错误，请联系管理人员");
         }
 
         return result;

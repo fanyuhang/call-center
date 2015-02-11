@@ -212,7 +212,8 @@ $.ligerui.get("financialUserNo").openSelect({
 
 $(".l-form-container").css("height", "175");
 $(".l-form-container").css("width", "520");
-$('<div class="l-dialog-btn" style="margin-right:30px;margin-top:20px;" onclick="javascript:f_savecust();"><div class="l-dialog-btn-l"></div><div class="l-dialog-btn-r"></div><div class="l-dialog-btn-inner">保存</div></div>').appendTo(".l-form-container");
+$('<div class="l-dialog-btn" style="margin-right:30px;margin-top:20px;" onclick="javascript:f_savecust();"><div class="l-dialog-btn-l"></div><div class="l-dialog-btn-r"></div><div class="l-dialog-btn-inner">预约任务</div></div>').appendTo(".l-form-container");
+//$('<div class="l-dialog-btn" style="margin-right:30px;margin-top:20px;" onclick="javascript:f_new_task();"><div class="l-dialog-btn-l"></div><div class="l-dialog-btn-r"></div><div class="l-dialog-btn-inner">保存客户</div></div>').appendTo(".l-form-container");
 
 $("#contractInfo").ligerGrid({
     checkbox: false,
@@ -641,6 +642,10 @@ function updateGridHeight() {
 }
 
 updateGridHeight();
+
+function f_new_task(){
+
+}
 
 try {
     var snocx = parent.document.getElementById("snocx");

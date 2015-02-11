@@ -105,7 +105,9 @@
     	</column>
     	<column cell="E1" propertyName="fldPhone" columnName="拨打号码" nullAllowed="true"></column>
     	<column cell="F1" propertyName="fldCustomerName" columnName="客户姓名" nullAllowed="true"></column>
-    	<column cell="G1" propertyName="fldComment" columnName="备注" nullAllowed="true"></column>
+        <column cell="G1" propertyName="fldCallLong" columnName="通话时长(秒)" nullAllowed="true"></column>
+        <column cell="H1" propertyName="fldTotalDuration" columnName="总时长(秒)" nullAllowed="true"></column>
+        <column cell="I1" propertyName="fldComment" columnName="备注" nullAllowed="true"></column>
     </table>
     
     <table class="com.redcard.telephone.entity.TelephoneTask" startRow="1">

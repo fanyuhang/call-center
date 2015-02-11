@@ -8,6 +8,10 @@
             ,a.starttime
             ,a.endtime
             ,a.callid
+            ,b.uid as uid
+            ,cast(DateDiff(second,a.starttime,getdate())/60 as varchar)
+            + ':'
+            +cast(DateDiff(second,a.starttime,getdate())%60 as varchar) as timeLong
         FROM (
             SELECT a.extno
                 ,a.uid

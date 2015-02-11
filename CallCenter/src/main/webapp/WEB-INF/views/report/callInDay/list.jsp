@@ -28,8 +28,9 @@
         fields: [
             {display: "统计时间", name: "startDate", newline: true, cssClass: "field", type: "date", attr: {"op": 'equal'}},
             {display: "至", name: "endDate", newline: false, cssClass: "field", type: "date", attr: {"op": 'equal'}},
-            {display: "通话时长 >", name: "totalCallLong", newline: false, cssClass: "field", type: "text", attr: {"op": 'greater',"type":'int'}},
-            {display: "话务员", name: "userName", newline: true, cssClass: "field", type: "text", attr: {"op": 'like'}},
+            {display: "话务员", name: "userName", newline: false, cssClass: "field", type: "text", attr: {"op": 'like'}},
+            {display: "通话时长 >", name: "totalCallLongStart", newline: true, cssClass: "field", type: "text", attr: {"op": 'greater',"type":'int'}},
+            {display: "通话时长 <", name: "totalCallLongEnd", newline: false, cssClass: "field", type: "text", attr: {"op": 'less',"type":'int'}},
             {display: "部门名称", name: "deptName", newline: false, cssClass: "field", type: "text", attr: {"op": 'like'}}
         ],
         toJSON: JSON2.stringify
@@ -42,9 +43,36 @@
             { display: "统计日期", name: "reportDateStr", type: "text", align: "center" },
             { display: "部门", name: "deptName", type: "text", align: "center" },
             { display: "话务员", name: "userName", type: "text", align: "center" },
-            { display: "通话时长(秒)", name: "totalCallLong", type: "text", align: "right",
+            { display: "总时长(秒)", name: "totalCallLong", type: "text", align: "right",
                 render: function (item) {
                     return item.totalCallLong+"";
+                }, totalSummary: { type: 'sum',
+                render: function (suminf, column, cell) {
+                    return '<div>合计:&nbsp;&nbsp;<b>' + suminf.sum + '（秒）</b></div>';
+                }
+            }
+            },
+            { display: "有效时长(秒)", name: "totalValidCallLong", type: "text", align: "right",
+                render: function (item) {
+                    return item.totalValidCallLong+"";
+                }, totalSummary: { type: 'sum',
+                render: function (suminf, column, cell) {
+                    return '<div>合计:&nbsp;&nbsp;<b>' + suminf.sum + '（秒）</b></div>';
+                }
+            }
+            },
+            { display: "总通次", name: "totalCallNum", type: "text", align: "right",
+                render: function (item) {
+                    return item.totalCallNum+"";
+                }, totalSummary: { type: 'sum',
+                render: function (suminf, column, cell) {
+                    return '<div>合计:&nbsp;&nbsp;<b>' + suminf.sum + '（秒）</b></div>';
+                }
+            }
+            },
+            { display: "有效通次", name: "totalValidCallNum", type: "text", align: "right",
+                render: function (item) {
+                    return item.totalValidCallNum+"";
                 }, totalSummary: { type: 'sum',
                 render: function (suminf, column, cell) {
                     return '<div>合计:&nbsp;&nbsp;<b>' + suminf.sum + '（秒）</b></div>';
@@ -54,15 +82,6 @@
             { display: "客户数", name: "totalCutomerNum", type: "text", align: "right",
                 render: function (item) {
                     return item.totalCutomerNum+"";
-                }, totalSummary: { type: 'sum',
-                render: function (suminf, column, cell) {
-                    return '<div>合计:&nbsp;&nbsp;<b>' + suminf.sum + '</b></div>';
-                }
-            }
-            },
-            { display: "拨打数", name: "totalCallNum", type: "text", align: "right",
-                render: function (item) {
-                    return item.totalCallNum+"";
                 }, totalSummary: { type: 'sum',
                 render: function (suminf, column, cell) {
                     return '<div>合计:&nbsp;&nbsp;<b>' + suminf.sum + '</b></div>';

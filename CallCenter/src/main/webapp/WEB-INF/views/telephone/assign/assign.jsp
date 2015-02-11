@@ -29,11 +29,8 @@ mainform.ligerForm({
         {display: "话单名称", name: "importId", newline: true, type: "select", attr: {readonly: "readonly"}, validate: {required: true},cssClass: "field",
             options: {
                 valueFieldID: "importId",
-                valueField: "fldId",
-                textField: "fldName",
-                validate: {required: true},
-                url: '<c:url value="/telephone/import/listAllUnAssignTelephone"/>'
-            }, attr: {"op": "equal", "vt": "int"}, comboboxName: "importName", group: "<label style=white-space:nowrap;>1. 选择话单</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'
+                validate: {required: true}
+            },comboboxName: "importName", group: "<label style=white-space:nowrap;>1. 选择话单</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'
         },
         {display: "可分配话务数", name: "taskCount", newline: false, type: "text", attr: {readonly: "readonly"}},
         {display: "话务员", name: "fldCallUserNo", newline: true, type: "select", validate: {required: true}, group: "<label style=white-space:nowrap;>2. 选择话务员</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>',
@@ -48,6 +45,28 @@ mainform.ligerForm({
 });
 
 mainform.attr("action", '<c:url value="/telephone/assign/save"/>');
+
+$.ligerui.get("importName").openSelect({
+    grid: {
+        rownumbers: true,
+        checkbox: false,
+        columnWidth: 180,
+        columns: [
+            {display: "话单名称", name: "fldName"},
+            {display: "导入记录数", name: "fldImportTotalNumber"},
+            {display: "已分配记录数", name: "fldAssignTotalNumber"},
+            {display: "导入人", name: "createUserName"},
+            {display: "导入时间", name: "fldCreateDate"}
+        ], pageSize: 20, heightDiff: -10,
+        url: '<c:url value="/telephone/import/listForAssign"/>', sortName: 'fldCreateDate'
+    },
+    search: {
+        fields: [
+            {display: "话单名称", name: "fldName", newline: true, type: "text", cssClass: "field"}
+        ]
+    },
+    valueField: 'fldId', textField: 'fldName', top: 30
+});
 
 $.ligerui.get("fldBeginDate").bind("changedate", function () {
     var fldBeginDate = $("#fldBeginDate").val();

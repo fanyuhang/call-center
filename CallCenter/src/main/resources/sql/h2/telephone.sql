@@ -218,6 +218,9 @@ CREATE TABLE tblTelephoneRecord (
   fldOperateDate    DATETIME       NULL,
   fldCreateUserNo   NVARCHAR(32)   NULL,
   fldCreateDate     DATETIME       NULL,
+  fldTotalDuration     int                  null,
+  fldWaitTime          int                  null,
+  fldAnswerFlag        int                  null,
   CONSTRAINT PK_TBLTELEPHONERECORD PRIMARY KEY (fldId)
 );
 

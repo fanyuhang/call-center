@@ -58,6 +58,10 @@ public class TelephoneRecord implements java.io.Serializable {
 	
 	private String callId;
 
+    private Integer fldTotalDuration;
+    private Integer fldWaitTime;
+    private Integer fldAnswerFlag;
+
 	// Constructors
 
 	/** default constructor */
@@ -350,4 +354,31 @@ public class TelephoneRecord implements java.io.Serializable {
 	public void setFldTaskStatus(Integer fldTaskStatus) {
 		this.fldTaskStatus = fldTaskStatus;
 	}
+
+    @Column(name = "FLDTOTALDURATION")
+    public Integer getFldTotalDuration() {
+        return fldTotalDuration;
+    }
+
+    public void setFldTotalDuration(Integer fldTotalDuration) {
+        this.fldTotalDuration = fldTotalDuration;
+    }
+
+    @Column(name = "FLDWAITTIME")
+    public Integer getFldWaitTime() {
+        return fldWaitTime;
+    }
+
+    public void setFldWaitTime(Integer fldWaitTime) {
+        this.fldWaitTime = fldWaitTime;
+    }
+
+    @Column(name = "FLDANSWERFLAG")
+    public Integer getFldAnswerFlag() {
+        return fldAnswerFlag;
+    }
+
+    public void setFldAnswerFlag(Integer fldAnswerFlag) {
+        this.fldAnswerFlag = fldAnswerFlag;
+    }
 }

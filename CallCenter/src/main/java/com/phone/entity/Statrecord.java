@@ -25,6 +25,8 @@ public class Statrecord implements Serializable {
     private String extno;
     private String uid;
     private Integer callid;
+    private String timeLong;
+    private String deptName;
 
     @Id
     @Column(name = "ID")
@@ -160,6 +162,24 @@ public class Statrecord implements Serializable {
             return operateUserName;
         }
         return operateUser != null ? operateUser.getName() : "";
+    }
+
+    @Transient
+    public String getTimeLong() {
+        return timeLong;
+    }
+
+    public void setTimeLong(String timeLong) {
+        this.timeLong = timeLong;
+    }
+
+    @Transient
+    public String getDeptName() {
+        return deptName;
+    }
+
+    public void setDeptName(String deptName) {
+        this.deptName = deptName;
     }
 
     @Override

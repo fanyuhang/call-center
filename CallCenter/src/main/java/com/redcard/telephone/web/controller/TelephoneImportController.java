@@ -3,6 +3,7 @@ package com.redcard.telephone.web.controller;
 import com.common.Constant;
 import com.common.core.excel.ExcelExportUtil;
 import com.common.core.excel.ExcelImportUtil;
+import com.common.core.filter.FilterRule;
 import com.common.core.filter.FilterTranslator;
 import com.common.core.grid.AsyncResponse;
 import com.common.core.grid.DataResponse;
@@ -58,6 +59,23 @@ public class TelephoneImportController {
     public DataResponse<TelephoneImport> list(GridPageRequest pageRequest, String where) {
         pageRequest.setSort("fldOperateDate", "desc");
         return (new DataResponse<TelephoneImport>(telephoneImportManager.findAllTelephoneImport(pageRequest, where)));
+    }
+
+    @RequestMapping(value = "listForAssign")
+    @ResponseBody
+    public DataResponse<TelephoneImport> listForAssign(GridPageRequest pageRequest, String where) {
+        FilterTranslator filterTranslator = telephoneImportManager.createFilter(where);
+
+        String fldName = null;
+        if(filterTranslator!=null){
+            for(FilterRule filterRule: filterTranslator.getGroup().getRules()){
+                if("fldName".equalsIgnoreCase(filterRule.getField())){
+                    fldName = (String)filterRule.getValue();
+                }
+            }
+        }
+
+        return (new DataResponse<TelephoneImport>(telephoneImportManager.findTelephoneImportByNameAndLoginName(fldName, SecurityUtil.getCurrentUserLoginName(), pageRequest)));
     }
 
     @RequestMapping(value = "template/{fileName}")
@@ -158,7 +176,7 @@ public class TelephoneImportController {
                                 break;
                             } else if (StringUtils.isNotBlank(telephoneImportEntity.getTelephone())
                                     && StringUtils.isNotBlank(importEntity.getTelephone())
-                                    &&telephoneImportEntity.getCustName().equals(importEntity.getCustName())
+                                    && telephoneImportEntity.getCustName().equals(importEntity.getCustName())
                                     && telephoneImportEntity.getTelephone().equals(importEntity.getTelephone())) {
                                 dupList.add(importEntity);
                                 flag = false;
@@ -402,7 +420,7 @@ public class TelephoneImportController {
     @ResponseBody
     public DataResponse<TelephoneImportDetail> showDtl(GridPageRequest pageRequest, String fldId) {
         FilterTranslator filterTranslator = telephoneImportDetailManager.createFilter(null);
-        filterTranslator.addFilterRule("fldImportId",fldId,Constant.FILTER_OP_EQUAL);
-        return new DataResponse<TelephoneImportDetail>(telephoneImportDetailManager.findAll(filterTranslator,pageRequest));
+        filterTranslator.addFilterRule("fldImportId", fldId, Constant.FILTER_OP_EQUAL);
+        return new DataResponse<TelephoneImportDetail>(telephoneImportDetailManager.findAll(filterTranslator, pageRequest));
     }
 }

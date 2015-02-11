@@ -17,6 +17,8 @@ public class CallInDay {
     private Integer totalCallLong;
     private Integer totalCutomerNum;
     private Integer totalCallNum;
+    private Integer totalValidCallLong;
+    private Integer totalValidCallNum;
 
     private String reportDateStr;
 
@@ -78,5 +80,21 @@ public class CallInDay {
 
     public void setTotalCallNum(Integer totalCallNum) {
         this.totalCallNum = totalCallNum;
+    }
+
+    public Integer getTotalValidCallLong() {
+        return totalValidCallLong;
+    }
+
+    public void setTotalValidCallLong(Integer totalValidCallLong) {
+        this.totalValidCallLong = totalValidCallLong;
+    }
+
+    public Integer getTotalValidCallNum() {
+        return totalValidCallNum;
+    }
+
+    public void setTotalValidCallNum(Integer totalValidCallNum) {
+        this.totalValidCallNum = totalValidCallNum;
     }
 }

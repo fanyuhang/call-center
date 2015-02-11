@@ -59,6 +59,9 @@ public class TelephoneRecordManager extends GenericPageHQLQuery<TelephoneRecord>
             telephoneRecord.setFldCallBeginTime(calllog.getAnsweredTime());
             telephoneRecord.setFldCallEndTime(calllog.getHangUpTime());
             telephoneRecord.setFldCallLong(0);
+            telephoneRecord.setFldTotalDuration(0);
+            telephoneRecord.setFldWaitTime(0);
+            telephoneRecord.setFldAnswerFlag(0);
             telephoneRecord.setFldCallDate(calllog.getInboundCallTime());
         }
         Talklog talkLog = talklogDao.findByCallId(Long.valueOf(callId));
@@ -66,6 +69,9 @@ public class TelephoneRecordManager extends GenericPageHQLQuery<TelephoneRecord>
             calllog = calllogDao.findOne(Long.valueOf(callId));
             telephoneRecord.setFldRecordFilePath(talkLog.getIispath());
             telephoneRecord.setFldCallLong(calllog.getTalkDuration());
+            telephoneRecord.setFldTotalDuration(calllog.getTotalDuration());
+            telephoneRecord.setFldWaitTime(calllog.getWaitTime());
+            telephoneRecord.setFldAnswerFlag(calllog.getAnswerFlag());
         }
         telephoneRecordDao.save(telephoneRecord);
     }
@@ -104,6 +110,9 @@ public class TelephoneRecordManager extends GenericPageHQLQuery<TelephoneRecord>
             telephoneRecord.setFldCallBeginTime(calllog.getAnsweredTime());
             telephoneRecord.setFldCallEndTime(calllog.getHangUpTime());
             telephoneRecord.setFldCallLong(0);
+            telephoneRecord.setFldCallLong(0);
+            telephoneRecord.setFldTotalDuration(0);
+            telephoneRecord.setFldWaitTime(0);
             telephoneRecord.setFldCallDate(calllog.getInboundCallTime());
         }
         Talklog talkLog = talklogDao.findByCallId(Long.valueOf(callId));
@@ -112,6 +121,9 @@ public class TelephoneRecordManager extends GenericPageHQLQuery<TelephoneRecord>
             calllog = calllogDao.findOne(Long.valueOf(callId));
             telephoneRecord.setFldRecordFilePath(talkLog.getIispath());
             telephoneRecord.setFldCallLong(calllog.getTalkDuration());
+            telephoneRecord.setFldCallLong(calllog.getTalkDuration());
+            telephoneRecord.setFldTotalDuration(calllog.getTotalDuration());
+            telephoneRecord.setFldWaitTime(calllog.getWaitTime());
         }
 
         telephoneRecordDao.save(telephoneRecord);

@@ -38,7 +38,8 @@
                 validate: {
                     required: true,
                     maxlength: 5
-                }}
+                }},
+            {display: "部门", name: "deptName", newline: false, type: "text", cssClass: "field"}
         ],
         toJSON: JSON2.stringify
     });
@@ -100,6 +101,10 @@
                 name: "extno"
             },
             {
+                display: "部门",
+                name: "deptName"
+            },
+            {
                 display: "话务员",
                 name: "operateUserName"
             },
@@ -108,8 +113,12 @@
                 name: "statusName"
             },
             {
-                display: "时间",
+                display: "开始时间",
                 name: "starttime"
+            },
+            {
+                display: "时长",
+                name: "timeLong"
             }
         ],
         dataAction: 'server',
@@ -128,7 +137,7 @@
     });
 
     function f_reload() {
-        grid.loadData();
+        grid._setUrl('<c:url value="/phone/stat/list"/>'+'?deptName='+$("#deptName").val());
     }
 
     setInterval("f_reload()", 2000);

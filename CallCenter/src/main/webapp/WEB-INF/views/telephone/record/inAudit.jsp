@@ -38,7 +38,9 @@
 	        	attr:{op:'greaterorequal', vt:'date', field:"fldCallBeginTime"}},
 	        {display: "拨打结束时间", name: "endDate", newline: false, type: "date", cssClass: "field",
 	        	attr:{op:'lessorequal', vt:'date', field:"fldCallBeginTime"}},
-            {display: "客户姓名", name: "fldCustomerName", newline: false, type: "text", cssClass: "field"}
+            {display: "客户姓名", name: "fldCustomerName", newline: false, type: "text", cssClass: "field"},
+            {display: "通话时长 > ", name: "fldCallLongStart", newline: true, cssClass: "field", type: "text", attr: {"op": 'greater',"vt":'int', field:"fldCallLong"}},
+            {display: '通话时长 < ', name: "fldCallLongEnd", newline: false, cssClass: "field", type: "text", attr: {"op": 'less',"vt":'int', field:"fldCallLong"}}
         ],
 	    toJSON: JSON2.stringify
 	});
@@ -53,6 +55,7 @@
 	        {display:"ID",name:"fldId",width:1,hide:1},
 	        {display: "话务员", name: "callUserName"},
 	        {display: "通话时间", name: "fldCallDate"},
+            {display: "总时长(秒)", name: "fldTotalDuration",width:"100"},
             {display: "通话时长(秒)", name: "fldCallLong",width:"100"},
             {display: "来电号码", name: "fldPhone",
                 render:function(item) {
