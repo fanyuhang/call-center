@@ -210,3 +210,17 @@ CREATE TABLE tblSysJob (
   fldExecuteCount      INT          NULL,
   CONSTRAINT PK_TBLSYSJOB PRIMARY KEY (fldId)
 );
+
+DROP TABLE IF EXISTS tblnotice;
+create table tblNotice (
+  fldId                int                  identity,
+  fldTitle             nvarchar(3000)       null,
+  fldContent           nvarchar(4000)       null,
+  fldLevel             int                  null,
+  fldStatus            int                  null,
+  fldOperateUserNo     nvarchar(32)         null,
+  fldOperateDate       datetime             null,
+  fldCreateUserNo      nvarchar(32)         null,
+  fldCreateDate        datetime             null,
+  constraint PK_TBLNOTICE primary key (fldId)
+);

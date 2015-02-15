@@ -55,6 +55,10 @@ public class GridPageRequest implements Pageable, Serializable {
         this.page = page - 1;
     }
 
+    public void setSort(Sort sort) {
+        this.sort = sort;
+    }
+
     public int getPagesize() {
         return pagesize;
     }

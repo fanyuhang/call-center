@@ -25,6 +25,7 @@
     </style>
     <script type="text/javascript">
         var GLOBAL_CTX = '${ctx}';
+        var IMAGE_WEBSITE="http://www.cnredcard.com/cuponpic/";
     </script>
     <script src='<c:url value="/static/ligerUI/jquery/jquery-1.8.3.min.js"/>' type="text/javascript"></script>
     <script src='<c:url value="/static/ligerUI/jquery/jquery-ui.js"/>' type="text/javascript"></script>

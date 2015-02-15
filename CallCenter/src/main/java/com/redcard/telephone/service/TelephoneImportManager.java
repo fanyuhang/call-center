@@ -23,6 +23,7 @@ public class TelephoneImportManager extends GenericPageHQLQuery<TelephoneImport>
     @Autowired
     private TelephoneImportDetailDao telephoneImportDetailDao;
 
+    @Transactional(readOnly = false)
     public void save(TelephoneImport telephoneImport) {
         telephoneImportDao.save(telephoneImport);
     }
@@ -52,6 +53,7 @@ public class TelephoneImportManager extends GenericPageHQLQuery<TelephoneImport>
         return telephoneImport.getFldImportTotalNumber() - telephoneImport.getFldAssignTotalNumber();
     }
 
+    @Transactional(readOnly = false)
     public void updateAssignNumber(Integer fldAssignTotalNumber, String fldId) {
         telephoneImportDao.updateAssignNumber(fldAssignTotalNumber, fldId);
     }

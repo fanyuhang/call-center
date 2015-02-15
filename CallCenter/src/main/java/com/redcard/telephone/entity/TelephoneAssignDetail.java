@@ -45,6 +45,7 @@ public class TelephoneAssignDetail implements java.io.Serializable {
 	private Date fldCreateDate;
 	
 	private Integer unFinishNumber;
+    private Integer fldTaskType;
 
 	// Constructors
 
@@ -276,4 +277,13 @@ public class TelephoneAssignDetail implements java.io.Serializable {
 	public void setUnFinishNumber(Integer unFinishNumber) {
 		this.unFinishNumber = unFinishNumber;
 	}
+
+    @Column(name = "FLDTASKTYPE")
+    public Integer getFldTaskType() {
+        return fldTaskType;
+    }
+
+    public void setFldTaskType(Integer fldTaskType) {
+        this.fldTaskType = fldTaskType;
+    }
 }

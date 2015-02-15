@@ -137,6 +137,7 @@ public class TelephoneRecordManager extends GenericPageHQLQuery<TelephoneRecord>
         return telephoneRecordDao.findOne(Long.valueOf(id));
     }
 
+    @Transactional(readOnly = false)
     public void saveAudti(String id, String taskId, String fldAuditFraction, String fldAuditComment) {
         //更新呼叫记录中的审查信息
         TelephoneRecord tmpTelephoneRecord = telephoneRecordDao.findOne(Long.valueOf(id));

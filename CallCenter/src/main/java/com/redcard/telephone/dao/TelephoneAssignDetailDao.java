@@ -1,5 +1,6 @@
 package com.redcard.telephone.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
@@ -19,4 +20,7 @@ public interface TelephoneAssignDetailDao extends PagingAndSortingRepository<Tel
 	
 	@Query("select sum(m.fldFinishNumber) from TelephoneAssignDetail m where m.fldCallUserNo = ?1")
     public Long countFinishNumber(String fldCallUserNo);
+
+    @Query("select m from TelephoneAssignDetail m where m.fldCallUserNo = ?1 and m.fldTaskDate = ?2 and m.fldTaskType = ?3")
+    public List<TelephoneAssignDetail> findByCallUserNoAndDate(String userNo, Date callDate, Integer taskType);
 }

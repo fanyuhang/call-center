@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      Microsoft SQL Server 2008                    */
-/* Created on:     2015-02-11 20:46:02                          */
+/* Created on:     2015-02-15 10:29:10                          */
 /*==============================================================*/
 
 
@@ -109,6 +109,7 @@ create table tblTelephoneAssignDetail (
    fldOperateDate       datetime             null,
    fldCreateUserNo      nvarchar(32)         null,
    fldCreateDate        datetime             null,
+   fldTaskType          int                  null,
    constraint PK_TBLTELEPHONEASSIGNDETAIL primary key (fldId)
 )
 go

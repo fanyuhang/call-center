@@ -7,6 +7,7 @@
 	var callStatusData = <sys:dictList type = "23" nullable="true"/>;
 	var resultTypeData = <sys:dictList type = "27"/>;
     var taskStatusData = <sys:dictList type = "30" nullable="true"/>;
+    var taskTypeData = <sys:dictList type = "33" nullable="true"/>;
 
     var toolbarOptions = {
     	items:[
@@ -28,7 +29,12 @@
 	    columnWidth: 180,
 	    columns: [
 	        {display: "话务员", name: "callUserName"},
-	        {display: "客户姓名", name: "fldCustomerName"},
+            {display: "任务类型", name: "fldTaskType",
+                render:function(item) {
+                    return renderLabel(taskTypeData,item.fldTaskType);
+                }
+            },
+            {display: "客户姓名", name: "fldCustomerName"},
             {display: "任务状态", name: "fldTaskStatus",render:function(item){
                 return renderLabel(taskStatusData,item.fldTaskStatus);
             }},

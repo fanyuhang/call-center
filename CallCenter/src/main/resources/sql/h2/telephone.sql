@@ -49,6 +49,7 @@ CREATE TABLE tblTelephoneAssignDetail (
   fldOperateDate    DATETIME     NULL,
   fldCreateUserNo   NVARCHAR(32) NULL,
   fldCreateDate     DATETIME     NULL,
+  fldTaskType          int                  null,
   CONSTRAINT PK_TBLTELEPHONEASSIGNDETAIL PRIMARY KEY (fldId)
 );
 

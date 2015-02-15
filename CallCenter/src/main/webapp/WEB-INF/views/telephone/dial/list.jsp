@@ -79,6 +79,9 @@
 <div id="callDialog" style="display:none;">
     <form:form id="callMainform" name="callMainform" method="post" modelAttribute="call"></form:form>
 </div>
+<div id="taskDialog" style="display:none;">
+    <form:form id="taskMainform" name="taskMainform" method="post"></form:form>
+</div>
 <script type="text/javascript">
 //覆盖本页面grid的loading效果
 LG.overrideGridLoading();
@@ -138,7 +141,11 @@ taskListGrid = $("#tasklist").ligerGrid({
             }
         },
         {display: "备注", name: "fldComment", width: 200},
-        {display: "fldAssignDetailId", name: "fldAssignDetailId", hide: 1, width: 1}
+        {display: '操作', name: '', width: 120,
+            render: function (item) {
+                return '<a href="javascript:void(0);" onclick="javascript:f_new_task(\'' + item.fldCustomerId + '\');" title="预约任务">预约任务</a>';
+            }
+        }
     ],
     width: '99%', height: 190, rowHeight: 20, fixedCellHeight: true, sortName:'fldTaskDate', sortOrder:'asc',
     frozen: false, checkbox: false, rownumbers: true,
@@ -212,8 +219,7 @@ $.ligerui.get("financialUserNo").openSelect({
 
 $(".l-form-container").css("height", "175");
 $(".l-form-container").css("width", "520");
-$('<div class="l-dialog-btn" style="margin-right:30px;margin-top:20px;" onclick="javascript:f_savecust();"><div class="l-dialog-btn-l"></div><div class="l-dialog-btn-r"></div><div class="l-dialog-btn-inner">预约任务</div></div>').appendTo(".l-form-container");
-//$('<div class="l-dialog-btn" style="margin-right:30px;margin-top:20px;" onclick="javascript:f_new_task();"><div class="l-dialog-btn-l"></div><div class="l-dialog-btn-r"></div><div class="l-dialog-btn-inner">保存客户</div></div>').appendTo(".l-form-container");
+$('<div class="l-dialog-btn" style="margin-right:30px;margin-top:20px;" onclick="javascript:f_savecust();"><div class="l-dialog-btn-l"></div><div class="l-dialog-btn-r"></div><div class="l-dialog-btn-inner">保存客户</div></div>').appendTo(".l-form-container");
 
 $("#contractInfo").ligerGrid({
     checkbox: false,
@@ -506,7 +512,7 @@ var isSave = false;
 function f_save() {
 
     if (isSave == true) {
-        LG.showError("正在处理，请勿重复操作");
+        LG.showSuccess("正在处理，请勿重复操作");
         return;
     } else {
         isSave = true;
@@ -557,10 +563,10 @@ function f_save() {
         complete: function () {
         },
         success: function () {
+            isSave = false;
             taskListGrid.loadData();
             callWin.hide();
             LG.tip("保存成功");
-            isSave = false;
             dialHistorGrid.loadData();
         },
         error: function (message) {
@@ -643,7 +649,64 @@ function updateGridHeight() {
 
 updateGridHeight();
 
-function f_new_task(){
+var taskMainform = $("#taskMainform");
+taskMainform.ligerForm({
+    labelWidth: 100,
+    inputWidth: 150,
+    fields: [
+        {display: "预约日期", name: "taskDate1", newline: true, type: "date",  format:'yyyy-MM-dd', showTime:false, validate: {required: true}},
+        {display: "备注", name: "comment1", newline: true, type: "textarea", width: 250, attr: {"cols": 35}, validate: {required: true}}
+    ]
+});
+
+var taskWin;
+var customerId;
+LG.validate(taskMainform);
+function f_new_task(id) {
+
+    customerId = id;
+
+    if (taskWin) {
+        taskWin.show();
+    }
+    else {
+        taskWin = $.ligerDialog.open({
+            title: "预约信息",
+            target: $("#taskDialog"),
+            width: 400, height: 220, top: 30,
+            buttons: [
+                { text: '确定', onclick: function () {
+                    f_task_save();
+                }
+                },
+                { text: '取消', onclick: function () {
+                    taskWin.hide();
+                }
+                }
+            ]
+        });
+    }
+
+    $("#taskDate1").val("");
+    $("#comment1").val("");
+
+    function f_task_save(){
+
+        if (taskMainform.valid()) {
+            LG.ajax({
+                url:'<c:url value="/telephone/dial/newTask" />',
+                data:{ customerId:customerId, date:$("#taskDate1").val(), comment:$("#comment1").val() },
+                success:function () {
+                    LG.showSuccess('预约成功');
+                    taskWin.hide();
+                    taskListGrid.loadData();
+                },
+                error:function (message) {
+                    LG.showError(message);
+                }
+            });
+        }
+    }
 
 }
 

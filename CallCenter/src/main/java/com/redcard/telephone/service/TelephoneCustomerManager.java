@@ -51,8 +51,9 @@ public class TelephoneCustomerManager extends GenericPageHQLQuery<TelephoneCusto
 			rtn += telephoneCustomerDao.countByMobile(mobile);
 		return rtn;
 	}
-	
-	public void save(List<TelephoneCustomer> telephoneCustomerList) {
+
+    @Transactional(readOnly = false)
+    public void save(List<TelephoneCustomer> telephoneCustomerList) {
 		telephoneCustomerDao.save(telephoneCustomerList);
 	}
 	
@@ -75,8 +76,8 @@ public class TelephoneCustomerManager extends GenericPageHQLQuery<TelephoneCusto
 		
 		return taskList;
 	}
-	
-	public TelephoneCustomer findByPhoneOrMobile(String name,String phone,String mobile) {
+
+    public TelephoneCustomer findByPhoneOrMobile(String name,String phone,String mobile) {
 		TelephoneCustomer telephoneCustomer = telephoneCustomerDao.findByPhone(name, phone);
 		if(null != telephoneCustomer)
 			return telephoneCustomer;
@@ -85,8 +86,9 @@ public class TelephoneCustomerManager extends GenericPageHQLQuery<TelephoneCusto
 			return telephoneCustomer;
 		}
 	}
-	
-	public String saveAsCustomer(String id) {
+
+    @Transactional(readOnly = false)
+    public String saveAsCustomer(String id) {
 		TelephoneCustomer telephoneCustomer = telephoneCustomerDao.findOne(id);
 		//校验客户是否已存在
 		Long count = customerManager.countByPhoneOrMobile(telephoneCustomer.getFldCustomerName(), telephoneCustomer.getFldPhone(), telephoneCustomer.getFldMobile());

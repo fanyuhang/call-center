@@ -194,6 +194,20 @@
 		fldDesc="" fldTarget="" fldIcon="/static/ligerUI/icons/32X32/search.gif"
 		fldLink="/system/sysLog/init" fldType="1" fldPosition="8" />
 
+    <tblNode fldCode="010209" fldParent="0102" fldName="公告管理"
+             fldDesc="" fldTarget=""
+             fldIcon="/static/ligerUI/icons/32X32/calendar.gif" fldLink="/system/notice/init"
+             fldType="1" fldPosition="9" />
+    <tblNode fldCode="01020901" fldParent="010209" fldName="增加"
+             fldDesc="" fldTarget="add" fldIcon="/static/ligerUI/icons/silkicons/add.png"
+             fldLink="/system/notice/save" fldType="2" fldPosition="1" />
+    <tblNode fldCode="01020902" fldParent="010209" fldName="修改"
+             fldDesc="" fldTarget="modify" fldIcon="/static/ligerUI/icons/miniicons/page_edit.gif"
+             fldLink="/system/notice/update" fldType="2" fldPosition="2" />
+    <tblNode fldCode="01020903" fldParent="010209" fldName="删除"
+             fldDesc="" fldTarget="delete" fldIcon="/static/ligerUI/icons/miniicons/page_delete.gif"
+             fldLink="/system/notice/delete" fldType="2" fldPosition="3" />
+
 	<!-- 一级菜单 -->
 	<tblNode fldCode="0103" fldParent="01" fldName="客户管理" fldDesc=""
 		fldTarget="#" fldIcon="/static/ligerUI/icons/silkicons/application.png"
@@ -716,8 +730,14 @@
     <tblDictionary fldId="116" fldType="30" fldName="已完成" fldValue="9" fldStatus="0" fldComment="任务状态，已完成" />
     
     <tblDictionary fldId="117" fldType="31" fldName="待审查" fldValue="0" fldStatus="0" fldComment="审查状态，待审查" />
-    <tblDictionary fldId="118" fldType="31" fldName="已审查" fldValue="1" fldStatus="0" fldComment="审查状态，已审查" /> 
- 
+    <tblDictionary fldId="118" fldType="31" fldName="已审查" fldValue="1" fldStatus="0" fldComment="审查状态，已审查" />
+
+    <tblDictionary fldId="3200" fldType="32" fldName="启用" fldValue="0" fldStatus="0" fldComment="公告状态，启用" />
+    <tblDictionary fldId="3201" fldType="32" fldName="禁用" fldValue="1" fldStatus="0" fldComment="公告状态，禁用" />
+
+    <tblDictionary fldId="3300" fldType="33" fldName="分配" fldValue="0" fldStatus="0" fldComment="任务类型，分配" />
+    <tblDictionary fldId="3301" fldType="33" fldName="预约" fldValue="1" fldStatus="0" fldComment="任务类型，预约" />
+
     <tblSysParameter fldId="1" fldName="SYS_ADMIN"
 		fldValue="1" fldUnit="" fldStatus="0" fldDisplay="1" fldComment="" />
 	<tblSysParameter fldId="2" fldName="MAX_ERROR_LOGIN"

@@ -106,7 +106,8 @@ public class TelephoneAssignManager extends GenericPageHQLQuery<TelephoneAssign>
 						telephoneTask.setFldTaskDate(telephoneAssignDetail.getFldTaskDate());
 						telephoneTask.setFldAuditStatus(Constant.TELEPHONE_TASK_AUDIT_STATUS_UN);
 						telephoneTask.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
-						telephoneTask.setFldOperateDate(new Date());
+                        telephoneTask.setFldOperateUserNo(SecurityUtil.getCurrentUserLoginName());
+                        telephoneTask.setFldOperateDate(new Date());
                         telephoneTask.setFldCreateDate(new Date());
                         telephoneTask.setFldComment(telephoneImportDetail.getFldComment());
 						taskList.add(telephoneTask);

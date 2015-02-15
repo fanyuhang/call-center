@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      Microsoft SQL Server 2008                    */
-/* Created on:     2014-08-02 15:35:58                          */
+/* Created on:     2015-02-11 21:34:18                          */
 /*==============================================================*/
 
 
@@ -58,6 +58,13 @@ if exists (select 1
            where  id = object_id('tblNodeRoleLink')
             and   type = 'U')
    drop table tblNodeRoleLink
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('tblNotice')
+            and   type = 'U')
+   drop table tblNotice
 go
 
 if exists (select 1
@@ -220,6 +227,23 @@ go
 create table tblNodeRoleLink (
    fldNodeId            nvarchar(32)         null,
    fldRoleId            int                  null
+)
+go
+
+/*==============================================================*/
+/* Table: tblNotice                                             */
+/*==============================================================*/
+create table tblNotice (
+   fldId                int                  identity,
+   fldTitle             nvarchar(3000)       null,
+   fldContent           nvarchar(4000)       null,
+   fldLevel             int                  null,
+   fldStatus            int                  null,
+   fldOperateUserNo     nvarchar(32)         null,
+   fldOperateDate       datetime             null,
+   fldCreateUserNo      nvarchar(32)         null,
+   fldCreateDate        datetime             null,
+   constraint PK_TBLNOTICE primary key (fldId)
 )
 go
 

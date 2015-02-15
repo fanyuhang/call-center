@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import sun.misc.Sort;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -57,8 +58,16 @@ public class TelephoneTaskManager extends GenericPageHQLQuery<TelephoneTask> {
         return telephoneTaskDao.listByAssignDetailId(assignDtlId);
     }
 
+    public Page<TelephoneTask> listTask(String callUserNo,GridPageRequest page) {
+        org.springframework.data.domain.Sort.Order order1 = new org.springframework.data.domain.Sort.Order(org.springframework.data.domain.Sort.Direction.DESC, "fldTaskType");
+        org.springframework.data.domain.Sort.Order order2 = new org.springframework.data.domain.Sort.Order(org.springframework.data.domain.Sort.Direction.ASC, "fldTaskDate");
+        org.springframework.data.domain.Sort sort = new org.springframework.data.domain.Sort(order1,order2);
+        page.setSort(sort);
+        return telephoneTaskDao.findByCallUserNoAndTaskStatus(callUserNo,TelephoneTaskStatusEnum.DONE_FINISH.getCode(),page);
+    }
+
     @Transactional(readOnly = false)
-    public void save(TelephoneRecord telephoneRecord) {
+    public String save(TelephoneRecord telephoneRecord) {
         TelephoneTask oldTelephoneTask = telephoneTaskDao.findOne(telephoneRecord.getFldTaskId());
         Integer oldStatus = oldTelephoneTask.getFldCallStatus();
         Integer oldTaskStatus = oldTelephoneTask.getFldTaskStatus();
@@ -104,27 +113,6 @@ public class TelephoneTaskManager extends GenericPageHQLQuery<TelephoneTask> {
 
         telephoneRecordDao.save(telephoneRecord);
 
-        String assignDetailId = oldTelephoneTask.getFldAssignDetailId();
-        TelephoneAssignDetail telephoneAssignDetail = telephoneAssignDetailDao.findOne(assignDetailId);
-
-        //更新话务分配明细表的已拨打数
-        Long countOfFinish = telephoneTaskDao.countByDateAndTaskStatus(telephoneAssignDetail.getFldId(), TelephoneTaskStatusEnum.DONE_FINISH.getCode(), DateUtils.truncate(new Date(), Calendar.DATE));
-        if (countOfFinish != null) {
-            telephoneAssignDetail.setFldFinishNumber(countOfFinish.intValue());
-
-            if (countOfFinish.intValue() == telephoneAssignDetail.getFldTaskNumber().intValue()) {
-                telephoneAssignDetail.setFldFinishStatus(TelephoneAssignFinishStatusEnum.DONE_FINISH.getCode());
-            }
-        }
-
-        Long countOfFollow = telephoneTaskDao.countByDateAndTaskStatus(telephoneAssignDetail.getFldId(), TelephoneTaskStatusEnum.WAITING_FINISH.getCode(), DateUtils.truncate(new Date(), Calendar.DATE));
-
-        if (countOfFollow != null) {
-            telephoneAssignDetail.setFldFollowNumber(countOfFollow.intValue());
-        }
-
-        telephoneAssignDetailDao.save(telephoneAssignDetail);
-
         //更新话单原始表中的最近拨打时间
         TelephoneImportDetail telephoneImportDetail = telephoneImportDetailDao.findOne(oldTelephoneTask.getFldCustomerId());
         if (telephoneImportDetail != null && telephoneImportDetail.getFldTelephoneId() != null) {
@@ -135,6 +123,7 @@ public class TelephoneTaskManager extends GenericPageHQLQuery<TelephoneTask> {
                 telephoneCustomerDao.save(telephoneCustomer);
             }
         }
+        return oldTelephoneTask.getFldAssignDetailId();
     }
 
     @Transactional(readOnly = false)

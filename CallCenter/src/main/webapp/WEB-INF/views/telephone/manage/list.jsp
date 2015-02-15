@@ -21,8 +21,9 @@
 <div id="maingrid"></div>
 <script type="text/javascript">
 	var finishStatusData = <sys:dictList type = "18" nullable="true"/>;
-	
-	//搜索表单应用ligerui样式
+    var taskTypeData = <sys:dictList type = "33" nullable="true"/>;
+
+    //搜索表单应用ligerui样式
 	$("#formsearch").ligerForm({
 	    labelWidth: 100,
 	    inputWidth: 150,
@@ -41,7 +42,15 @@
 	        {display: "任务开始时间", name: "startDate", newline: true, type: "date", cssClass: "field",
 	        	attr:{op:'greaterorequal', vt:'date', field:"fldTaskDate"}},
 	        {display: "任务结束时间", name: "endDate", newline: false, type: "date", cssClass: "field",
-	        	attr:{op:'lessorequal', vt:'date', field:"fldTaskDate"}}
+	        	attr:{op:'lessorequal', vt:'date', field:"fldTaskDate"}},
+            {display: "任务类型", name: "fldTaskType", newline: false, type: "select", cssClass: "field",
+                options: {
+                    valueFieldID: "fldTaskType",
+                    valueField: "value",
+                    textField: "text",
+                    data: taskTypeData
+                }, attr: {"op": "equal", "vt": "int"}
+            }
         ],
 	    toJSON: JSON2.stringify
 	});
@@ -55,7 +64,12 @@
 	    columns: [
 	    	{display: "ID", name: "fldId", hide:1,width:1},
 	        {display: "话务员", name: "callUserName"},
-	        {display: "任务时间", name: "fldTaskDate"},
+            {display: "任务类型", name: "fldTaskType",
+                render:function(item) {
+                    return renderLabel(taskTypeData,item.fldTaskType);
+                }
+            },
+            {display: "任务时间", name: "fldTaskDate"},
 	        {display: "话务数", name: "fldTaskNumber"},
 	        {display: "已拨打数", name: "fldFinishNumber"},
             {display: "待跟踪数", name: "fldFollowNumber"},
