@@ -208,6 +208,20 @@
              fldDesc="" fldTarget="delete" fldIcon="/static/ligerUI/icons/miniicons/page_delete.gif"
              fldLink="/system/notice/delete" fldType="2" fldPosition="3" />
 
+    <tblNode fldCode="010210" fldParent="0102" fldName="产品管理"
+             fldDesc="" fldTarget=""
+             fldIcon="/static/ligerUI/icons/32X32/my_account.gif" fldLink="/telephone/product/init"
+             fldType="1" fldPosition="10" />
+    <tblNode fldCode="01021001" fldParent="010210" fldName="增加"
+             fldDesc="" fldTarget="add" fldIcon="/static/ligerUI/icons/silkicons/add.png"
+             fldLink="/telephone/product/save" fldType="2" fldPosition="1" />
+    <tblNode fldCode="01021002" fldParent="010210" fldName="修改"
+             fldDesc="" fldTarget="modify" fldIcon="/static/ligerUI/icons/miniicons/page_edit.gif"
+             fldLink="/telephone/product/update" fldType="2" fldPosition="2" />
+    <tblNode fldCode="01021003" fldParent="010210" fldName="删除"
+             fldDesc="" fldTarget="delete" fldIcon="/static/ligerUI/icons/miniicons/page_delete.gif"
+             fldLink="/telephone/product/delete" fldType="2" fldPosition="3" />
+
 	<!-- 一级菜单 -->
 	<tblNode fldCode="0103" fldParent="01" fldName="客户管理" fldDesc=""
 		fldTarget="#" fldIcon="/static/ligerUI/icons/silkicons/application.png"
@@ -400,6 +414,9 @@
 	<tblNode fldCode="01050303" fldParent="010503" fldName="任务回收" fldDesc="" fldTarget="recover"
 		fldIcon="/static/ligerUI/icons/silkicons/arrow_divide.png" 
 		fldLink="/telephone/manage/recover" fldType="2" fldPosition="3" />
+    <tblNode fldCode="01050304" fldParent="010503" fldName="导出" fldDesc="" fldTarget="export"
+             fldIcon="/static/ligerUI/icons/miniicons/action_save.gif"
+             fldLink="/telephone/manage/export" fldType="2" fldPosition="4"/>
 		
 	<tblNode fldCode="010504" fldParent="0105" fldName="话单管理" fldDesc="" fldTarget="" 
 		fldIcon="/static/ligerUI/icons/32X32/contact.gif"
@@ -448,6 +465,11 @@
 	<tblNode fldCode="01050901" fldParent="010509" fldName="审查" fldDesc="" fldTarget="audit"
 		fldIcon="/static/ligerUI/icons/miniicons/icon_wand.gif"
 		fldLink="/telephone/record/inAudit" fldType="2" fldPosition="1"/>
+
+    <tblNode fldCode="010510" fldParent="0105" fldName="产品介绍"
+             fldDesc="" fldTarget=""
+             fldIcon="/static/ligerUI/icons/32X32/tag.gif" fldLink="/telephone/product/queryInit"
+             fldType="1" fldPosition="10" />
 
     <tblNode fldCode="0106" fldParent="01" fldName="话务监控" fldDesc=""
              fldTarget="#" fldIcon="" fldLink="" fldType="1" fldPosition="6" />
@@ -534,6 +556,48 @@
 	<tblNode fldCode="01080202" fldParent="010802" fldName="邮件发送详情"
 		fldDesc="" fldTarget="view" fldIcon="/static/ligerUI/icons/silkicons/application_view_detail.png"
 		fldLink="/email/operate/view" fldType="2" fldPosition="2" />
+
+    <tblNode fldCode="0109" fldParent="01" fldName="话单管理" fldDesc=""
+             fldTarget="#" fldIcon="" fldLink="" fldType="1" fldPosition="5" />
+
+    <tblNode fldCode="010901" fldParent="0109" fldName="分配管理" fldDesc="" fldTarget=""
+             fldIcon="/static/ligerUI/icons/32X32/customers.gif"
+             fldLink="/telephone/traceAssign/init" fldType="1" fldPosition="1" />
+    <tblNode fldCode="01090101" fldParent="010901" fldName="分配" fldDesc="" fldTarget="add"
+             fldIcon="/static/ligerUI/icons/silkicons/add.png"
+             fldLink="/telephone/traceAssign/save" fldType="2" fldPosition="1" />
+    <tblNode fldCode="01090102" fldParent="010901" fldName="修改" fldDesc="" fldTarget="edit"
+             fldIcon="/static/ligerUI/icons/silkicons/page_edit.png"
+             fldLink="/telephone/traceAssign/update" fldType="2" fldPosition="2" />
+    <tblNode fldCode="01090103" fldParent="010901" fldName="重置" fldDesc="" fldTarget="reset"
+             fldIcon="/static/ligerUI/icons/silkicons/arrow_rotate_anticlockwise.png"
+             fldLink="/telephone/traceAssign/reset" fldType="2" fldPosition="2" />
+
+    <tblNode fldCode="010902" fldParent="0109" fldName="审核管理" fldDesc="" fldTarget=""
+             fldIcon="/static/ligerUI/icons/32X32/check.gif"
+             fldLink="/telephone/traceAudit/init" fldType="1" fldPosition="1" />
+    <tblNode fldCode="01090201" fldParent="010902" fldName="通过" fldDesc="" fldTarget="pass"
+             fldIcon="/static/ligerUI/icons/silkicons/add.png"
+             fldLink="/telephone/traceAudit/save" fldType="2" fldPosition="1" />
+    <tblNode fldCode="01090202" fldParent="010902" fldName="退回" fldDesc="" fldTarget="nopass"
+             fldIcon="/static/ligerUI/icons/silkicons/delete.png"
+             fldLink="/telephone/traceAudit/cancel" fldType="2" fldPosition="2" />
+
+    <tblNode fldCode="010903" fldParent="0109" fldName="约访管理" fldDesc="" fldTarget=""
+             fldIcon="/static/ligerUI/icons/32X32/member.gif"
+             fldLink="/telephone/traceReserve/init" fldType="1" fldPosition="1" />
+    <tblNode fldCode="01090301" fldParent="010903" fldName="在联系" fldDesc="" fldTarget="on"
+             fldIcon="/static/ligerUI/icons/silkicons/arrow_right.png"
+             fldLink="/telephone/traceReserve/going" fldType="2" fldPosition="1" />
+    <tblNode fldCode="01090302" fldParent="010903" fldName="已签约" fldDesc="" fldTarget="sign"
+             fldIcon="/static/ligerUI/icons/silkicons/add.png"
+             fldLink="/telephone/traceReserve/sign" fldType="2" fldPosition="2" />
+    <tblNode fldCode="01090303" fldParent="010903" fldName="拒签约" fldDesc="" fldTarget="notsign"
+             fldIcon="/static/ligerUI/icons/silkicons/delete.png"
+             fldLink="/telephone/traceReserve/notsign" fldType="2" fldPosition="2" />
+    <tblNode fldCode="01090304" fldParent="010903" fldName="查看拨打记录" fldDesc="" fldTarget="dialHis"
+             fldIcon="/static/ligerUI/icons/silkicons/clock.png"
+             fldLink="/telephone/customer/dialHis" fldType="2" fldPosition="3" />
 		
 	<tblRole fldId="1" fldRoleName="sysadmin" />
 
@@ -717,6 +781,7 @@
     <tblDictionary fldId="106" fldType="27" fldName="空号" fldValue="2" fldStatus="0" fldComment="任务结果，空号" />
     <tblDictionary fldId="107" fldType="27" fldName="待跟踪" fldValue="3" fldStatus="0" fldComment="任务结果，待跟踪" />
     <tblDictionary fldId="108" fldType="27" fldName="有意向" fldValue="4" fldStatus="0" fldComment="任务结果，有意向" />
+    <tblDictionary fldId="2705" fldType="27" fldName="约访" fldValue="5" fldStatus="0" fldComment="任务结果，约访" />
     <tblDictionary fldId="109" fldType="27" fldName="其他" fldValue="9" fldStatus="0" fldComment="任务结果，其他" />
     
     <tblDictionary fldId="110" fldType="28" fldName="呼出" fldValue="0" fldStatus="0" fldComment="呼叫类型，呼出" />
@@ -737,6 +802,21 @@
 
     <tblDictionary fldId="3300" fldType="33" fldName="分配" fldValue="0" fldStatus="0" fldComment="任务类型，分配" />
     <tblDictionary fldId="3301" fldType="33" fldName="预约" fldValue="1" fldStatus="0" fldComment="任务类型，预约" />
+
+    <tblDictionary fldId="3400" fldType="34" fldName="有效" fldValue="0" fldStatus="0" fldComment="客户跟踪状态，有效" />
+    <tblDictionary fldId="3401" fldType="34" fldName="无效" fldValue="1" fldStatus="0" fldComment="客户跟踪状态，无效" />
+
+    <tblDictionary fldId="3500" fldType="35" fldName="待分配" fldValue="0" fldStatus="0" fldComment="客户跟踪分配状态，待分配" />
+    <tblDictionary fldId="3501" fldType="35" fldName="已分配" fldValue="1" fldStatus="0" fldComment="客户跟踪分配状态，已分配" />
+
+    <tblDictionary fldId="3600" fldType="36" fldName="待审核" fldValue="0" fldStatus="0" fldComment="客户跟踪审核状态，待审核" />
+    <tblDictionary fldId="3601" fldType="36" fldName="已退回" fldValue="1" fldStatus="0" fldComment="客户跟踪审核状态，已退回" />
+    <tblDictionary fldId="3609" fldType="36" fldName="已审核" fldValue="9" fldStatus="0" fldComment="客户跟踪审核状态，已审核" />
+
+    <tblDictionary fldId="3700" fldType="37" fldName="待跟踪" fldValue="0" fldStatus="0" fldComment="客户跟踪完成状态，待跟踪" />
+    <tblDictionary fldId="3701" fldType="37" fldName="在联系" fldValue="1" fldStatus="0" fldComment="客户跟踪完成状态，在联系" />
+    <tblDictionary fldId="3705" fldType="37" fldName="已签约" fldValue="5" fldStatus="0" fldComment="客户跟踪完成状态，已签约" />
+    <tblDictionary fldId="3709" fldType="37" fldName="拒签约" fldValue="9" fldStatus="0" fldComment="客户跟踪完成状态，拒签约" />
 
     <tblSysParameter fldId="1" fldName="SYS_ADMIN"
 		fldValue="1" fldUnit="" fldStatus="0" fldDisplay="1" fldComment="" />

@@ -58,7 +58,7 @@ public class CallOutDayController {
                 if (rule.getOp().equalsIgnoreCase(Constant.FILTER_OP_LIKE)) {
                     param.put(rule.getField(), "%" + rule.getValue() + "%");
                 } else if (rule.getType().equalsIgnoreCase(Constant.FILTER_TYPE_DATE)) {
-                    param.put(rule.getField(), DateUtils.parseDate((String)rule.getValue(), "yyyy-MM-dd"));
+                    param.put(rule.getField(), DateUtils.parseDate((String)rule.getValue(), "yyyy-MM-dd hh:MM"));
                 }else{
                     param.put(rule.getField(), rule.getValue());
                 }

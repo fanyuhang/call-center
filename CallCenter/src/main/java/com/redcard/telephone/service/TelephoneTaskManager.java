@@ -1,5 +1,6 @@
 package com.redcard.telephone.service;
 
+import com.common.AppContext;
 import com.common.Constant;
 import com.common.core.grid.GridPageRequest;
 import com.common.core.util.GenericPageHQLQuery;
@@ -10,8 +11,7 @@ import com.phone.entity.Calllog;
 import com.phone.entity.Talklog;
 import com.redcard.customer.dao.CustomerDao;
 import com.redcard.customer.entity.Customer;
-import com.redcard.telephone.common.TelephoneAssignFinishStatusEnum;
-import com.redcard.telephone.common.TelephoneTaskStatusEnum;
+import com.redcard.telephone.common.*;
 import com.redcard.telephone.dao.*;
 import com.redcard.telephone.entity.*;
 import org.apache.commons.lang.time.DateUtils;
@@ -45,6 +45,10 @@ public class TelephoneTaskManager extends GenericPageHQLQuery<TelephoneTask> {
     private TalklogDao talklogDao;
     @Autowired
     private TelephoneImportDetailDao telephoneImportDetailDao;
+    @Autowired
+    private TelephoneTraceDao telephoneTraceDao;
+    @Autowired
+    private TelephoneTraceLogDao telephoneTraceLogDao;
 
     public long getCount() {
         return telephoneTaskDao.count();
@@ -123,6 +127,39 @@ public class TelephoneTaskManager extends GenericPageHQLQuery<TelephoneTask> {
                 telephoneCustomerDao.save(telephoneCustomer);
             }
         }
+
+        //记录待约访客户
+        if(TelephoneTaskResultStatusEnum.RESERVE.getCode().compareTo(telephoneRecord.getFldResultType())==0){
+            TelephoneTrace telephoneTrace = new TelephoneTrace();
+            telephoneTrace.setFldCustomerId(oldTelephoneTask.getFldCustomerId());
+            telephoneTrace.setFldImportId(oldTelephoneTask.getFldImportId());
+            telephoneTrace.setFldPhone(oldTelephoneTask.getFldPhone());
+            telephoneTrace.setFldMobile(oldTelephoneTask.getFldMobile());
+            telephoneTrace.setFldCustomerName(oldTelephoneTask.getFldCustomerName());
+            telephoneTrace.setFldAssignStatus(TelephoneTraceAssignStatusEnum.WAIT_ASSIGN.getCode());
+            telephoneTrace.setFldAuditStatus(TelephoneTraceAuditStatusEnum.WAIT_AUDIT.getCode());
+            telephoneTrace.setFldResultStatus(TelephoneTraceFinishStatusEnum.NOT_FINISH.getCode());
+            telephoneTrace.setFldStatus(TelephoneTraceStatusEnum.VALID.getCode());
+            telephoneTrace.setFldCallUserNo(oldTelephoneTask.getFldCallUserNo());
+            telephoneTrace.setFldComment(oldTelephoneTask.getFldComment());
+            telephoneTrace.setFldOperateUserNo(SecurityUtil.getCurrentUserLoginName());
+            telephoneTrace.setFldOperateDate(new Date());
+            telephoneTrace.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
+            telephoneTrace.setFldCreateDate(new Date());
+
+            telephoneTraceDao.save(telephoneTrace);
+
+            TelephoneTraceLog telephoneTraceLog = new TelephoneTraceLog();
+            telephoneTraceLog.setFldTraceId(telephoneTrace.getFldId());
+            telephoneTraceLog.setFldComment(telephoneTrace.getFldComment());
+            telephoneTraceLog.setFldStatusDesc(AppContext.getInstance().getDictName(35,telephoneTrace.getFldAssignStatus()+""));
+            telephoneTraceLog.setFldOperateUserNo(SecurityUtil.getCurrentUserLoginName());
+            telephoneTraceLog.setFldOperateDate(new Date());
+            telephoneTraceLog.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
+            telephoneTraceLog.setFldCreateDate(new Date());
+
+            telephoneTraceLogDao.save(telephoneTraceLog);
+        }
         return oldTelephoneTask.getFldAssignDetailId();
     }
 
@@ -138,7 +175,7 @@ public class TelephoneTaskManager extends GenericPageHQLQuery<TelephoneTask> {
         tmpTelephoneCustomer.setFldBirthday(customer.getFldBirthday());
         tmpTelephoneCustomer.setFldIdentityNo(customer.getFldIdentityNo());
         tmpTelephoneCustomer.setFldEmail(customer.getFldEmail());
-        tmpTelephoneCustomer.setFldFinancialUserNo(telephoneCustomer.getFldFinancialUserNo());
+//        tmpTelephoneCustomer.setFldFinancialUserNo(telephoneCustomer.getFldFinancialUserNo());
         telephoneCustomerDao.save(tmpTelephoneCustomer);
 
         //若客户存在，则更新客户表

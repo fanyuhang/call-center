@@ -26,9 +26,9 @@ mainform.ligerForm({
 //                initValue: 0
 //            }, attr: {"op": "equal", "vt": "int"}, comboboxName: "telephoneSource"
 //        },
-        {display: "话单名称", name: "importId", newline: true, type: "select", attr: {readonly: "readonly"}, validate: {required: true},cssClass: "field",
+        {display: "话单名称", name: "fldImportId", newline: true, type: "select", attr: {readonly: "readonly"}, validate: {required: true},cssClass: "field",
             options: {
-                valueFieldID: "importId",
+                valueFieldID: "fldImportId",
                 validate: {required: true}
             },comboboxName: "importName", group: "<label style=white-space:nowrap;>1. 选择话单</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'
         },
@@ -121,7 +121,7 @@ $.ligerui.get("callUserNo").openSelect({
             {display: "用户名称", name: "userName"},
             {display: "登录名称", name: "loginName"},
             {display: "部门", name: "deptName"}
-        ], pageSize: 20, heightDiff: -10,
+        ], pageSize: 20, heightDiff: -40,
         url: '<c:url value="/security/user/list"/>', sortName: 'userName'
     },
     search: {
@@ -135,7 +135,8 @@ $.ligerui.get("callUserNo").openSelect({
                     data:userTypeData,
                     valueFieldID:"type"
                 }
-            }
+            },
+            {display: "部门", name: "deptName", newline: true, type: "text", cssClass: "field",attr:{field:'userDept.dept.deptName'}}
         ]
     },
     valueField: 'loginName', textField: 'userName', top: 30,
@@ -166,11 +167,11 @@ $("#fldAverageNumber").change(function () {
 });
 
 $("#importName").change(function () {
-    if ($("#importId").val() == "") {
+    if ($("#fldImportId").val() == "") {
         $("#taskCount").val("0");
     } else {
         LG.ajax({
-            url: '<c:url value="/telephone/assign/countImportCustomerById"/>' + '?id=' + $("#importId").val(),
+            url: '<c:url value="/telephone/assign/countImportCustomerById"/>' + '?id=' + $("#fldImportId").val(),
             data: {},
             beforeSend: function () {
 
@@ -192,11 +193,11 @@ $("#telephoneSource").change(function () {
     if (source == 0) {
         $.ligerui.get("importName").setEnabled();
 
-        if ($("#importId").val() == "") {
+        if ($("#fldImportId").val() == "") {
             $("#taskCount").val("0");
         } else {
             LG.ajax({
-                url: '<c:url value="/telephone/assign/countImportCustomerById"/>' + '?id=' + $("#importId").val(),
+                url: '<c:url value="/telephone/assign/countImportCustomerById"/>' + '?id=' + $("#fldImportId").val(),
                 data: {},
                 beforeSend: function () {
 
@@ -253,7 +254,7 @@ function f_save() {
     if ($("#fldSource").val() == "") {
         LG.showError("请选择话务来源!");
         return;
-    } else if ($("#fldSource").val() == '0' && $("#importId").val() == "") {
+    } else if ($("#fldSource").val() == '0' && $("#fldImportId").val() == "") {
         LG.showError("请选择话单!");
         return;
     }

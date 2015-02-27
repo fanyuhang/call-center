@@ -7,6 +7,8 @@ DROP TABLE IF EXISTS tblTelephoneImport;
 DROP TABLE IF EXISTS tblTelephoneImportDetail;
 DROP TABLE IF EXISTS tblTelephoneTask;
 DROP TABLE IF EXISTS tblTelephoneRecord;
+DROP TABLE IF EXISTS tblTelephoneTrace;
+DROP TABLE IF EXISTS tblTelephoneTraceLog;
 
 /*==============================================================*/
 /* Table: tblTelephoneAssign                                    */
@@ -26,6 +28,7 @@ CREATE TABLE tblTelephoneAssign (
   fldOperateDate    DATETIME       NULL,
   fldCreateUserNo   NVARCHAR(32)   NULL,
   fldCreateDate     DATETIME       NULL,
+  fldImportId          nvarchar(40)         null,
   CONSTRAINT PK_TBLTELEPHONEASSIGN PRIMARY KEY (fldId)
 );
 
@@ -50,6 +53,7 @@ CREATE TABLE tblTelephoneAssignDetail (
   fldCreateUserNo   NVARCHAR(32) NULL,
   fldCreateDate     DATETIME     NULL,
   fldTaskType          int                  null,
+  fldImportId          nvarchar(40)         null,
   CONSTRAINT PK_TBLTELEPHONEASSIGNDETAIL PRIMARY KEY (fldId)
 );
 
@@ -193,6 +197,7 @@ CREATE TABLE tblTelephoneTask (
   fldOperateDate    DATETIME       NULL,
   fldCreateUserNo   NVARCHAR(32)   NULL,
   fldCreateDate     DATETIME       NULL,
+  fldImportId          nvarchar(40)         null,
   CONSTRAINT PK_TBLTELEPHONETASK PRIMARY KEY (fldId)
 );
 
@@ -225,3 +230,42 @@ CREATE TABLE tblTelephoneRecord (
   CONSTRAINT PK_TBLTELEPHONERECORD PRIMARY KEY (fldId)
 );
 
+create table tblTelephoneTrace (
+  fldId                bigint               identity,
+  fldTaskId            bigint               null,
+  fldCustomerId        nvarchar(40)         null,
+  fldImportId          nvarchar(40)         null,
+  fldCallUserNo        nvarchar(40)         null,
+  fldCustomerName      nvarchar(256)        null,
+  fldMobile            nvarchar(256)        null,
+  fldPhone             nvarchar(256)        null,
+  fldComment           nvarchar(1000)       null,
+  fldStatus            int                  null,
+  fldAssignStatus      int                  null,
+  fldAssignUserNo      nvarchar(32)         null,
+  fldAssignDate        datetime             null,
+  fldAuditStatus       int                  null,
+  fldAuditUserNo       nvarchar(40)         null,
+  fldAuditDate         datetime             null,
+  fldResultStatus      int                  null,
+  fldFinancialUserNo   nvarchar(32)         null,
+  fldServiceUserNo     nvarchar(32)         null,
+  fldFinishDate        datetime             null,
+  fldOperateUserNo     nvarchar(32)         null,
+  fldOperateDate       datetime             null,
+  fldCreateUserNo      nvarchar(32)         null,
+  fldCreateDate        datetime             null,
+  constraint PK_TBLTELEPHONETRACE primary key (fldId)
+);
+
+create table tblTelephoneTraceLog (
+  fldId                bigint               identity,
+  fldTraceId           bigint               null,
+  fldStatusDesc        nvarchar(1000)       null,
+  fldComment           nvarchar(1000)       null,
+  fldOperateUserNo     nvarchar(32)         null,
+  fldOperateDate       datetime             null,
+  fldCreateUserNo      nvarchar(32)         null,
+  fldCreateDate        datetime             null,
+  constraint PK_TBLTELEPHONETRACELOG primary key (fldId)
+);

@@ -2,16 +2,24 @@ package com.redcard.telephone.web.controller;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.common.AppContext;
+import com.common.Constant;
+import com.common.core.filter.FilterRule;
+import com.common.core.filter.FilterTranslator;
+import com.common.core.util.ListToExcel;
+import com.common.mybatis.paginator.domain.PageList;
+import org.apache.commons.lang3.time.DateUtils;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.type.TypeReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -122,6 +130,41 @@ public class TelephoneManageController {
             ExcelExportUtil<TelephoneTask> listToExcel = new ExcelExportUtil<TelephoneTask>(telephoneTaskManager.listByAssignDtlId(fldAssignDetailId));
             String date = new SimpleDateFormat("yyyyMMddHHmmssS").format(new Date());
             String reportPath = request.getSession().getServletContext().getRealPath("/") + "/export/";
+            String fileName = SecurityUtil.getCurrentUserId() + "_" + date + ".xls";
+            File pathFile = new File(reportPath);
+            if (!pathFile.exists())
+                pathFile.mkdirs();
+            result.getData().add(listToExcel.generate(reportPath + fileName));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new AsyncResponse(true, "系统内部错误");
+        }
+        return result;
+    }
+
+    @RequestMapping(value = "exportForSearch")
+    @ResponseBody
+    public AsyncResponse exportForSearch(String where, String columnNames, String propertyNames, HttpServletRequest request, HttpServletResponse response) {
+        AsyncResponse result = new AsyncResponse(false, "生成导出列表成功");
+        ObjectMapper mapper = new ObjectMapper();
+        List<String> columnList = null;
+        List<String> propertyList = null;
+        try {
+            columnList = mapper.readValue(columnNames, new TypeReference<List<String>>() {
+            });
+            propertyList = mapper.readValue(propertyNames, new TypeReference<List<String>>() {
+            });
+            Page<TelephoneAssignDetail> page = telephoneAssignDetailManager.findDetail(null, where);
+
+            if(page!=null&&page.getContent()!=null){
+                for(TelephoneAssignDetail telephoneAssignDetail: page.getContent()){
+                    telephoneAssignDetail.setTaskTypeLabel(AppContext.getInstance().getDictName(33,telephoneAssignDetail.getFldTaskType()+""));
+                    telephoneAssignDetail.setResultStatusLabel(AppContext.getInstance().getDictName(18,telephoneAssignDetail.getFldFinishStatus()+""));
+                }
+            }
+            ListToExcel<TelephoneAssignDetail> listToExcel = new ListToExcel<TelephoneAssignDetail>(page.getContent(), columnList, propertyList, "sheet1");
+            String date = new SimpleDateFormat("yyyyMMddHHmmssS").format(new Date());
+            String reportPath = request.getSession().getServletContext().getRealPath("/") + "/trade/";
             String fileName = SecurityUtil.getCurrentUserId() + "_" + date + ".xls";
             File pathFile = new File(reportPath);
             if (!pathFile.exists())

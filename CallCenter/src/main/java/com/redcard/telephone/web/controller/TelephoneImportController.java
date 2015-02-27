@@ -156,6 +156,19 @@ public class TelephoneImportController {
                 List<TelephoneImportEntity> dupList = new ArrayList<TelephoneImportEntity>();//重复话单
                 List<TelephoneImportEntity> list = new ArrayList<TelephoneImportEntity>();//非重复话单
                 for (TelephoneImportEntity importEntity : objects) {
+
+                    if(StringUtils.isNotBlank(importEntity.getMobile())&&importEntity.getMobile().length()!=11){
+                        continue;
+                    }
+
+                    if(StringUtils.isNotBlank(importEntity.getTelephone())&&importEntity.getTelephone().length()<7){
+                        continue;
+                    }
+
+                    if(StringUtils.isBlank(importEntity.getMobile())&&StringUtils.isBlank(importEntity.getTelephone())){
+                        continue;
+                    }
+
                     if (Constant.DUPLICATE_STATUS_Y == Integer.valueOf(fldDuplicateStatus)) {//去重:姓名+手机或姓名+固定电话
                         if (list.size() == 0) {
                             Long count = telephoneCustomerManager.countByPhoneOrMobile(importEntity.getCustName(), importEntity.getTelephone(), importEntity.getMobile());
@@ -251,11 +264,7 @@ public class TelephoneImportController {
                 if (!StringUtils.isEmpty(dupFileName)) {
                     telephoneImport.setFldDuplicateFilePath(localPath + dupFileName);//重复记录文件地址
                 }
-                if (Constant.DUPLICATE_STATUS_N == Integer.valueOf(fldDuplicateStatus)) {
-                    telephoneImport.setFldImportTotalNumber(objects.size());
-                } else {
-                    telephoneImport.setFldImportTotalNumber(list.size());
-                }
+                telephoneImport.setFldImportTotalNumber(list.size());
                 if (!StringUtils.isEmpty(noDupFileName)) {
                     telephoneImport.setFldImportFilePath(localPath + noDupFileName);
                 }

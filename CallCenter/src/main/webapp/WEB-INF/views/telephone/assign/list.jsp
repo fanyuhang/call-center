@@ -42,7 +42,8 @@
 	    columnWidth: 180,
 	    columns: [
 	    	{display: "ID", name: "fldId", hide:1,width:1},
-	        {display: "话务分配人", name: "createUserName"},
+            {display: "话单名称", name: "importName"},
+            {display: "话务分配人", name: "createUserName"},
 	        {display: "分配时间", name: "fldCreateDate"},
 	        {display: "使用话务数", name: "fldAssignNumber"},
 	        {display: "话务员数", name: "fldCallUserNumber"},

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.redcard.telephone.common.TelephoneTaskTypeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
@@ -68,6 +69,8 @@ public class TelephoneAssignManager extends GenericPageHQLQuery<TelephoneAssign>
 			telephoneAssignDetail.setFldTaskDate(DateUtil.getDateAfterDays(telephoneAssign.getFldBeginDate(),i));
 			telephoneAssignDetail.setFldFinishNumber(0);
 			telephoneAssignDetail.setFldFollowNumber(0);
+            telephoneAssignDetail.setFldImportId(telephoneAssign.getFldImportId());
+            telephoneAssignDetail.setFldTaskType(TelephoneTaskTypeEnum.ASSIGN.getCode());
 			telephoneAssignDetail.setFldExchangeNumber(0);
 			telephoneAssignDetail.setFldFinishStatus(Constant.TASK_FINISH_STATUS_UNFINISH);
 			telephoneAssignDetail.setFldCreateDate(new Date());
@@ -87,7 +90,7 @@ public class TelephoneAssignManager extends GenericPageHQLQuery<TelephoneAssign>
 					//从话务明细中获取指定数量的话单
 					GridPageRequest page = new GridPageRequest();
 					page.setPagesize(telephoneAssign.getFldAverageNumber());
-					String where = "{\"op\":\"and\",\"rules\":[{\"op\":\"eq\",\"field\":\"fldAssignStatus\",\"value\":\"0\",\"type\":\"int\"},{\"op\":\"eq\",\"field\":\"fldImportId\",\"value\":\""+telephoneAssign.getImportId()+"\",\"type\":\"string\"}]};";
+					String where = "{\"op\":\"and\",\"rules\":[{\"op\":\"eq\",\"field\":\"fldAssignStatus\",\"value\":\"0\",\"type\":\"int\"},{\"op\":\"eq\",\"field\":\"fldImportId\",\"value\":\""+telephoneAssign.getFldImportId()+"\",\"type\":\"string\"}]};";
 					List<TelephoneImportDetail> detailList = telephoneImportDetailManager.findAllDetail(page, where).getContent();
 					List<TelephoneImportDetail> newDetailList = new ArrayList<TelephoneImportDetail>();
 					
@@ -100,6 +103,7 @@ public class TelephoneAssignManager extends GenericPageHQLQuery<TelephoneAssign>
 						telephoneTask.setFldCallUserNo(callUserNo);
 						telephoneTask.setFldCustomerName(telephoneImportDetail.getFldCustomerName());
 						telephoneTask.setFldAssignDate(new Date());
+                        telephoneTask.setFldImportId(telephoneAssign.getFldImportId());
 						telephoneTask.setFldTaskType(Constant.TASK_TYPE_AUTO);
 						telephoneTask.setFldCallStatus(Constant.TASK_CALL_STATUS_UN);
 						telephoneTask.setFldTaskStatus(Constant.TASK_FINISH_STATUS_UNFINISH);
@@ -142,6 +146,7 @@ public class TelephoneAssignManager extends GenericPageHQLQuery<TelephoneAssign>
 						telephoneTask.setFldCallUserNo(callUserNo);
 						telephoneTask.setFldCustomerName(telephoneCustomer.getFldCustomerName());
 						telephoneTask.setFldAssignDate(new Date());
+                        telephoneTask.setFldImportId(telephoneAssign.getFldImportId());
 						telephoneTask.setFldTaskType(Constant.TASK_TYPE_AUTO);
 						telephoneTask.setFldCallStatus(Constant.TASK_CALL_STATUS_UN);
 						telephoneTask.setFldTaskStatus(Constant.TASK_FINISH_STATUS_UNFINISH);
@@ -165,7 +170,7 @@ public class TelephoneAssignManager extends GenericPageHQLQuery<TelephoneAssign>
 				telephoneAssignDetailDao.save(assignDetailList);
 			}
 		}
-		telephoneImportManager.updateAssignNumber(telephoneAssign.getFldAssignNumber(),telephoneAssign.getImportId());
+		telephoneImportManager.updateAssignNumber(telephoneAssign.getFldAssignNumber(),telephoneAssign.getFldImportId());
 	}
 	
 	@Transactional(readOnly = false)

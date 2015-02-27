@@ -52,6 +52,7 @@ public class TelephoneTask implements java.io.Serializable {
 	private Date fldOperateDate;
 	private String fldCreateUserNo;
 	private Date fldCreateDate;
+    private String fldImportId;
 
 	// Constructors
 
@@ -350,4 +351,31 @@ public class TelephoneTask implements java.io.Serializable {
 	public String getFldPhone() {
 		return null != telephoneImportDetail.getFldPhone() ? telephoneImportDetail.getFldPhone() : "";
 	}
+
+    @Column(name = "FLDIMPORTID")
+    public String getFldImportId() {
+        return fldImportId;
+    }
+
+    public void setFldImportId(String fldImportId) {
+        this.fldImportId = fldImportId;
+    }
+
+    private TelephoneImport telephoneImport;
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "FLDIMPORTID", nullable = true, insertable = false, updatable = false)
+    public TelephoneImport getTelephoneImport() {
+        return telephoneImport;
+    }
+
+    public void setTelephoneImport(TelephoneImport telephoneImport) {
+        this.telephoneImport = telephoneImport;
+    }
+
+    @Transient
+    public String getImportName() {
+        return telephoneImport == null ? "" : telephoneImport.getFldName();
+    }
 }

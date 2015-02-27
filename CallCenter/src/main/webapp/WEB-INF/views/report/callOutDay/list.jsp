@@ -26,8 +26,8 @@
         labelWidth: 100,
         width: 180,
         fields: [
-            {display: "统计时间", name: "startDate", newline: true, cssClass: "field", type: "date", attr: {"op": 'equal'}},
-            {display: "至", name: "endDate", newline: false, cssClass: "field", type: "date", attr: {"op": 'equal'}},
+            {display: "统计时间", name: "startDate", newline: true, cssClass: "field", type: "date", options:{showTime: true}, attr: {"op": 'equal'}},
+            {display: "至", name: "endDate", newline: false, cssClass: "field", type: "date",options:{showTime: true}, attr: {"op": 'equal'}},
             {display: "话务员", name: "userName", newline: false, cssClass: "field", type: "text", attr: {"op": 'like'}},
             {display: "通话时长 >", name: "totalCallLongStart", newline: true, cssClass: "field", type: "text", attr: {"op": 'greater',"type":'int'}},
             {display: "通话时长 <", name: "totalCallLongEnd", newline: false, cssClass: "field", type: "text", attr: {"op": 'less',"type":'int'}},

@@ -190,10 +190,10 @@ function f_upload() {
                         fileElementId: 'fldFile',
                         dataType: 'text/html',
                         success: function (data, status) {
-                            ;
                             detailWin.hide();
                             LG.hideLoading();
                             LG.showSuccess('导入话单成功!');
+                            f_reload();
                         },
                         error: function (data, status, e) {
                             LG.showError("导入话单失败!");

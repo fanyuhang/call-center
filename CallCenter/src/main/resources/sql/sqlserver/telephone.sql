@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      Microsoft SQL Server 2008                    */
-/* Created on:     2015-02-15 10:29:10                          */
+/* Created on:     2015-02-27 10:14:57                          */
 /*==============================================================*/
 
 
@@ -55,6 +55,13 @@ go
 
 if exists (select 1
             from  sysobjects
+           where  id = object_id('tblTelephoneProduct')
+            and   type = 'U')
+   drop table tblTelephoneProduct
+go
+
+if exists (select 1
+            from  sysobjects
            where  id = object_id('tblTelephoneRecord')
             and   type = 'U')
    drop table tblTelephoneRecord
@@ -67,11 +74,26 @@ if exists (select 1
    drop table tblTelephoneTask
 go
 
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('tblTelephoneTrace')
+            and   type = 'U')
+   drop table tblTelephoneTrace
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('tblTelephoneTraceLog')
+            and   type = 'U')
+   drop table tblTelephoneTraceLog
+go
+
 /*==============================================================*/
 /* Table: tblTelephoneAssign                                    */
 /*==============================================================*/
 create table tblTelephoneAssign (
    fldId                nvarchar(40)         not null,
+   fldImportId          nvarchar(40)         null,
    fldSource            int                  null,
    fldAssignNumber      int                  null,
    fldCallUserNumber    int                  null,
@@ -94,6 +116,7 @@ go
 /*==============================================================*/
 create table tblTelephoneAssignDetail (
    fldId                nvarchar(40)         not null,
+   fldImportId          nvarchar(40)         null,
    fldAssignId          nvarchar(40)         null,
    fldCallUserNo        nvarchar(40)         null,
    fldAssignUserNo      nvarchar(40)         null,
@@ -243,6 +266,23 @@ create table tblTelephoneImportDetail (
 go
 
 /*==============================================================*/
+/* Table: tblTelephoneProduct                                   */
+/*==============================================================*/
+create table tblTelephoneProduct (
+   fldId                int                  identity,
+   fldTitle             nvarchar(3000)       null,
+   fldContent           nvarchar(4000)       null,
+   fldLevel             int                  null,
+   fldStatus            int                  null,
+   fldOperateUserNo     nvarchar(32)         null,
+   fldOperateDate       datetime             null,
+   fldCreateUserNo      nvarchar(32)         null,
+   fldCreateDate        datetime             null,
+   constraint PK_TBLTELEPHONEPRODUCT primary key (fldId)
+)
+go
+
+/*==============================================================*/
 /* Table: tblTelephoneRecord                                    */
 /*==============================================================*/
 create table tblTelephoneRecord (
@@ -308,6 +348,7 @@ go
 /*==============================================================*/
 create table tblTelephoneTask (
    fldId                numeric              identity,
+   fldImportId          nvarchar(40)         null,
    fldCustomerId        nvarchar(40)         null,
    fldAssignDetailId    nvarchar(40)         null,
    fldCallUserNo        nvarchar(40)         null,
@@ -386,5 +427,53 @@ execute sp_addextendedproperty 'MS_Description',
    '0£∫¥˝…Û≤È
    1£∫“—…Û≤È',
    'user', @CurrentUser, 'table', 'tblTelephoneTask', 'column', 'fldAuditStatus'
+go
+
+/*==============================================================*/
+/* Table: tblTelephoneTrace                                     */
+/*==============================================================*/
+create table tblTelephoneTrace (
+   fldId                bigint               identity,
+   fldTaskId            bigint               null,
+   fldCustomerId        nvarchar(40)         null,
+   fldImportId          nvarchar(40)         null,
+   fldCallUserNo        nvarchar(40)         null,
+   fldCustomerName      nvarchar(256)        null,
+   fldMobile            nvarchar(256)        null,
+   fldPhone             nvarchar(256)        null,
+   fldComment           nvarchar(1000)       null,
+   fldStatus            int                  null,
+   fldAssignStatus      int                  null,
+   fldAssignUserNo      nvarchar(32)         null,
+   fldAssignDate        datetime             null,
+   fldAuditStatus       int                  null,
+   fldAuditUserNo       nvarchar(40)         null,
+   fldAuditDate         datetime             null,
+   fldResultStatus      int                  null,
+   fldFinancialUserNo   nvarchar(32)         null,
+   fldServiceUserNo     nvarchar(32)         null,
+   fldFinishDate        datetime             null,
+   fldOperateUserNo     nvarchar(32)         null,
+   fldOperateDate       datetime             null,
+   fldCreateUserNo      nvarchar(32)         null,
+   fldCreateDate        datetime             null,
+   constraint PK_TBLTELEPHONETRACE primary key (fldId)
+)
+go
+
+/*==============================================================*/
+/* Table: tblTelephoneTraceLog                                  */
+/*==============================================================*/
+create table tblTelephoneTraceLog (
+   fldId                bigint               identity,
+   fldTraceId           bigint               null,
+   fldStatusDesc        nvarchar(1000)       null,
+   fldComment           nvarchar(1000)       null,
+   fldOperateUserNo     nvarchar(32)         null,
+   fldOperateDate       datetime             null,
+   fldCreateUserNo      nvarchar(32)         null,
+   fldCreateDate        datetime             null,
+   constraint PK_TBLTELEPHONETRACELOG primary key (fldId)
+)
 go
 

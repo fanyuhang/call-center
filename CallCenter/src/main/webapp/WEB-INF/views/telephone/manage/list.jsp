@@ -62,8 +62,8 @@
 	    delayLoad: true,
 	    columnWidth: 180,
 	    columns: [
-	    	{display: "ID", name: "fldId", hide:1,width:1},
-	        {display: "话务员", name: "callUserName"},
+            {display: "话单名称", name: "importName"},
+            {display: "话务员", name: "callUserName"},
             {display: "任务类型", name: "fldTaskType",
                 render:function(item) {
                     return renderLabel(taskTypeData,item.fldTaskType);
@@ -107,6 +107,24 @@
 	       	case "recover":
 	            top.f_addTab(null, '任务回收', '<c:url value="/telephone/manage/recover"/>' + '?menuNo=${menuNo}');
 	       		break;
+            case "export":
+                var columns = grid.getColumns();
+                var columnNames = [];
+                var propertyNames = [];
+                for (var i = 1; i < columns.length; i++) {
+
+                    columnNames.push(columns[i].display);
+                    if(columns[i].name=='fldTaskType'){
+                        propertyNames.push("taskTypeLabel");
+                    }else if(columns[i].name=='fldTaskType'){
+                        propertyNames.push("resultStatusLabel");
+                    }else{
+                        propertyNames.push(columns[i].name);
+                    }
+                }
+                f_export(columnNames, propertyNames);
+                break;
+                break;
 	    }
 	}
 
@@ -115,6 +133,21 @@
 	}
 
     resizeDataGrid(grid);
+
+    function f_export(columnNames, propertyNames) {
+        var rule = LG.bulidFilterGroup("#formsearch");
+        LG.ajax({
+            loading: '正在导出数据中...',
+            url: '<c:url value="/telephone/manage/exportForSearch"/>',
+            data: {where: JSON2.stringify(rule), columnNames: JSON2.stringify(columnNames), propertyNames: JSON2.stringify(propertyNames)},
+            success: function (data, message) {
+                window.location.href = '<c:url value="/common/download?filepath="/>' + encodeURIComponent(data[0]);
+            },
+            error: function (message) {
+                LG.tip(message);
+            }
+        });
+    }
 
 </script>
 </body>

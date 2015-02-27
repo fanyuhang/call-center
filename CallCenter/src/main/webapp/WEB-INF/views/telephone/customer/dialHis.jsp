@@ -5,8 +5,25 @@
 <div id="maingrid"></div>
 <script type="text/javascript">
 	var callTypeData = <sys:dictList type = "28"/>;
-	
-	//列表结构
+
+    var toolbarOptions = {
+        items:[
+            {
+                id:'view', text:'查看详细',
+                img:'/static/ligerUI/icons/miniicons/action_save.gif',
+                click:function (item) {
+                    if (grid.getSelectedRows().length > 1 || grid.getSelectedRows().length == 0) {
+                        LG.tip('请选择一行数据!');
+                        return;
+                    }
+                    var selected = grid.getSelected();
+                    top.f_addTab(null, '查看通话详细', '<c:url value="/telephone/record/view"/>' + '?menuNo=${menuNo}&fldId=' + selected.fldId);
+                }
+            }
+        ]
+    };
+
+    //列表结构
 	var where = encodeURI('?customerName=${customerName}&phone=${phone}&mobile=${mobile}');
 	var grid = $("#maingrid").ligerGrid({
 	  checkbox: false,
@@ -26,7 +43,7 @@
           {display: "通话时长", name: "fldCallLong"},
           {display: "通话开始时间", name: "fldCallBeginTime"},
           {display: "通话结束时间", name: "fldCallEndTime"}
-      ], dataAction: 'server', pageSize: 50, toolbar: null, url: '<c:url value="/telephone/dial/dialHis'+where+'"/>', sortName: 'fldOperateDate', sortOrder: 'desc',
+      ], dataAction: 'server', pageSize: 50, toolbar: toolbarOptions, url: '<c:url value="/telephone/dial/dialHis"/>', sortName: 'fldOperateDate', sortOrder: 'desc',
       width: '98%', height: '98%', toJSON: JSON2.stringify
 	});
 	

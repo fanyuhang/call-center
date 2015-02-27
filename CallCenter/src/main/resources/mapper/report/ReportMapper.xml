@@ -77,10 +77,10 @@
             and b.fldUserName like #{userName}
         </if>
         <if test="startDate != null">
-            and DATEADD(day, DATEDIFF(day, 0, a.fldCallDate), 0) >= #{startDate}
+            and a.fldCallDate >= #{startDate}
         </if>
         <if test="endDate != null">
-            and DATEADD(day, DATEDIFF(day, 0, a.fldCallDate), 0) &lt;= #{endDate}
+            and a.fldCallDate &lt;= #{endDate}
         </if>
         AND a.fldCallType = 0
         GROUP BY DATEADD(day, DATEDIFF(day, 0, a.fldCallDate), 0)
@@ -102,10 +102,10 @@
             and b.fldUserName like #{userName}
         </if>
         <if test="startDate != null">
-            and DATEADD(day, DATEDIFF(day, 0, a.fldCallDate), 0) >= #{startDate}
+            and a.fldCallDate>= #{startDate}
         </if>
         <if test="endDate != null">
-            and DATEADD(day, DATEDIFF(day, 0, a.fldCallDate), 0) &lt;= #{endDate}
+            and  a.fldCallDate &lt;= #{endDate}
         </if>
         AND a.fldCallType = 0
         GROUP BY DATEADD(day, DATEDIFF(day, 0, a.fldCallDate), 0)
@@ -142,10 +142,10 @@
             and b.fldUserName like #{userName}
         </if>
         <if test="startDate != null">
-            and DATEADD(day, DATEDIFF(day, 0, a.fldCallDate), 0) >= #{startDate}
+            and a.fldCallDate >= #{startDate}
         </if>
         <if test="endDate != null">
-            and DATEADD(day, DATEDIFF(day, 0, a.fldCallDate), 0) &lt;= #{endDate}
+            and a.fldCallDate &lt;= #{endDate}
         </if>
         AND a.fldCallType = 1
         GROUP BY DATEADD(day, DATEDIFF(day, 0, a.fldCallDate), 0)
@@ -167,10 +167,10 @@
             and b.fldUserName like #{userName}
         </if>
         <if test="startDate != null">
-            and DATEADD(day, DATEDIFF(day, 0, a.fldCallDate), 0) >= #{startDate}
+            and a.fldCallDate >= #{startDate}
         </if>
         <if test="endDate != null">
-            and DATEADD(day, DATEDIFF(day, 0, a.fldCallDate), 0) &lt;= #{endDate}
+            and a.fldCallDate &lt;= #{endDate}
         </if>
         AND a.fldCallType = 1
         GROUP BY DATEADD(day, DATEDIFF(day, 0, a.fldCallDate), 0)
