@@ -53,15 +53,16 @@ public class MessageOperateManager extends GenericPageHQLQuery<MessageOperate> {
         JaxWsDynamicClientFactory dcf = JaxWsDynamicClientFactory.newInstance();
         org.apache.cxf.endpoint.Client client = dcf.createClient(serviceEndpotintAddress);
         Object[] objects = null;
-        logger.info(String
+        logger.error(String
                 .format("call sendBatchMessage of BusinessService!SEND_MESSAGE_METHOD:[%s],SEND_MESSAGE_ACCOUNT:[%s],SEND_MESSAGE_PASSWORD:[%s],destmobile:[%s],msgText:[%s]",
                         sendMessageMethod, sendMessageAccount, sendMessagePassword, destmobile, msgText));
         try {
             objects = client.invoke(sendMessageMethod, sendMessageAccount, sendMessagePassword, destmobile, msgText);
         } catch (Exception e) {
             logger.error("call sendBatchMessage catched exception!", e);
+            e.printStackTrace();
         }
-        logger.info("call sendBatchMessage of BusinessService result is :" + new Gson().toJson(objects));
+        logger.error("call sendBatchMessage of BusinessService result is :" + new Gson().toJson(objects));
         if (ArrayUtils.isEmpty(objects)) {
             return -100;// 表示系统接口调用异常
         } else {

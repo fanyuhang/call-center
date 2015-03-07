@@ -52,8 +52,8 @@
             {display: "客户姓名", name: "customerName"},
             {display: "产品全称", name: "productFullName"},
             {display: "产品实际天数", name: "productClearDays"},
-            {display: "成立日期", name: "establishDate"},
-            {display: "到期日期", name: "dueDate"},
+            {display: "成立日期", name: "fldEstablishDate"},
+            {display: "到期日期", name: "fldDueDate"},
             {display: "打款日期", name: "fldMoneyDate"},
             {display: "年化收益率", name: "fldAnnualizedRate",
                 render: function (item) {

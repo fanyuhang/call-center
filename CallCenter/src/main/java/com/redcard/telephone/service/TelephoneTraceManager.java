@@ -3,6 +3,7 @@ package com.redcard.telephone.service;
 import com.common.AppContext;
 import com.common.core.util.GenericPageHQLQuery;
 import com.common.security.util.SecurityUtil;
+import com.redcard.message.service.MessageOperateManager;
 import com.redcard.telephone.common.TelephoneTraceAssignStatusEnum;
 import com.redcard.telephone.common.TelephoneTraceAuditStatusEnum;
 import com.redcard.telephone.common.TelephoneTraceFinishStatusEnum;
@@ -14,6 +15,7 @@ import com.redcard.telephone.entity.TelephoneTraceLog;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -158,7 +160,7 @@ public class TelephoneTraceManager extends GenericPageHQLQuery<TelephoneTrace> {
     }
 
     @Transactional(readOnly = false)
-    public void pass(String ids) {
+    public List<TelephoneTrace> pass(String ids) {
         String[] idStrs = ids.split("\\,");
         List<Long> list = new ArrayList<Long>();
         for (String id : idStrs) {
@@ -187,6 +189,7 @@ public class TelephoneTraceManager extends GenericPageHQLQuery<TelephoneTrace> {
         }
         telephoneTraceDao.save(telephoneTraceList);
         telephoneTraceLogDao.save(telephoneTraceLogList);
+        return telephoneTraceList;
     }
 
     @Transactional(readOnly = false)

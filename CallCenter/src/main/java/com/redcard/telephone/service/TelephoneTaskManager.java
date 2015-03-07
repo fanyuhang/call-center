@@ -138,7 +138,7 @@ public class TelephoneTaskManager extends GenericPageHQLQuery<TelephoneTask> {
             telephoneTrace.setFldCustomerName(oldTelephoneTask.getFldCustomerName());
             telephoneTrace.setFldAssignStatus(TelephoneTraceAssignStatusEnum.WAIT_ASSIGN.getCode());
             telephoneTrace.setFldAuditStatus(TelephoneTraceAuditStatusEnum.WAIT_AUDIT.getCode());
-            telephoneTrace.setFldResultStatus(TelephoneTraceFinishStatusEnum.NOT_FINISH.getCode());
+            telephoneTrace.setFldResultStatus(TelephoneTraceFinishStatusEnum.WAIT_FINISH.getCode());
             telephoneTrace.setFldStatus(TelephoneTraceStatusEnum.VALID.getCode());
             telephoneTrace.setFldCallUserNo(oldTelephoneTask.getFldCallUserNo());
             telephoneTrace.setFldComment(oldTelephoneTask.getFldComment());
