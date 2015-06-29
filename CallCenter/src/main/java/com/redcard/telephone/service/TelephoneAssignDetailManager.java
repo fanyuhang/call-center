@@ -6,25 +6,18 @@ import com.common.core.util.EntityUtil;
 import com.common.core.util.GenericPageHQLQuery;
 import com.common.security.util.SecurityUtil;
 import com.redcard.telephone.common.TelephoneAssignFinishStatusEnum;
+import com.redcard.telephone.common.TelephoneRecoverStatusEnum;
 import com.redcard.telephone.common.TelephoneTaskStatusEnum;
 import com.redcard.telephone.common.TelephoneTaskTypeEnum;
-import com.redcard.telephone.dao.TelephoneAssignDetailDao;
-import com.redcard.telephone.dao.TelephoneCustomerDao;
-import com.redcard.telephone.dao.TelephoneImportDetailDao;
-import com.redcard.telephone.dao.TelephoneTaskDao;
-import com.redcard.telephone.entity.TelephoneAssignDetail;
-import com.redcard.telephone.entity.TelephoneCustomer;
-import com.redcard.telephone.entity.TelephoneImportDetail;
-import com.redcard.telephone.entity.TelephoneTask;
+import com.redcard.telephone.dao.*;
+import com.redcard.telephone.entity.*;
 import org.apache.commons.lang.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Component
 @Transactional(readOnly = true)
@@ -35,6 +28,8 @@ public class TelephoneAssignDetailManager extends GenericPageHQLQuery<TelephoneA
     private TelephoneTaskDao telephoneTaskDao;
     @Autowired
     private TelephoneImportDetailDao telephoneImportDetailDao;
+    @Autowired
+    private TelephoneImportDao telephoneImportDao;
 
     public Page<TelephoneAssignDetail> findDetail(GridPageRequest page, String where) {
         return (Page<TelephoneAssignDetail>) super.findAll(where, page);
@@ -127,5 +122,65 @@ public class TelephoneAssignDetailManager extends GenericPageHQLQuery<TelephoneA
 
         telephoneAssignDetailDao.save(telephoneAssignDetail);
 
+    }
+
+    @Transactional(readOnly = false)
+    public String recover(String ids) {
+
+        StringBuffer stringBuffer = new StringBuffer();
+
+        String[] idsArray = ids.split("\\,");
+
+        List<TelephoneAssignDetail> telephoneAssignDetailList = telephoneAssignDetailDao.findByIds(Arrays.asList(idsArray));
+
+        Map<String,Integer> numberMap = new HashMap<String, Integer>();
+
+        for(TelephoneAssignDetail telephoneAssignDetail : telephoneAssignDetailList) {
+
+            //2.获取话务任务
+            List<TelephoneTask> taskList = telephoneTaskDao.listByAssignDetailId(telephoneAssignDetail.getFldId());
+            //3.未拨打的任务删除
+            int count = 0;
+            for(TelephoneTask telephoneTask : taskList) {
+                if(telephoneTask.getFldCallStatus() == Constant.TASK_CALL_STATUS_UN) {
+                    //话务导入明细表的分配状态回滚
+                    TelephoneImportDetail telephoneImportDetail = telephoneImportDetailDao.findOne(telephoneTask.getFldCustomerId());
+                    telephoneImportDetail.setFldAssignStatus(Constant.TELEPHONE_ASSIGN_STATUS_UNASSIGN);//未分配
+                    telephoneImportDetailDao.save(telephoneImportDetail);
+                    //话务导入表的已分配记录数-1
+                    TelephoneImport telephoneImport = telephoneImportDao.findOne(telephoneImportDetail.getFldImportId());
+                    telephoneImport.setFldAssignTotalNumber(telephoneImport.getFldAssignTotalNumber() - 1);
+                    telephoneImportDao.save(telephoneImport);
+
+                    telephoneTaskDao.delete(telephoneTask);
+                    count++;
+                }
+            }
+
+            if (numberMap.get(telephoneAssignDetail.getImportName()) == null) {
+                numberMap.put(telephoneAssignDetail.getImportName(), count);
+            } else {
+                numberMap.put(telephoneAssignDetail.getImportName(), numberMap.get(telephoneAssignDetail.getImportName()) + count);
+            }
+
+            //4.话务明细中的话务数减少
+            if(count > 0) {
+                telephoneAssignDetail.setFldTaskNumber(telephoneAssignDetail.getFldTaskNumber() - count);
+            }
+
+            telephoneAssignDetail.setFldRecoverDate(new Date());
+            telephoneAssignDetail.setFldRecoverStatus(TelephoneRecoverStatusEnum.DONE.getCode());
+            telephoneAssignDetail.setFldRecoverUserNo(SecurityUtil.getCurrentUserLoginName());
+        }
+
+        if(telephoneAssignDetailList.size()>0){
+            telephoneAssignDetailDao.save(telephoneAssignDetailList);
+        }
+
+        for(Map.Entry<String,Integer> entry: numberMap.entrySet()){
+            stringBuffer.append("["+entry.getKey()+"]").append("收回").append(numberMap.values()+"<br/>");
+        }
+
+        return stringBuffer.toString();
     }
 }

@@ -561,21 +561,29 @@ $(function(){
         LG.isTongHua = 1;
         var recordId = LG.currentTelephoneRecordId;
         var callId = LG.callId;
-        LG.ajax({
-            url: GLOBAL_CTX + '/telephone/record/updateWithTelephone',
-            data: { recordId: recordId, callId: callId },
-            success: function (data, message) {
-                LG.currentTelephoneRecordId = '';
-                LG.callId = '';
-            },
-            error: function (message) {
-                LG.currentTelephoneRecordId = '';
-                LG.callId = '';
-            }
-        });
+
+        if (LG.currentTelephoneRecordId != '' && LG.callId != '') {
+            LG.ajax({
+                url: GLOBAL_CTX + '/telephone/record/updateWithTelephone',
+                data: { recordId: recordId, callId: callId },
+                success: function (data, message) {
+                    LG.currentTelephoneRecordId = '';
+                    LG.callId = '';
+                },
+                error: function (message) {
+                    LG.currentTelephoneRecordId = '';
+                    LG.callId = '';
+                }
+            });
+        }
+
+        LG.currentTelephoneRecordId = '';
+        LG.callId = '';
     }
     function snlReceiveDeliverCallEvent(szPhoneNumber, szPhoneParam, nCallID) {
-        LG.callId = nCallID;
+        if (LG.callId == '') {
+            LG.callId = nCallID;
+        }
         if(LG.isOutCall==1 && (szPhoneNumber.length>5||szPhoneNumber.length==0)){
 //            szPhoneNumber = szPhoneNumber.substring(1,szPhoneNumber.length);
             szPhoneNumber = szPhoneNumber.substring(0,szPhoneNumber.length);

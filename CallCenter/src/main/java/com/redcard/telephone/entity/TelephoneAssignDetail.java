@@ -1,6 +1,7 @@
 package com.redcard.telephone.entity;
 
 import com.common.core.util.JsonDateSerializer;
+import com.common.core.util.JsonTimestampSerializer;
 import com.common.security.entity.User;
 import com.common.security.util.SecurityUtil;
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -122,7 +123,7 @@ public class TelephoneAssignDetail implements java.io.Serializable {
     }
 
     @Column(name = "FLDASSIGNDATE")
-    @JsonSerialize(using = JsonDateSerializer.class)
+    @JsonSerialize(using = JsonTimestampSerializer.class)
     public Date getFldAssignDate() {
         return this.fldAssignDate;
     }
@@ -338,5 +339,55 @@ public class TelephoneAssignDetail implements java.io.Serializable {
 
     public void setResultStatusLabel(String resultStatusLabel) {
         this.resultStatusLabel = resultStatusLabel;
+    }
+
+    private Integer fldRecoverStatus;
+    private Date fldRecoverDate;
+    private String fldRecoverUserNo;
+
+    @Column(name = "FLDRECOVERSTATUS")
+    public Integer getFldRecoverStatus() {
+        return fldRecoverStatus;
+    }
+
+    public void setFldRecoverStatus(Integer fldRecoverStatus) {
+        this.fldRecoverStatus = fldRecoverStatus;
+    }
+
+    @Column(name = "FLDRECOVERDATE")
+    @JsonSerialize(using = JsonTimestampSerializer.class)
+    public Date getFldRecoverDate() {
+        return fldRecoverDate;
+    }
+
+    public void setFldRecoverDate(Date fldRecoverDate) {
+        this.fldRecoverDate = fldRecoverDate;
+    }
+
+    @Column(name = "FLDRECOVERUSERNO")
+    public String getFldRecoverUserNo() {
+        return fldRecoverUserNo;
+    }
+
+    public void setFldRecoverUserNo(String fldRecoverUserNo) {
+        this.fldRecoverUserNo = fldRecoverUserNo;
+    }
+
+    private User recoverUserNo;
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "FLDRECOVERUSERNO", referencedColumnName="FLDLOGINNAME", nullable = true, insertable = false, updatable = false)
+    public User getRecoverUserNo() {
+        return recoverUserNo;
+    }
+
+    public void setRecoverUserNo(User recoverUserNo) {
+        this.recoverUserNo = recoverUserNo;
+    }
+
+    @Transient
+    public String getRecoverUserName() {
+        return recoverUserNo!=null ? recoverUserNo.getUserName() : "";
     }
 }

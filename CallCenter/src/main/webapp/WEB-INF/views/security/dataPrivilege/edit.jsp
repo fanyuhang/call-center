@@ -4,6 +4,7 @@
 <script src="<c:url value="/static/ligerUI/js/DataPrivilageSysParm.js"/>" type="text/javascript"></script>
 <script src="<c:url value="/static/ligerUI/ligerUI/js/plugins/ligerForm.js"/>" type="text/javascript"></script>
 <script src="<c:url value="/static/ligerUI/ligerUI/js/plugins/ligerFilter.js"/>" type="text/javascript"></script>
+<script src='<c:url value="/static/ligerUI/ligerUI/js/ligerui.all.js"/>' type="text/javascript"></script>
 <style type="text/css">
     #fieldvalues {
         padding: 2px;

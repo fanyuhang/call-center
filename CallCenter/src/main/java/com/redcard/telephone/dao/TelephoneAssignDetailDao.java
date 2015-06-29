@@ -23,4 +23,7 @@ public interface TelephoneAssignDetailDao extends PagingAndSortingRepository<Tel
 
     @Query("select m from TelephoneAssignDetail m where m.fldCallUserNo = ?1 and m.fldTaskDate = ?2 and m.fldTaskType = ?3")
     public List<TelephoneAssignDetail> findByCallUserNoAndDate(String userNo, Date callDate, Integer taskType);
+
+    @Query("select m from TelephoneAssignDetail m where m.fldId in (?1)")
+    public List<TelephoneAssignDetail> findByIds(List<String> ids);
 }

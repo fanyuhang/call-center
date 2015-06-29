@@ -432,4 +432,12 @@ public class TelephoneImportController {
         filterTranslator.addFilterRule("fldImportId", fldId, Constant.FILTER_OP_EQUAL);
         return new DataResponse<TelephoneImportDetail>(telephoneImportDetailManager.findAll(filterTranslator, pageRequest));
     }
+
+    @RequestMapping(value = "delete")
+    @ResponseBody
+    public AsyncResponse delete(String id) {
+        AsyncResponse result = new AsyncResponse(false, "删除成功");
+        telephoneImportManager.delete(id);
+        return result;
+    }
 }

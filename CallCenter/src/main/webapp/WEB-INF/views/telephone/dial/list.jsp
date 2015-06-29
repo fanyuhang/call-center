@@ -110,7 +110,7 @@ $("#tabcontainer").ligerTab();
 $("#innertabcontainer").ligerTab();
 
 var taskListGrid;
-var callId;
+var callLogId;
 
 taskListGrid = $("#tasklist").ligerGrid({
     columns: [
@@ -143,7 +143,8 @@ taskListGrid = $("#tasklist").ligerGrid({
         {display: "备注", name: "fldComment", width: 200},
         {display: '操作', name: '', width: 120,
             render: function (item) {
-                return '<a href="javascript:void(0);" onclick="javascript:f_new_task(\'' + item.fldCustomerId + '\');" title="预约任务">预约任务</a>';
+                return '<a href="javascript:void(0);" onclick="javascript:f_new_task(\'' + item.fldCustomerId + '\');" title="预约任务">预约任务</a>'
+                        +'&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0);" onclick="javascript:f_valid_task(\'' + item.fldId + '\');" title="错号">错号</a>';;
             }
         }
     ],
@@ -296,6 +297,7 @@ taskListGrid.bind('SelectRow', function (rowdata) {
     var mobile = rowdata.fldMobile;
     var phone = rowdata.fldPhone;
     taskId = rowdata.fldId;
+    callLogId = '';
 
     LG.ajax({
         url: '<c:url value="/telephone/dial/findCustomer"/>',
@@ -536,11 +538,10 @@ function f_save() {
         return;
     }
 
-    var fldTaskStatus = $("#fldTaskStatus").val();
-    if ("" == fldTaskStatus) {
-        LG.showError("请选择任务状态");
-        isSave = false;
-        return;
+    var fldTaskStatus = 9;
+
+    if(fldResultType=='3'||fldResultType=='5'){
+        fldTaskStatus = 1;
     }
 
     var data = {};
@@ -551,7 +552,7 @@ function f_save() {
     data.fldCallBeginTime = $("#currCallBeginTime").val();
     data.fldComment = fldComment;
     data.fldAssignDetailId = $("#fldAssignDetailId").val();
-    data.callId = callId;
+    data.callId = callLogId;
     data.fldTaskStatus = fldTaskStatus;
 
     LG.ajax({
@@ -568,10 +569,14 @@ function f_save() {
             callWin.hide();
             LG.tip("保存成功");
             dialHistorGrid.loadData();
+            taskId = '';
+            callLogId = '';
         },
         error: function (message) {
             isSave = false;
             LG.showError(message);
+            taskId = '';
+            callLogId = '';
         }
     });
 }
@@ -581,6 +586,7 @@ callMainform.ligerForm({
     labelWidth: 100,
     inputWidth: 150,
     fields: [
+        {display: "任务状态", name: "fldTaskStatus", newline: true, type: "hidden", attr: {value:'9'}},
         {display: "拨打号码", name: "currCallPhone", newline: true, type: "hidden", attr: {readonly: "readonly"}},
         {display: "客户名称", name: "currCallCustomerName", newline: false, type: "hidden", attr: {readonly: "readonly"}},
         {display: "通话开始时间", name: "currCallBeginTime", newline: true, type: "hidden", attr: {readonly: "readonly"}, format: 'yyyy-MM-dd hh:mm:ss'},
@@ -590,19 +596,20 @@ callMainform.ligerForm({
                 textField: 'text',
                 isMultiSelect: false,
                 data: resultTypeData,
+                initValue:'0',
                 valueFieldID: "fldResultType"
             }
         },
-        {display: "任务状态", name: "fldTaskStatus", newline: false, type: "select", validate: {required: true}, comboboxName: "taskStatus",
-            options: {
-                valueField: 'value',
-                textField: 'text',
-                isMultiSelect: false,
-                data: taskStatusData,
-                initValue: '9',
-                valueFieldID: "fldTaskStatus"
-            }
-        },
+//        {display: "任务状态", name: "fldTaskStatus", newline: false, type: "select", validate: {required: true}, comboboxName: "taskStatus",
+//            options: {
+//                valueField: 'value',
+//                textField: 'text',
+//                isMultiSelect: false,
+//                data: taskStatusData,
+//                initValue: '9',
+//                valueFieldID: "fldTaskStatus"
+//            }
+//        },
         {display: "备注", name: "fldComment", newline: true, type: "textarea", width: 400, attr: {"cols": 45}, validate: {required: true}}
     ]
 });
@@ -612,6 +619,9 @@ function makecall(phone, customerName, fldComment) {
     if (parent.LG.telephoneStatus != 0) {
         return;
     }
+
+    callLogId = '';
+
     parent.LG.call(phone);
 
     if(fldComment=='null'){
@@ -710,10 +720,31 @@ function f_new_task(id) {
 
 }
 
+function f_valid_task(taskId){
+
+    jQuery.ligerDialog.confirm('确定这个任务的号码错误吗?', function (confirm) {
+        if (confirm){
+            LG.ajax({
+                url:'<c:url value="/telephone/task/invalid"/>',
+                loading:'正在处理中...',
+                data:{ id:taskId },
+                success:function () {
+                    LG.showSuccess('处理成功');
+                    taskListGrid.loadData();
+                },
+                error:function (message) {
+                    LG.showError(message);
+                }
+            });
+        }
+
+    });
+}
+
 try {
     var snocx = parent.document.getElementById("snocx");
     snocx.attachEvent("snlReceiveDeliverCallEvent", function (szPhoneNumber, szPhoneParam, nCallID) {
-        callId = nCallID;
+        callLogId = nCallID;
         isTongHua = true;
     });
 

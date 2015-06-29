@@ -388,6 +388,9 @@
 	<tblNode fldCode="01050102" fldParent="010501" fldName="话单导入" fldDesc="" fldTarget="import"
 		fldIcon="/static/ligerUI/icons/silkicons/application_get.png"
 		fldLink="/telephone/import/import" fldType="2" fldPosition="2" />
+    <tblNode fldCode="01050103" fldParent="010501" fldName="删除" fldDesc="" fldTarget="del"
+             fldIcon="/static/ligerUI/icons/miniicons/page_delete.gif"
+             fldLink="/telephone/import/delete" fldType="2" fldPosition="3" />
 
 	<tblNode fldCode="010502" fldParent="0105" fldName="话务分配" fldDesc="" fldTarget=""
 		fldIcon="/static/ligerUI/icons/32X32/full_time.gif"
@@ -470,6 +473,19 @@
              fldDesc="" fldTarget=""
              fldIcon="/static/ligerUI/icons/32X32/tag.gif" fldLink="/telephone/product/queryInit"
              fldType="1" fldPosition="10" />
+
+    <tblNode fldCode="010511" fldParent="0105" fldName="任务管理" fldDesc="" fldTarget=""
+             fldIcon="/static/ligerUI/icons/32X32/shipping.gif"
+             fldLink="/telephone/task/init" fldType="1" fldPosition="3" />
+    <tblNode fldCode="01051101" fldParent="010511" fldName="交接" fldDesc="" fldTarget="exchange"
+             fldIcon="/static/ligerUI/icons/silkicons/application_link.png"
+             fldLink="/telephone/task/exchange" fldType="2" fldPosition="1" />
+    <tblNode fldCode="01051102" fldParent="010511" fldName="回收" fldDesc="" fldTarget="recover"
+             fldIcon="/static/ligerUI/icons/silkicons/arrow_divide.png"
+             fldLink="/telephone/task/recover" fldType="2" fldPosition="2" />
+    <tblNode fldCode="01051103" fldParent="010511" fldName="导出" fldDesc="" fldTarget="export"
+             fldIcon="/static/ligerUI/icons/miniicons/action_save.gif"
+             fldLink="/telephone/task/export" fldType="2" fldPosition="3"/>
 
     <tblNode fldCode="0106" fldParent="01" fldName="话务监控" fldDesc=""
              fldTarget="#" fldIcon="" fldLink="" fldType="1" fldPosition="6" />
@@ -776,14 +792,12 @@
     <tblDictionary fldId="102" fldType="26" fldName="去重" fldValue="0" fldStatus="0" fldComment="话务导入是否去重，去重" />
     <tblDictionary fldId="103" fldType="26" fldName="不去重" fldValue="1" fldStatus="0" fldComment="话务导入是否去重，不去重" />
     
-    <tblDictionary fldId="104" fldType="27" fldName="未知" fldValue="0" fldStatus="0" fldComment="任务结果，未知" />
-    <tblDictionary fldId="105" fldType="27" fldName="错号" fldValue="1" fldStatus="0" fldComment="任务结果，错号" />
-    <tblDictionary fldId="106" fldType="27" fldName="空号" fldValue="2" fldStatus="0" fldComment="任务结果，空号" />
+    <tblDictionary fldId="104" fldType="27" fldName="空号/错号/停机" fldValue="0" fldStatus="0" fldComment="任务结果，空号/错号/停机" />
     <tblDictionary fldId="107" fldType="27" fldName="待跟踪" fldValue="3" fldStatus="0" fldComment="任务结果，待跟踪" />
-    <tblDictionary fldId="108" fldType="27" fldName="有意向" fldValue="4" fldStatus="0" fldComment="任务结果，有意向" />
     <tblDictionary fldId="2705" fldType="27" fldName="约访" fldValue="5" fldStatus="0" fldComment="任务结果，约访" />
-    <tblDictionary fldId="109" fldType="27" fldName="其他" fldValue="9" fldStatus="0" fldComment="任务结果，其他" />
-    
+    <tblDictionary fldId="109" fldType="27" fldName="拒绝" fldValue="9" fldStatus="0" fldComment="任务结果，拒绝" />
+    <tblDictionary fldId="109" fldType="27" fldName="无人接听" fldValue="10" fldStatus="0" fldComment="任务结果，无人接听" />
+
     <tblDictionary fldId="110" fldType="28" fldName="呼出" fldValue="0" fldStatus="0" fldComment="呼叫类型，呼出" />
     <tblDictionary fldId="111" fldType="28" fldName="呼入" fldValue="1" fldStatus="0" fldComment="呼叫类型，呼入" />
 
@@ -817,6 +831,9 @@
     <tblDictionary fldId="3701" fldType="37" fldName="在联系" fldValue="1" fldStatus="0" fldComment="客户跟踪完成状态，在联系" />
     <tblDictionary fldId="3705" fldType="37" fldName="已签约" fldValue="5" fldStatus="0" fldComment="客户跟踪完成状态，已签约" />
     <tblDictionary fldId="3709" fldType="37" fldName="拒签约" fldValue="9" fldStatus="0" fldComment="客户跟踪完成状态，拒签约" />
+
+    <tblDictionary fldId="3800" fldType="38" fldName="未回收" fldValue="0" fldStatus="0" fldComment="话务任务回收状态，未回收" />
+    <tblDictionary fldId="3801" fldType="38" fldName="已回收" fldValue="1" fldStatus="0" fldComment="话务任务回收状态，已回收" />
 
     <tblSysParameter fldId="1" fldName="SYS_ADMIN"
 		fldValue="1" fldUnit="" fldStatus="0" fldDisplay="1" fldComment="" />

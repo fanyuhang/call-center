@@ -4,10 +4,8 @@ import com.common.AppContext;
 import com.common.core.util.GenericPageHQLQuery;
 import com.common.security.util.SecurityUtil;
 import com.redcard.message.service.MessageOperateManager;
-import com.redcard.telephone.common.TelephoneTraceAssignStatusEnum;
-import com.redcard.telephone.common.TelephoneTraceAuditStatusEnum;
-import com.redcard.telephone.common.TelephoneTraceFinishStatusEnum;
-import com.redcard.telephone.common.TelephoneTraceStatusEnum;
+import com.redcard.telephone.common.*;
+import com.redcard.telephone.dao.TelephoneTaskDao;
 import com.redcard.telephone.dao.TelephoneTraceDao;
 import com.redcard.telephone.dao.TelephoneTraceLogDao;
 import com.redcard.telephone.entity.TelephoneTrace;
@@ -38,6 +36,9 @@ public class TelephoneTraceManager extends GenericPageHQLQuery<TelephoneTrace> {
 
     @Autowired
     private TelephoneTraceLogDao telephoneTraceLogDao;
+
+    @Autowired
+    private TelephoneTaskDao telephoneTaskDao;
 
     public TelephoneTrace find(Long id) {
         return telephoneTraceDao.findOne(id);
@@ -237,6 +238,7 @@ public class TelephoneTraceManager extends GenericPageHQLQuery<TelephoneTrace> {
 
         List<TelephoneTraceLog> telephoneTraceLogList = new ArrayList<TelephoneTraceLog>();
         TelephoneTraceLog telephoneTraceLog = null;
+        List<Long> taskIds = new ArrayList<Long>();
         for (TelephoneTrace telephoneTrace : telephoneTraceList) {
             telephoneTrace.setFldResultStatus(resultStatus);
             if(TelephoneTraceFinishStatusEnum.DONE_FINISH.getCode().compareTo(resultStatus)==0
@@ -255,8 +257,10 @@ public class TelephoneTraceManager extends GenericPageHQLQuery<TelephoneTrace> {
             telephoneTraceLog.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
             telephoneTraceLog.setFldCreateDate(new Date());
             telephoneTraceLogList.add(telephoneTraceLog);
+            taskIds.add(telephoneTrace.getFldTaskId());
         }
         telephoneTraceDao.save(telephoneTraceList);
         telephoneTraceLogDao.save(telephoneTraceLogList);
+        telephoneTaskDao.updateTaskStatusByIds(TelephoneTaskStatusEnum.DONE_FINISH.getCode(),taskIds);
     }
 }

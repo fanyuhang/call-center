@@ -287,4 +287,54 @@ public class TelephoneAssign implements java.io.Serializable {
     public String getImportName() {
         return telephoneImport == null ? "" : telephoneImport.getFldName();
     }
+
+    private Integer fldRecoverStatus;
+    private Date fldRecoverDate;
+    private String fldRecoverUserNo;
+
+    @Column(name = "FLDRECOVERSTATUS")
+    public Integer getFldRecoverStatus() {
+        return fldRecoverStatus;
+    }
+
+    public void setFldRecoverStatus(Integer fldRecoverStatus) {
+        this.fldRecoverStatus = fldRecoverStatus;
+    }
+
+    @Column(name = "FLDRECOVERDATE")
+    @JsonSerialize(using = JsonTimestampSerializer.class)
+    public Date getFldRecoverDate() {
+        return fldRecoverDate;
+    }
+
+    public void setFldRecoverDate(Date fldRecoverDate) {
+        this.fldRecoverDate = fldRecoverDate;
+    }
+
+    @Column(name = "FLDRECOVERUSERNO")
+    public String getFldRecoverUserNo() {
+        return fldRecoverUserNo;
+    }
+
+    public void setFldRecoverUserNo(String fldRecoverUserNo) {
+        this.fldRecoverUserNo = fldRecoverUserNo;
+    }
+
+    private User recoverUserNo;
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "FLDRECOVERUSERNO", referencedColumnName="FLDLOGINNAME", nullable = true, insertable = false, updatable = false)
+    public User getRecoverUserNo() {
+        return recoverUserNo;
+    }
+
+    public void setRecoverUserNo(User recoverUserNo) {
+        this.recoverUserNo = recoverUserNo;
+    }
+
+    @Transient
+    public String getRecoverUserName() {
+        return recoverUserNo!=null ? recoverUserNo.getUserName() : "";
+    }
 }

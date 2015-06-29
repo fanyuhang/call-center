@@ -62,6 +62,8 @@ public class TelephoneRecord implements java.io.Serializable {
     private Integer fldWaitTime;
     private Integer fldAnswerFlag;
 
+    private Long fldCallId;
+
 	// Constructors
 
 	/** default constructor */
@@ -380,5 +382,14 @@ public class TelephoneRecord implements java.io.Serializable {
 
     public void setFldAnswerFlag(Integer fldAnswerFlag) {
         this.fldAnswerFlag = fldAnswerFlag;
+    }
+
+    @Column(name = "FLDCALLID")
+    public Long getFldCallId() {
+        return fldCallId;
+    }
+
+    public void setFldCallId(Long fldCallId) {
+        this.fldCallId = fldCallId;
     }
 }

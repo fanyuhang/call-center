@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
@@ -25,5 +26,19 @@ public interface TelephoneTaskDao extends PagingAndSortingRepository<TelephoneTa
 
     @Query("select m from TelephoneTask m where m.fldCallUserNo = ?1 and m.fldTaskStatus < ?2 ")
     Page<TelephoneTask> findByCallUserNoAndTaskStatus(String callUserNo, Integer taskStatus, Pageable page);
+
+    @Query("select m from TelephoneTask m where m.fldId in (?1)")
+    public List<TelephoneTask> findByIds(List<Long> ids);
+
+    @Modifying
+    @Query("delete from TelephoneTask m where m.fldId in (?1)")
+    public void deleteByIds(List<Long> ids);
+
+    @Query("select count(*) from TelephoneTask m where m.fldAssignDetailId = ?1")
+    public Long countByAssignDetailId(String assignDetailId);
+
+    @Modifying
+    @Query("update TelephoneTask  set fldTaskStatus = ?1 where fldId in (?2)")
+    public void updateTaskStatusByIds(Integer taskStatus,List<Long> ids);
 
 }

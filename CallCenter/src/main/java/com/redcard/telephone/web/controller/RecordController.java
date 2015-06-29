@@ -62,7 +62,6 @@ public class RecordController {
     @RequestMapping(value = "list")
     @ResponseBody
     public DataResponse<TelephoneRecord> list(GridPageRequest pageRequest, String where, String type) {
-        pageRequest.setSort("fldOperateDate", "desc");
         if (!StringUtils.isEmpty(type)) {
             if (Constant.TELEPHONE_CALL_TYPE_OUT.toString().equals(type)) {
                 where = FilterGroupUtil.addRule(where, "fldCallType", Constant.TELEPHONE_CALL_TYPE_OUT.toString(), "int", "equal");

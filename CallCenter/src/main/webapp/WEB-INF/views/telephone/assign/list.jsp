@@ -19,14 +19,26 @@
 </div>
 <div id="maingrid"></div>
 <script type="text/javascript">
-	//搜索表单应用ligerui样式
+    var recoverStatusData = <sys:dictList type = "38" nullable="true"/>;
+
+    //搜索表单应用ligerui样式
 	$("#formsearch").ligerForm({
 	    labelWidth: 100,
 	    inputWidth: 150,
 	    space: 30,
 	    fields: [
-	        {display: "话务分配人", name: "createUser.userName", newline: true, type: "text", cssClass: "field"},
-	        {display: "分配时间", name: "startDate", newline: false, type: "date", cssClass: "field",
+            {display: "话单名称", name: "telephoneImport.fldName", newline: true, type: "text", cssClass: "field"},
+            {display: "话务分配人", name: "createUser.userName", newline: false, type: "text", cssClass: "field"},
+            {display: "回收状态", name: "fldRecoverStatus", newline: false, type: "select", cssClass: "field",
+                options: {
+                    valueFieldID: "fldRecoverStatus",
+                    valueField: "value",
+                    textField: "text",
+                    initValue:'0',
+                    data: recoverStatusData
+                }, attr: {"op": "equal", "vt": "int"}
+            },
+	        {display: "分配时间", name: "startDate", newline: true, type: "date", cssClass: "field",
 	        	attr:{op:'greaterorequal', vt:'date', field:"fldOperateDate"}},
 	        {display: "至", name: "endDate", newline: false, type: "date", cssClass: "field",
 	        	attr:{op:'lessorequal', vt:'date', field:"fldOperateDate"}}
@@ -36,7 +48,7 @@
 	
 	//列表结构
 	var grid = $("#maingrid").ligerGrid({
-	    checkbox: false,
+	    checkbox: true,
 	    rownumbers: true,
 	    delayLoad: true,
 	    columnWidth: 180,
@@ -45,6 +57,11 @@
             {display: "话单名称", name: "importName"},
             {display: "话务分配人", name: "createUserName"},
 	        {display: "分配时间", name: "fldCreateDate"},
+            {display: "回收状态", name: "fldRecoverStatus",
+                render:function(item) {
+                    return renderLabel(recoverStatusData,item.fldRecoverStatus);
+                }
+            },
 	        {display: "使用话务数", name: "fldAssignNumber"},
 	        {display: "话务员数", name: "fldCallUserNumber"},
 	        {display: "任务开始时间", name: "fldBeginDate"},
@@ -74,12 +91,15 @@
 	            top.f_addTab(null, '话务明细', '<c:url value="/telephone/assign/assignDetail"/>' + '?menuNo=${menuNo}&id='+selected.fldId);
 	       		break;
 	       	case "recover":
-	       		if (grid.getSelectedRows().length > 1 || grid.getSelectedRows().length == 0) {
-	                LG.tip('请选择一行数据!');
+	       		if (grid.getSelectedRows().length == 0) {
+	                LG.tip('请至少选择一行数据!');
 	                return;
 	            }
-	          var selected = grid.getSelected();
-	          recover(selected.fldId);
+                $.ligerDialog.confirm('确定回收所选中的话务分配记录吗？', function (yes) {
+                    if (yes) {
+                        recover();
+                    }
+                });
 	       		break;
 	    }
 	}
@@ -88,12 +108,25 @@
 	    grid.loadData();
 	}
 	
-	function recover(id) {
+	function recover() {
+
+        var rows = grid.getSelectedRows();
+
+        var ids = "";
+        for (var i = 0; i < rows.length; i++) {
+            ids = ids + rows[i].fldId + ",";
+        }
+
+        if (ids.length > 0) {
+            ids = ids.substring(0, ids.length - 1);
+        }
+
 		LG.ajax({
         loading:'正在回收中...',
-        url:'<c:url value="/telephone/assign/recover"/>',
-        data:{fldId:id},
+        url:'<c:url value="/telephone/assign/recoverByIds"/>',
+        data:{ids:ids},
         success:function (data, message) {
+            f_reload();
             LG.tip(message);
         },
         error:function (message) {

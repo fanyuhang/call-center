@@ -5540,6 +5540,8 @@
             "lessorequal": "小于或等于",
             "in": "包括在...",
             "notin": "不包括...",
+            "isnull":"为空",
+            "isnotnull":"不为空",
             "addgroup": "增加分组",
             "addrule": "增加条件",
             "deletegroup": "删除分组"
@@ -5548,13 +5550,13 @@
 
     $.ligerDefaults.Filter.operators['string'] =
     $.ligerDefaults.Filter.operators['text'] =
-    ["equal", "notequal", "startwith", "endwith", "like", "greater", "greaterorequal", "less", "lessorequal", "in", "notin"];
+    ["equal", "notequal", "startwith", "endwith", "like", "greater", "greaterorequal", "less", "lessorequal", "in", "notin","isnull","isnotnull"];
 
     $.ligerDefaults.Filter.operators['number'] =
     $.ligerDefaults.Filter.operators['int'] =
     $.ligerDefaults.Filter.operators['float'] =
     $.ligerDefaults.Filter.operators['date'] =
-    ["equal", "notequal", "greater", "greaterorequal", "less", "lessorequal", "in", "notin"];
+    ["equal", "notequal", "greater", "greaterorequal", "less", "lessorequal", "in", "notin","isnull","isnotnull"];
 
     $.ligerDefaults.Filter.editors['string'] =
     {

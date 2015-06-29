@@ -98,27 +98,33 @@
         columns: [
             {
                 display: "分机号",
-                name: "extno"
+                name: "extno",
+                isSort:false
             },
             {
                 display: "部门",
-                name: "deptName"
+                name: "deptName",
+                isSort:false
             },
             {
                 display: "话务员",
-                name: "operateUserName"
+                name: "operateUserName",
+                isSort:false
             },
             {
                 display: "状态",
-                name: "statusName"
+                name: "statusName",
+                isSort:false
             },
             {
                 display: "开始时间",
-                name: "starttime"
+                name: "starttime",
+                isSort:false
             },
             {
                 display: "时长",
-                name: "timeLong"
+                name: "timeLong",
+                isSort:false
             }
         ],
         dataAction: 'server',

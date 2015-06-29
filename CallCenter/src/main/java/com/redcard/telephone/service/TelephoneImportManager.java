@@ -2,6 +2,7 @@ package com.redcard.telephone.service;
 
 import com.common.core.grid.GridPageRequest;
 import com.common.core.util.GenericPageHQLQuery;
+import com.common.security.util.SecurityUtil;
 import com.redcard.telephone.dao.TelephoneImportDao;
 import com.redcard.telephone.dao.TelephoneImportDetailDao;
 import com.redcard.telephone.entity.TelephoneImport;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -60,5 +62,16 @@ public class TelephoneImportManager extends GenericPageHQLQuery<TelephoneImport>
 
     public List<TelephoneImportDetail> viewDtl(String id) {
         return telephoneImportDetailDao.queryByImportId(id);
+    }
+
+    @Transactional(readOnly = false)
+    public void delete(String id){
+        TelephoneImport telephoneImport = telephoneImportDao.findOne(id);
+        telephoneImportDetailDao.deleteByImportId(id);
+        telephoneImport.setFldImportTotalNumber(telephoneImportDetailDao.countTotalNumberByImportId(id).intValue());
+        telephoneImport.setFldOperateUserNo(SecurityUtil.getCurrentUserLoginName());
+        telephoneImport.setFldOperateDate(new Date());
+        telephoneImportDao.save(telephoneImport);
+
     }
 }

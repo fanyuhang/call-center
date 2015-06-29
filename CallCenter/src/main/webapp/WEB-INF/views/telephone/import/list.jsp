@@ -152,6 +152,16 @@ function toolbarBtnItemClick(item) {
             var selected = grid.getSelected();
             f_export('<c:url value="/telephone/import/dupexport"/>' + '?id=' + selected.fldId);
             break;
+        case "del":
+            if (grid.getSelectedRows().length > 1 || grid.getSelectedRows().length == 0) {
+                LG.tip('请选择一行数据!');
+                return;
+            }
+            jQuery.ligerDialog.confirm('确定删除吗?', function (confirm) {
+                if (confirm)
+                    f_delete();
+            });
+            break;
     }
 }
 
@@ -217,6 +227,26 @@ function f_template(filename) {
 
 function f_reload() {
     grid.loadData();
+}
+
+function f_delete() {
+    var selected = grid.getSelected();
+    if (selected) {
+        LG.ajax({
+            url: '<c:url value="/telephone/import/delete"/>',
+            loading: '正在删除中...',
+            data: { id: selected.fldId},
+            success: function () {
+                LG.showSuccess('删除成功');
+                f_reload();
+            },
+            error: function (message) {
+                LG.showError(message);
+            }
+        });
+    } else {
+        LG.tip('请选择行!');
+    }
 }
 
 resizeDataGrid(grid);

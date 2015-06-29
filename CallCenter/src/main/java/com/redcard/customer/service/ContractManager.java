@@ -48,15 +48,21 @@ public class ContractManager extends GenericPageHQLQuery<CustomerContract> {
         Double oldContractCardMoney = 0d;
         if (StringUtils.isNotBlank(customerContract.getFldId())) {
             CustomerContract oldCustomerContract = contractDao.findOne(customerContract.getFldId());
-            oldContractCardMoney = oldCustomerContract.getFldCardMoney()==null?0:oldCustomerContract.getFldCardMoney();
+            if(oldCustomerContract!=null){
+                oldContractCardMoney = oldCustomerContract.getFldCardMoney()==null?0:oldCustomerContract.getFldCardMoney();
+            }
         }
         String fldProductId = customerProductDetail.getFldProductId();
         customerContract.setFldProductId(fldProductId);
-        //更新是否到期
-        if (DateUtils.truncatedCompareTo(customerContract.getFldDueDate(), new Date(), Calendar.DATE) > 0) {
+        if(customerContract.getFldDueDate()!=null){
+            //更新是否到期
+            if (DateUtils.truncatedCompareTo(customerContract.getFldDueDate(), new Date(), Calendar.DATE) > 0) {
+                customerContract.setFldFinishStatus(Constant.CONTRACT_FINISH_STATUS_NO);
+            } else {
+                customerContract.setFldFinishStatus(Constant.CONTRACT_FINISH_STATUS_YES);
+            }
+        }else{
             customerContract.setFldFinishStatus(Constant.CONTRACT_FINISH_STATUS_NO);
-        } else {
-            customerContract.setFldFinishStatus(Constant.CONTRACT_FINISH_STATUS_YES);
         }
         contractDao.save(customerContract);
 

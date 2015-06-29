@@ -161,4 +161,18 @@ public class TelephoneAssignController {
 		}
         return result;
     }
+
+    @RequestMapping(value = "recoverByIds")
+    @ResponseBody
+    public AsyncResponse recoverByIds(String ids) {
+        AsyncResponse result = new AsyncResponse(false, "话务回收成功");
+        try {
+            telephoneAssignManager.recover(ids);
+        } catch (Exception e) {
+            result.setIsError(true);
+            result.setMessage("话务回收失败");
+            log.error(e.toString());
+        }
+        return result;
+    }
 }

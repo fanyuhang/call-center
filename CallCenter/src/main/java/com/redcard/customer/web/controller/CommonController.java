@@ -225,7 +225,9 @@ public class CommonController {
                                     }
                                     customer.setFldCardLevel(importEntity.getCardLevel()==null?null:importEntity.getCardLevel().intValue());
                                     customer.setFldCardNo(importEntity.getCardNo());
-                                    customer.setFldComment(importEntity.getComment());
+                                    if(StringUtils.isNotBlank(importEntity.getComment())){
+                                        customer.setFldComment(StringUtils.replace(importEntity.getComment(),"\"",""));
+                                    }
                                 } else {
                                     if (!StringUtils.isEmpty(customer.getFldMobile())) {
                                         customer = customerManager.findByMobile(customer.getFldMobile());
@@ -432,7 +434,9 @@ public class CommonController {
                                 customer.setFldBirthday(DateUtil.getDateByStr(importEntity.getBirthday()));
                                 customer.setFldCardLevel(importEntity.getCardLevel()==null?null:importEntity.getCardLevel().intValue());
                                 customer.setFldCardNo(importEntity.getCardNo());
-                                customer.setFldComment(importEntity.getComment());
+                                if(StringUtils.isNotBlank(importEntity.getComment())){
+                                    customer.setFldComment(StringUtils.replace(importEntity.getComment(),"\"",""));
+                                }
                                 customer.setFldOperateDate(new Date());
 
                                 if (StringUtils.isNotBlank(importEntity.getFinancialUserNo())) {

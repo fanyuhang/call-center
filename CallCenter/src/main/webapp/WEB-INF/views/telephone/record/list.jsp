@@ -20,8 +20,8 @@
 </div>
 <div id="maingrid"></div>
 <script type="text/javascript">
-	var callTypeData = <sys:dictList type = "28"/>;
-	var resultTypeData = <sys:dictList type = "27"/>;
+	var callTypeData = <sys:dictList type = "28" nullable="true"/>;
+	var resultTypeData = <sys:dictList type = "27" nullable="true"/>;
 	
 	//搜索表单应用ligerui样式
 	$("#formsearch").ligerForm({
@@ -49,9 +49,9 @@
         	{display: "拨打号码", name: "fldPhone", newline: false, type: "text", cssClass: "field"},
         	{display: "客户姓名", name: "fldCustomerName", newline: true, type: "text", cssClass: "field"},
 	        {display: "拨打起始时间", name: "startDate", newline: false, type: "date", cssClass: "field",
-	        	attr:{op:'greaterorequal', vt:'date', field:"fldCallBeginTime"}},
+	        	attr:{op:'greaterorequal', vt:'date', field:"fldCallDate"}},
 	        {display: "拨打结束时间", name: "endDate", newline: false, type: "date", cssClass: "field",
-	        	attr:{op:'lessorequal', vt:'date', field:"fldCallBeginTime"}},
+	        	attr:{op:'lessorequal', vt:'date', field:"fldCallDate"}},
             {display: "通话时长 > ", name: "fldCallLongStart", newline: true, cssClass: "field", type: "text", attr: {"op": 'greater',"vt":'int', field:"fldCallLong"}},
             {display: '通话时长 < ', name: "fldCallLongEnd", newline: false, cssClass: "field", type: "text", attr: {"op": 'less',"vt":'int', field:"fldCallLong"}}
         ],
@@ -62,10 +62,10 @@
 	var grid = $("#maingrid").ligerGrid({
 	    checkbox: false,
 	    rownumbers: true,
-	    delayLoad: false,
+	    delayLoad: true,
 	    columnWidth: 160,
 	    columns: [
-	        {display: "话务员", name: "callUserName"},
+	        {display: "话务员", name: "callUserName", isSort: false},
 	        {display: "呼叫类型", name: "fldCallType",
 	        	render:function(item) {
 	        		return renderLabel(callTypeData,item.fldCallType);
@@ -85,7 +85,7 @@
 	        	}
 	        },
 	        {display: "备注", name: "fldComment",width:170}
-	    ], dataAction: 'server', pageSize: 20, toolbar: {}, url: '<c:url value="/telephone/record/list"/>',
+	    ], dataAction: 'server', pageSize: 20, toolbar: {}, url: '<c:url value="/telephone/record/list"/>',sortName:'fldCallDate', sortOrder:'desc',
 	    width: '98%', height: '98%', toJSON: JSON2.stringify, onReload: f_reload
 	});
 

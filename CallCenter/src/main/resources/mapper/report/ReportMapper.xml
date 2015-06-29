@@ -57,7 +57,18 @@
     </select>
     <select id="callOutDay" parameterType="map"
             resultType="com.redcard.report.entity.CallOutDay">
-        select a.*, isnull(b.totalValidCallNum,0) as totalValidCallNum
+        select a.*
+        ,isnull(b.totalValidCallNum,0) as totalValidCallNum
+        ,c.item0
+        ,c.item3
+        ,c.item5
+        ,c.item9
+        ,c.item10
+        ,d.count0
+        ,d.count3
+        ,d.count5
+        ,d.count9
+        ,d.count10
         from (SELECT DATEADD(day, DATEDIFF(day, 0, a.fldCallDate), 0) AS reportDate
         ,b.fldUserName AS userName
         ,d.fldDeptName AS deptName
@@ -94,7 +105,7 @@
         LEFT JOIN tblUserDeptLink c ON b.fldLoginName = c.fldLoginName
         LEFT JOIN tblDept d ON c.fldDeptCode = d.fldDeptCode
         WHERE 1=1
-        AND a.fldCalllong = 0
+        AND a.fldCalllong != 0
         <if test="deptName != null">
             and d.fldDeptName like #{deptName}
         </if>
@@ -111,6 +122,91 @@
         GROUP BY DATEADD(day, DATEDIFF(day, 0, a.fldCallDate), 0)
         ,b.fldUserName
         ,d.fldDeptName) b on a.reportDate = b.reportDate and a.userName = b.userName and a.deptName = b.deptName
+        left join (SELECT b.reportDate
+        ,b.userName
+        ,b.deptName
+        ,isnull(b.[0], 0) AS item0
+        ,isnull(b.[3], 0) AS item3
+        ,isnull(b.[5], 0) AS item5
+        ,isnull(b.[9], 0) AS item9
+        ,isnull(b.[10], 0) AS item10
+        FROM (
+        SELECT *
+        FROM (
+        SELECT DATEADD(day, DATEDIFF(day, 0, a.fldCallDate), 0) AS reportDate
+        ,b.fldUserName AS userName
+        ,d.fldDeptName AS deptName
+        ,a.fldResultType
+        ,sum(fldCallLong) calllong
+        FROM tblTelephoneRecord a
+        LEFT JOIN tblUser b ON a.fldCreateUserNo = b.fldLoginName
+        LEFT JOIN tblUserDeptLink c ON b.fldLoginName = c.fldLoginName
+        LEFT JOIN tblDept d ON c.fldDeptCode = d.fldDeptCode
+        WHERE 1 = 1
+        AND a.fldCalllong != 0
+        <if test="deptName != null">
+            and d.fldDeptName like #{deptName}
+        </if>
+        <if test="userName != null">
+            and b.fldUserName like #{userName}
+        </if>
+        <if test="startDate != null">
+            and a.fldCallDate>= #{startDate}
+        </if>
+        <if test="endDate != null">
+            and  a.fldCallDate &lt;= #{endDate}
+        </if>
+        AND a.fldCallType = 0
+        GROUP BY DATEADD(day, DATEDIFF(day, 0, a.fldCallDate), 0)
+        ,b.fldUserName
+        ,d.fldDeptName
+        ,a.fldResultType
+        ) a
+        pivot(sum(a.calllong) FOR a.fldResultType IN ([0], [3], [5], [9], [10])) AS ourpivot
+        ) b
+        ) c on a.reportDate = c.reportDate and a.userName = c.userName and a.deptName = c.deptName
+        left join (SELECT b.reportDate
+        ,b.userName
+        ,b.deptName
+        ,isnull(b.[0], 0) AS count0
+        ,isnull(b.[3], 0) AS count3
+        ,isnull(b.[5], 0) AS count5
+        ,isnull(b.[9], 0) AS count9
+        ,isnull(b.[10], 0) AS count10
+        FROM (
+        SELECT *
+        FROM (
+        SELECT DATEADD(day, DATEDIFF(day, 0, a.fldCallDate), 0) AS reportDate
+        ,b.fldUserName AS userName
+        ,d.fldDeptName AS deptName
+        ,a.fldResultType
+        ,COUNT(*) AS num
+        FROM tblTelephoneRecord a
+        LEFT JOIN tblUser b ON a.fldCreateUserNo = b.fldLoginName
+        LEFT JOIN tblUserDeptLink c ON b.fldLoginName = c.fldLoginName
+        LEFT JOIN tblDept d ON c.fldDeptCode = d.fldDeptCode
+        WHERE 1 = 1
+        AND a.fldCalllong != 0
+        <if test="deptName != null">
+            and d.fldDeptName like #{deptName}
+        </if>
+        <if test="userName != null">
+            and b.fldUserName like #{userName}
+        </if>
+        <if test="startDate != null">
+            and a.fldCallDate>= #{startDate}
+        </if>
+        <if test="endDate != null">
+            and  a.fldCallDate &lt;= #{endDate}
+        </if>
+        AND a.fldCallType = 0
+        GROUP BY DATEADD(day, DATEDIFF(day, 0, a.fldCallDate), 0)
+        ,b.fldUserName
+        ,d.fldDeptName
+        ,a.fldResultType
+        ) a
+        pivot(sum(a.num) FOR a.fldResultType IN ([0], [3], [5], [9], [10])) AS ourpivot
+        ) b ) d on a.reportDate = d.reportDate and a.userName = d.userName and a.deptName = d.deptName
         WHERE 1=1
         <if test="totalCallLongStart != null">
             and a.totalValidCallLong > #{totalCallLongStart}
@@ -159,7 +255,7 @@
         LEFT JOIN tblUserDeptLink c ON b.fldLoginName = c.fldLoginName
         LEFT JOIN tblDept d ON c.fldDeptCode = d.fldDeptCode
         WHERE 1=1
-        AND a.fldCalllong = 0
+        AND a.fldCalllong != 0
         <if test="deptName != null">
             and d.fldDeptName like #{deptName}
         </if>

@@ -52,18 +52,18 @@
                 }
             }
             },
-            { display: "有效时长(秒)", name: "totalValidCallLong", type: "text", align: "right",
-                render: function (item) {
-                    return item.totalValidCallLong+"";
-                }, totalSummary: { type: 'sum',
-                render: function (suminf, column, cell) {
-                    return '<div>合计:&nbsp;&nbsp;<b>' + suminf.sum + '（秒）</b></div>';
-                }
-            }
-            },
             { display: "总通次", name: "totalCallNum", type: "text", align: "right",
                 render: function (item) {
                     return item.totalCallNum+"";
+                }, totalSummary: { type: 'sum',
+                render: function (suminf, column, cell) {
+                    return '<div>合计:&nbsp;&nbsp;<b>' + suminf.sum + '</b></div>';
+                }
+            }
+            },
+            { display: "有效时长(秒)", name: "totalValidCallLong", type: "text", align: "right",
+                render: function (item) {
+                    return item.totalValidCallLong+"";
                 }, totalSummary: { type: 'sum',
                 render: function (suminf, column, cell) {
                     return '<div>合计:&nbsp;&nbsp;<b>' + suminf.sum + '（秒）</b></div>';
@@ -75,13 +75,103 @@
                     return item.totalValidCallNum+"";
                 }, totalSummary: { type: 'sum',
                 render: function (suminf, column, cell) {
-                    return '<div>合计:&nbsp;&nbsp;<b>' + suminf.sum + '（秒）</b></div>';
+                    return '<div>合计:&nbsp;&nbsp;<b>' + suminf.sum + '</b></div>';
                 }
             }
             },
             { display: "客户数", name: "totalCutomerNum", type: "text", align: "right",
                 render: function (item) {
                     return item.totalCutomerNum+"";
+                }, totalSummary: { type: 'sum',
+                render: function (suminf, column, cell) {
+                    return '<div>合计:&nbsp;&nbsp;<b>' + suminf.sum + '</b></div>';
+                }
+            }
+            },
+            { display: "空/错/停时长(秒)", name: "item0", type: "text", align: "right",
+                render: function (item) {
+                    return item.item0+"";
+                }, totalSummary: { type: 'sum',
+                render: function (suminf, column, cell) {
+                    return '<div>合计:&nbsp;&nbsp;<b>' + suminf.sum + '（秒）</b></div>';
+                }
+            }
+            },
+            { display: "空/错/停通次", name: "count0", type: "text", align: "right",
+                render: function (item) {
+                    return item.count0+"";
+                }, totalSummary: { type: 'sum',
+                render: function (suminf, column, cell) {
+                    return '<div>合计:&nbsp;&nbsp;<b>' + suminf.sum + '</b></div>';
+                }
+            }
+            },
+            { display: "无人接听时长(秒)", name: "item10", type: "text", align: "right",
+                render: function (item) {
+                    return item.item10+"";
+                }, totalSummary: { type: 'sum',
+                render: function (suminf, column, cell) {
+                    return '<div>合计:&nbsp;&nbsp;<b>' + suminf.sum + '（秒）</b></div>';
+                }
+            }
+            },
+            { display: "无人接听通次", name: "count10", type: "text", align: "right",
+                render: function (item) {
+                    return item.count10+"";
+                }, totalSummary: { type: 'sum',
+                render: function (suminf, column, cell) {
+                    return '<div>合计:&nbsp;&nbsp;<b>' + suminf.sum + '</b></div>';
+                }
+            }
+            },
+            { display: "拒绝时长(秒)", name: "item9", type: "text", align: "right",
+                render: function (item) {
+                    return item.item9+"";
+                }, totalSummary: { type: 'sum',
+                render: function (suminf, column, cell) {
+                    return '<div>合计:&nbsp;&nbsp;<b>' + suminf.sum + '（秒）</b></div>';
+                }
+            }
+            },
+            { display: "拒绝通次", name: "count9", type: "text", align: "right",
+                render: function (item) {
+                    return item.count9+"";
+                }, totalSummary: { type: 'sum',
+                render: function (suminf, column, cell) {
+                    return '<div>合计:&nbsp;&nbsp;<b>' + suminf.sum + '</b></div>';
+                }
+            }
+            },
+            { display: "待跟踪时长(秒)", name: "item3", type: "text", align: "right",
+                render: function (item) {
+                    return item.item3+"";
+                }, totalSummary: { type: 'sum',
+                render: function (suminf, column, cell) {
+                    return '<div>合计:&nbsp;&nbsp;<b>' + suminf.sum + '（秒）</b></div>';
+                }
+            }
+            },
+            { display: "待跟踪通次", name: "count3", type: "text", align: "right",
+                render: function (item) {
+                    return item.count3+"";
+                }, totalSummary: { type: 'sum',
+                render: function (suminf, column, cell) {
+                    return '<div>合计:&nbsp;&nbsp;<b>' + suminf.sum + '</b></div>';
+                }
+            }
+            },
+            { display: "约访时长(秒)", name: "item5", type: "text", align: "right",
+                render: function (item) {
+                    return item.item5+"";
+                }, totalSummary: { type: 'sum',
+                render: function (suminf, column, cell) {
+                    return '<div>合计:&nbsp;&nbsp;<b>' + suminf.sum + '（秒）</b></div>';
+                }
+            }
+            },
+            { display: "约访通次", name: "count5", type: "text", align: "right",
+                render: function (item) {
+                    return item.count5+"";
                 }, totalSummary: { type: 'sum',
                 render: function (suminf, column, cell) {
                     return '<div>合计:&nbsp;&nbsp;<b>' + suminf.sum + '</b></div>';

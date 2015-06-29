@@ -30,6 +30,7 @@
         WHERE a.rownum = 1
             AND a.extno IS NOT NULL
             AND b.NAME is not null
+        ORDER BY DateDiff(second,a.starttime,getdate()) desc
 
     </select>
 </mapper>

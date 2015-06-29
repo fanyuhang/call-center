@@ -63,6 +63,7 @@ public class TelephoneRecordManager extends GenericPageHQLQuery<TelephoneRecord>
             telephoneRecord.setFldWaitTime(0);
             telephoneRecord.setFldAnswerFlag(0);
             telephoneRecord.setFldCallDate(calllog.getInboundCallTime());
+            telephoneRecord.setFldCallId(Long.valueOf(callId));
         }
         Talklog talkLog = talklogDao.findByCallId(Long.valueOf(callId));
         if (talkLog != null) {
@@ -72,6 +73,7 @@ public class TelephoneRecordManager extends GenericPageHQLQuery<TelephoneRecord>
             telephoneRecord.setFldTotalDuration(calllog.getTotalDuration());
             telephoneRecord.setFldWaitTime(calllog.getWaitTime());
             telephoneRecord.setFldAnswerFlag(calllog.getAnswerFlag());
+            telephoneRecord.setFldCallId(Long.valueOf(callId));
         }
         telephoneRecordDao.save(telephoneRecord);
     }
@@ -114,6 +116,7 @@ public class TelephoneRecordManager extends GenericPageHQLQuery<TelephoneRecord>
             telephoneRecord.setFldTotalDuration(0);
             telephoneRecord.setFldWaitTime(0);
             telephoneRecord.setFldCallDate(calllog.getInboundCallTime());
+            telephoneRecord.setFldCallId(Long.valueOf(callId));
         }
         Talklog talkLog = talklogDao.findByCallId(Long.valueOf(callId));
 
@@ -124,6 +127,7 @@ public class TelephoneRecordManager extends GenericPageHQLQuery<TelephoneRecord>
             telephoneRecord.setFldCallLong(calllog.getTalkDuration());
             telephoneRecord.setFldTotalDuration(calllog.getTotalDuration());
             telephoneRecord.setFldWaitTime(calllog.getWaitTime());
+            telephoneRecord.setFldCallId(Long.valueOf(callId));
         }
 
         telephoneRecordDao.save(telephoneRecord);

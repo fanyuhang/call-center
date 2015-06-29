@@ -20,14 +20,14 @@
         fields: [
             {display: "合同编号", name: "fldId", newline: true, type: "text", validate: {required: true, maxlength: 40}, attr:{value:"${customerContract.fldId}", readonly: "readonly"},group: "<label style=white-space:nowrap;>合同信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'},
             {display: "合同签订日期", name: "fldSignDate", newline: false, type: "date", validate: {required: true}, attr:{value:"<fmt:formatDate value='${customerContract.fldSignDate}' pattern='yyyy-MM-dd'/>",readonly: "readonly"},format:'yyyy-MM-dd',editor:{ type:'date' }},
-            {display: "成立日期", name: "fldEstablishDate", newline: true, type: "date", validate: {required: true}, attr:{value:"<fmt:formatDate value='${customerProduct.fldEstablishDate}' pattern='yyyy-MM-dd'/>",readonly: "readonly"},format:'yyyy-MM-dd',editor:{ type:'date' }},
-            {display: "起息日期", name: "fldValueDate", newline: false, type: "date", validate: {required: true}, attr:{value:"<fmt:formatDate value='${customerProduct.fldValueDate}' pattern='yyyy-MM-dd'/>",readonly: "readonly"},format:'yyyy-MM-dd',editor:{ type:'date' }}
+            {display: "成立日期", name: "fldEstablishDate", newline: true, type: "date", attr:{value:"<fmt:formatDate value='${customerProduct.fldEstablishDate}' pattern='yyyy-MM-dd'/>"},format:'yyyy-MM-dd',editor:{ type:'date' }},
+            {display: "起息日期", name: "fldValueDate", newline: false, type: "date", attr:{value:"<fmt:formatDate value='${customerProduct.fldValueDate}' pattern='yyyy-MM-dd'/>"},format:'yyyy-MM-dd',editor:{ type:'date' }},
             {display: "购买姓名",name: "fldCustomerId", newline: true, type: "select", validate: {required: true},
             	comboboxName: "customerName", options: {valueFieldID: "customerName"}},
             {display: "购买产品", name: "fldProductDetailId", newline: true, type: "select", comboboxName:"productId",
             	options:{valueFieldID:'productId'}, validate: {required: true},group: "<label style=white-space:nowrap;>购买产品</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'},
             {display: "实际天/月数", name: "fldClearDays", newline: true, type: "text", attr:{value:"${customerContract.clearDays}",readonly: "readonly"}},
-            {display: "到期日期", name: "fldDueDate", newline: false, attr:{value:"<fmt:formatDate value='${customerProduct.fldDueDate}' pattern='yyyy-MM-dd'/>",readonly: "readonly"}, type: "date", validate: {required: true}},
+            {display: "到期日期", name: "fldDueDate", newline: false, type: "date", attr:{value:"<fmt:formatDate value='${customerProduct.fldDueDate}' pattern='yyyy-MM-dd'/>"},format:'yyyy-MM-dd',editor:{ type:'date' }},
             {display: "年化收益率(%)", name: "fldAnnualizedRate", newline: true, type: "text", attr:{value:"${customerContract.fldAnnualizedRate}",readonly: "readonly"}},
             {display: "年化7天存款率(%)", name: "fldDepositRate", newline: false, type: "text", attr:{value:"${customerContract.fldDepositRate}",readonly: "readonly"}},
             {display: "购买金额(万元)", name: "fldPurchaseMoney", newline: true, validate: {required: true}, type: "text",attr:{value:"${customerContract.fldPurchaseMoney}"},group: "<label style=white-space:nowrap;>购买金额</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'},
@@ -39,7 +39,7 @@
             {display: "银行卡号", name: "fldBankNo", newline: true, type: "text", attr:{value:"${customerContract.fldBankNo}"},validate: { maxlength: 64},group: "<label style=white-space:nowrap;>打款信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'},
             {display: "开户银行", name: "fldBankName", newline: false, type: "text", attr:{value:"${customerContract.fldBankName}"},validate: { maxlength: 64}},
             {display: "打款日期", name: "fldMoneyDate", newline: true, type: "date", validate: {required: true}, attr:{value:"<fmt:formatDate value='${customerContract.fldMoneyDate}' pattern='yyyy-MM-dd'/>",readonly: "readonly"},format:'yyyy-MM-dd',editor:{ type:'date' }},
-            {display: "募集期天数", name: "fldCollectDays", newline: true, type: "text", attr:{value:"${customerContract.fldCollectDays}",readonly: "readonly"}},
+            {display: "募集期天数", name: "fldCollectDays", newline: true, type: "text", attr:{value:"${customerContract.fldCollectDays}"}},
             {display: "募集期贴息(元)", name: "fldCollectMoney", newline: false, type: "text", attr:{value:"${customerContract.fldCollectMoney}"}},
             {display: "卡号", name: "fldCardNo", newline: true, type: "text", attr:{value:"${customerContract.fldCardNo}"}, validate: { maxlength: 32},group: "<label style=white-space:nowrap;>瑞得卡信息</label>", groupicon: '<c:url value="/static/ligerUI/icons/32X32/communication.gif"/>'},
             {display: "等级", name: "fldCardLevel", newline: false, type: "select", comboboxName:"cardLevel",
@@ -208,14 +208,16 @@
     				$("#fldPerformanceMoney").val(0);
     			}
                 //到期日期=成立日期+实际天数
-                if(dayUnit == '0') {
-                    var dueDate = new Date(Date.parse($("#fldEstablishDate").val()));
-                    dueDate.setDate(dueDate.getDate()+days);
-                    $("#fldDueDate").val(dueDate.getFullYear()+"-"+parseInt(parseInt(dueDate.getMonth())+1)+"-"+dueDate.getDate());
-                } else {
-                    var dueDate = new Date(Date.parse($("#fldEstablishDate").val()));
-                    dueDate.setMonth(dueDate.getMonth()+days);
-                    $("#fldDueDate").val(dueDate.getFullYear()+"-"+parseInt(parseInt(dueDate.getMonth())+1)+"-"+dueDate.getDate());
+                if(!$("#fldEstablishDate")){
+                    if(dayUnit == '0') {
+                        var dueDate = new Date(Date.parse($("#fldEstablishDate").val()));
+                        dueDate.setDate(dueDate.getDate()+days);
+//                        $("#fldDueDate").val(dueDate.getFullYear()+"-"+parseInt(parseInt(dueDate.getMonth())+1)+"-"+dueDate.getDate());
+                    } else {
+                        var dueDate = new Date(Date.parse($("#fldEstablishDate").val()));
+                        dueDate.setMonth(dueDate.getMonth()+days);
+//                        $("#fldDueDate").val(dueDate.getFullYear()+"-"+parseInt(parseInt(dueDate.getMonth())+1)+"-"+dueDate.getDate());
+                    }
                 }
             },
             error: function (message) {
@@ -233,7 +235,7 @@
 	            {display:"登录名称", name:"loginName"},
 	            {display:"部门", name:"deptName"}
 	        ], pageSize:20,heightDiff:-10,
-	        url:'<c:url value="/security/user/list"/>?where='+financialWhere, sortName:'userName', checkbox:false
+	        url:'<c:url value="/security/user/list"/>?where=', sortName:'userName', checkbox:false
 	    },
 	    search:{
 	        fields:[
@@ -253,7 +255,7 @@
                 {display:"登录名称", name:"loginName"},
                 {display:"部门", name:"deptName"}
             ], pageSize:20,heightDiff:-10,
-            url:'<c:url value="/security/user/list"/>?where='+customerWhere, sortName:'userName', checkbox:false
+            url:'<c:url value="/security/user/list"/>?where=', sortName:'userName', checkbox:false
         },
         search:{
             fields:[
@@ -273,7 +275,7 @@
                 {display:"登录名称", name:"loginName"},
                 {display:"部门", name:"deptName"}
             ], pageSize:20,heightDiff:-10,
-            url:'<c:url value="/security/user/list"/>?where='+serviceWhere, sortName:'userName', checkbox:false
+            url:'<c:url value="/security/user/list"/>?where=', sortName:'userName', checkbox:false
         },
         search:{
             fields:[

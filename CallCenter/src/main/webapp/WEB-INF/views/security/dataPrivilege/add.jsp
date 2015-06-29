@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@include file="../../include/formHeader.jsp" %>
 <script src="<c:url value="/static/ligerUI/js/DataPrivilageSysParm.js"/>" type="text/javascript"></script>
+<script src='<c:url value="/static/ligerUI/ligerUI/js/ligerui.all.js"/>' type="text/javascript"></script>
 <style type="text/css">
     #fieldvalues {
         padding: 2px;

@@ -16,6 +16,7 @@ mainform.ligerForm({
     labelWidth: 100,
     space: 30,
     fields: [
+        {display: "回收状态", name: "fldRecoverStatus", newline: false, type: "hidden", attr:{value:"0"}},
         {display: "话务来源", name: "fldSource", newline: false, type: "hidden", attr:{value:"0"}},
 //        {display: "话务来源", name: "fldSource", newline: false, type: "hidden", attr: {readonly: "readonly"}, validate: {required: true}, cssClass: "field",
 //            options: {

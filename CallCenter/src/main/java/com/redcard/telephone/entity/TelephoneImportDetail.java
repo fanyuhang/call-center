@@ -2,12 +2,10 @@ package com.redcard.telephone.entity;
 
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import com.common.security.util.SecurityUtil;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  * TelephoneImportDetail entity. @author MyEclipse Persistence Tools
@@ -241,4 +239,16 @@ public class TelephoneImportDetail implements java.io.Serializable {
 		this.fldCreateDate = fldCreateDate;
 	}
 
+    private TelephoneImport telephoneImport;
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "FLDIMPORTID",nullable = true,insertable = false, updatable = false)
+    public TelephoneImport getTelephoneImport() {
+        return telephoneImport;
+    }
+
+    public void setTelephoneImport(TelephoneImport telephoneImport) {
+        this.telephoneImport = telephoneImport;
+    }
 }
