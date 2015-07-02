@@ -1,9 +1,6 @@
 package com.redcard.report.dao.mybatis;
 
-import com.redcard.report.entity.CallInDay;
-import com.redcard.report.entity.CallOutDay;
-import com.redcard.report.entity.YeJiDay;
-import com.redcard.report.entity.YeJiMonth;
+import com.redcard.report.entity.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -19,5 +16,7 @@ public interface ReportMapper {
     public List<CallOutDay> callOutDay(Map<String, Object> param);
 
     public List<CallInDay> callInDay(Map<String, Object> param);
+
+    public List<CallOutDayImport> callOutDayImport(Map<String, Object> param);
 
 }

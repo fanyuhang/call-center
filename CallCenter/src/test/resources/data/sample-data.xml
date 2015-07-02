@@ -536,6 +536,13 @@
     <tblNode fldCode="01070401" fldParent="010704" fldName="导出列表" fldDesc="" fldTarget="export"
              fldIcon="/static/ligerUI/icons/silkicons/application_put.png"
              fldLink="" fldType="2" fldPosition="1"/>
+
+    <tblNode fldCode="010705" fldParent="0107" fldName="话单呼出统计" fldDesc="" fldTarget=""
+             fldIcon="/static/ligerUI/icons/32X32/report.gif"
+             fldLink="/report/callOutDayImport/init" fldType="1" fldPosition="3" />
+    <tblNode fldCode="01070501" fldParent="010705" fldName="导出列表" fldDesc="" fldTarget="export"
+             fldIcon="/static/ligerUI/icons/silkicons/application_put.png"
+             fldLink="" fldType="2" fldPosition="1"/>
 	<!-- 一级菜单 -->
 	<tblNode fldCode="0108" fldParent="01" fldName="邮件管理" fldDesc=""
 		fldTarget="#" fldIcon="/static/ligerUI/icons/silkicons/application.png"

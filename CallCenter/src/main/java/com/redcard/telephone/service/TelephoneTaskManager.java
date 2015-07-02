@@ -22,8 +22,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -127,8 +129,17 @@ public class TelephoneTaskManager extends GenericPageHQLQuery<TelephoneTask> {
         telephoneRecord.setFldCallDate(new Date());
 
         String callId = telephoneRecord.getCallId();
+        Calllog calllog = null;
         if (!StringUtils.isBlank(callId)) {
-            Calllog calllog = calllogDao.findOne(Long.valueOf(callId));
+            calllog = calllogDao.findOne(Long.valueOf(callId));
+        }else{
+            List<Calllog> calllogList = calllogDao.findByPhoneAndCaller(telephoneRecord.getFldPhone(),telephoneRecord.getFldOperateUserNo(), DateUtils.truncate(new Date(), Calendar.HOUR));
+            if(calllogList!=null&&calllogList.size()>0){
+                calllog = calllogList.get(0);
+            }
+        }
+
+        if(calllog !=null){
             if (calllog != null) {
                 telephoneRecord.setFldCallBeginTime(calllog.getAnsweredTime());
                 telephoneRecord.setFldCallEndTime(calllog.getHangUpTime());
@@ -138,11 +149,11 @@ public class TelephoneTaskManager extends GenericPageHQLQuery<TelephoneTask> {
                 telephoneRecord.setFldTotalDuration(calllog.getTotalDuration());
                 telephoneRecord.setFldWaitTime(calllog.getWaitTime());
             }
-            Talklog talkLog = talklogDao.findByCallId(Long.valueOf(callId));
+            Talklog talkLog = talklogDao.findByCallId(calllog.getId());
             if (talkLog != null) {
                 telephoneRecord.setFldRecordFilePath(talkLog.getIispath());
             }
-            telephoneRecord.setFldCallId(Long.valueOf(callId));
+            telephoneRecord.setFldCallId(calllog.getId());
         }
 
         telephoneRecordDao.save(telephoneRecord);

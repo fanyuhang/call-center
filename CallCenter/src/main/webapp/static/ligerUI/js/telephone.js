@@ -62,12 +62,12 @@ LG.dial = function () {
     function doDial() {
         var phone = $("#phone").val();
         if (dialPanle.valid()) {
-            LG.call(phone);
-            window.dialWin.hide();
             LG.ajax({
                 url:GLOBAL_CTX + '/telephone/record/saveWithTelephone',
                 data:{ telephone:phone },
                 success:function (data,message) {
+                    LG.call(phone);
+                    window.dialWin.hide();
                     cleanForm();
                     LG.currentTelephoneRecordId = data[0];
                 },

@@ -15,12 +15,14 @@ import com.redcard.telephone.entity.TelephoneCustomer;
 import com.redcard.telephone.entity.TelephoneRecord;
 import com.redcard.telephone.entity.TelephoneTask;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -107,28 +109,36 @@ public class TelephoneRecordManager extends GenericPageHQLQuery<TelephoneRecord>
     @Transactional(readOnly = false)
     public void updateWithTelephone(String recordId, String callId) {
         TelephoneRecord telephoneRecord = telephoneRecordDao.findOne(Long.valueOf(recordId));
-        Calllog calllog = calllogDao.findOne(Long.valueOf(callId));
+        Calllog calllog = null;
+        if (!StringUtils.isBlank(callId)) {
+            calllog = calllogDao.findOne(Long.valueOf(callId));
+        }else{
+            List<Calllog> calllogList = calllogDao.findByPhoneAndCaller(telephoneRecord.getFldPhone(),telephoneRecord.getFldOperateUserNo(), DateUtils.truncate(new Date(), Calendar.HOUR));
+            if(calllogList!=null&&calllogList.size()>0){
+                calllog = calllogList.get(0);
+            }
+        }
+
         if (calllog != null) {
             telephoneRecord.setFldCallBeginTime(calllog.getAnsweredTime());
             telephoneRecord.setFldCallEndTime(calllog.getHangUpTime());
-            telephoneRecord.setFldCallLong(0);
             telephoneRecord.setFldCallLong(0);
             telephoneRecord.setFldTotalDuration(0);
             telephoneRecord.setFldWaitTime(0);
             telephoneRecord.setFldCallDate(calllog.getInboundCallTime());
             telephoneRecord.setFldCallId(Long.valueOf(callId));
+            Talklog talkLog = talklogDao.findByCallId(calllog.getId());
+            if (talkLog != null) {
+                calllog = calllogDao.findOne(calllog.getId());
+                telephoneRecord.setFldRecordFilePath(talkLog.getIispath());
+                telephoneRecord.setFldCallLong(calllog.getTalkDuration());
+                telephoneRecord.setFldCallLong(calllog.getTalkDuration());
+                telephoneRecord.setFldTotalDuration(calllog.getTotalDuration());
+                telephoneRecord.setFldWaitTime(calllog.getWaitTime());
+                telephoneRecord.setFldCallId(calllog.getId());
+            }
         }
-        Talklog talkLog = talklogDao.findByCallId(Long.valueOf(callId));
 
-        if (talkLog != null) {
-            calllog = calllogDao.findOne(Long.valueOf(callId));
-            telephoneRecord.setFldRecordFilePath(talkLog.getIispath());
-            telephoneRecord.setFldCallLong(calllog.getTalkDuration());
-            telephoneRecord.setFldCallLong(calllog.getTalkDuration());
-            telephoneRecord.setFldTotalDuration(calllog.getTotalDuration());
-            telephoneRecord.setFldWaitTime(calllog.getWaitTime());
-            telephoneRecord.setFldCallId(Long.valueOf(callId));
-        }
 
         telephoneRecordDao.save(telephoneRecord);
     }

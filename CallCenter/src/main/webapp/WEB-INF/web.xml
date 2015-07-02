@@ -57,7 +57,7 @@
         </init-param>
         <init-param>
             <param-name>ignored</param-name>
-            <param-value>(/index)|(/login)|(/logout)|(/services)|(/remote)</param-value>
+            <param-value>(/index)|(/login)|(/logout)|(/services)|(/remote)|(/telephone/dial/save)|(/telephone/record/updateWithTelephone)|(/telephone/dial/dialHis)</param-value>
         </init-param>
         <init-param>
             <param-name>resources</param-name>

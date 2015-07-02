@@ -58,6 +58,12 @@ public class DialController {
         return (new DataResponse<TelephoneTask>(telephoneTaskManager.listTask(SecurityUtil.getCurrentUserLoginName(),pageRequest)));
     }
 
+    @RequestMapping(value = "check")
+    @ResponseBody
+    public AsyncResponse check() {
+        return new AsyncResponse(false,"成功");
+    }
+
     @RequestMapping(value = "findCustomer")
     @ResponseBody
     public AsyncResponse findCustomer(String customerName, String mobile, String phone) {

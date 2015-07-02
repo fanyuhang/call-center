@@ -139,6 +139,9 @@
             },
             error:function (result, b) {
                 LG.tip('发现系统错误 <BR>错误码：' + result.status);
+                if(result.status=='200'){
+                    top.location.href=top.location.href;
+                }
             }
         });
     };
@@ -442,6 +445,9 @@
                 },
                 error:function (result) {
                     LG.tip('发现系统错误 <BR>错误码：' + result.status);
+                    if(result.status=='200'){
+                        top.location.href=top.location.href;
+                    }
                 }
             });
         }

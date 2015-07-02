@@ -565,10 +565,10 @@ function f_save() {
         },
         success: function () {
             isSave = false;
-            taskListGrid.loadData();
             callWin.hide();
             LG.tip("保存成功");
             dialHistorGrid.loadData();
+            taskListGrid.loadData();
             taskId = '';
             callLogId = '';
         },
@@ -620,36 +620,48 @@ function makecall(phone, customerName, fldComment) {
         return;
     }
 
-    callLogId = '';
+    LG.ajax({
+        url: '<c:url value="/telephone/dial/check"/>',
+        data: {},
+        dataType: 'json',
+        type: 'post',
+        success: function (data) {
 
-    parent.LG.call(phone);
+            callLogId = '';
 
-    if(fldComment=='null'){
-        $("#fldComment").val('');
-    }else{
-        $("#fldComment").val(fldComment);
-    }
+            parent.LG.call(phone);
 
-    var date = new Date();
-    $("#currCallBeginTime").val(date.getFullYear() + "-" + parseInt(parseInt(date.getMonth()) + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds());
-    $("#currCallPhone").val(phone);
-    $("#currCallCustomerName").val(customerName);
-
-    callWin = $.ligerDialog.open({
-        title: "拨打信息",
-        target: $("#callDialog"),
-        width: 650, height: 250, top: 30,
-        buttons: [
-            { text: '确定', onclick: function () {
-                if(!isTongHua){
-                    f_save();
-                }else{
-                    LG.showError("请再挂断电话之后保存拨打信息");
-                }
+            if(fldComment=='null'){
+                $("#fldComment").val('');
+            }else{
+                $("#fldComment").val(fldComment);
             }
-            }
-        ]
-    });
+
+            var date = new Date();
+            $("#currCallBeginTime").val(date.getFullYear() + "-" + parseInt(parseInt(date.getMonth()) + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds());
+            $("#currCallPhone").val(phone);
+            $("#currCallCustomerName").val(customerName);
+
+            callWin = $.ligerDialog.open({
+                title: "拨打信息",
+                target: $("#callDialog"),
+                width: 650, height: 250, top: 30,
+                buttons: [
+                    { text: '确定', onclick: function () {
+                        if(!isTongHua){
+                            f_save();
+                        }else{
+                            LG.showError("请再挂断电话之后保存拨打信息");
+                        }
+                    }
+                    }
+                ]
+            });
+        },
+        error:function (message) {
+            LG.showError(message);
+        }});
+
 }
 
 function updateGridHeight() {
