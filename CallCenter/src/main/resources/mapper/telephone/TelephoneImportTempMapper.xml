@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redcard.telephone.dao.mybatis.TelephoneImportTempMapper">
+    <update id="updateDuplicateStatusWithPhone" parameterType="map">
+        update tblTelephoneImportTemp set fldDuplicateStatus = #{fldDuplicateStatus}, fldCustomerId = b.fldId
+        from tblTelephoneImportTemp a
+        left join tblTelephoneCustomer b on a.fldPhone is not null and len(a.fldPhone)>0 and b.fldPhone is not null and len(b.fldPhone)>0 and (a.fldCustomerName+a.fldPhone) = (b.fldCustomerName + b.fldPhone)
+        where fldBatchNo = #{fldBatchNo}
+        and a.fldPhone is not null and len(a.fldPhone)>0
+		and b.fldId is not null
+    </update>
+    <update id="updateDuplicateStatusWithMobile" parameterType="map">
+        update tblTelephoneImportTemp set fldDuplicateStatus = #{fldDuplicateStatus}, fldCustomerId = b.fldId
+        from tblTelephoneImportTemp a
+        left join tblTelephoneCustomer b on a.fldMobile is not null and len(a.fldMobile)>0 and b.fldMobile is not null and len(b.fldMobile)>0 and (a.fldCustomerName+a.fldMobile) = (b.fldCustomerName + b.fldMobile)
+        where fldBatchNo = #{fldBatchNo}
+        and a.fldMobile is not null and len(a.fldMobile)>0
+		and b.fldId is not null
+    </update>
+</mapper>

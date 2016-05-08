@@ -19,7 +19,8 @@ var grid = $("#maingrid").ligerGrid({
         }},
         {display: "手机", name: "fldMobile",
             render:function(item) {
-                return LG.hiddenPhone(item.fldMobile);
+                return item.fldMobile;
+                //return LG.hiddenPhone(item.fldMobile);
             }},
         {display: "固定电话", name: "fldPhone"},
         {display: "地址", name: "fldAddress"},

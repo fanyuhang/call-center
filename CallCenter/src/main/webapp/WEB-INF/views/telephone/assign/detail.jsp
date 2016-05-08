@@ -21,7 +21,7 @@
 	        	} else 
 	        		return ''+item.fldTaskNumber+'';
 	        }},
-	        {display: "已拨打数", name: "fldFinishNumber",render:function(item){
+	        {display: "已完成数", name: "fldFinishNumber",render:function(item){
 	        	if(item.fldFinishNumber > 0) {
 	        		return "<a href='javascript:void(0);' onclick=\"javascript:showDialDtl('"+item.fldId+"');\" title='查看拨打详情'>"+item.fldFinishNumber+"</a>";
 	        	} else 

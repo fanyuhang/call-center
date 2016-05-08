@@ -193,7 +193,7 @@ function f_upload() {
                         return;
                     }
                     LG.showLoading("正在上传...");
-                    var url = '<c:url value="/telephone/import/fileUpload"/>?importName=' + $("#importName").val() + '&fldDuplicateStatus=' + $("#fldDuplicateStatus").val();
+                    var url = '<c:url value="/telephone/import/fileUpload1"/>?importName=' + $("#importName").val() + '&fldDuplicateStatus=' + $("#fldDuplicateStatus").val();
                     $.ajaxFileUpload({
                         url: url,
                         secureuri: false,

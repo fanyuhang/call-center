@@ -855,4 +855,10 @@
                fldJobClass="com.redcard.task.CustomerContractFinishCheckTask"
                fldStatus="0" fldExecuteCount="0"/>
 
+    <tblSysJob fldid="2" fldJobName="话务任务状态更新" fldJobGroup="TelephoneAssignDetailFinishCheckTask" fldTriggerName="TelephoneAssignDetailFinishCheckTask"
+               fldTriggerGroup="TelephoneAssignDetailFinishCheckTask" fldCronExpression="0 0/5 * * * ?"
+               fldIntervalInSeconds="0" fldRepeatCount="0" fldTriggerType="1"
+               fldJobClass="com.redcard.task.TelephoneAssignDetailFinishCheckTask"
+               fldStatus="0" fldExecuteCount="0"/>
+
 </dataset>

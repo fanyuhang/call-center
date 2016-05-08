@@ -21,7 +21,7 @@ public interface TelephoneTaskDao extends PagingAndSortingRepository<TelephoneTa
 	@Query("select m from TelephoneTask m where m.fldCustomerId = ?1")
     public List<TelephoneTask> listByCustomerId(String customerId);
 
-    @Query("select count(*) from TelephoneTask m where m.fldAssignDetailId = ?1 and m.fldTaskStatus=?2 and m.fldTaskDate=?3")
+    @Query("select count(*) from TelephoneTask m where m.fldAssignDetailId = ?1 and m.fldTaskStatus = ?2 and m.fldTaskDate=?3")
     public Long countByDateAndTaskStatus(String assignDetailId,Integer taskStatus, Date date);
 
     @Query("select m from TelephoneTask m where m.fldCallUserNo = ?1 and m.fldTaskStatus < ?2 ")

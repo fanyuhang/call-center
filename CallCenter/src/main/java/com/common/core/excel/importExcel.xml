@@ -91,4 +91,16 @@
     	<column cell="E1" propertyName="address" nullAllowed="true"></column>
         <column cell="F1" propertyName="fldComment" nullAllowed="true"></column>
     </table>
+
+    <table class="com.redcard.telephone.entity.TelephoneImportTemp" startRow="1">
+        <column cell="A1" propertyName="fldCustomerName" nullAllowed="true"></column>
+        <column cell="B1" propertyName="fldGender" nullAllowed="true">
+            <mapping value="1" text="男"></mapping>
+            <mapping value="0" text="女"></mapping>
+        </column>
+        <column cell="C1" propertyName="fldMobile" nullAllowed="true"></column>
+        <column cell="D1" propertyName="fldPhone" nullAllowed="true"></column>
+        <column cell="E1" propertyName="fldAddress" nullAllowed="true"></column>
+        <column cell="F1" propertyName="fldComment" nullAllowed="true"></column>
+    </table>
 </tables>

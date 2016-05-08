@@ -66,9 +66,9 @@ public class TelephoneTaskController {
         try {
 
             String detailId = telephoneTaskManager.invalid(id);
-            if (StringUtils.isNotBlank(detailId)) {
-                telephoneAssignDetailManager.updateFinishStatusByDetailId(detailId);
-            }
+//            if (StringUtils.isNotBlank(detailId)) {
+//                telephoneAssignDetailManager.updateFinishStatusByDetailId(detailId);
+//            }
         } catch (Exception e) {
             e.printStackTrace();
             return new AsyncResponse(true, "系统内部错误，请联系管理员");

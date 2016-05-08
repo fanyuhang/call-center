@@ -100,9 +100,10 @@ public class DialController {
         AsyncResponse result = new AsyncResponse();
         try {
             String detailId = telephoneTaskManager.save(telephoneRecord);
-            if (StringUtils.isNotBlank(detailId)) {
-                telephoneAssignDetailManager.updateFinishStatusByDetailId(detailId);
-            }
+            //@TODO 通过定时任务做
+//            if (StringUtils.isNotBlank(detailId)) {
+//                telephoneAssignDetailManager.updateFinishStatusByDetailId(detailId);
+//            }
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -104,8 +104,8 @@ public class TelephoneAssignDetailManager extends GenericPageHQLQuery<TelephoneA
     public void updateFinishStatusByDetailId(String fldAssignDetailId) {
         TelephoneAssignDetail telephoneAssignDetail = telephoneAssignDetailDao.findOne(fldAssignDetailId);
 
-        //更新话务分配明细表的已拨打数
-        Long countOfFinish = telephoneTaskDao.countByDateAndTaskStatus(telephoneAssignDetail.getFldId(), TelephoneTaskStatusEnum.DONE_FINISH.getCode(), DateUtils.truncate(new Date(), Calendar.DATE));
+        //更新话务分配明细表的已完成数
+        Long countOfFinish = telephoneTaskDao.countByDateAndTaskStatus(fldAssignDetailId, TelephoneTaskStatusEnum.DONE_FINISH.getCode(), DateUtils.truncate(new Date(), Calendar.DATE));
         if (countOfFinish != null) {
             telephoneAssignDetail.setFldFinishNumber(countOfFinish.intValue());
 
@@ -114,7 +114,7 @@ public class TelephoneAssignDetailManager extends GenericPageHQLQuery<TelephoneA
             }
         }
 
-        Long countOfFollow = telephoneTaskDao.countByDateAndTaskStatus(telephoneAssignDetail.getFldId(), TelephoneTaskStatusEnum.WAITING_FINISH.getCode(), DateUtils.truncate(new Date(), Calendar.DATE));
+        Long countOfFollow = telephoneTaskDao.countByDateAndTaskStatus(fldAssignDetailId, TelephoneTaskStatusEnum.WAITING_FINISH.getCode(), DateUtils.truncate(new Date(), Calendar.DATE));
 
         if (countOfFollow != null) {
             telephoneAssignDetail.setFldFollowNumber(countOfFollow.intValue());

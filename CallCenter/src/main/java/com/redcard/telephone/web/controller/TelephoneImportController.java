@@ -12,13 +12,11 @@ import com.common.core.util.EntityUtil;
 import com.common.core.util.FileHelper;
 import com.common.core.util.JsonHelper;
 import com.common.security.util.SecurityUtil;
-import com.redcard.telephone.entity.TelephoneCustomer;
-import com.redcard.telephone.entity.TelephoneImport;
-import com.redcard.telephone.entity.TelephoneImportDetail;
-import com.redcard.telephone.entity.TelephoneImportEntity;
+import com.redcard.telephone.entity.*;
 import com.redcard.telephone.service.TelephoneCustomerManager;
 import com.redcard.telephone.service.TelephoneImportDetailManager;
 import com.redcard.telephone.service.TelephoneImportManager;
+import com.redcard.telephone.service.TelephoneImportTempManager;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,9 +30,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping(value = "/telephone/import")
@@ -47,6 +43,8 @@ public class TelephoneImportController {
     private TelephoneImportManager telephoneImportManager;
     @Autowired
     private TelephoneImportDetailManager telephoneImportDetailManager;
+    @Autowired
+    private TelephoneImportTempManager telephoneImportTempManager;
 
     @RequestMapping(value = "init")
     public String init(String menuNo, Model model) {
@@ -67,10 +65,10 @@ public class TelephoneImportController {
         FilterTranslator filterTranslator = telephoneImportManager.createFilter(where);
 
         String fldName = null;
-        if(filterTranslator!=null){
-            for(FilterRule filterRule: filterTranslator.getGroup().getRules()){
-                if("fldName".equalsIgnoreCase(filterRule.getField())){
-                    fldName = (String)filterRule.getValue();
+        if (filterTranslator != null) {
+            for (FilterRule filterRule : filterTranslator.getGroup().getRules()) {
+                if ("fldName".equalsIgnoreCase(filterRule.getField())) {
+                    fldName = (String) filterRule.getValue();
                 }
             }
         }
@@ -157,15 +155,15 @@ public class TelephoneImportController {
                 List<TelephoneImportEntity> list = new ArrayList<TelephoneImportEntity>();//非重复话单
                 for (TelephoneImportEntity importEntity : objects) {
 
-                    if(StringUtils.isNotBlank(importEntity.getMobile())&&importEntity.getMobile().length()!=11){
+                    if (StringUtils.isNotBlank(importEntity.getMobile()) && importEntity.getMobile().length() != 11) {
                         continue;
                     }
 
-                    if(StringUtils.isNotBlank(importEntity.getTelephone())&&importEntity.getTelephone().length()<7){
+                    if (StringUtils.isNotBlank(importEntity.getTelephone()) && importEntity.getTelephone().length() < 7) {
                         continue;
                     }
 
-                    if(StringUtils.isBlank(importEntity.getMobile())&&StringUtils.isBlank(importEntity.getTelephone())){
+                    if (StringUtils.isBlank(importEntity.getMobile()) && StringUtils.isBlank(importEntity.getTelephone())) {
                         continue;
                     }
 
@@ -272,7 +270,6 @@ public class TelephoneImportController {
                 telephoneImport.setFldOperateDate(new Date());
                 telephoneImport.setFldCreateDate(new Date());
                 telephoneImport.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
-                telephoneImportManager.save(telephoneImport);
 
                 //记录话单原始表
                 List<TelephoneCustomer> telephoneCustomerList = new ArrayList<TelephoneCustomer>();
@@ -341,8 +338,12 @@ public class TelephoneImportController {
 
                         telephoneImportDetailList.add(telephoneImportDetail);
                     }
+
+                    telephoneImport.setFldImportTotalNumber(telephoneImport.getFldImportTotalNumber() + dupList.size());
                 }
                 telephoneImportDetailManager.save(telephoneImportDetailList);
+
+                telephoneImportManager.save(telephoneImport);
             }
         } catch (Exception e) {
             log.error("导入文件失败, {}", e.getMessage());
@@ -351,6 +352,164 @@ public class TelephoneImportController {
         }
         return JsonHelper.serialize(result);
     }
+
+
+    @RequestMapping(value = "fileUpload1")
+    @ResponseBody
+    public String fileUpload1(String importName, Integer fldDuplicateStatus, HttpServletRequest request, HttpServletResponse response) {
+        AsyncResponse result = new AsyncResponse(false, "导入话单成功!");
+        try {
+            String fileName = FileHelper.uploadFile(request, response);
+
+            List<TelephoneImportTemp> objects = ExcelImportUtil.excelImport(TelephoneImportTemp.class, fileName);
+            if (null != objects && objects.size() > 0) {
+                String uuid = EntityUtil.getId();
+                //存放原始话单
+                ExcelExportUtil<TelephoneImportTemp> listToExcel = new ExcelExportUtil<TelephoneImportTemp>(objects);
+                String localPath = Constant.TELEPHONE_IMPORTT_PATH + File.separator + uuid + File.separator;
+                String reportPath = request.getSession().getServletContext().getRealPath("/") + File.separator + localPath;
+                File pathFile = new File(reportPath);
+                if (!pathFile.exists())
+                    pathFile.mkdirs();
+                fileName = StringUtils.substringAfterLast(fileName, File.separator);
+                String origFileName = Constant.TELEPHONE_IMPORT_SAVE_TYPE_ORIG + "_" + fileName;
+                String path = reportPath + origFileName;
+                listToExcel.generate(path);
+
+
+                //记录话务导入表
+                TelephoneImport telephoneImport = new TelephoneImport();
+                telephoneImport.setFldName(importName);
+                telephoneImport.setFldId(EntityUtil.getId());
+                telephoneImport.setFldDuplicateStatus(Integer.valueOf(fldDuplicateStatus));
+                telephoneImport.setFldUploadFilePath(localPath + origFileName);//原始话单相对路径
+                telephoneImport.setFldTotalNumber(objects.size());//原始话单记录总数
+
+                for (TelephoneImportTemp tmp : objects) {
+                    tmp.setFldBatchNo(telephoneImport.getFldId());
+                    tmp.setFldDuplicateStatus(Constant.DUPLICATE_STATUS_N);
+                }
+
+                if (objects != null && objects.size() > 0) {
+                    telephoneImportTempManager.save(objects);
+                }
+
+                Map<String, Object> param = new HashMap<String, Object>();
+                param.put("fldBatchNo", telephoneImport.getFldId());
+                param.put("fldDuplicateStatus", Constant.DUPLICATE_STATUS_Y);
+
+                telephoneImportTempManager.updateDuplicateStatusWithMobile(param);
+                telephoneImportTempManager.updateDuplicateStatusWithPhone(param);
+
+                List<TelephoneImportTemp> dupList = telephoneImportTempManager.findByDuplicateStatus(telephoneImport.getFldId(), Constant.DUPLICATE_STATUS_Y);//重复话单
+                List<TelephoneImportTemp> list = telephoneImportTempManager.findByDuplicateStatus(telephoneImport.getFldId(), Constant.DUPLICATE_STATUS_N);//非重复话单
+
+                //存放重复话单
+                String dupFileName = null;
+                if (null != dupList && dupList.size() > 0) {
+                    dupFileName = Constant.TELEPHONE_IMPORT_SAVE_TYPE_DUP + "_" + fileName;
+                    ExcelExportUtil<TelephoneImportTemp> dupListToExcel = new ExcelExportUtil<TelephoneImportTemp>(dupList);
+                    dupListToExcel.generate(reportPath + dupFileName);
+                }
+
+                //存放非重复话单
+                String noDupFileName = null;
+                if (null != list && list.size() > 0) {
+                    noDupFileName = Constant.TELEPHONE_IMPORT_SAVE_TYPE_NO_DUP + "_" + fileName;
+                    ExcelExportUtil<TelephoneImportTemp> noDupListToExcel = new ExcelExportUtil<TelephoneImportTemp>(list);
+                    noDupListToExcel.generate(reportPath + noDupFileName);
+                }
+
+                telephoneImport.setFldDuplicateTotalNumber(dupList.size());//重复记录数
+                if (!StringUtils.isEmpty(dupFileName)) {
+                    telephoneImport.setFldDuplicateFilePath(localPath + dupFileName);//重复记录文件地址
+                }
+                telephoneImport.setFldImportTotalNumber(list.size());
+                if (!StringUtils.isEmpty(noDupFileName)) {
+                    telephoneImport.setFldImportFilePath(localPath + noDupFileName);
+                }
+                telephoneImport.setFldAssignTotalNumber(0);
+                telephoneImport.setFldOperateDate(new Date());
+                telephoneImport.setFldCreateDate(new Date());
+                telephoneImport.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
+
+                List<TelephoneImportDetail> telephoneImportDetailList = new ArrayList<TelephoneImportDetail>();
+                List<TelephoneCustomer> telephoneCustomerList = new ArrayList<TelephoneCustomer>();
+                for (TelephoneImportTemp tmp : list) {
+
+                    TelephoneCustomer telephoneCustomer = new TelephoneCustomer();
+                    telephoneCustomer.setFldId(EntityUtil.getId());
+                    telephoneCustomer.setFldCustomerName(tmp.getFldCustomerName());
+                    telephoneCustomer.setFldGender(tmp.getFldGender());
+                    telephoneCustomer.setFldMobile(tmp.getFldMobile());
+                    telephoneCustomer.setFldPhone(tmp.getFldPhone());
+                    telephoneCustomer.setFldComment(tmp.getFldComment());
+                    telephoneCustomer.setFldAddress(tmp.getFldAddress());
+                    telephoneCustomer.setFldOperateDate(new Date());
+                    telephoneCustomer.setFldCreateDate(new Date());
+                    telephoneCustomer.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
+                    telephoneCustomer.setFldAssignStatus(Constant.TELEPHONE_ASSIGN_STATUS_UNASSIGN);//分配状态：未分配
+                    telephoneCustomer.setFldSource(Constant.TELEPHONE_CUSTOMER_SOURCE_IMPORT);//客户来源,话务导入
+
+                    telephoneCustomerList.add(telephoneCustomer);
+
+                    TelephoneImportDetail telephoneImportDetail = new TelephoneImportDetail();
+                    telephoneImportDetail.setFldId(EntityUtil.getId());
+                    telephoneImportDetail.setFldTelephoneId(telephoneCustomer.getFldId());
+                    telephoneImportDetail.setFldImportId(telephoneImport.getFldId());
+                    telephoneImportDetail.setFldCustomerName(tmp.getFldCustomerName());
+                    telephoneImportDetail.setFldGender(tmp.getFldGender());
+                    telephoneImportDetail.setFldMobile(tmp.getFldMobile());
+                    telephoneImportDetail.setFldPhone(tmp.getFldPhone());
+                    telephoneImportDetail.setFldComment(tmp.getFldComment());
+                    telephoneImportDetail.setFldAddress(tmp.getFldAddress());
+                    telephoneImportDetail.setFldOperateDate(new Date());
+                    telephoneImportDetail.setFldCreateDate(new Date());
+                    telephoneImportDetail.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
+                    telephoneImportDetail.setFldAssignStatus(Constant.TELEPHONE_ASSIGN_STATUS_UNASSIGN);//分配状态：未分配
+                    telephoneImportDetail.setFldAssignNumber(0);//分配次数
+
+                    telephoneImportDetailList.add(telephoneImportDetail);
+                }
+
+                if (Constant.DUPLICATE_STATUS_N == Integer.valueOf(fldDuplicateStatus)) {
+                    for (TelephoneImportTemp tmp : dupList) {
+                        TelephoneImportDetail telephoneImportDetail = new TelephoneImportDetail();
+                        telephoneImportDetail.setFldId(EntityUtil.getId());
+                        telephoneImportDetail.setFldImportId(telephoneImport.getFldId());
+                        telephoneImportDetail.setFldTelephoneId(tmp.getFldCustomerId());
+                        telephoneImportDetail.setFldCustomerName(tmp.getFldCustomerName());
+                        telephoneImportDetail.setFldGender(tmp.getFldGender());
+                        telephoneImportDetail.setFldMobile(tmp.getFldMobile());
+                        telephoneImportDetail.setFldPhone(tmp.getFldPhone());
+                        telephoneImportDetail.setFldComment(tmp.getFldComment());
+                        telephoneImportDetail.setFldAddress(tmp.getFldAddress());
+                        telephoneImportDetail.setFldOperateDate(new Date());
+                        telephoneImportDetail.setFldCreateDate(new Date());
+                        telephoneImportDetail.setFldCreateUserNo(SecurityUtil.getCurrentUserLoginName());
+                        telephoneImportDetail.setFldAssignStatus(Constant.TELEPHONE_ASSIGN_STATUS_UNASSIGN);//分配状态：未分配
+                        telephoneImportDetail.setFldAssignNumber(0);//分配次数
+
+                        telephoneImportDetailList.add(telephoneImportDetail);
+                    }
+
+                    telephoneImport.setFldImportTotalNumber(telephoneImport.getFldImportTotalNumber() + dupList.size());
+                }
+
+                telephoneCustomerManager.save(telephoneCustomerList);
+
+                telephoneImportDetailManager.save(telephoneImportDetailList);
+
+                telephoneImportManager.save(telephoneImport);
+            }
+        } catch (Exception e) {
+            log.error("导入文件失败, {}", e.getMessage());
+            e.printStackTrace();
+            return JsonHelper.serialize(new AsyncResponse(true, "导入话单失败！"));
+        }
+        return JsonHelper.serialize(result);
+    }
+
 
     @SuppressWarnings("unchecked")
     @RequestMapping(value = "origexport")

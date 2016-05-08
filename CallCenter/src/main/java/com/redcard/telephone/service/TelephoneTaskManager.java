@@ -14,6 +14,7 @@ import com.redcard.customer.dao.CustomerDao;
 import com.redcard.customer.entity.Customer;
 import com.redcard.telephone.common.*;
 import com.redcard.telephone.dao.*;
+import com.redcard.telephone.dao.mybatis.TelephoneMapper;
 import com.redcard.telephone.entity.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
@@ -24,10 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.text.DateFormat;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Component
 @Transactional(readOnly = true)
@@ -56,8 +54,18 @@ public class TelephoneTaskManager extends GenericPageHQLQuery<TelephoneTask> {
     @Autowired
     private TelephoneImportDao telephoneImportDao;
 
+    @Autowired
+    private TelephoneMapper telephoneMapper;
+
     public long getCount() {
         return telephoneTaskDao.count();
+    }
+
+    @Transactional(readOnly = false)
+    public void updateTelephoneAssignDetail(){
+        telephoneMapper.updateTelephoneAssignDetailFinishNumber(new HashMap<String, Object>());
+        telephoneMapper.updateTelephoneAssignDetailFollowNumber(new HashMap<String, Object>());
+        telephoneMapper.updateTelephoneAssignDetailFinishStatus(new HashMap<String, Object>());
     }
 
     @Transactional(readOnly = false)

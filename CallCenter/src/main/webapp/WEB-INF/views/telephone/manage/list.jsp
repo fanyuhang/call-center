@@ -137,19 +137,21 @@
                 var columns = grid.getColumns();
                 var columnNames = [];
                 var propertyNames = [];
-                for (var i = 1; i < columns.length; i++) {
-
+                for (var i = 2; i < columns.length; i++) {
+                    if (columns[i].name == 'fldRecoverStatus'
+                            ||columns[i].name == 'assignUserName') {
+                        continue;
+                    }
                     columnNames.push(columns[i].display);
                     if (columns[i].name == 'fldTaskType') {
                         propertyNames.push("taskTypeLabel");
-                    } else if (columns[i].name == 'fldTaskType') {
+                    } else if (columns[i].name == 'fldFinishStatus') {
                         propertyNames.push("resultStatusLabel");
                     } else {
                         propertyNames.push(columns[i].name);
                     }
                 }
                 f_export(columnNames, propertyNames);
-                break;
                 break;
         }
     }

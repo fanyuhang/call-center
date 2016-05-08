@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.redcard.telephone.dao.mybatis.TelephoneMapper">
+    <update id="updateTelephoneAssignDetailFinishNumber" parameterType="map">
+        update tblTelephoneAssignDetail set fldFinishNumber = a.num from (select a.fldAssignDetailId, a.fldTaskDate, a.fldCallUserNo, a.fldTaskStatus, COUNT(*) num
+        from tblTelephoneTask a
+        where a.fldTaskStatus = 9
+        group by a.fldAssignDetailId, a.fldTaskDate, a.fldCallUserNo, a.fldTaskStatus ) a
+        left join tblTelephoneAssignDetail b on a.fldAssignDetailId = b.fldId
+    </update>
+    <update id="updateTelephoneAssignDetailFollowNumber" parameterType="map">
+        update tblTelephoneAssignDetail set fldFollowNumber = a.num from (select a.fldAssignDetailId, a.fldTaskDate, a.fldCallUserNo, a.fldTaskStatus, COUNT(*) num
+        from tblTelephoneTask a
+        where a.fldTaskStatus = 1
+        group by a.fldAssignDetailId, a.fldTaskDate, a.fldCallUserNo, a.fldTaskStatus ) a
+        left join tblTelephoneAssignDetail b on a.fldAssignDetailId = b.fldId
+    </update>
+    <update id="updateTelephoneAssignDetailFinishStatus" parameterType="map">
+        update tblTelephoneAssignDetail set fldFinishStatus = 1 where fldTaskNumber = fldFinishNumber
+    </update>
+</mapper>
